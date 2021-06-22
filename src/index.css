@@ -19,3 +19,37 @@ code {
   padding: 0!important;
   font-family: "Poppins"!important;
 }
+
+.custom-table-styles span {
+    white-space: nowrap !important;
+  }
+  .custom-table-styles table {
+    margin: 20px !important;
+    width: 98% !important;
+    border-collapse: collapse; 
+  }
+  .custom-table-styles  thead{
+   text-align: left;
+ }
+ .custom-table-styles  td{
+cursor: pointer;
+ }
+ .custom-table-styles td,
+ .custom-table-styles th {
+    padding: 0px 16px !important;
+    height: 50px;
+    white-space: nowrap !important;
+    border-bottom: 1px solid rgba(224, 224, 224, 1); 
+  }
+
+  .custom-table-styles tr:hover {
+   
+    background-color: rgba(0, 0, 0, 0.04); 
+  }
+  .custom-table-styles th {
+    background-color: #eaeef1 !important;
+  }
+  .NabBarItems{
+    text-decoration: none;
+    color: white;
+  }
