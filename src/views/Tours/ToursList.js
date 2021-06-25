@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
-import { Paper, Button } from '@material-ui/core';
+import { Paper, Button ,Typography} from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
 
 // Helpers
@@ -63,15 +63,14 @@ const ToursList = ({ confirm }) => {
     const addTourHandler = () => {
         history.push(PATHS.tours.add)
     }
-    if (loading) return <div>Loading..</div>;
+    if (loading) return <div className="loading">Loading..</div>;
     return (
         <>
             <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
-                <h2>Tours</h2>
-                <Button onClick={addTourHandler} color="primary" variant="contained">Add Tour</Button>
+                <Typography className="font-size-34" variant='h4'>{t('Tours')}</Typography>
+                <Button onClick={addTourHandler} color="primary" variant="contained" className="Primary-btn">Add Tour</Button>
             </Paper>
             <div className={'custom-table-styles'}>
-                {console.log(actions, "actions")}
                 <MaterialTable
                     data={mapTableData(tours)}
                     title={t(tableTitle)}

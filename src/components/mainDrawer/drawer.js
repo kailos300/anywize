@@ -8,6 +8,11 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import MapIcon from '@material-ui/icons/Map';
+import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';
+
+import CallSplitIcon from '@material-ui/icons/CallSplit';
+import StoreIcon from '@material-ui/icons/Store';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import CloseIcon from '@material-ui/icons/Close';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,7 +21,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-const drawerWidth = 240;
+import { MID_NAVIGATION_ROUTES } from 'constants/ui-constants'
+import logo from 'assets/img/logo.png';
+
+
+const drawerWidth = 301;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
     },
     content: {
         flexGrow: 1,
@@ -105,28 +114,29 @@ export default function Bar(props) {
                 }}
             >
                 <div className={classes.drawerHeader}>
+                    <img style={{ width: '163.27px' }} src={logo} />
                     <IconButton onClick={props.handleDrawerClose}>
                         {theme.direction === 'ltr' ? <CloseIcon style={{ color: 'white ' }} /> : <ChevronRightIcon />}
                     </IconButton>
                 </div>
-                <Divider style={{ background: 'white ' }} />
+                <Divider style={{ background: '#545454' }} />
                 <List>
                     {['Maps', 'Past Deliveries', 'New Orders'].map((text, index) => (
-                        <Link className={'NabBarItems'} to="/dash">
-                            <ListItem button key={text}>
-                                <ListItemIcon style={{ color: 'white ' }}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <Link key={text} className={'NabBarItems'} to="/dash">
+                            <ListItem button>
+                                <ListItemIcon style={{ color: 'white ' }}>{index % 2 === 0 ? <MapIcon /> : <MarkunreadMailboxIcon />}</ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
                         </Link>
                     ))}
                 </List>
-                <Divider style={{ background: 'white ' }} />
+                <Divider style={{ background: '#545454' }} />
                 <List>
-                    {['Customers', 'Tours'].map((text, index) => (
-                        <Link className={'NabBarItems'} to="/tours">
-                            <ListItem button key={text}>
-                                <ListItemIcon style={{ color: 'white ' }}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
+                    {MID_NAVIGATION_ROUTES.map((text, index) => (
+                        <Link key={text.name} className={'NabBarItems'} to={text.path}>
+                            <ListItem button>
+                                <ListItemIcon style={{ color: 'white ' }}>{index % 2 === 0 ? <StoreIcon /> : <CallSplitIcon />}</ListItemIcon>
+                                <ListItemText primary={text.name} />
                             </ListItem>
                         </Link>
                     ))}

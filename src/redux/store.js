@@ -4,6 +4,7 @@ import authReducer from './slices/authSlice';
 import userReducer from './modules/user';
 import authenticationReducer from './modules/authentication';
 import tourReducer from './slices/tourSlice';
+import customerReducer from './slices/customerSlice';
 import uiReducer from './slices/uiSlice';
 
 // import { reducer as formReducer } from 'redux-form';
@@ -16,6 +17,7 @@ const store = configureStore({
         authentication: authenticationReducer,
         user: userReducer,
         tours: tourReducer,
+        customers:customerReducer,
         ui: uiReducer,
     },
 });

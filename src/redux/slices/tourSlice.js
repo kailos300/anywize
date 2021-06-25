@@ -14,19 +14,26 @@ const tourSlice = createSlice({
   initialState,
   reducers: {
     addNewTour: (state, action) => {
+      console.log(state,"state",action)
       const { _id } = action.payload;
       state.tours[_id] = action.payload;
       state.tour = action.payload;
     },
     setEditTour: (state, action) => {
+      console.log(state,"state",action)
+
       const { id } = action.payload;
       state.tours[id] = action.payload;
       state.tour = action.payload;
     },
     setTour: (state, action) => {
+      console.log(state,"state",action)
+
       state.tour = action.payload;
     },
     setTours: (state, action) => {
+      console.log(state,"state",action)
+
       const tours = {};
       action.payload.forEach(tour => {
         tours[tour.id] = tour;
@@ -34,12 +41,18 @@ const tourSlice = createSlice({
       state.tours = tours;
     },
     removeTour: (state, action) => {
+      console.log(state,"state")
+
       delete state.tours[action.payload];
     },
     setTourLoading: (state) => {
+      console.log(state,"state")
+
       state.loading = true;
     },
     setTourReady: (state) => {
+      console.log(state,"state")
+
       state.loading = false;
     },
   },

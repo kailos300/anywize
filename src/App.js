@@ -10,7 +10,7 @@ import AppRouter from './routes/AppRouter';
 import Bar from './components/mainDrawer/drawer';
 import Snackbar from 'components/Snackbar';
 
-const drawerWidth = 240;
+const drawerWidth = 301;
 
 const useStyles = makeStyles((theme) => ({
   appWrapper: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -41,7 +41,7 @@ function App() {
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
 
   useEffect(() => {
@@ -72,8 +72,8 @@ function App() {
       </div>
         :
         <>
-        <AppRouter />
-        <Snackbar />
+          <AppRouter />
+          <Snackbar />
         </>
       }
     </>

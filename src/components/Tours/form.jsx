@@ -1,9 +1,11 @@
 import React from 'react'
-import { Grid, Box, Paper, Button } from '@material-ui/core';
+import { Grid, Box, Paper, Button, Typography } from '@material-ui/core';
 import * as pick from 'lodash/pick';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
+
+
 import { storage } from 'util/storage';
 import { Input } from '../Shared/mui-formik-inputs';
 import { TourSchema } from 'constants/validation-schemas';
@@ -34,17 +36,17 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
   const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
   return (
     <form onSubmit={handleSubmit} noValidate>
-      {console.log(values, "initialValues")}
-      <Box boxShadow={'3'} p={2}>
+      <Box style={{ background: 'white' }} boxShadow={'1'} p={2}>
         <Grid container >
           <Grid>
-            <h2>{values.name}</h2>
+            <Typography className="font-size-34" variant='h4'>{values.name}</Typography>
           </Grid>
         </Grid>
       </Box>
-      <Box boxShadow={3} mt={2} p={2}>
-        <Grid>
-          <form>
+      <Box boxShadow={1} mx={3} my={4} style={{ background: 'white' }} >
+        <Typography className="font-size-21" variant='h5' style={{ borderBottom: '1px solid #CBD5DD', padding: '20px' }}>{t('Basic Data')}</Typography>
+        <Grid style={{ padding: '20px' }} container spacing={2}>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
             <Input
               label={t('Tour Name')}
               name="name"
@@ -53,6 +55,8 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
               value={values.name}
               errors={errors}
             />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
             <Input
               label={t('Remark')}
               name="description"
@@ -61,10 +65,10 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
               value={values.description}
               errors={errors}
             />
-          </form>
-          <Button type='submit' color="primary" variant="contained">{t(`${action}`) + ' ' + t('Tour')}</Button>
+          </Grid>
         </Grid>
       </Box>
+          <Button type='submit' className="Primary-btn margin-20" color="primary" variant="contained">{t(`${action}`) + ' ' + t('Tour')}</Button>
     </form>
   )
 }

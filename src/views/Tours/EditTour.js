@@ -41,7 +41,7 @@ const EditTour = () => {
       history.push(PATHS.tours.root);
     };
   
-    if (loading || !tour) return <div>Loading..</div>;
+    if (loading || !tour) return <div className="loading">Loading..</div>;
     return (
         <TourForm
         initialValues={tour}

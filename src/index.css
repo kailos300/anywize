@@ -33,6 +33,7 @@ code {
  }
  .custom-table-styles  td{
 cursor: pointer;
+font-size: 12px !important;
  }
  .custom-table-styles td,
  .custom-table-styles th {
@@ -40,6 +41,7 @@ cursor: pointer;
     height: 50px;
     white-space: nowrap !important;
     border-bottom: 1px solid rgba(224, 224, 224, 1); 
+    font-size: 12px;
   }
 
   .custom-table-styles tr:hover {
@@ -53,3 +55,37 @@ cursor: pointer;
     text-decoration: none;
     color: white;
   }
+  .font-size-34{
+    font-size: 34px !important;
+    font-family: 'Questrial', sans-serif !important;
+  }
+  .font-size-21{
+    font-size: 21px !important;
+  }
+  .font-size-12{
+    font-size: 12px !important;
+  }
+  .Primary-btn{
+    background:#6F9CEB !important;
+    border-radius:0px !important;
+    width:168px !important;
+  }
+  .margin-20{
+    margin:20px !important;
+  } 
+  .align-items-end{
+    align-items: flex-end;
+  }
+  .MuiFormControl-marginNormal{
+    margin-bottom: 3px !important;
+  }
+label,input,select {
+  font-size: 12px !important;
+}
+.loading{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
