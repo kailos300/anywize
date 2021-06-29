@@ -31,6 +31,7 @@ const AddCustomer = () => {
             fetchTours();
         }
     }, [tours]);
+    
     const handleAddCustomer = async (payload) => {
         await dispatch(addCustomer(payload));
 

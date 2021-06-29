@@ -5,6 +5,8 @@ import userReducer from './modules/user';
 import authenticationReducer from './modules/authentication';
 import tourReducer from './slices/tourSlice';
 import customerReducer from './slices/customerSlice';
+import orderReducer from './slices/orderSlice';
+
 import uiReducer from './slices/uiSlice';
 
 // import { reducer as formReducer } from 'redux-form';
@@ -18,6 +20,7 @@ const store = configureStore({
         user: userReducer,
         tours: tourReducer,
         customers:customerReducer,
+        orders:orderReducer,
         ui: uiReducer,
     },
 });

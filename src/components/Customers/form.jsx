@@ -225,7 +225,6 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                             errors={errors}
                             options={tourList.map((o) => ({ label: o.id, value: o.id }))}
                         />
-                        {console.log(tourList)}
                     </Grid>
                     <Grid item xs={12} sm={6} md={4} lg={2}>
                         <Input

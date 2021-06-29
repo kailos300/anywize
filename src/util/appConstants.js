@@ -11,6 +11,11 @@ export const PATHS = {
         add: '/customers/add',
         edit: '/customers/edit/:id',
     },
+    orders:{
+        root:'/orders',
+        add:'/orders/add',
+        edit:'/orders/edit/:id'
+    },
     customer: '/dash',
     dashboard: '/dashboard',
     addTour:'/tour/add',

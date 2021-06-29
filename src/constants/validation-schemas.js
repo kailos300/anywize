@@ -19,3 +19,7 @@ export const CustomerSchema = yup.object().shape({
     latitude: yup.string().required('Required'),
     longitude: yup.string().required('Required'),
 });
+
+export const OrderSchema = yup.object().shape({
+
+});

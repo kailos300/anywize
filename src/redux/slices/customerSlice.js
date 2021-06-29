@@ -77,6 +77,7 @@ export const getCustomers = () => async dispatch => {
 
     try {
         const customers = await coreApi.fetch(baseUrl);
+        console.log(customers,"customers")
         const newCustomers = map(customers, o => extend({ cityValue: `${o.zipcode}, ${o.city}` }, o))
         dispatch(setCustomers(newCustomers));
     } catch (err) {

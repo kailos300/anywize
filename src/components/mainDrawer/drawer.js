@@ -21,7 +21,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import { MID_NAVIGATION_ROUTES } from 'constants/ui-constants'
+import { MID_NAVIGATION_ROUTES, TOP_NAVIGATION_ROUTES } from 'constants/ui-constants'
 import logo from 'assets/img/logo.png';
 
 
@@ -121,11 +121,11 @@ export default function Bar(props) {
                 </div>
                 <Divider style={{ background: '#545454' }} />
                 <List>
-                    {['Maps', 'Past Deliveries', 'New Orders'].map((text, index) => (
-                        <Link key={text} className={'NabBarItems'} to="/dash">
+                    {TOP_NAVIGATION_ROUTES.map((text, index) => (
+                        <Link key={text.name} className={'NabBarItems'} to={text.path}>
                             <ListItem button>
                                 <ListItemIcon style={{ color: 'white ' }}>{index % 2 === 0 ? <MapIcon /> : <MarkunreadMailboxIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText primary={text.name} />
                             </ListItem>
                         </Link>
                     ))}
