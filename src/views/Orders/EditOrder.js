@@ -1,10 +1,66 @@
-import React from 'react'
+import React, {useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+
+// Helpers
+import { PATHS } from 'util/appConstants';
+
+// Actions
+import { selectOrder, selectOrderStatus, getOrder, editOrder,getOrders } from 'redux/slices/orderSlice';
+import { getCustomers, selectCustomers } from 'redux/slices/customerSlice';
+import { setShowMessage } from 'redux/slices/uiSlice';
+
+// Components
+import OrderForm from 'components/Orders/form';
+
+const currentAction = 'EDIT';
 
 const EditOrder = () => {
-    return (
-        <div>
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { id } = useParams();
+    const loading = useSelector(selectOrderStatus);
+    const order = useSelector(selectOrder);
+    const customers = useSelector(selectCustomers);
 
-        </div>
+    useEffect(() => {
+        if (id) {
+            dispatch(getOrder(id));
+        }
+    }, [id]);
+
+    const fetchCustomers = useCallback(async () => {
+        return await dispatch(getCustomers());
+    }, [dispatch, customers]);
+
+    useEffect(() => {
+        console.log(customers)
+        if (!customers.length) {
+            fetchCustomers();
+        }
+    }, [customers]);
+    const handleEditOrder = async (id, payload) => {
+        await dispatch(editOrder(id, payload));
+
+        dispatch(setShowMessage({
+            description: 'Order Edited Successfully!',
+            type: 'success',
+
+        }));
+        
+
+        history.push(PATHS.orders.root);
+    };
+
+    if (loading || !order) return <div className="loading">Loading..</div>;
+    return (
+        <OrderForm
+            initialValues={order}
+            handleEditOrder={handleEditOrder}
+            action={currentAction}
+            customerList={customers}
+
+        />
     )
 }
 export default EditOrder;

@@ -5,8 +5,9 @@ import EditTour from './Tours/EditTour';
 import CustomersList from './Customers/CustomersList';
 import AddCustomer from './Customers/AddCustomer';
 import EditCustomer from './Customers/EditCustomer';
-import AddOrder from './Orders/AddOrder';
 import OrderList from './Orders/OrderList';
+import AddOrder from './Orders/AddOrder';
+import EditOrder from './Orders/EditOrder';
 
 export {
   Login,
@@ -16,6 +17,7 @@ export {
   CustomersList,
   AddCustomer,
   EditCustomer,
+  OrderList,
   AddOrder,
-  OrderList
+  EditOrder
 };

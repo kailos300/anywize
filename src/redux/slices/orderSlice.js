@@ -14,25 +14,25 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     addNewOrder: (state, action) => {
-      console.log(state,"state",action)
+      console.log(state, "state", action)
       const { _id } = action.payload;
       state.orders[_id] = action.payload;
       state.order = action.payload;
     },
     setEditOrder: (state, action) => {
-      console.log(state,"state",action)
+      console.log(state, "state", action)
 
       const { id } = action.payload;
       state.orders[id] = action.payload;
       state.order = action.payload;
     },
     setOrder: (state, action) => {
-      console.log(state,"state",action)
+      console.log(state, "state", action)
 
       state.order = action.payload;
     },
     setOrders: (state, action) => {
-      console.log(state,"state",action)
+      console.log(state, "state", action)
 
       const orders = {};
       action.payload.forEach(order => {
@@ -41,17 +41,17 @@ const orderSlice = createSlice({
       state.orders = orders;
     },
     removeOrder: (state, action) => {
-      console.log(state,"state")
+      console.log(state, "state")
 
       delete state.orders[action.payload];
     },
     setOrderLoading: (state) => {
-      console.log(state,"state")
+      console.log(state, "state")
 
       state.loading = true;
     },
     setOrderReady: (state) => {
-      console.log(state,"state")
+      console.log(state, "state")
 
       state.loading = false;
     },
@@ -149,6 +149,8 @@ export const deleteOrder = (id) => async dispatch => {
         type: 'success',
       }));
       dispatch(removeOrder(id));
+      dispatch(getOrders())
+
     }
   } catch (err) {
     console.log(err);
@@ -161,6 +163,6 @@ const orderSelector = ({ orders }) => orders.order;
 const ordersSelector = ({ orders }) => orders.orders;
 const orderStatusSelector = ({ orders }) => orders.loading;
 
-export const selectOrder = createSelector(orderSelector,  order =>  order);
-export const selectOrders = createSelector(ordersSelector,  orders => Object.values( orders));
+export const selectOrder = createSelector(orderSelector, order => order);
+export const selectOrders = createSelector(ordersSelector, orders => Object.values(orders));
 export const selectOrderStatus = createSelector(orderStatusSelector, loading => loading);

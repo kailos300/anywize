@@ -46,7 +46,6 @@ const CustomersList = ({ confirm }) => {
     }, [customers]);
 
     const callbackOnDelete = (e, rowData) => {
-        console.log(e, rowData)
         e.stopPropagation();
         confirm(
             () => dispatch(deleteCustomer(rowData.id)),
