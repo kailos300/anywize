@@ -13,7 +13,15 @@ export const TOP_NAVIGATION_ROUTES = [
 
 ];
 
+export const NAVIGATION_ROUTES = [
+  { name: 'Tours', path: '/dash' },
+  { name: 'New Orders', path: PATHS.orders.root },
+  { name: 'Master Data' },
+  { name: 'Past Deliveries', path: '/dash' },
+  { name: 'Settings', path: '/dash' },
 
+
+];
 export const TOURS_TABLE_COLUMNS = [
   { title: "Tour name", field: "name" },
   { title: "Tour ID", field: 'id' }
@@ -32,4 +40,4 @@ export const CUSTOMERS_TABLE_COLUMNS = [
 export const ORDERS_TABLE_COLUMNS = [
   { title: "Order id", field: "id" },
   { title: "Description", field: "description" },
- ]
+]

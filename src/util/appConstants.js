@@ -5,11 +5,14 @@ export const PATHS = {
         root: '/tours',
         add: '/tours/add',
         edit: '/tours/edit/:id',
+        detail:'/tours/detail/:id'
+
     },
     customers:{
         root:'/customers',
         add: '/customers/add',
         edit: '/customers/edit/:id',
+        detail:'/customers/detail/:id'
     },
     orders:{
         root:'/orders',

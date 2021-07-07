@@ -2,13 +2,18 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
+import { useLocation ,useHistory } from 'react-router-dom'
+
+import { PATHS } from 'util/appConstants';
 
 import { fetchUserInfo } from 'redux/slices/userSlice';
+import { selectAuthenticated } from 'redux/slices/authSlice';
 
-import { useLocation } from 'react-router-dom'
 import AppRouter from './routes/AppRouter';
 import Bar from './components/mainDrawer/drawer';
 import Snackbar from 'components/Snackbar';
+import Navbar from 'components/Navbar';
+import Masterbar from 'components/Masterbar';
 
 const drawerWidth = 301;
 
@@ -41,12 +46,21 @@ function App() {
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const authenticated = useSelector(selectAuthenticated);
+
   const [open, setOpen] = React.useState(true);
 
 
   useEffect(() => {
     dispatch(fetchUserInfo());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!authenticated) {
+      history.push(PATHS.login);
+    }
+  }, [authenticated, history]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -58,12 +72,14 @@ function App() {
 
   return (
     <>
-      {location.pathname !== '/login' ? <div className={classes.appWrapper}>
-        <Bar
+    <Navbar />
+    <Masterbar/>
+      {/* {location.pathname !== '/login' ? <div className={classes.appWrapper}> */}
+        {/* <Bar
           open={open}
           handleDrawerOpen={handleDrawerOpen}
-          handleDrawerClose={handleDrawerClose} />
-        <main className={clsx(classes.content, {
+          handleDrawerClose={handleDrawerClose} /> */}
+        {/* <main className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}>
           <AppRouter />
@@ -71,11 +87,11 @@ function App() {
         </main>
       </div>
         :
-        <>
+        <> */}
           <AppRouter />
           <Snackbar />
-        </>
-      }
+        {/* </>
+      } */}
     </>
   );
 }

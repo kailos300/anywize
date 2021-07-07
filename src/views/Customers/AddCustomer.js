@@ -31,11 +31,9 @@ const AddCustomer = () => {
             fetchTours();
         }
     }, [tours]);
-    
-    const handleAddCustomer = async (payload) => {
-        await dispatch(addCustomer(payload));
 
-        history.push(PATHS.customers.root);
+    const handleAddCustomer = async (payload) => {
+        await dispatch(addCustomer(payload)).then(res => res !== undefined ? history.push(PATHS.customers.root) : '');
     }
     return (
         <CustomerForm

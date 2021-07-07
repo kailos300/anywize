@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
-import { Paper, Button,Typography } from '@material-ui/core';
+import { Paper, Button, Typography } from '@material-ui/core';
 
 // Helpers
 import { CUSTOMERS_TABLE_COLUMNS } from 'constants/ui-constants';
@@ -65,10 +65,10 @@ const CustomersList = ({ confirm }) => {
     if (loading) return <div className="loading">Loading..</div>;
     return (
         <>
-            <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
+            {/* <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
                 <Typography className="font-size-34" variant='h4'>{t('Customers')}</Typography>
                 <Button className="Primary-btn" onClick={addCustomerHandler}  color="primary" variant="contained">Add Customer</Button>
-            </Paper>
+            </Paper> */}
             <div className={'custom-table-styles'}>
                 <MaterialTable
                     data={mapTableData(customers)}
@@ -77,7 +77,7 @@ const CustomersList = ({ confirm }) => {
                     onRowClick={(e, rowData) => history.push(
                         PATHS.customers.edit.replace(':id', rowData.id),
                     )}
-                    actions={actions}
+                    // actions={actions}
                     options={{
                         paging: false,
                         maxBodyHeight: '85vh',
@@ -85,6 +85,7 @@ const CustomersList = ({ confirm }) => {
                         actionsColumnIndex: -1,
                         searchFieldAlignment: "left",
                         showTitle: false,
+                        filtering: true,
                     }}
                     onSelectionChange={rows => setSelected([...rows])}
                 />

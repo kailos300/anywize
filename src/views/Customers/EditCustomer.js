@@ -1,4 +1,4 @@
-import React, { useEffect,useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { PATHS } from 'util/appConstants';
 // Actions
 import { selectCustomer, selectCustomerStatus, getCustomer, editCustomer } from 'redux/slices/customerSlice';
 import { setShowMessage } from 'redux/slices/uiSlice';
-import { getTours ,selectTours} from 'redux/slices/tourSlice';
+import { getTours, selectTours } from 'redux/slices/tourSlice';
 
 // Components
 import CustomerForm from 'components/Customers/form';
@@ -40,15 +40,17 @@ const EditCustomer = () => {
         }
     }, [tours]);
     const handleEditCustomer = async (id, payload) => {
-        await dispatch(editCustomer(id, payload));
+        await dispatch(editCustomer(id, payload))
+            // .then(data => console.log(data, "data"))
+            // .catch(error => console.log(error, "error"));
 
-        dispatch(setShowMessage({
-            description: 'Customer Edited Successfully!',
-            type: 'success',
+        // dispatch(setShowMessage({
+        //     description: 'Customer Edited Successfully!',
+        //     type: 'success',
 
-        }));
+        // }));
 
-        history.push(PATHS.customers.root);
+        // history.push(PATHS.customers.root);
     };
 
     if (loading || !customer) return <div className="loading">Loading..</div>;

@@ -44,6 +44,9 @@ const customerSlice = createSlice({
         setCustomerReady: (state) => {
             state.loading = false;
         },
+        emptyCustomers: (state) => {
+            state.customers = {}
+        }
     },
 });
 
@@ -55,6 +58,7 @@ export const {
     removeCustomer,
     setCustomerLoading,
     setCustomerReady,
+    emptyCustomers,
 } = customerSlice.actions;
 export default customerSlice.reducer;
 
@@ -77,7 +81,7 @@ export const getCustomers = () => async dispatch => {
 
     try {
         const customers = await coreApi.fetch(baseUrl);
-        console.log(customers,"customers")
+        console.log(customers)
         const newCustomers = map(customers, o => extend({ cityValue: `${o.zipcode}, ${o.city}` }, o))
         dispatch(setCustomers(newCustomers));
     } catch (err) {
@@ -94,19 +98,19 @@ export const addCustomer = (payload) => async dispatch => {
         const customer = await coreApi.post(baseUrl, payload);
 
         dispatch(addNewCustomer(customer));
-
+        dispatch(emptyCustomers())
         dispatch(setShowMessage({
             description: 'Customer Added Successfully!',
             type: 'success',
         }));
         return customer;
+
+    } catch (err) {
+        console.log(err);
         dispatch(setShowMessage({
             description: "Can't Add! Customer",
             type: 'error',
         }));
-
-    } catch (err) {
-        console.log(err);
     } finally {
         dispatch(setCustomerReady());
     }
@@ -118,18 +122,18 @@ export const editCustomer = (id, payload) => async dispatch => {
 
     try {
         const res = await coreApi.put(url, payload);
-
         if (res) {
             dispatch(setEditCustomer({ ...payload, id }));
+            dispatch(emptyCustomers())
+
             dispatch(setShowMessage({
                 description: 'Edited CUSTOMER Successfully',
                 type: 'success',
             }));
         }
     } catch (err) {
-        console.log(err);
         dispatch(setShowMessage({
-            description: err.message ?? 'Failed editing customer. Please try again later',
+            description: 'Failed editing customer. Please try again',
             type: 'error',
         }));
     } finally {

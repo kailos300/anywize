@@ -6,7 +6,7 @@ class Api {
   axiosInstance;
 
   constructor() {
-  const baseURL = 'http://157.230.25.213:3000/api/'
+    const baseURL = 'http://157.230.25.213:3000/api/'
     this.axiosInstance = axios.create({
       baseURL,
       headers: { 'Content-Type': 'application/json' }
@@ -44,6 +44,10 @@ class Api {
           storage.clear();
         }
       }
+      else {
+        console.log(error)
+        return Promise.reject(error);
+      }
     });
   }
 
@@ -66,6 +70,7 @@ class Api {
         return response.data ?? response;
     } catch (error) {
       console.log(error);
+      return Promise.reject(error);
     }
   };
 

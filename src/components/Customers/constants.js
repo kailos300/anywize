@@ -6,7 +6,7 @@ export const initialValues = {
     notification: false,
     tour: '',
     position: '',
-    depositAgreement: '',
+    deposit_agreement: '',
     keyboxCode: '',
     tour_id:'', // required
     tour_position: '', // required

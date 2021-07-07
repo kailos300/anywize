@@ -239,15 +239,15 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                     <Grid item xs={12} sm={6} md={4} lg={3}>
                         <Select
                             label={t('Deposit agreement')}
-                            name="depositAgreement"
+                            name="deposit_agreement"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.depositAgreement}
+                            value={values.deposit_agreement}
                             errors={errors}
-                            options={['None', 'Bring Key', 'KeyBox'].map((o) => ({ label: o, value: o }))}
+                            options={['NONE', 'Bring Key', 'KeyBox'].map((o) => ({ label: o, value: o }))}
                         />
                     </Grid>
-                    {values.depositAgreement == "KeyBox" && <Grid item xs={12} sm={6} md={4} lg={2}>
+                    {values.deposit_agreement == "KeyBox" && <Grid item xs={12} sm={6} md={4} lg={2}>
                         <Input
                             label={t('Keybox Code')}
                             name="keyboxCode"
