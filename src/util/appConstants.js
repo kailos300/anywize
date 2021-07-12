@@ -23,3 +23,4 @@ export const PATHS = {
     dashboard: '/dashboard',
     addTour:'/tour/add',
 };
+

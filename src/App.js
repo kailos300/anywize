@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory , useParams } from 'react-router-dom'
 
 import { PATHS } from 'util/appConstants';
+import { checkPaths } from 'constants/ui-constants';
 
 import { fetchUserInfo } from 'redux/slices/userSlice';
 import { selectAuthenticated } from 'redux/slices/authSlice';
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function App() {
+  const { id } = useParams();
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -53,6 +55,7 @@ function App() {
 
 
   useEffect(() => {
+
     dispatch(fetchUserInfo());
   }, [dispatch]);
 
@@ -69,11 +72,17 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const checkPath = () => {
+    console.log(id)
+    console.log(checkPaths)
+  let newPaths =   checkPaths.map((path)=>path.replace(':id', id))
+  console.log(newPaths)
+  }
   return (
     <>
+    {console.log(id )}
       <Navbar />
-      <Masterbar />
+      { <Masterbar />}
       {/* {location.pathname !== '/login' ? <div className={classes.appWrapper}>
         <Bar
           open={open}
@@ -82,9 +91,9 @@ function App() {
         <main className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}> */}
-          <AppRouter />
-          <Snackbar />
-        {/* </main>
+      <AppRouter />
+      <Snackbar />
+      {/* </main>
       </div>
         :
         <>

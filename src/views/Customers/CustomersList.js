@@ -31,26 +31,47 @@ const useStyles = makeStyles({
         "& .MuiPaper-elevation2": {
             boxShadow: "none"
         },
-        "& .MuiTableCell-root":{
-            border:'none',
-            color:'white'
+        "& .MuiTableCell-root": {
+            border: 'none',
+            color: 'white',
+            fontSize: '12px',
         },
-        "& .MuiTablePagination-root":{
-            border:'none',
-            color:'white'
+        "& .MuiTableSortLabel-root:hover": {
+            color: '#F5F5F5'
+        },
+        "& .MuiTablePagination-root": {
+            border: 'none',
+            color: 'white'
 
         },
         "& .MuiPaper-root ": {
             backgroundColor: '#121212',
-            color:'white'
+            color: 'white'
 
 
         },
-        _actions: {
-            color: "blue"
-          }
-    
+        "& .MuiInput-underline:before": {
+            borderBottom: '1px solid #525252'
+        },
+        "& .MuiInput-underline:hover:before": {
+            borderBottom: '1px solid #525252'
+        },
+        "& .MuiIconButton-root": {
+            color:'#F5F5F5'
+        },
+        "& .MuiSvgIcon-root": {
+            color:'#F5F5F5'
+        },
+        "& .MuiTypography-root": {
+            color:'#F5F5F5'
+        }
+
+
     },
+    _filtericon: {
+        color: '#525252',
+        fontSize: '12px'
+    }
 
 })
 const tableTitle = 'CUSTOMERS';
@@ -99,14 +120,14 @@ const CustomersList = ({ confirm }) => {
     if (loading) return <div className="loading">Loading..</div>;
     return (
 
-        <div className={clsx(classes._container,'custom-table-styles')}>
+        <div className={clsx(classes._container, 'custom-table-styles')}>
             {/* <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
                 <Typography className="font-size-34" variant='h4'>{t('Customers')}</Typography>
                 <Button className="Primary-btn" onClick={addCustomerHandler}  color="primary" variant="contained">Add Customer</Button>
             </Paper> */}
             {/* <div className={'custom-table-styles'}> */}
             <MaterialTable
-                icons={{ Filter: () => <i className="fas fa-filter"></i> }}
+                icons={{ Filter: () => <i className={clsx(classes._filtericon, "fas fa-filter")}></i> }}
                 style={{ display: 'flex', flexDirection: 'column', }}
                 data={mapTableData(customers)}
                 title={t(tableTitle)}
@@ -123,18 +144,24 @@ const CustomersList = ({ confirm }) => {
                     headerStyle: {
                         backgroundColor: '#121212',
                         color: 'white',
-                        border: 'none'
+                        borderBottom: '1px solid #525252',
+                        font: 'normal normal normal 12px/24px Roboto'
                     },
                     cellStyle: {
                         backgroundColor: '#121212',
                         color: 'white',
-                        border: 'none'
+                        border: 'none',
+                        font: 'normal normal normal 12px/24px Roboto',
                     },
+                    searchFieldStyle: {
+                        color: '#F5F5F5'
+                    },
+                    filterCellStyle: {
+                        color: '#F5F5F5'
+                    }
                 }}
                 onSelectionChange={rows => setSelected([...rows])}
-                classes={{
-                    actions:classes._actions
-                }}
+
             />
         </div>
     )

@@ -35,7 +35,11 @@ const useStyles = makeStyles({
         },
         "& .MuiTableCell-root": {
             border: 'none',
-            color: 'white'
+            color: 'white',
+            fontSize: '12px',
+        },
+        "& .MuiTableSortLabel-root:hover": {
+            color: '#F5F5F5'
         },
         "& .MuiTablePagination-root": {
             border: 'none',
@@ -48,8 +52,28 @@ const useStyles = makeStyles({
 
 
         },
+        "& .MuiInput-underline:before": {
+            borderBottom: '1px solid #525252'
+        },
+        "& .MuiInput-underline:hover:before": {
+            borderBottom: '1px solid #525252'
+        },
+        "& .MuiIconButton-root": {
+            color:'#F5F5F5'
+        },
+        "& .MuiSvgIcon-root": {
+            color:'#F5F5F5'
+        },
+        "& .MuiTypography-root": {
+            color:'#F5F5F5'
+        }
+
 
     },
+    _filtericon: {
+        color: '#525252',
+        fontSize: '12px'
+    }
 
 })
 
@@ -104,7 +128,7 @@ const ToursList = ({ confirm }) => {
             </Paper> */}
             <div className={clsx(classes._container, 'custom-table-styles')}>
                 <MaterialTable
-                    icons={{ Filter: () => <i className="fas fa-filter"></i> }}
+                    icons={{ Filter: () => <i className={clsx(classes._filtericon, "fas fa-filter")}></i> }}
                     style={{ display: 'flex', flexDirection: 'column', }}
                     data={mapTableData(tours)}
                     title={t(tableTitle)}
@@ -121,13 +145,21 @@ const ToursList = ({ confirm }) => {
                         headerStyle: {
                             backgroundColor: '#121212',
                             color: 'white',
-                            border: 'none'
+                            borderBottom: '1px solid #525252',
+                            font: 'normal normal normal 12px/24px Roboto'
                         },
                         cellStyle: {
                             backgroundColor: '#121212',
                             color: 'white',
-                            border: 'none'
+                            border: 'none',
+                            font: 'normal normal normal 12px/24px Roboto',
                         },
+                        searchFieldStyle: {
+                            color: '#F5F5F5'
+                        },
+                        filterCellStyle: {
+                            color: '#F5F5F5'
+                        }
                     }}
                     onSelectionChange={rows => setSelected([...rows])}
                 />

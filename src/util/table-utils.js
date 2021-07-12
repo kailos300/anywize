@@ -23,6 +23,7 @@ export const getActions = (tableTitle, callbackOnDelete ,addHandler) => {
     {
       icon: 'add',
       tooltip: 'Add',
+      iconProps: { style: {color: "#ADADAD",background:'#1F1F1F' } },
       isFreeAction: true,
       onClick: addHandler
     });
