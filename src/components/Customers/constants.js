@@ -1,7 +1,8 @@
 export const initialValues = {
     number: '1',
     salutation: '',
-    lastName: '',
+    firstname:'',
+    lastname: '',
     mobile: '',
     notification: false,
     tour: '',

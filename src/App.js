@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
-import { useLocation ,useHistory } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
 import { PATHS } from 'util/appConstants';
 
@@ -72,25 +72,25 @@ function App() {
 
   return (
     <>
-    <Navbar />
-    <Masterbar/>
-      {/* {location.pathname !== '/login' ? <div className={classes.appWrapper}> */}
-        {/* <Bar
+      <Navbar />
+      <Masterbar />
+      {/* {location.pathname !== '/login' ? <div className={classes.appWrapper}>
+        <Bar
           open={open}
           handleDrawerOpen={handleDrawerOpen}
-          handleDrawerClose={handleDrawerClose} /> */}
-        {/* <main className={clsx(classes.content, {
+          handleDrawerClose={handleDrawerClose} />
+        <main className={clsx(classes.content, {
           [classes.contentShift]: open,
-        })}>
+        })}> */}
           <AppRouter />
           <Snackbar />
-        </main>
+        {/* </main>
       </div>
         :
-        <> */}
+        <>
           <AppRouter />
           <Snackbar />
-        {/* </>
+        </>
       } */}
     </>
   );

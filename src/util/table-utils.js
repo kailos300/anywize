@@ -11,14 +11,21 @@ export const getColumns = (columns, t) => {
 };
 
 
-export const getActions = (tableTitle ,callbackOnDelete) => {
+export const getActions = (tableTitle, callbackOnDelete ,addHandler) => {
   let actions = [];
-  actions.push({
-    icon: 'delete',
-    tooltip: 'Delete',
-    position: 'row',
-    onClick: callbackOnDelete,
-  });
+  actions.push(
+  //   {
+  //   icon: 'delete',
+  //   tooltip: 'Delete',
+  //   position: 'row',
+  //   onClick: callbackOnDelete,
+  // },
+    {
+      icon: 'add',
+      tooltip: 'Add',
+      isFreeAction: true,
+      onClick: addHandler
+    });
 
 
   return actions;

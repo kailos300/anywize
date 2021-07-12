@@ -1,9 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import clsx from 'clsx'
 //assets
 import logo from 'assets/img/logo.png';
 
@@ -11,6 +12,7 @@ import logo from 'assets/img/logo.png';
 import { NAVIGATION_ROUTES } from 'constants/ui-constants';
 
 const useStyles = makeStyles({
+
     _container: {
         backgroundColor: '#121212',
         height: '72px',
@@ -25,18 +27,28 @@ const useStyles = makeStyles({
     },
     _menuitem: {
         textDecoration: 'none',
+        padding: 0,
         color: '#F5F5F5',
         font: 'normal normal normal 22px / 40px Questrial',
         width: 'unset',
-        display: 'unset'
+        display: 'unset',
+        margin: '0 16px',
     },
     _nav: {
         display: 'flex',
+    },
+    _nomargin: {
+        margin: 0,
+    },
+    _isactive: {
+        color: '#6F9CEB',
+        borderBottom: '1px solid #6F9CEB'
     }
 
 })
 const Navbar = () => {
     const classes = useStyles();
+    const location = useLocation();
 
     return (
         <header className={classes._container}>
@@ -45,8 +57,9 @@ const Navbar = () => {
             </Link>
             <List className={classes._nav} component="nav">
                 {NAVIGATION_ROUTES.map((item, index) =>
-                    <ListItem  className={classes._menuitem} key={index} component={Link} to={item.path}>
-                        <ListItemText>
+                    <ListItem activeClassName={classes._isactive} className={clsx(classes._menuitem, (location.pathname == "/tours" && item.name == 'Master Data') ? classes._isactive : '')} key={index} component={NavLink} to={item.path}>
+                        {console.log(item.path)}
+                        <ListItemText className={classes._nomargin}>
                             {item.name}
                         </ListItemText>
                     </ListItem>)

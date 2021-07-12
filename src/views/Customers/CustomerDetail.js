@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory, useParams } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import clsx from 'clsx';
+
+import { PATHS } from 'util/appConstants';
+
+// Actions
+import { selectCustomer, selectCustomerStatus, getCustomer } from 'redux/slices/customerSlice';
+import { setShowMessage } from 'redux/slices/uiSlice';
 
 const useStyles = makeStyles({
     _container: {
@@ -56,7 +64,7 @@ const useStyles = makeStyles({
         width: '11px'
     },
     _margintop80: {
-        marginTop:'80px'
+        marginTop: '80px'
     },
     _adressbox: {
         marginTop: '24px',
@@ -66,12 +74,29 @@ const useStyles = makeStyles({
 
 const CustomerDetail = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { id } = useParams();
 
+    const loading = useSelector(selectCustomerStatus);
+    const customer = useSelector(selectCustomer);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getCustomer(id));
+        }
+    }, [id]);
+
+    const editCustomerHandler = () => {
+        history.push(PATHS.customers.edit.replace(':id', id))
+    }
+    if (loading || !customer) return <div className="loading">Loading..</div>;
     return (
         <div className={classes._container}>
+            {console.log(customer, "customer")}
             <div className={classes._editbox}>
                 <Typography className={classes._heading} variant="h4">AliasOrOtherwiseName</Typography>
-                <EditIcon className={classes._edit} />
+                <EditIcon onClick={editCustomerHandler} className={classes._edit} />
             </div>
             <Typography className={classes._infoheading} variant="h5">Basic Data</Typography>
             <div>
@@ -81,9 +106,9 @@ const CustomerDetail = () => {
                     <Typography className={classes._head} variant="h6">Alias</Typography>
                 </div>
                 <div className={classes._basicdetail}>
-                    <Typography className={clsx(classes._detail, classes._width11)} variant="h6">-</Typography>
-                    <Typography className={clsx(classes._name, classes._detail)} variant="h6">Testers Test GmbH & Co. KG</Typography>
-                    <Typography className={classes._detail} variant="h6">Testers</Typography>
+                    <Typography className={clsx(classes._detail, classes._width11)} variant="h6">{customer.id}</Typography>
+                    <Typography className={clsx(classes._name, classes._detail)} variant="h6">{customer.name}</Typography>
+                    <Typography className={classes._detail} variant="h6">{customer.alias}</Typography>
                 </div>
             </div>
             <div>
@@ -96,12 +121,14 @@ const CustomerDetail = () => {
 
                 </div>
                 <div className={classes._basicdetail}>
-                    <Typography className={clsx(classes._detail, classes._width11)} variant="h6">-</Typography>
-                    <Typography className={clsx(classes._name, classes._detail)} variant="h6">Testers Test GmbH & Co. KG</Typography>
-                    <Typography className={classes._detail} variant="h6">Testers</Typography>
+                    <Typography className={clsx(classes._detail, classes._width11)} variant="h6">{customer.street}</Typography>
+                    <Typography className={clsx(classes._name, classes._detail)} variant="h6">{customer.street_number}</Typography>
+                    <Typography className={classes._detail} variant="h6">{customer.zipcode}</Typography>
+                    <Typography className={classes._detail} variant="h6">{customer.city}</Typography>
+                    <Typography className={classes._detail} variant="h6">{customer.country}</Typography>
                 </div>
             </div>
-            <Typography className={clsx(classes._infoheading,classes._margintop80)} variant="h5">Contact</Typography>   
+            <Typography className={clsx(classes._infoheading, classes._margintop80)} variant="h5">Contact</Typography>
             <div>
                 <div className={classes._basicdetailhead}>
                     <Typography className={clsx(classes._head)} variant="h6">Salutaion</Typography>
@@ -132,11 +159,11 @@ const CustomerDetail = () => {
 
                 </div>
                 <div className={classes._basicdetail}>
-                    <Typography className={clsx(classes._detail)} variant="h6">E-Mail</Typography>
-                    <Typography className={clsx(classes._detail)} variant="h6">GmbH</Typography>
+                    <Typography className={clsx(classes._detail)} variant="h6">{customer.email}</Typography>
+                    <Typography className={clsx(classes._detail)} variant="h6">{customer.email_notifications ?'Yes':'No'}</Typography>
                 </div>
             </div>
-            <Typography className={clsx(classes._infoheading,classes._margintop80)} variant="h5">Tour</Typography>   
+            <Typography className={clsx(classes._infoheading, classes._margintop80)} variant="h5">Tour</Typography>
             <div>
                 <div className={classes._basicdetailhead}>
                     <Typography className={clsx(classes._head)} variant="h6">ID</Typography>
@@ -144,9 +171,9 @@ const CustomerDetail = () => {
                     <Typography className={classes._head} variant="h6">Position</Typography>
                 </div>
                 <div className={classes._basicdetail}>
-                    <Typography className={clsx(classes._detail)} variant="h6">Mr.</Typography>
-                    <Typography className={clsx(classes._name, classes._detail)} variant="h6">Mark</Typography>
-                    <Typography className={classes._detail} variant="h6">Meyer</Typography>
+                    <Typography className={clsx(classes._detail)} variant="h6">{customer.tour_id}</Typography>
+                    <Typography className={clsx(classes._name, classes._detail)} variant="h6">{customer.Tour.name}</Typography>
+                    <Typography className={classes._detail} variant="h6">{customer.tour_position}</Typography>
                 </div>
             </div>
             <div>
@@ -156,8 +183,8 @@ const CustomerDetail = () => {
 
                 </div>
                 <div className={classes._basicdetail}>
-                    <Typography className={clsx(classes._detail)} variant="h6">Depositagreement</Typography>
-                    <Typography className={clsx(classes._detail)} variant="h6">GmbH & Co. KG</Typography>
+                    <Typography className={clsx(classes._detail)} variant="h6">{customer.deposit_agreement}</Typography>
+                    <Typography className={clsx(classes._detail)} variant="h6">{customer.keybox_code}</Typography>
                 </div>
             </div>
         </div>

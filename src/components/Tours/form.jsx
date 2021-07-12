@@ -4,15 +4,55 @@ import * as pick from 'lodash/pick';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
-
+import { makeStyles } from '@material-ui/core/styles';
+import SaveIcon from '@material-ui/icons/Save';
+import CloseIcon from '@material-ui/icons/Close';
+import { useHistory, useParams  } from 'react-router-dom';
 
 import { storage } from 'util/storage';
 import { Input } from '../Shared/mui-formik-inputs';
 import { TourSchema } from 'constants/validation-schemas';
 import { TourFormAllowedFields } from 'constants/forms-submit-allowed-fields';
+import { PATHS } from 'util/appConstants';
+
+
+
+const useStyles = makeStyles({
+  _container: {
+      backgroundColor: '#F5F5F5',
+      padding: '60px 130px',
+      minHeight: '100vh'
+  },
+  _editbox: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+  },
+  _heading: {
+      font: 'normal normal normal 28px/40px Questrial',
+      color: '#121212'
+  },
+  _icons: {
+      color: '#ADADAD',
+      width: '22px',
+      height: '22px',
+      cursor: 'pointer',
+      paddingRight: '16px'
+  },
+  _subheading: {
+      font: 'normal normal 500 22px/32px Roboto',
+      color: ' #121212',
+      marginTop: '44px',
+  }
+
+
+})
 
 const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
+  const history = useHistory();
+    const { id } = useParams();
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -34,42 +74,44 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
     },
   });
   const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
+
+  const closeTourHandler = () => {
+    action=='ADD'? history.push(PATHS.tours.root):
+    history.push(PATHS.customers.detail.replace(':id', id))
+}
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <Box style={{ background: 'white' }} boxShadow={'1'} p={2}>
-        <Grid container >
-          <Grid>
-            <Typography className="font-size-34" variant='h4'>{values.name}</Typography>
-          </Grid>
+    <div className={classes._container} >
+      <div className={classes._editbox}>
+        <Typography className={classes._heading} variant="h4">{action=="ADD" ?'New Tour':'Edit Tour'}</Typography>
+        <div>
+          <CloseIcon onClick={closeTourHandler} className={classes._icons} />
+          <SaveIcon onClick={handleSubmit} className={classes._icons} />
+        </div>
+
+      </div>
+ <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={4} lg={2}>
+          <Input
+            label={t('Tour Name')}
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
+            errors={errors}
+          />
         </Grid>
-      </Box>
-      <Box boxShadow={1} mx={3} my={4} style={{ background: 'white' }} >
-        <Typography className="font-size-21" variant='h5' style={{ borderBottom: '1px solid #CBD5DD', padding: '20px' }}>{t('Basic Data')}</Typography>
-        <Grid style={{ padding: '20px' }} container spacing={2}>
-          <Grid item xs={12} sm={6} md={4} lg={2}>
-            <Input
-              label={t('Tour Name')}
-              name="name"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              errors={errors}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={2}>
-            <Input
-              label={t('Remark')}
-              name="description"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.description}
-              errors={errors}
-            />
-          </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={2}>
+          <Input
+            label={t('Remark')}
+            name="description"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.description}
+            errors={errors}
+          />
         </Grid>
-      </Box>
-          <Button type='submit' className="Primary-btn margin-20" color="primary" variant="contained">{t(`${action}`) + ' ' + t('Tour')}</Button>
-    </form>
+      </Grid>
+    </div>
   )
 }
 TourForm.propTypes = {

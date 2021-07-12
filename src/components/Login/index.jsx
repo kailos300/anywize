@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Alert from '@material-ui/lab/Alert';
-import BackgroundImage from '../../assets/img/auth-background.png';
+import BackgroundImage from '../../assets/img/video.mp4';
 import Logo from '../../assets/img/logo.png';
 import Form from './form';
 
@@ -19,13 +19,21 @@ const styles = makeStyles((theme) => ({
     '-o-background-size': 'cover',
     backgroundSize: 'cover',
   },
-  formContainer:{
-    backgroundColor:'white'
+  formContainer: {
+    backgroundColor: 'white'
   },
 
   logo: {
     height: '48px',
   },
+  video: {
+    objectFit: 'cover',
+    width: ' 100vw',
+    height: '100vh',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+  }
 }));
 
 const LoginIndex = ({ onSubmit, error }) => {
@@ -33,7 +41,10 @@ const LoginIndex = ({ onSubmit, error }) => {
   const { t } = useTranslation();
 
   return (
-    <Box p={2} className={classes.background} style={{height:'100%', backgroundImage: `linear-gradient(#000d20bd, #3a3e66c7), url(${BackgroundImage})` }}>
+    <Box p={2} className={classes.background} style={{ height: '100%' }}>
+      <video className={classes.video} playsinline autoplay muted loop id="bgvid">
+        <source src={BackgroundImage} type="video/mp4" />
+      </video>
       <Grid style={{ height: '100%' }} container spacing={2} justify="center" alignItems="center">
         <Grid item xs={12} sm={6} md={4} lg={4}>
           <Box textAlign="center">

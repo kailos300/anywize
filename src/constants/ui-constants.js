@@ -16,9 +16,9 @@ export const TOP_NAVIGATION_ROUTES = [
 export const NAVIGATION_ROUTES = [
   { name: 'Tours', path: '/dash' },
   { name: 'New Orders', path: PATHS.orders.root },
-  { name: 'Master Data' },
-  { name: 'Past Deliveries', path: '/dash' },
-  { name: 'Settings', path: '/dash' },
+  { name: 'Master Data',path:PATHS.customers.root },
+  { name: 'Past Deliveries', path: '/dash1' },
+  { name: 'Settings', path: '/dash2' },
 
 
 ];
@@ -28,13 +28,13 @@ export const TOURS_TABLE_COLUMNS = [
 ];
 
 export const CUSTOMERS_TABLE_COLUMNS = [
-  { title: "Name", field: "name" },
-  { title: "Number", field: "number" },
+  { title: "Group", field: "group" },
+  { title: "ID", field: "id" },
+  { title: 'Name 1', field: 'name' },
   { title: "City", field: "cityValue" },
-  { title: "Tour", field: "tour_id" },
-  { title: "Tour Name", field: "tourName" },
-  { title: "Position", field: "tour_position" },
-  { title: "Contact", field: "contact" },
+  { title: 'Last Invoice Date', field: 'invioc' },
+  { title: 'Account Manager', },
+  { title: 'Billing Cycle' }
 ]
 
 export const ORDERS_TABLE_COLUMNS = [

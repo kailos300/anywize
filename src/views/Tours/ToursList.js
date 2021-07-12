@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
-import { Paper, Button ,Typography} from '@material-ui/core';
+import { Paper, Button, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link, Redirect } from 'react-router-dom';
+import clsx from 'clsx';
 
 // Helpers
 import { TOURS_TABLE_COLUMNS } from 'constants/ui-constants';
@@ -24,10 +26,38 @@ import { selectUser } from 'redux/slices/userSlice';
 // Components
 import withConfirm from 'components/dialogs/delete';
 
+const useStyles = makeStyles({
+    _container: {
+        backgroundColor: '#121212',
+        padding: '60px 130px',
+        "& .MuiPaper-elevation2": {
+            boxShadow: "none"
+        },
+        "& .MuiTableCell-root": {
+            border: 'none',
+            color: 'white'
+        },
+        "& .MuiTablePagination-root": {
+            border: 'none',
+            color: 'white'
+
+        },
+        "& .MuiPaper-root ": {
+            backgroundColor: '#121212',
+            color: 'white'
+
+
+        },
+
+    },
+
+})
+
 const tableTitle = 'TOURS';
 
 const ToursList = ({ confirm }) => {
     const { t } = useTranslation('common');
+    const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const loading = useSelector(selectTourStatus);
@@ -59,33 +89,45 @@ const ToursList = ({ confirm }) => {
     const actions = getActions(
         tableTitle,
         (e, rowData) => callbackOnDelete(e, rowData),
+        () => addHandler()
+
     );
-    const addTourHandler = () => {
+    const addHandler = () => {
         history.push(PATHS.tours.add)
     }
     if (loading) return <div className="loading">Loading..</div>;
     return (
         <>
-            <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
+            {/* <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
                 <Typography className="font-size-34" variant='h4'>{t('Tours')}</Typography>
                 <Button onClick={addTourHandler} color="primary" variant="contained" className="Primary-btn">Add Tour</Button>
-            </Paper>
-            <div className={'custom-table-styles'}>
+            </Paper> */}
+            <div className={clsx(classes._container, 'custom-table-styles')}>
                 <MaterialTable
+                    icons={{ Filter: () => <i className="fas fa-filter"></i> }}
+                    style={{ display: 'flex', flexDirection: 'column', }}
                     data={mapTableData(tours)}
                     title={t(tableTitle)}
                     columns={getColumns(TOURS_TABLE_COLUMNS, t)}
                     onRowClick={(e, rowData) => history.push(
-                        PATHS.tours.edit.replace(':id', rowData.id),
+                        PATHS.tours.detail.replace(':id', rowData.id),
                     )}
                     actions={actions}
                     options={{
-                        paging: false,
-                        maxBodyHeight: '85vh',
-                        minBodyHeight: '85vh',
                         actionsColumnIndex: -1,
                         searchFieldAlignment: "left",
                         showTitle: false,
+                        filtering: true,
+                        headerStyle: {
+                            backgroundColor: '#121212',
+                            color: 'white',
+                            border: 'none'
+                        },
+                        cellStyle: {
+                            backgroundColor: '#121212',
+                            color: 'white',
+                            border: 'none'
+                        },
                     }}
                     onSelectionChange={rows => setSelected([...rows])}
                 />

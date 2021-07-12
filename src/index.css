@@ -19,8 +19,10 @@ code {
   padding: 0!important;
   font-family: "Poppins"!important;
 }
-
-.custom-table-styles span {
+/* .custom-table-styles .MuiPaper-elevation2 {
+  box-shadow:none !important;
+} */
+/* .custom-table-styles span {
     white-space: nowrap !important;
   }
   .custom-table-styles table {
@@ -31,11 +33,11 @@ code {
   .custom-table-styles  thead{
    text-align: left;
    background: black;
- }
- .MuiTableHead-root{
+ } */
+ /* .MuiTableHead-root{
    background: black !important;
- }
- .custom-table-styles  td{
+ } */
+ /* .custom-table-styles  td{
 cursor: pointer;
 font-size: 12px !important;
  }
@@ -49,11 +51,11 @@ font-size: 12px !important;
     padding: 0px 16px !important;
     height: 50px;
     white-space: nowrap !important;
-    /* border-bottom: 1px solid rgba(224, 224, 224, 1);  */
+
     font-size: 12px;
-  }
-.custom-table-styles tr:nth-child(even){
-  background-color:#1F1F1F;
+  } */
+.custom-table-styles >* tr:nth-child(even) td{
+  background-color:#1F1F1F !important;
 }
   /* .custom-table-styles tr:hover {
    
@@ -62,10 +64,10 @@ font-size: 12px !important;
   .custom-table-styles th {
     /* background-color: #eaeef1 !important; */
   }
-  .MuiTableCell-root{
+  /* .MuiTableCell-root{
     border-bottom: unset !important;
     color: white !important;
-  }
+  } */
   .NabBarItems{
     text-decoration: none;
     color: white;
@@ -104,3 +106,4 @@ label,input,select {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+div.MuiToolbar-root { order: 1 } div.MuiToolbar-root + div { order: 3 } table.MuiTable-root { order: 2 }

@@ -1,10 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
+import { PATHS } from 'util/appConstants';
+
 
 const useStyles = makeStyles({
     _container: {
@@ -21,13 +23,22 @@ const useStyles = makeStyles({
     },
     _menuitem: {
         textDecoration: 'none',
+        padding: 0,
         color: '#F5F5F5',
         font: 'normal normal normal 22px / 40px Questrial',
         width: 'unset',
-        display: 'unset'
+        display: 'unset',
+        margin: '0 16px',
     },
     _nav: {
         display: 'flex',
+    },
+    _nomargin: {
+        margin: 0,
+    },
+    _isactive: {
+        color: '#6F9CEB',
+        borderBottom: '1px solid #6F9CEB'
     }
 
 })
@@ -38,13 +49,14 @@ const Masterbar = () => {
         <header className={classes._container}>
             <Typography className={classes._title} variant='h4'>Master Data</Typography>
             <List className={classes._nav} component="nav">
-                <ListItem className={classes._menuitem} key={1} component={Link} to={'/'}>
-                    <ListItemText>
+                <ListItem activeClassName={classes._isactive} className={classes._menuitem} key={1} component={NavLink} to={PATHS.customers.root}>
+                    <ListItemText className={classes._nomargin}>
                         {'Kunden'}
                     </ListItemText>
                 </ListItem>
-                <ListItem className={classes._menuitem} key={1} component={Link} to={'/'}>
-                    <ListItemText>
+                <ListItem activeClassName={classes._isactive} className={classes._menuitem} key={1} component={NavLink} to={PATHS.tours.root
+                }>
+                    <ListItemText className={classes._nomargin}>
                         {'Touren'}
                     </ListItemText>
                 </ListItem>
