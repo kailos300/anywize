@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import RequireAuth from 'components/hoc/require-auth';
 import Typography from '@material-ui/core/Typography';
 
-import { Login, ToursList,TourDetail, AddTour, EditTour, CustomersList, CustomerDetail, AddCustomer, EditCustomer, AddOrder, OrderList, EditOrder ,Edit } from 'views';
+import { Login, ToursList,TourDetail, AddTour, EditTour, CustomersList, CustomerDetail, AddCustomer, EditCustomer, AddOrder, OrderList, EditOrder ,Edit ,Maps } from 'views';
 import { PATHS } from '../../util/appConstants';
 
 const AppRouter = () => {
@@ -23,7 +23,8 @@ const AppRouter = () => {
       <Route exact path={PATHS.customers.add} component={RequireAuth(AddCustomer)} />
       <Route exact path={PATHS.customers.edit} component={RequireAuth(EditCustomer)} />
       {/* <Route exact path={'/edit'} component={RequireAuth(Edit)} /> */}
-
+       
+       <Route exact path={PATHS.maps} component={Maps}/>
       {/**orders */}
       <Route exact path={PATHS.orders.root} component={RequireAuth(OrderList)} />
       <Route exact path={PATHS.orders.add} component={RequireAuth(AddOrder)} />

@@ -16,8 +16,9 @@ export const TOP_NAVIGATION_ROUTES = [
 export const NAVIGATION_ROUTES = [
   { name: 'Tours', path: '/dash' },
   { name: 'Orders', path: PATHS.orders.root },
-  { name: 'Master Data',path:PATHS.customers.root },
+  { name: 'Master Data', path: PATHS.customers.root },
   { name: 'Past Deliveries', path: '/dash1' },
+  { name: 'Maps', path: PATHS.maps },
   { name: 'Settings', path: '/dash2' },
 
 
@@ -42,7 +43,7 @@ export const ORDERS_TABLE_COLUMNS = [
   { title: "Description", field: "description" },
 ]
 
-export const checkPaths =[
+export const checkPaths = [
   PATHS.tours.root,
   PATHS.tours.add,
   PATHS.tours.edit,

@@ -107,3 +107,7 @@ label,input,select {
   transform: translate(-50%, -50%);
 }
 div.MuiToolbar-root { order: 1 } div.MuiToolbar-root + div { order: 3 } table.MuiTable-root { order: 2 }
+
+.map-container {
+  min-height: 100vh;
+  }

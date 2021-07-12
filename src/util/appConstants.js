@@ -22,5 +22,6 @@ export const PATHS = {
     customer: '/dash',
     dashboard: '/dashboard',
     addTour:'/tour/add',
+    maps:'/map'
 };
 

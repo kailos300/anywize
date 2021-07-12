@@ -11,6 +11,7 @@ import OrderList from './Orders/OrderList';
 import AddOrder from './Orders/AddOrder';
 import EditOrder from './Orders/EditOrder';
 import Edit from './Customers/edit';
+import Maps from './Maps';
 
 export {
   Login,
@@ -26,4 +27,5 @@ export {
   AddOrder,
   EditOrder,
   Edit,
+  Maps
 };

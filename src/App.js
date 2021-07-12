@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
-import { useLocation, useHistory , useParams } from 'react-router-dom'
+import { useParams, useLocation, useHistory } from 'react-router-dom'
 
 import { PATHS } from 'util/appConstants';
 import { checkPaths } from 'constants/ui-constants';
@@ -43,8 +43,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
 }));
-function App() {
-  const { id } = useParams();
+const App = () => {
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -55,7 +54,7 @@ function App() {
 
 
   useEffect(() => {
-
+    console.log(location)
     dispatch(fetchUserInfo());
   }, [dispatch]);
 
@@ -73,16 +72,14 @@ function App() {
     setOpen(false);
   };
   const checkPath = () => {
-    console.log(id)
-    console.log(checkPaths)
-  let newPaths =   checkPaths.map((path)=>path.replace(':id', id))
-  console.log(newPaths)
+    let id = location.pathname.split('/').pop();
+    let newPaths = checkPaths.map((path) => path.replace(':id', id))
+    return newPaths;
   }
   return (
     <>
-    {console.log(id )}
       <Navbar />
-      { <Masterbar />}
+      {checkPath().includes(location.pathname)  && <Masterbar />}
       {/* {location.pathname !== '/login' ? <div className={classes.appWrapper}>
         <Bar
           open={open}
