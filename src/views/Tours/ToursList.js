@@ -147,7 +147,8 @@ const ToursList = ({ confirm }) => {
                             backgroundColor: '#121212',
                             color: 'white',
                             borderBottom: '1px solid #525252',
-                            font: 'normal normal normal 12px/24px Roboto'
+                            font: 'normal normal normal 12px/24px Roboto',
+                            fontWeight: 'bold',
                         },
                         cellStyle: {
                             backgroundColor: '#121212',

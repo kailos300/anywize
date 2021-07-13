@@ -1,5 +1,5 @@
 export const initialValues = {
-    number: '1',
+    number: '',
     salutation: '',
     firstname:'',
     lastname: '',

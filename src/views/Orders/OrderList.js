@@ -87,7 +87,7 @@ const OrderList = ({ confirm }) => {
 
     useEffect(() => {
         console.log(orders)
-        if (!orders.length) {
+        if (!orders.length && !loading) {
             fetchOrders();
         }
     }, [orders]);
@@ -137,7 +137,8 @@ const OrderList = ({ confirm }) => {
                         backgroundColor: '#121212',
                         color: 'white',
                         borderBottom: '1px solid #525252',
-                        font: 'normal normal normal 12px/24px Roboto'
+                        font: 'normal normal normal 12px/24px Roboto',
+                        fontWeight: 'bold',
                     },
                     cellStyle: {
                         backgroundColor: '#121212',
