@@ -102,7 +102,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </div>
 
             </div>
-            <Typography className={classes._subheading} variant="h5">Basic Data</Typography>
+            <Typography className={classes._subheading} variant="h5">{t('Basic Data')}</Typography>
 
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -127,7 +127,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Input
-                        label={'Alias'}
+                        label={t('Alias')}
                         name="alias"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -139,7 +139,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Input
-                        label={'Street'}
+                        label={t('Street')}
                         name="street"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -149,7 +149,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Input
-                        label={'House No.'}
+                        label={t('House No.')}
                         name="street_number"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -161,7 +161,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             <Grid className="align-items-end" container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Input
-                        label={'Zipcode'}
+                        label={t('Zipcode')}
                         name="zipcode"
                         onChange={customHandleChange}
                         value={values.zipcode}
