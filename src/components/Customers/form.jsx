@@ -96,7 +96,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">{action == "ADD" ? 'New Customer' : 'Edit Customer'}</Typography>
+        <Typography className={classes._heading} variant="h4">{action == "ADD" ? t('New Customer') : t('Edit Customer')}</Typography>
         <div>
           <CloseIcon onClick={closeCustomerHandler} className={classes._icons} />
           <SaveIcon onClick={handleSubmit} className={classes._icons} />
@@ -128,7 +128,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={'Alias'}
+            label={t('Alias')}
             name="alias"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -140,7 +140,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={'Street'}
+            label={t('Street')}
             name="street"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -150,7 +150,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={'House No.'}
+            label={t('House No.')}
             name="street_number"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -162,7 +162,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={'Zipcode'}
+            label={t('Zipcode')}
             name="zipcode"
             onChange={customHandleChange}
             value={values.zipcode}
@@ -171,7 +171,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={'City'}
+            label={t('City')}
             name="city"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -181,7 +181,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
-            label={'Country'}
+            label={t('Country')}
             name="country"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -197,7 +197,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
-            label={'Salutation'}
+            label={t('Salutation')}
             name="salutation"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -208,7 +208,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={'First Name'}
+            label={t('First Name')}
             name="firstname"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -218,7 +218,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={'Last Name'}
+            label={t('Last Name')}
             name="lastname"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -233,7 +233,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={'Phone'}
+            label={t('Phone')}
             name="phone"
             onChange={handleChange}
             onBlur={handleBlur}

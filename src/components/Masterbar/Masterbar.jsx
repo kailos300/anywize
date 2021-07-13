@@ -51,7 +51,7 @@ const Masterbar = () => {
 
     return (
         <header className={classes._container}>
-            <Typography className={classes._title} variant='h4'>Master Data</Typography>
+            <Typography className={classes._title} variant='h4'>{t('Master Data')}</Typography>
             <List className={classes._nav} component="nav">
                 <ListItem activeClassName={classes._isactive} className={classes._menuitem} key={1} component={NavLink} to={PATHS.customers.root}>
                     <ListItemText className={classes._nomargin}>
@@ -61,7 +61,7 @@ const Masterbar = () => {
                 <ListItem activeClassName={classes._isactive} className={classes._menuitem} key={1} component={NavLink} to={PATHS.tours.root
                 }>
                     <ListItemText className={classes._nomargin}>
-                        {'Tours'}
+                        {t('Tours')}
                     </ListItemText>
                 </ListItem>
 

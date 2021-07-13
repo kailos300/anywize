@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -47,6 +49,7 @@ const useStyles = makeStyles({
 
 })
 const Navbar = () => {
+    const {t} =useTranslation()
     const classes = useStyles();
     const location = useLocation();
 
@@ -58,9 +61,9 @@ const Navbar = () => {
             <List className={classes._nav} component="nav">
                 {NAVIGATION_ROUTES.map((item, index) =>
                     <ListItem activeClassName={classes._isactive} className={clsx(classes._menuitem, (location.pathname == "/tours" && item.name == 'Master Data') ? classes._isactive : '')} key={index} component={NavLink} to={item.path}>
-                        {console.log(item.path)}
+
                         <ListItemText className={classes._nomargin}>
-                            {item.name}
+                            {t(item.name)}
                         </ListItemText>
                     </ListItem>)
                 }
