@@ -6,6 +6,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 import { PATHS } from 'util/appConstants';
 
@@ -74,6 +75,7 @@ const useStyles = makeStyles({
 })
 
 const CustomerDetail = () => {
+    const { t } = useTranslation();
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -99,20 +101,20 @@ const CustomerDetail = () => {
                 <Typography className={classes._heading} variant="h4">{customer.alias || customer.name}</Typography>
                 <EditIcon onClick={editCustomerHandler} className={classes._edit} />
             </div>
-            <Typography className={classes._infoheading} variant="h5">Basic Data</Typography>
+            <Typography className={classes._infoheading} variant="h5">{t('Basic Data')}</Typography>
             <div className={classes._basicdetailhead}>
                 <div>
-                    <Typography className={clsx(classes._head, classes._width11)} variant="h6">ID</Typography>
+                    <Typography className={clsx(classes._head, classes._width11)} variant="h6">{t('ID')}</Typography>
                     <Typography className={clsx(classes._detail, classes._width11)} variant="h6">{customer.id}</Typography>
 
                 </div>
                 <div>
-                    <Typography className={clsx(classes._head, classes._name)} variant="h6">Name</Typography>
+                    <Typography className={clsx(classes._head, classes._name)} variant="h6">{t('Name')}</Typography>
                     <Typography className={clsx(classes._name, classes._detail)} variant="h6">{customer.name}</Typography>
 
                 </div>
                 <div>
-                    <Typography className={classes._head} variant="h6">Alias</Typography>
+                    <Typography className={classes._head} variant="h6">{t('Alias')}</Typography>
                     <Typography className={classes._detail} variant="h6">{customer.alias}</Typography>
 
                 </div>
@@ -150,17 +152,17 @@ const CustomerDetail = () => {
             <Typography className={clsx(classes._infoheading, classes._margintop80)} variant="h5">Contact</Typography>
             <div className={classes._basicdetailhead}>
                 <div>
-                    <Typography className={clsx(classes._head)} variant="h6">Salutaion</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6">{t('Salutation')}</Typography>
                     <Typography className={clsx(classes._detail)} variant="h6">Mr.</Typography>
 
                 </div>
                 <div>
-                    <Typography className={clsx(classes._head, classes._name)} variant="h6">FirstName</Typography>
+                    <Typography className={clsx(classes._head, classes._name)} variant="h6">{t('First Name')}</Typography>
                     <Typography className={clsx(classes._name, classes._detail)} variant="h6">Mark</Typography>
 
                 </div>
                 <div>
-                    <Typography className={classes._head} variant="h6">LastName</Typography>
+                    <Typography className={classes._head} variant="h6">{t('Last Name')}</Typography>
                     <Typography className={classes._detail} variant="h6">Meyer</Typography>
 
                 </div>
@@ -168,12 +170,12 @@ const CustomerDetail = () => {
             {/*** */}
             <div className={classes._basicdetailhead}>
                 <div>
-                    <Typography className={clsx(classes._head)} variant="h6">Telefon</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6">{t('Phone')}</Typography>
                     <Typography className={clsx(classes._detail)} variant="h6">-</Typography>
 
                 </div>
                 <div>
-                    <Typography className={clsx(classes._head)} variant="h6"> Mobil</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6"> {t('Mobile')}</Typography>
                     <Typography className={clsx(classes._detail)} variant="h6">1212</Typography>
 
                 </div>
@@ -182,29 +184,29 @@ const CustomerDetail = () => {
 
             <div div className={classes._basicdetailhead}>
                 <div>
-                    <Typography className={clsx(classes._head)} variant="h6">E-Mail</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6">{t('E-Mail')}</Typography>
                     <Typography className={clsx(classes._detail)} variant="h6">{customer.email}</Typography>
 
                 </div>
                 <div >
-                    <Typography className={clsx(classes._head)} variant="h6">Notify</Typography>
-                    <Typography className={clsx(classes._detail)} variant="h6">{customer.email_notifications ? 'Yes' : 'No'}</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6">{t('Notify')}</Typography>
+                    <Typography className={clsx(classes._detail)} variant="h6">{customer.email_notifications ? t('Yes') : t('No')}</Typography>
                 </div>
             </div>
             {/*** */}
 
-            <Typography className={clsx(classes._infoheading, classes._margintop80)} variant="h5">Tour</Typography>
+            <Typography className={clsx(classes._infoheading, classes._margintop80)} variant="h5">{t('Tour')}</Typography>
             <div className={classes._basicdetailhead}>
                 <div>
-                    <Typography className={clsx(classes._head)} variant="h6">ID</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6">{t('ID')}</Typography>
                     <Typography className={clsx(classes._detail)} variant="h6">{customer.tour_id}</Typography>
                 </div>
                 <div>
-                    <Typography className={clsx(classes._head, classes._name)} variant="h6">Name</Typography>
+                    <Typography className={clsx(classes._head, classes._name)} variant="h6">{t("Name")}</Typography>
                     <Typography className={clsx(classes._name, classes._detail)} variant="h6">{customer.Tour.name}</Typography>
                 </div>
                 <div>
-                    <Typography className={classes._head} variant="h6">Position</Typography>
+                    <Typography className={classes._head} variant="h6">{t('Position')}</Typography>
                     <Typography className={classes._detail} variant="h6">{customer.tour_position}</Typography>
                 </div>
             </div>
@@ -212,12 +214,12 @@ const CustomerDetail = () => {
 
             <div className={classes._basicdetailhead}>
                 <div>
-                    <Typography className={clsx(classes._head)} variant="h6">Depositagreement</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6">{t('Deposit agreement')}</Typography>
                     <Typography className={clsx(classes._detail)} variant="h6">{customer.deposit_agreement}</Typography>
 
                 </div>
                 <div >
-                    <Typography className={clsx(classes._head)} variant="h6">Code</Typography>
+                    <Typography className={clsx(classes._head)} variant="h6">{t('Code')}</Typography>
                     <Typography className={clsx(classes._detail)} variant="h6">{customer.keybox_code}</Typography>
                 </div>
             </div>

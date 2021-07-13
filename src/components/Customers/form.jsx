@@ -103,7 +103,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </div>
 
       </div>
-      <Typography className={classes._subheading} variant="h5">Basic Data</Typography>
+      <Typography className={classes._subheading} variant="h5">{t('Basic Data')}</Typography>
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -193,7 +193,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
           />
         </Grid>
       </Grid>
-      <Typography className={classes._subheading} variant="h5">Contact</Typography>
+      <Typography className={classes._subheading} variant="h5">{t('Contact')}</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
@@ -263,10 +263,10 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             onBlur={handleBlur}
             errors={errors}
           />
-          <Typography component="span" className="font-size-12">Notify when Tour starts</Typography>
+          <Typography component="span" className="font-size-12">{t('Notify when Tour starts')}</Typography>
         </Grid>
       </Grid>
-      <Typography className={classes._subheading} variant="h5">Tour</Typography>
+      <Typography className={classes._subheading} variant="h5">{t('Tour')}</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select

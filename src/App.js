@@ -77,8 +77,8 @@ const App = () => {
   }
   return (
     <>
-      <Navbar />
-      {checkPath().includes(location.pathname)  && <Masterbar />}
+      {location.pathname !== '/login' && <Navbar />}
+      {location.pathname !== '/login' && checkPath().includes(location.pathname) && <Masterbar />}
       {/* {location.pathname !== '/login' ? <div className={classes.appWrapper}>
         <Bar
           open={open}
