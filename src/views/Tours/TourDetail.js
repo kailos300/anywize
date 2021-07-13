@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     _container: {
         backgroundColor: '#121212',
         padding: '60px 130px',
-        minHeight:'100vh'
+        minHeight: '100vh'
     },
     _heading: {
         color: '#F5F5F5',
@@ -58,11 +58,11 @@ const useStyles = makeStyles({
         font: 'normal normal normal 18px/24px Roboto'
     },
     _name: {
-        width: '228px',
+        // width: '228px',
         letterSpacing: '0px',
     },
     _width11: {
-        width: '11px'
+        // width: '11px'
     },
     _margintop80: {
         marginTop: '80px'
@@ -84,9 +84,9 @@ const TourDetail = () => {
 
     useEffect(() => {
         if (id) {
-          dispatch(getTour(id));
+            dispatch(getTour(id));
         }
-      }, [ id]);
+    }, [id]);
 
     const editTourHandler = () => {
         history.push(PATHS.tours.edit.replace(':id', id))
@@ -99,15 +99,17 @@ const TourDetail = () => {
                 <EditIcon onClick={editTourHandler} className={classes._edit} />
             </div>
             <Typography className={classes._infoheading} variant="h5">Basic Data</Typography>
-            <div>
-                <div className={classes._basicdetailhead}>
+            <div className={classes._basicdetailhead}>
+                <div>
                     <Typography className={clsx(classes._head, classes._width11)} variant="h6">ID</Typography>
-                    <Typography className={clsx(classes._head, classes._name)} variant="h6">Name</Typography>
-                    <Typography className={classes._head} variant="h6">Alias</Typography>
-                </div>
-                <div className={classes._basicdetail}>
                     <Typography className={clsx(classes._detail, classes._width11)} variant="h6">{tour.id}</Typography>
+                </div>
+                <div >
+                    <Typography className={clsx(classes._head, classes._name)} variant="h6">Name</Typography>
                     <Typography className={clsx(classes._name, classes._detail)} variant="h6">{tour.name}</Typography>
+                </div>
+                <div>
+                    <Typography className={classes._head} variant="h6">Description</Typography>
                     <Typography className={classes._detail} variant="h6">{tour.description}</Typography>
                 </div>
             </div>
