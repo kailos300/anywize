@@ -104,8 +104,9 @@ const OrderList = ({ confirm }) => {
     const actions = getActions(
         tableTitle,
         (e, rowData) => callbackOnDelete(e, rowData),
+        () => addHandler()
     );
-    const addOrderHandler = () => {
+    const addHandler = () => {
         history.push(PATHS.orders.add)
     }
     if (loading) return <div className="loading">Loading..</div>;
