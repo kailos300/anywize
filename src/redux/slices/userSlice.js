@@ -41,15 +41,14 @@ export const {
 export default userSlice.reducer;
 
 export const fetchUserInfo = () => async dispatch => {
-  // const url = '/users/me';
+  const url = '/users/me';
+  try {
 
-  // try {
-      
-  //     const  user = await coreApi.fetch(url);
-  //   dispatch(setUser(user));
-  // } catch (err) {
-  //   console.log(err);
-  // }
+    const user = await coreApi.fetch(url);
+    dispatch(setUser(user));
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const userSelector = state => state.newUser.user;

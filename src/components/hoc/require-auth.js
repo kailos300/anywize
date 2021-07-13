@@ -31,7 +31,7 @@ export default (ComposedComponent) => {
     };
 
     ensureAuthentication = (isAuthed) => {
-      if (!isAuthed) {
+      if (!localStorage.getItem('token')) {
         const path = _.get(this.props.match, "path");
 
         // Save the user's path for future redirect
@@ -42,8 +42,6 @@ export default (ComposedComponent) => {
         // Redirect to the login page
         return this.props.history.push("/login");
       }
-
-      return this.props.getAuthenticatedUser();
     };
 
     render() {

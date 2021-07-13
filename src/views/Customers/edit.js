@@ -276,7 +276,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
             </Grid>
             <Typography className={classes._subheading} variant="h5">Tour</Typography>
-            <Grid className="align-items-end" style={{ padding: '0 20px' }} container spacing={2}>
+            <Grid style={{ padding: '0 20px' }} container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Select
                         label={t('Tour')}
@@ -321,7 +321,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                     />
                 </Grid>}
             </Grid>
-            <Grid className="align-items-end" style={{ padding: '0 20px' }} container spacing={2}>
+            <Grid style={{ padding: '0 20px' }} container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Input
                         label={t('Latitude')}

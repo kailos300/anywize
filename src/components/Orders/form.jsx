@@ -73,7 +73,7 @@ const OrderForm = ({ initialValues, handleAddOrder, handleEditOrder, action, cus
     });
     const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
     const closeOrderHandler = () => {
-        // action == 'ADD' ? 
+        // action == 'ADD' ?
         history.push(PATHS.orders.root)
         // :
         // history.push(PATHS.customers.detail.replace(':id', id))
@@ -90,7 +90,7 @@ const OrderForm = ({ initialValues, handleAddOrder, handleEditOrder, action, cus
 
             </div>
             <Typography className={classes._subheading} variant="h5">Basic Data</Typography>
-            <Grid style={{ padding: '20px' }} container spacing={2} className="align-items-end">
+            <Grid style={{ padding: '20px' }} container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Select
                         label={t('Customer')}

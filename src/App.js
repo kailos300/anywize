@@ -54,7 +54,6 @@ const App = () => {
 
 
   useEffect(() => {
-    console.log(location)
     dispatch(fetchUserInfo());
   }, [dispatch]);
 

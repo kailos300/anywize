@@ -95,7 +95,7 @@ const CustomerDetail = () => {
         <div className={classes._container}>
             {console.log(customer, "customer")}
             <div className={classes._editbox}>
-                <Typography className={classes._heading} variant="h4">AliasOrOtherwiseName</Typography>
+                <Typography className={classes._heading} variant="h4">{customer.alias || customer.name}</Typography>
                 <EditIcon onClick={editCustomerHandler} className={classes._edit} />
             </div>
             <Typography className={classes._infoheading} variant="h5">Basic Data</Typography>

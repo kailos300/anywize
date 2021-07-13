@@ -17,7 +17,7 @@ const Login = () => {
   const loginCallback = () => history.push(PATHS.dashboard);
 
   useEffect(() => {
-    if (authenticated) {
+    if (localStorage.getItem('token') && authenticated) {
       loginCallback();
     }
   }, [authenticated]);

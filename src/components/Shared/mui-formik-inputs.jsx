@@ -103,7 +103,7 @@ export const Input = (props) => {
   return (
     <TextField
       label={label || ''}
-      margin='normal'
+      margin='dense'
       name={name}
       type={type || 'text'}
       value={value || ''}
@@ -122,7 +122,7 @@ export const InputOnlyNumbers = (props) => {
   return (
     <TextField
       label={label || ''}
-      margin='normal'
+      margin='dense'
       name={name}
       type={type || 'text'}
       value={value || ''}
@@ -152,7 +152,7 @@ export const Select = (props) => {
         <InputLabel>{label || ''}</InputLabel>
       }
       <MaterialSelect
-        margin={margin || 'normal'}
+        margin={margin || 'none'}
         name={name}
         value={value || ''}
         fullWidth={true}

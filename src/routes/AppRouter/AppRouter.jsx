@@ -23,7 +23,7 @@ const AppRouter = () => {
       <Route exact path={PATHS.customers.add} component={RequireAuth(AddCustomer)} />
       <Route exact path={PATHS.customers.edit} component={RequireAuth(EditCustomer)} />
       {/* <Route exact path={'/edit'} component={RequireAuth(Edit)} /> */}
-       
+
        <Route exact path={PATHS.maps} component={Maps}/>
       {/**orders */}
       <Route exact path={PATHS.orders.root} component={RequireAuth(OrderList)} />
