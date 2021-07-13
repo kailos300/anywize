@@ -170,7 +170,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Input
-                        label={'City'}
+                        label={t('City')}
                         name="city"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -180,7 +180,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Select
-                        label={'Country'}
+                        label={t('Country')}
                         name="country"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -194,7 +194,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             <Grid className="align-items-end" container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Select
-                        label={'Salutation'}
+                        label={t('Salutation')}
                         name="salutation"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -205,7 +205,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Input
-                        label={'First Name'}
+                        label={t('First Name')}
                         name="firstname"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -215,7 +215,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Input
-                        label={'Last Name'}
+                        label={t('Last Name')}
                         name="lastname"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -229,7 +229,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             <Grid className="align-items-end" container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Input
-                        label={'Phone'}
+                        label={t('Phone')}
                         name="phone"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -239,7 +239,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Input
-                        label={'Mobile'}
+                        label={t('Mobile')}
                         name="mobile"
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -271,10 +271,10 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                         onBlur={handleBlur}
                         errors={errors}
                     />
-                    <span className="font-size-12">Notify when Tour starts</span>
+                    <span className="font-size-12">{t('Notify when Tour starts')}</span>
                 </Grid>
             </Grid>
-            <Typography className={classes._subheading} variant="h5">Tour</Typography>
+            <Typography className={classes._subheading} variant="h5">{t('Tour')}</Typography>
             <Grid className="align-items-end" container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                     <Select

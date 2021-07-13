@@ -82,14 +82,14 @@ const OrderForm = ({ initialValues, handleAddOrder, handleEditOrder, action, cus
 
         <div className={classes._container}>
             <div className={classes._editbox}>
-                <Typography className={classes._heading} variant="h4">{action == "ADD" ? 'New Order' : 'Edit Order'}</Typography>
+                <Typography className={classes._heading} variant="h4">{action == "ADD" ? t('New Order') : t('Edit Order')}</Typography>
                 <div>
                     <CloseIcon onClick={closeOrderHandler} className={classes._icons} />
                     <SaveIcon onClick={handleSubmit} className={classes._icons} />
                 </div>
 
             </div>
-            <Typography className={classes._subheading} variant="h5">Basic Data</Typography>
+            <Typography className={classes._subheading} variant="h5">{t('Basic Data')}</Typography>
             <Grid style={{ padding: '20px' }} container spacing={2} className="align-items-end">
                 <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Select

@@ -6,8 +6,44 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Input, Password } from '../Shared/mui-formik-inputs';
+import {makeStyles} from "@material-ui/core/styles";
+
+const styles = makeStyles((theme) => ({
+  formInput: {
+    background: 'rgba(150, 147, 147, 0.1)',
+    borderRadius: '0px',
+    height: '32px',
+    color: '#FFFFFF',
+    marginBottom: '15px'
+  },
+  loginButton: {
+    background: '#6F9CEB',
+    borderRadius: '0px',
+    color: '#FFFFFF',
+    fontSize: '14px',
+    height: '32px',
+    width: '100%',
+    textTransform: 'capitalize',
+    border: '4px solid #6F9CEB',
+    "&:hover, &:focus": {
+      background: '#6F9CEB',
+    }
+  },
+  input: {
+    color: '#FFFFFF',
+    height: '32px',
+  },
+  placeholder: {
+    '&::placeholder': {
+      textOverflow: 'ellipsis !important',
+      color: '#FFFFFF',
+      opacity: 1
+    }
+  }
+}));
 
 const LoginForm = ({ onSubmit }) => {
+  const classes = styles();
   const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
@@ -33,28 +69,45 @@ const LoginForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Input
-        label={t('Email')}
+        placeholder={t('E-mail address')}
         name="email"
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.email}
-        errors={errors}
+        // errors={errors}
+        className={classes.formInput}
+        variant={'outlined'}
+        InputProps={{
+          className: classes.input,
+          classes: {input: classes.placeholder}
+        }}
       />
       <Password
-        label={t('Password')}
+        placeholder={t('Password')}
         name="password"
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.password}
-        errors={errors}
+        // errors={errors}
+        className={classes.formInput}
+        variant={'outlined'}
+        InputProps={{
+          className: classes.input,
+          classes: { input: classes.placeholder },
+        }}
+        inputProps={{
+          autocomplete: 'new-password',
+          form: {
+            autocomplete: 'off',
+          },
+        }}
       />
       <Box py={2}>
         <Button
           variant="contained"
           fullWidth
           type="submit"
-          color="secondary"
-          disabled={!isValid}
+          className={classes.loginButton}
         >
           {t('Log in')}
         </Button>

@@ -5,6 +5,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
+import { useTranslation } from 'react-i18next';
+
 import { PATHS } from 'util/appConstants';
 
 
@@ -43,6 +45,8 @@ const useStyles = makeStyles({
 
 })
 const Masterbar = () => {
+    const { t } = useTranslation();
+
     const classes = useStyles();
 
     return (
@@ -51,13 +55,13 @@ const Masterbar = () => {
             <List className={classes._nav} component="nav">
                 <ListItem activeClassName={classes._isactive} className={classes._menuitem} key={1} component={NavLink} to={PATHS.customers.root}>
                     <ListItemText className={classes._nomargin}>
-                        {'Kunden'}
+                        {t('Customers')}
                     </ListItemText>
                 </ListItem>
                 <ListItem activeClassName={classes._isactive} className={classes._menuitem} key={1} component={NavLink} to={PATHS.tours.root
                 }>
                     <ListItemText className={classes._nomargin}>
-                        {'Touren'}
+                        {'Tours'}
                     </ListItemText>
                 </ListItem>
 
