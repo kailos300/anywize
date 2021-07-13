@@ -6,7 +6,7 @@ class Api {
   axiosInstance;
 
   constructor() {
-    const baseURL = 'http://157.230.25.213:3000/api/'
+    const baseURL = process.env.REACT_APP_API
     this.axiosInstance = axios.create({
       baseURL,
       headers: { 'Content-Type': 'application/json' }

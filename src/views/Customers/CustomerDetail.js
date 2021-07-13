@@ -17,6 +17,7 @@ const useStyles = makeStyles({
     _container: {
         backgroundColor: '#121212',
         padding: '60px 130px',
+        minHeight: '100vh'
     },
     _heading: {
         color: '#F5F5F5',

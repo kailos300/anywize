@@ -30,6 +30,7 @@ const useStyles = makeStyles({
     _container: {
         backgroundColor: '#121212',
         padding: '60px 130px',
+        minHeight: '100vh',
         "& .MuiPaper-elevation2": {
             boxShadow: "none"
         },
@@ -153,13 +154,15 @@ const ToursList = ({ confirm }) => {
                             color: 'white',
                             border: 'none',
                             font: 'normal normal normal 12px/24px Roboto',
+                            padding:'0 16px'
                         },
                         searchFieldStyle: {
                             color: '#F5F5F5'
                         },
                         filterCellStyle: {
                             color: '#F5F5F5'
-                        }
+                        },
+                        rowStyle: { height: '38px' }
                     }}
                     onSelectionChange={rows => setSelected([...rows])}
                 />

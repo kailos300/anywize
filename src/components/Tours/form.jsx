@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
-import { useHistory, useParams  } from 'react-router-dom';
-
+import { useHistory, useParams } from 'react-router-dom';
+import clsx from 'clsx';
 import { storage } from 'util/storage';
 import { Input } from '../Shared/mui-formik-inputs';
 import { TourSchema } from 'constants/validation-schemas';
@@ -19,31 +19,49 @@ import { PATHS } from 'util/appConstants';
 
 const useStyles = makeStyles({
   _container: {
-      backgroundColor: '#F5F5F5',
-      padding: '60px 130px',
-      minHeight: '100vh'
+    backgroundColor: '#F5F5F5',
+    padding: '60px 130px',
+    minHeight: '100vh'
   },
   _editbox: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   _heading: {
-      font: 'normal normal normal 28px/40px Questrial',
-      color: '#121212'
+    font: 'normal normal normal 28px/40px Questrial',
+    color: '#121212'
   },
   _icons: {
-      color: '#ADADAD',
-      width: '22px',
-      height: '22px',
-      cursor: 'pointer',
-      paddingRight: '16px'
+    color: '#ADADAD',
+    width: '22px',
+    height: '22px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease-in-out',
+  },
+  _dflex: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  _save: {
+    "&:hover": {
+      transform: 'scale(1.3)',
+      color: '#6F9CEB'
+    },
+
+  },
+  _close: {
+    "&:hover": {
+      transform: 'scale(1.3)',
+      color: '#525252'
+    },
   },
   _subheading: {
-      font: 'normal normal 500 22px/32px Roboto',
-      color: ' #121212',
-      marginTop: '44px',
+    font: 'normal normal 500 22px/32px Roboto',
+    color: ' #121212',
+    marginTop: '44px',
   }
+
 
 
 })
@@ -52,7 +70,7 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
-    const { id } = useParams();
+  const { id } = useParams();
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -76,20 +94,25 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
   const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
 
   const closeTourHandler = () => {
-    action=='ADD'? history.push(PATHS.tours.root):
-    history.push(PATHS.customers.detail.replace(':id', id))
-}
+    action == 'ADD' ? history.push(PATHS.tours.root) :
+      history.push(PATHS.customers.detail.replace(':id', id))
+  }
   return (
     <div className={classes._container} >
       <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">{action=="ADD" ?'New Tour':'Edit Tour'}</Typography>
-        <div>
-          <CloseIcon onClick={closeTourHandler} className={classes._icons} />
-          <SaveIcon onClick={handleSubmit} className={classes._icons} />
+        <Typography className={classes._heading} variant="h4">{action == "ADD" ? t('New Tour') : t('Edit Tour')}</Typography>
+        <div className={classes._dflex}>
+          <div className={classes._dflex}>
+            {/* <span >Cancel</span> */}
+            <CloseIcon onClick={closeTourHandler} title="close" className={clsx(classes._icons, classes._close)} />
+          </div>
+          <div className={classes._dflex}>
+            <SaveIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
+            {/* <span>Save</span> */}
+          </div>
         </div>
-
       </div>
- <Grid container spacing={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
             label={t('Tour Name')}

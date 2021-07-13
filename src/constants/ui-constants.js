@@ -30,7 +30,7 @@ export const TOURS_TABLE_COLUMNS = [
 
 export const CUSTOMERS_TABLE_COLUMNS = [
   { title: "Group", field: "group" },
-  { title: "ID", field: "id" },
+  { title: "ID", field: "id", defaultSort: 'desc' },
   { title: 'Name 1', field: 'name' },
   { title: "City", field: "cityValue" },
   { title: 'Last Invoice Date', field: 'invioc' },
