@@ -18,9 +18,9 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token') && authenticated) {
-      loginCallback();
+      history.push(PATHS.dashboard)
     }
-  }, [authenticated]);
+  }, [authenticated, history]);
 
   const onSubmit = async (values) => {
     try {

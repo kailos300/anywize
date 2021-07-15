@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -27,17 +27,13 @@ const EditCustomer = () => {
     if (id && !loading) {
       dispatch(getCustomer(id));
     }
-  }, [id]);
-
-  const fetchTours = useCallback(async () => {
-    return await dispatch(getTours());
-  }, [dispatch, tours]);
+  }, [dispatch, id, loading]);
 
   useEffect(() => {
     if (!tours.length) {
-      fetchTours();
+      dispatch(getTours())
     }
-  }, [tours]);
+  }, [dispatch, tours]);
 
   const handleEditCustomer = async (id, payload) => {
     await dispatch(editCustomer(id, payload))

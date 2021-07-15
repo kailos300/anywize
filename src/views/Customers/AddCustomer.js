@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,15 +20,11 @@ const AddCustomer = () => {
     const history = useHistory();
     const tours = useSelector(selectTours);
 
-    const fetchTours = useCallback(async () => {
-        return await dispatch(getTours());
-    }, [dispatch]);
-
     useEffect(() => {
         if (!tours.length) {
-            fetchTours();
+            dispatch(getTours())
         }
-    }, [tours]);
+    }, [dispatch, tours]);
 
     const handleAddCustomer = async (payload) => {
         await dispatch(addCustomer(payload)).then(res => res !== undefined ? history.push(PATHS.customers.root) : '');

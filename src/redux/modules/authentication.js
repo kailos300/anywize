@@ -94,7 +94,7 @@ const INITIAL_STATE = {
   ]),
 };
 
-export default (state = INITIAL_STATE, action) => {
+const reducer =  (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CHANGE_AUTH:
       return updateStore(state, action, {
@@ -107,3 +107,5 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default reducer;

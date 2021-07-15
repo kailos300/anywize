@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -67,7 +67,9 @@ const useStyles = makeStyles({
 
     }
 })
+
 const tableTitle = 'CUSTOMERS';
+
 const OrderList = ({ confirm }) => {
     const { t } = useTranslation('common');
     const dispatch = useDispatch();
@@ -76,16 +78,11 @@ const OrderList = ({ confirm }) => {
     const loading = useSelector(selectOrderStatus);
     const orders = useSelector(selectOrders);
 
-    const fetchOrders = useCallback(async () => {
-        return await dispatch(getOrders());
-    }, [dispatch, orders]);
-
     useEffect(() => {
-        console.log(orders)
         if (!orders.length && !loading) {
-            fetchOrders();
+            dispatch(getOrders())
         }
-    }, [orders]);
+    }, [dispatch, orders, loading]);
 
     const callbackOnDelete = (e, rowData) => {
         console.log(e, rowData)

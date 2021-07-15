@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -85,15 +85,11 @@ const ToursList = ({ confirm }) => {
     const loading = useSelector(selectTourStatus);
     const tours = useSelector(selectTours);
 
-    const fetchTours = useCallback(async () => {
-        return await dispatch(getTours());
-    }, [dispatch, tours]);
-
     useEffect(() => {
         if (!tours.length) {
-            fetchTours();
+            dispatch(getTours())
         }
-    }, [tours]);
+    }, [dispatch, tours]);
 
     const callbackOnDelete = (e, rowData) => {
         e.stopPropagation();

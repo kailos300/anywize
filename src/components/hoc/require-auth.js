@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getAuthenticatedUser, setPostAuthPath } from "../../redux/modules/authentication";
 
-export default (ComposedComponent) => {
+const Auth = (ComposedComponent) => {
   class Authentication extends Component {
     static propTypes = {
       authenticated: PropTypes.bool,
@@ -55,3 +55,5 @@ export default (ComposedComponent) => {
     connect(mapStateToProps, { getAuthenticatedUser, setPostAuthPath })(Authentication)
   );
 };
+
+export default Auth;

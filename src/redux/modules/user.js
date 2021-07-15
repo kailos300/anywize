@@ -47,7 +47,7 @@ const INITIAL_STATE = {
   ...buildGenericInitialState([GET_USER, GET_USERS]),
 };
 
-export default (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CHANGE_AUTH:
       return updateStore(
@@ -72,6 +72,8 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default reducer;
 
 // Selectors
 export const getAuthenticatedUser = ({ user, authentication }) => user[authentication.user];
