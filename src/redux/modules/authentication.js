@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { APP_NAMESPACE } from "../../util/redux-constants";
 import { get, post } from "../../util/http-utils";
-import { deleteCookie, getCookie, setCookie } from "../../util/cookie-utils";
+import { setCookie } from "../../util/cookie-utils";
 import { updateStore, buildGenericInitialState, handleError } from "../../util/store-utils";
 
 const AUTH_ENDPOINT_BASE = "auth";

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useParams } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
@@ -11,8 +10,7 @@ import clsx from 'clsx';
 import { PATHS } from 'util/appConstants';
 
 // Actions
-import { selectTour, selectTourStatus, getTour, editTour } from 'redux/slices/tourSlice';
-import { setShowMessage } from 'redux/slices/uiSlice';
+import { selectTour, selectTourStatus, getTour } from 'redux/slices/tourSlice';
 
 const useStyles = makeStyles({
   _container: {
@@ -88,7 +86,7 @@ const TourDetail = () => {
     if (id) {
       dispatch(getTour(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   const editTourHandler = () => {
     history.push(PATHS.tours.edit.replace(':id', id))

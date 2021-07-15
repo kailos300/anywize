@@ -18,8 +18,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import { MID_NAVIGATION_ROUTES, TOP_NAVIGATION_ROUTES } from 'constants/ui-constants'
 import logo from 'assets/img/logo.png';
@@ -114,7 +112,7 @@ export default function Bar(props) {
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <img style={{ width: '163.27px' }} src={logo} />
+                    <img style={{ width: '163.27px' }} src={logo} alt={'logo'}/>
                     <IconButton onClick={props.handleDrawerClose}>
                         {theme.direction === 'ltr' ? <CloseIcon style={{ color: 'white ' }} /> : <ChevronRightIcon />}
                     </IconButton>

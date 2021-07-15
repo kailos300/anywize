@@ -8,9 +8,8 @@ import { PATHS } from 'util/appConstants';
 
 //Actions
 import { initialValues } from 'components/Customers/constants';
-import { selectCustomerStatus, addCustomer } from 'redux/slices/customerSlice';
+import {  addCustomer } from 'redux/slices/customerSlice';
 import { getTours, selectTours } from 'redux/slices/tourSlice';
-import { setShowMessage } from 'redux/slices/uiSlice';
 
 //Components
 import CustomerForm from 'components/Customers/form';
@@ -19,12 +18,11 @@ const currentAction = 'ADD';
 const AddCustomer = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const loading = useSelector(selectCustomerStatus);
     const tours = useSelector(selectTours);
 
     const fetchTours = useCallback(async () => {
         return await dispatch(getTours());
-    }, [dispatch, tours]);
+    }, [dispatch]);
 
     useEffect(() => {
         if (!tours.length) {

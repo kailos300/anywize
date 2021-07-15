@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Box, Button, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import * as pick from 'lodash/pick';
 import { useFormik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { Input, InputOnlyNumbers, Select, Checkbox } from 'components/Shared/mui-formik-inputs'
+import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs'
 
 import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
@@ -67,7 +67,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         },
     });
 
-    const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
+    const { values, handleBlur, handleChange, errors, handleSubmit } = formik;
 
     // const customHandleChange = e => {
     //     const { value } = e.target;
@@ -310,7 +310,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
                         options={['NONE', 'Bring Key', 'KeyBox'].map((o) => ({ label: o, value: o }))}
                     />
                 </Grid>
-                {values.deposit_agreement == "KeyBox" && <Grid item xs={12} sm={6} md={4} lg={2}>
+                {values.deposit_agreement === "KeyBox" && <Grid item xs={12} sm={6} md={4} lg={2}>
                     <Input
                         label={t('Keybox Code')}
                         name="keyboxCode"

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useParams } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
@@ -12,7 +11,6 @@ import { PATHS, DEPOSIT_AGREEMENTS } from 'util/appConstants';
 
 // Actions
 import { selectCustomer, selectCustomerStatus, getCustomer } from 'redux/slices/customerSlice';
-import { setShowMessage } from 'redux/slices/uiSlice';
 
 const useStyles = makeStyles({
   _container: {
@@ -88,7 +86,7 @@ const CustomerDetail = () => {
     if (id) {
       dispatch(getCustomer(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   const editCustomerHandler = () => {
     history.push(PATHS.customers.edit.replace(':id', id))

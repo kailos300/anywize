@@ -21,26 +21,26 @@ const EditTour = () => {
     const loading = useSelector(selectTourStatus);
     const tour = useSelector(selectTour);
 
-  
+
     useEffect(() => {
       if (id) {
         dispatch(getTour(id));
       }
-    }, [ id]);
-  
+    }, [dispatch, id]);
+
     const handleEditTour = async (id, payload) => {
       console.log(id,payload)
       await dispatch(editTour(id, payload));
-  
+
       dispatch(setShowMessage({
         description: 'Tour Edited Successfully!',
         type: 'success',
 
       }));
-  
+
       history.push(PATHS.tours.root);
     };
-  
+
     if (loading || !tour) return <div className="loading">Loading..</div>;
     return (
         <TourForm
@@ -50,6 +50,5 @@ const EditTour = () => {
     />
     );
   };
-  
+
   export default EditTour;
-  

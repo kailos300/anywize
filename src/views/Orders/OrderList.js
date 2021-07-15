@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
-import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
@@ -20,7 +19,6 @@ import {
     getOrders,
     deleteOrder,
 } from 'redux/slices/orderSlice';
-import { selectUser } from 'redux/slices/userSlice';
 
 // Components
 import withConfirm from 'components/dialogs/delete';
@@ -77,9 +75,6 @@ const OrderList = ({ confirm }) => {
     const history = useHistory();
     const loading = useSelector(selectOrderStatus);
     const orders = useSelector(selectOrders);
-    const user = useSelector(selectUser);
-
-    const [selected, setSelected] = useState([]);
 
     const fetchOrders = useCallback(async () => {
         return await dispatch(getOrders());
@@ -152,7 +147,6 @@ const OrderList = ({ confirm }) => {
                     rowStyle: { height: '38px' }
 
                 }}
-                onSelectionChange={rows => setSelected([...rows])}
             />
         </div>
         // </>

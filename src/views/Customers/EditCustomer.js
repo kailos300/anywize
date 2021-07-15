@@ -7,7 +7,6 @@ import { PATHS } from 'util/appConstants';
 
 // Actions
 import { selectCustomer, selectCustomerStatus, getCustomer, editCustomer } from 'redux/slices/customerSlice';
-import { setShowMessage } from 'redux/slices/uiSlice';
 import { getTours, selectTours } from 'redux/slices/tourSlice';
 
 // Components

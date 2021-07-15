@@ -3,7 +3,6 @@ export const initialValues = {
     salutation: '',
     firstname:'',
     lastname: '',
-    phone: '',
     notification: false,
     tour: '',
     position: '',

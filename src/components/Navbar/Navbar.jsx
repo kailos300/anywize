@@ -60,7 +60,7 @@ const Navbar = () => {
             </Link>
             <List className={classes._nav} component="nav">
                 {NAVIGATION_ROUTES.map((item, index) =>
-                    <ListItem activeClassName={classes._isactive} className={clsx(classes._menuitem, (location.pathname == "/tours" && item.name == 'Master Data') ? classes._isactive : '')} key={index} component={NavLink} to={item.path}>
+                    <ListItem activeClassName={classes._isactive} className={clsx(classes._menuitem, (location.pathname === "/tours" && item.name === 'Master Data') ? classes._isactive : '')} key={index} component={NavLink} to={item.path}>
 
                         <ListItemText className={classes._nomargin}>
                             {t(item.name)}

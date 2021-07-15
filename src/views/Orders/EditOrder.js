@@ -6,7 +6,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { PATHS } from 'util/appConstants';
 
 // Actions
-import { selectOrder, selectOrderStatus, getOrder, editOrder,getOrders } from 'redux/slices/orderSlice';
+import { selectOrder, selectOrderStatus, getOrder, editOrder } from 'redux/slices/orderSlice';
 import { getCustomers, selectCustomers } from 'redux/slices/customerSlice';
 import { setShowMessage } from 'redux/slices/uiSlice';
 
@@ -47,7 +47,7 @@ const EditOrder = () => {
             type: 'success',
 
         }));
-        
+
 
         history.push(PATHS.orders.root);
     };

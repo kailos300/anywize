@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
 // Helpers
 import { PATHS } from 'util/appConstants';

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box, Paper, Button, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import * as pick from 'lodash/pick';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
@@ -9,13 +9,10 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import { useHistory, useParams } from 'react-router-dom';
 import clsx from 'clsx';
-import { storage } from 'util/storage';
 import { Input } from '../Shared/mui-formik-inputs';
 import { TourSchema } from 'constants/validation-schemas';
 import { TourFormAllowedFields } from 'constants/forms-submit-allowed-fields';
 import { PATHS } from 'util/appConstants';
-
-
 
 const useStyles = makeStyles({
   _container: {
@@ -91,16 +88,16 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
       }
     },
   });
-  const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
+  const { values, handleBlur, handleChange, errors, handleSubmit } = formik;
 
   const closeTourHandler = () => {
-    action == 'ADD' ? history.push(PATHS.tours.root) :
+    action === 'ADD' ? history.push(PATHS.tours.root) :
       history.push(PATHS.customers.detail.replace(':id', id))
   }
   return (
     <div className={classes._container} >
       <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">{action == "ADD" ? t('New Tour') : t('Edit Tour')}</Typography>
+        <Typography className={classes._heading} variant="h4">{action === "ADD" ? t('New Tour') : t('Edit Tour')}</Typography>
         <div className={classes._dflex}>
           <div className={classes._dflex}>
             {/* <span >Cancel</span> */}

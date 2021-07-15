@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
-import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 // Helpers
@@ -19,11 +18,10 @@ import {
   getCustomers,
   deleteCustomer,
 } from 'redux/slices/customerSlice';
-import { selectUser } from 'redux/slices/userSlice';
 
 // Components
 import withConfirm from 'components/dialogs/delete';
-import img from '../../assets/img/3.svg'
+
 const useStyles = makeStyles({
   _container: {
     backgroundColor: '#121212',
@@ -85,9 +83,6 @@ const CustomersList = ({ confirm }) => {
 
   const loading = useSelector(selectCustomerStatus);
   const customers = useSelector(selectCustomers);
-  const user = useSelector(selectUser);
-
-  const [selected, setSelected] = useState([]);
 
   const fetchCustomers = useCallback(async () => {
     return await dispatch(getCustomers());
@@ -167,8 +162,6 @@ const CustomersList = ({ confirm }) => {
           rowStyle: { height: '38px' }
 
         }}
-        onSelectionChange={rows => setSelected([...rows])}
-
       />
     </div>
   )

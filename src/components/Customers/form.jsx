@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Box, Button, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import * as pick from 'lodash/pick';
 import { useFormik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,7 +9,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { Input, InputOnlyNumbers, Select, Checkbox } from 'components/Shared/mui-formik-inputs'
+import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs'
 
 import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
@@ -90,13 +90,13 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
     setFieldValue('country', '')
   }
   const closeCustomerHandler = () => {
-    action == 'ADD' ? history.push(PATHS.customers.root) :
+    action === 'ADD' ? history.push(PATHS.customers.root) :
       history.push(PATHS.customers.detail.replace(':id', id))
   }
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">{action == "ADD" ? t('New Customer') : t('Edit Customer')}</Typography>
+        <Typography className={classes._heading} variant="h4">{action === "ADD" ? t('New Customer') : t('Edit Customer')}</Typography>
         <div>
           <CloseIcon onClick={closeCustomerHandler} className={classes._icons} />
           <SaveIcon onClick={handleSubmit} className={classes._icons} />
@@ -305,7 +305,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             ].map((o) => ({ label: o.label, value: o.value }))}
           />
         </Grid>
-        {values.deposit_agreement == "KEY_BOX" && <Grid item xs={12} sm={6} md={4} lg={2}>
+        {values.deposit_agreement === "KEY_BOX" && <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
             label={t('Keybox Code')}
             name="keyboxCode"

@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import RequireAuth from 'components/hoc/require-auth';
 import Typography from '@material-ui/core/Typography';
 
-import { Login, ToursList,TourDetail, AddTour, EditTour, CustomersList, CustomerDetail, AddCustomer, EditCustomer, AddOrder, OrderList, EditOrder ,Edit ,Maps } from 'views';
+import { Login, ToursList,TourDetail, AddTour, EditTour, CustomersList, CustomerDetail, AddCustomer, EditCustomer, AddOrder, OrderList, EditOrder ,Maps } from 'views';
 import { PATHS } from '../../util/appConstants';
 
 const AppRouter = () => {

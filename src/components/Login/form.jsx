@@ -64,7 +64,7 @@ const LoginForm = ({ onSubmit }) => {
     },
   });
 
-  const { handleSubmit, errors, values, handleChange, handleBlur, isValid } = formik;
+  const { handleSubmit, values, handleChange, handleBlur } = formik;
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off">

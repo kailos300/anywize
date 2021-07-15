@@ -1,15 +1,13 @@
 import React from 'react'
-import { Grid, Box, Paper, Button, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import * as pick from 'lodash/pick';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import { storage } from 'util/storage';
 import { Input, InputOnlyNumbers, Select } from '../Shared/mui-formik-inputs';
 import { OrderSchema } from 'constants/validation-schemas';
 import { OrderFormAllowedFields } from 'constants/forms-submit-allowed-fields';
@@ -49,7 +47,6 @@ const OrderForm = ({ initialValues, handleAddOrder, handleEditOrder, action, cus
     const { t } = useTranslation();
     const classes = useStyles();
     const history = useHistory();
-    const { id } = useParams();
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -71,7 +68,7 @@ const OrderForm = ({ initialValues, handleAddOrder, handleEditOrder, action, cus
             }
         },
     });
-    const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
+    const { values, handleBlur, handleChange, errors, handleSubmit } = formik;
     const closeOrderHandler = () => {
         // action == 'ADD' ?
         history.push(PATHS.orders.root)
@@ -82,7 +79,7 @@ const OrderForm = ({ initialValues, handleAddOrder, handleEditOrder, action, cus
 
         <div className={classes._container}>
             <div className={classes._editbox}>
-                <Typography className={classes._heading} variant="h4">{action == "ADD" ? t('New Order') : t('Edit Order')}</Typography>
+                <Typography className={classes._heading} variant="h4">{action === "ADD" ? t('New Order') : t('Edit Order')}</Typography>
                 <div>
                     <CloseIcon onClick={closeOrderHandler} className={classes._icons} />
                     <SaveIcon onClick={handleSubmit} className={classes._icons} />
