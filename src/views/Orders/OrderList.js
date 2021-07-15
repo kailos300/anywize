@@ -80,6 +80,21 @@ const OrderList = ({ confirm }) => {
     }
   }, [dispatch, orders, loading])
 
+  const callbackOnDelete = (e, rowData) => {
+    e.stopPropagation();
+    confirm(() => dispatch(deleteOrder(rowData.id)), {
+      description: "Are you sure?",
+    });
+  };
+
+  const actions = getActions(
+    tableTitle,
+    (e, rowData) => callbackOnDelete(e, rowData),
+    () => addHandler()
+  );
+  const addHandler = () => {
+    history.push(PATHS.orders.add);
+  };
   if (loading) return <div className="loading">Loading..</div>;
 
   return (
@@ -96,7 +111,7 @@ const OrderList = ({ confirm }) => {
         // onRowClick={(e, rowData) => history.push(
         //     PATHS.orders.edit.replace(':id', rowData.id),
         // )}
-        actions={'actions'}
+        actions={actions}
         // parentChildData={(row, rows) => rows.find(a => a.supplier_id === row.customer_id)}
         options={{
           paging: false,
