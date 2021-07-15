@@ -57,6 +57,13 @@ font-size: 12px !important;
 .custom-table-styles >* tr:nth-child(even) td{
   background-color:#1F1F1F !important;
 }
+
+.order-table-styles >* tr:nth-child(even) td{
+  background-color:#525252 !important;
+}
+.order-table-styles >* tr:nth-child(odd) td{
+  background-color:#1F1F1F !important;
+}
   /* .custom-table-styles tr:hover {
    
     background-color: rgba(0, 0, 0, 0.04); 

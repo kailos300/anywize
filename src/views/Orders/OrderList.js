@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
 import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 import clsx from 'clsx';
 
 // Helpers
@@ -117,15 +119,16 @@ const OrderList = ({ confirm }) => {
         //         <Typography className="font-size-34" variant='h4'>{t('Orders')}</Typography>
         //         <Button className="Primary-btn" onClick={addOrderHandler} color="primary" variant="contained">Add Order</Button>
         //     </Paper>
-        <div className={clsx(classes._container, 'custom-table-styles')}>
+        <div className={clsx(classes._container, 'custom-table-styles order-table-styles')}>
             <MaterialTable
                 data={mapTableData(orders)}
                 title={t(tableTitle)}
                 columns={getColumns(ORDERS_TABLE_COLUMNS, t)}
-                onRowClick={(e, rowData) => history.push(
-                    PATHS.orders.edit.replace(':id', rowData.id),
-                )}
+                // onRowClick={(e, rowData) => history.push(
+                //     PATHS.orders.edit.replace(':id', rowData.id),
+                // )}
                 actions={actions}
+                // parentChildData={(row, rows) => rows.find(a => a.supplier_id === row.customer_id)}
                 options={{
                     paging: false,
                     // maxBodyHeight: '85vh',
@@ -145,14 +148,73 @@ const OrderList = ({ confirm }) => {
                         color: 'white',
                         border: 'none',
                         font: 'normal normal normal 12px/24px Roboto',
-                        padding:'0 16px'
+                        padding: '0 16px'
                     },
                     showTitle: false,
                     header: false,
-                    rowStyle: { height: '38px' }
-
+                    rowStyle: { height: '71px' },
+                    selection: true,
+                    showTextRowsSelected: false,
+                    showSelectAllCheckbox: false,
                 }}
-                onSelectionChange={rows => setSelected([...rows])}
+                onTreeExpandChange={console.log('expanded')}
+                // onSelectionChange={rows => setSelected([...rows])}
+              detailPanel={[
+    {
+      tooltip: 'Show Name',
+      render: rowData => {
+        return (
+          <div
+            style={{
+              fontSize: 100,
+              textAlign: 'center',
+              color: 'white',
+              backgroundColor: '#43A047',
+            }}
+          >
+            {rowData.id}
+          </div>
+        )
+      },
+    },
+    {
+      icon: 'account_circle',
+      tooltip: 'Show Surname',
+      render: rowData => {
+        return (
+          <div
+            style={{
+              fontSize: 100,
+              textAlign: 'center',
+              color: 'white',
+              backgroundColor: '#E53935',
+            }}
+          >
+            {rowData.customer_id}
+          </div>
+        )
+      },
+    },
+    {
+      icon: 'favorite_border',
+      openIcon: 'favorite',
+      tooltip: 'Show Both',
+      render: rowData => {
+        return (
+          <div
+            style={{
+              fontSize: 100,
+              textAlign: 'center',
+              color: 'white',
+              backgroundColor: '#FDD835',
+            }}
+          >
+            {rowData.id} {rowData.supplier_id}
+          </div>
+        )
+      },
+    },
+  ]}
             />
         </div>
         // </>
