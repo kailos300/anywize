@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getAuthenticatedUser, setPostAuthPath } from "../../redux/modules/authentication";
+import {
+  getAuthenticatedUser,
+  setPostAuthPath,
+} from "../../redux/modules/authentication";
 
-export default (ComposedComponent) => {
+const Auth = (ComposedComponent) => {
   class Authentication extends Component {
     static propTypes = {
       authenticated: PropTypes.bool,
@@ -22,7 +25,8 @@ export default (ComposedComponent) => {
     // List of pre-authention routes, so they aren't saved for a post-auth redirect
     static preAuthRoutes = ["/login"];
 
-    componentDidMount = () => this.ensureAuthentication(this.props.authenticated);
+    componentDidMount = () =>
+      this.ensureAuthentication(this.props.authenticated);
 
     componentWillUpdate = (nextProps) => {
       if (this.props.authenticated !== nextProps.authenticated) {
@@ -31,7 +35,7 @@ export default (ComposedComponent) => {
     };
 
     ensureAuthentication = (isAuthed) => {
-      if (!localStorage.getItem('token')) {
+      if (!localStorage.getItem("token")) {
         const path = _.get(this.props.match, "path");
 
         // Save the user's path for future redirect
@@ -52,6 +56,10 @@ export default (ComposedComponent) => {
   const mapStateToProps = ({ auth }) => ({ authenticated: auth.authenticated });
 
   return withRouter(
-    connect(mapStateToProps, { getAuthenticatedUser, setPostAuthPath })(Authentication)
+    connect(mapStateToProps, { getAuthenticatedUser, setPostAuthPath })(
+      Authentication
+    )
   );
 };
+
+export default Auth;

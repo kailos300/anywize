@@ -1,5 +1,5 @@
-export const SHOW_ALERT = '[ALERTS] SHOW ALERT';
-export const HIDE_ALERT = '[ALERTS] HIDE ALERT';
+export const SHOW_ALERT = "[ALERTS] SHOW ALERT";
+export const HIDE_ALERT = "[ALERTS] HIDE ALERT";
 
 export function showMessage(message) {
   return {

@@ -1,24 +1,22 @@
-import React, { Fragment, useState, useCallback } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { useTranslation } from 'react-i18next';
+import React, { Fragment, useState, useCallback } from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { useTranslation } from "react-i18next";
 
 const defaultOptions = {
-  description: '',
-  confirmationText: 'Yes',
-  cancellationText: 'No',
+  description: "",
+  confirmationText: "Yes",
+  cancellationText: "No",
   dialogProps: {},
-  onClose: () => {
-  },
-  onCancel: () => {
-  },
+  onClose: () => {},
+  onCancel: () => {},
 };
 
-const withConfirm = WrappedComponent => props => {
-  const { t } = useTranslation('common');
+const withConfirm = (WrappedComponent) => (props) => {
+  const { t } = useTranslation("common");
   const [onConfirm, setOnConfirm] = useState(null);
   const [options, setOptions] = useState(defaultOptions);
   const {
@@ -45,7 +43,7 @@ const withConfirm = WrappedComponent => props => {
       onConfirm(...args);
       handleClose();
     },
-    [onConfirm, handleClose],
+    [onConfirm, handleClose]
   );
 
   function confirm(onConfirm, options = {}) {
@@ -62,23 +60,23 @@ const withConfirm = WrappedComponent => props => {
         open={!!onConfirm}
         onClose={handleCancel}
       >
-        <DialogTitle>{t('Confirm!')}</DialogTitle>
+        <DialogTitle>{t("Confirm!")}</DialogTitle>
         {description && (
           <DialogContent>
             <p
-              style={{ fontSize: '18px', color: 'rgba(0,0,0,0.6)', margin: 0 }}
+              style={{ fontSize: "18px", color: "rgba(0,0,0,0.6)", margin: 0 }}
               dangerouslySetInnerHTML={{ __html: t(description) }}
             />
           </DialogContent>
         )}
 
         <DialogActions>
-          <Button style={{ color: 'red' }} onClick={handleCancel}>
+          <Button style={{ color: "red" }} onClick={handleCancel}>
             {t(cancellationText)}
           </Button>
           <Button
-            color='secondary'
-            className='anti-bootstrap-button'
+            color="secondary"
+            className="anti-bootstrap-button"
             onClick={handleConfirm}
             autoFocus={true}
           >

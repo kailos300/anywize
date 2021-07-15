@@ -1,19 +1,23 @@
-import React, { useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
 
 // Helpers
-import { PATHS } from 'util/appConstants';
+import { PATHS } from "util/appConstants";
 
 // Actions
-import { selectCustomer, selectCustomerStatus, getCustomer, editCustomer } from 'redux/slices/customerSlice';
-import { setShowMessage } from 'redux/slices/uiSlice';
-import { getTours, selectTours } from 'redux/slices/tourSlice';
+import {
+  selectCustomer,
+  selectCustomerStatus,
+  getCustomer,
+  editCustomer,
+} from "redux/slices/customerSlice";
+import { getTours, selectTours } from "redux/slices/tourSlice";
 
 // Components
-import CustomerForm from 'components/Customers/form';
+import CustomerForm from "components/Customers/form";
 
-const currentAction = 'EDIT';
+const currentAction = "EDIT";
 
 const EditCustomer = () => {
   const dispatch = useDispatch();
@@ -23,25 +27,20 @@ const EditCustomer = () => {
   const customer = useSelector(selectCustomer);
   const tours = useSelector(selectTours);
 
-
   useEffect(() => {
     if (id && !loading) {
       dispatch(getCustomer(id));
     }
-  }, [id]);
-
-  const fetchTours = useCallback(async () => {
-    return await dispatch(getTours());
-  }, [dispatch, tours]);
+  }, [dispatch, id, loading]);
 
   useEffect(() => {
     if (!tours.length) {
-      fetchTours();
+      dispatch(getTours());
     }
-  }, [tours]);
+  }, [dispatch, tours]);
 
   const handleEditCustomer = async (id, payload) => {
-    await dispatch(editCustomer(id, payload))
+    await dispatch(editCustomer(id, payload));
     // .then(data => console.log(data, "data"))
     // .catch(error => console.log(error, "error"));
 
@@ -63,5 +62,5 @@ const EditCustomer = () => {
       tourList={tours}
     />
   );
-}
+};
 export default EditCustomer;

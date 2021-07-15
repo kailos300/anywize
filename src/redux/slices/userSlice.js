@@ -1,15 +1,15 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
-import { coreApi } from 'api/core';
+import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { coreApi } from "api/core";
 
-export const APP_NAMESPACE = 'mkrn-starter';
+export const APP_NAMESPACE = "mkrn-starter";
 const userPrefix = `${APP_NAMESPACE}/user`;
 const usersPrefix = `${APP_NAMESPACE}/users`;
 const authUserPrefix = `${APP_NAMESPACE}/auth`;
 
 const initialState = {
   messages: {
-    [userPrefix]: '',
-    [usersPrefix]: '',
+    [userPrefix]: "",
+    [usersPrefix]: "",
   },
   errors: {
     [userPrefix]: [],
@@ -25,7 +25,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     setUser: (state, action) => {
@@ -34,16 +34,12 @@ const userSlice = createSlice({
   },
 });
 
-export const {
-  setUser,
-  setUserSettings,
-} = userSlice.actions;
+export const { setUser, setUserSettings } = userSlice.actions;
 export default userSlice.reducer;
 
-export const fetchUserInfo = () => async dispatch => {
-  const url = '/users/me';
+export const fetchUserInfo = () => async (dispatch) => {
+  const url = "/users/me";
   try {
-
     const user = await coreApi.fetch(url);
     dispatch(setUser(user));
   } catch (err) {
@@ -51,6 +47,6 @@ export const fetchUserInfo = () => async dispatch => {
   }
 };
 
-const userSelector = state => state.newUser.user;
+const userSelector = (state) => state.newUser.user;
 
-export const selectUser = createSelector(userSelector, user => user);
+export const selectUser = createSelector(userSelector, (user) => user);

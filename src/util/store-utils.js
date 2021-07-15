@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { PENDING, SUCCESS, ERROR } from './redux-constants';
+import _ from "lodash";
+import { PENDING, SUCCESS, ERROR } from "./redux-constants";
 
 /**
  * updateStore  - Returns an object containing updated state. This helper
@@ -11,31 +11,35 @@ import { PENDING, SUCCESS, ERROR } from './redux-constants';
  * @returns {Object}
  */
 export const updateStore = (state, action, extraValues = {}) => {
-  const { type = '', payload = {}, meta = { status: '' } } = action;
+  const { type = "", payload = {}, meta = { status: "" } } = action;
   switch (meta.status) {
     case SUCCESS:
       return {
         ...state,
         ...extraValues,
-        messages: { ...state.messages, [type]: _.get(payload, 'message') },
+        messages: { ...state.messages, [type]: _.get(payload, "message") },
         loading: { ...state.loading, [type]: false },
         errors: { ...state.errors, [type]: [] },
       };
     case ERROR:
       return {
         ...state,
-        messages: { ...state.messages, [type]: '' },
+        messages: { ...state.messages, [type]: "" },
         loading: { ...state.loading, [type]: false },
         errors: {
           ...state.errors,
-          [type]: _.get(payload, 'data.errors') || _.get(payload, 'errors') || action.payload || [],
+          [type]:
+            _.get(payload, "data.errors") ||
+            _.get(payload, "errors") ||
+            action.payload ||
+            [],
         },
       };
     case PENDING:
     default:
       return {
         ...state,
-        messages: { ...state.messages, [type]: '' },
+        messages: { ...state.messages, [type]: "" },
         loading: { ...state.loading, [type]: true },
         errors: { ...state.errors, [type]: [] },
       };
@@ -51,7 +55,7 @@ export const updateStore = (state, action, extraValues = {}) => {
  */
 export const buildGenericInitialState = (constants) => ({
   messages: constants.reduce((retObj, constant) => {
-    retObj[constant] = '';
+    retObj[constant] = "";
     return retObj;
   }, {}),
   errors: constants.reduce((retObj, constant) => {
@@ -74,10 +78,10 @@ export const buildGenericInitialState = (constants) => ({
 export const handleError = (dispatch, error, type) => {
   if (error && error.response) {
     if (error.response.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+      localStorage.removeItem("token");
+      window.location.href = "/login";
     } else {
-      const foundError = _.get(error, 'response.data.errors') || [{ error }];
+      const foundError = _.get(error, "response.data.errors") || [{ error }];
       return dispatch({
         type,
         payload: foundError,
@@ -85,10 +89,9 @@ export const handleError = (dispatch, error, type) => {
       });
     }
   } else {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   }
-
 };
 
 /**
@@ -98,7 +101,7 @@ export const handleError = (dispatch, error, type) => {
  */
 export const removeMetaFromState = (state) =>
   Object.keys(state).reduce((accum, val) => {
-    if (val !== 'errors' && val !== 'messages' && val !== 'loading') {
+    if (val !== "errors" && val !== "messages" && val !== "loading") {
       accum[val] = state[val];
     }
 

@@ -1,3 +1,3 @@
-import Masterbar from './Masterbar';
+import Masterbar from "./Masterbar";
 
 export default Masterbar;

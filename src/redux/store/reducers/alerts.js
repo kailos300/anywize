@@ -1,4 +1,4 @@
-import { SHOW_ALERT, HIDE_ALERT } from '../actions/alerts';
+import { SHOW_ALERT, HIDE_ALERT } from "../actions/alerts";
 
 const initialState = {
   message: null,
@@ -27,4 +27,4 @@ const alerts = function (state = initialState, action) {
   }
 };
 
-export default alerts
+export default alerts;

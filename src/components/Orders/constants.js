@@ -1,5 +1,5 @@
 export const initialValues = {
-    customer_id:'',
-    description:'',
-    number:''
-   };
+  customer_id: "",
+  description: "",
+  number: "",
+};
