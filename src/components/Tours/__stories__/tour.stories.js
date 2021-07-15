@@ -1,15 +1,10 @@
-import React from 'react';
-import { action } from '@storybook/addon-actions';
-import NewForm from '../form';
-
+import React from "react";
+import { action } from "@storybook/addon-actions";
+import NewForm from "../form";
 
 export default {
-  title: 'Tour components',
+  title: "Tour components",
 };
 export const Form = () => (
-    <NewForm
-      initialValues={{}}
-      onSubmit={action('submit')}
-    />
-  );
-  
+  <NewForm initialValues={{}} onSubmit={action("submit")} />
+);

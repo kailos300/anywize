@@ -1,44 +1,46 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 // Helpers
-import { PATHS } from 'util/appConstants';
+import { PATHS } from "util/appConstants";
 
 //Actions
-import { initialValues } from 'components/Customers/constants';
-import {  addCustomer } from 'redux/slices/customerSlice';
-import { getTours, selectTours } from 'redux/slices/tourSlice';
+import { initialValues } from "components/Customers/constants";
+import { addCustomer } from "redux/slices/customerSlice";
+import { getTours, selectTours } from "redux/slices/tourSlice";
 
 //Components
-import CustomerForm from 'components/Customers/form';
+import CustomerForm from "components/Customers/form";
 
-const currentAction = 'ADD';
+const currentAction = "ADD";
 const AddCustomer = () => {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const tours = useSelector(selectTours);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const tours = useSelector(selectTours);
 
-    useEffect(() => {
-        if (!tours.length) {
-            dispatch(getTours())
-        }
-    }, [dispatch, tours]);
-
-    const handleAddCustomer = async (payload) => {
-        await dispatch(addCustomer(payload)).then(res => res !== undefined ? history.push(PATHS.customers.root) : '');
+  useEffect(() => {
+    if (!tours.length) {
+      dispatch(getTours());
     }
-    return (
-        <CustomerForm
-            action={currentAction}
-            initialValues={initialValues}
-            handleAddCustomer={handleAddCustomer}
-            tourList={tours}
-        />
-    )
-}
+  }, [dispatch, tours]);
+
+  const handleAddCustomer = async (payload) => {
+    await dispatch(addCustomer(payload)).then((res) =>
+      res !== undefined ? history.push(PATHS.customers.root) : ""
+    );
+  };
+  return (
+    <CustomerForm
+      action={currentAction}
+      initialValues={initialValues}
+      handleAddCustomer={handleAddCustomer}
+      tourList={tours}
+    />
+  );
+};
 AddCustomer.propTypes = {
-    initialValues: PropTypes.object.isRequired,
+  initialValues: PropTypes.object.isRequired,
 };
 export default AddCustomer;

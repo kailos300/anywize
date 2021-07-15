@@ -1,53 +1,57 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Grid, Typography } from '@material-ui/core';
-import * as pick from 'lodash/pick';
-import { useFormik } from 'formik';
-import { makeStyles } from '@material-ui/core/styles';
-import countries from 'iso-3166-country-list';
-import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
-import { useHistory, useParams } from 'react-router-dom';
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Grid, Typography } from "@material-ui/core";
+import * as pick from "lodash/pick";
+import { useFormik } from "formik";
+import { makeStyles } from "@material-ui/core/styles";
+import countries from "iso-3166-country-list";
+import SaveIcon from "@material-ui/icons/Save";
+import CloseIcon from "@material-ui/icons/Close";
+import { useHistory, useParams } from "react-router-dom";
 
-import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs'
+import { Input, Select, Checkbox } from "components/Shared/mui-formik-inputs";
 
-import { CustomerSchema } from 'constants/validation-schemas';
-import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
-import { PATHS } from 'util/appConstants';
+import { CustomerSchema } from "constants/validation-schemas";
+import { CustomerFormAllowedFields } from "constants/forms-submit-allowed-fields";
+import { PATHS } from "util/appConstants";
 
-const unzip = require('zip-to-city');
+const unzip = require("zip-to-city");
 
 const useStyles = makeStyles({
   _container: {
-    backgroundColor: '#F5F5F5',
-    padding: '60px 130px',
-    minHeight: '100vh'
+    backgroundColor: "#F5F5F5",
+    padding: "60px 130px",
+    minHeight: "100vh",
   },
   _editbox: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   _heading: {
-    font: 'normal normal normal 28px/40px Questrial',
-    color: '#121212'
+    font: "normal normal normal 28px/40px Questrial",
+    color: "#121212",
   },
   _icons: {
-    color: '#ADADAD',
-    width: '22px',
-    height: '22px',
-    cursor: 'pointer',
-    paddingRight: '16px'
+    color: "#ADADAD",
+    width: "22px",
+    height: "22px",
+    cursor: "pointer",
+    paddingRight: "16px",
   },
   _subheading: {
-    font: 'normal normal 500 22px/32px Roboto',
-    color: ' #121212',
-    marginTop: '44px',
-  }
-
-
-})
-const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, action, tourList }) => {
+    font: "normal normal 500 22px/32px Roboto",
+    color: " #121212",
+    marginTop: "44px",
+  },
+});
+const CustomerForm = ({
+  initialValues,
+  handleAddCustomer,
+  handleEditCustomer,
+  action,
+  tourList,
+}) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
@@ -61,12 +65,17 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
     initialValues: initialValues,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        if (action === 'ADD') {
-          return await handleAddCustomer(pick(values, CustomerFormAllowedFields));
+        if (action === "ADD") {
+          return await handleAddCustomer(
+            pick(values, CustomerFormAllowedFields)
+          );
         }
-        if (action === 'EDIT') {
-          console.log('working')
-          return await handleEditCustomer(values.id, pick(values, CustomerFormAllowedFields));
+        if (action === "EDIT") {
+          console.log("working");
+          return await handleEditCustomer(
+            values.id,
+            pick(values, CustomerFormAllowedFields)
+          );
         }
       } catch (err) {
         setSubmitting(false);
@@ -74,41 +83,55 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
     },
   });
 
-  const { values, handleBlur, handleChange, setFieldValue, errors, handleSubmit } = formik;
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    setFieldValue,
+    errors,
+    handleSubmit,
+  } = formik;
 
-  const customHandleChange = e => {
+  const customHandleChange = (e) => {
     const { value } = e.target;
-    var zip = unzip(value)
+    var zip = unzip(value);
     if (zip !== null) {
-      setFieldValue('zipcode', value);
-      setFieldValue('city', zip)
-      setFieldValue('country', 'DE')
-      return
+      setFieldValue("zipcode", value);
+      setFieldValue("city", zip);
+      setFieldValue("country", "DE");
+      return;
     }
-    setFieldValue('zipcode', value);
-    setFieldValue('city', '')
-    setFieldValue('country', '')
-  }
+    setFieldValue("zipcode", value);
+    setFieldValue("city", "");
+    setFieldValue("country", "");
+  };
   const closeCustomerHandler = () => {
-    action === 'ADD' ? history.push(PATHS.customers.root) :
-      history.push(PATHS.customers.detail.replace(':id', id))
-  }
+    action === "ADD"
+      ? history.push(PATHS.customers.root)
+      : history.push(PATHS.customers.detail.replace(":id", id));
+  };
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">{action === "ADD" ? t('New Customer') : t('Edit Customer')}</Typography>
+        <Typography className={classes._heading} variant="h4">
+          {action === "ADD" ? t("New Customer") : t("Edit Customer")}
+        </Typography>
         <div>
-          <CloseIcon onClick={closeCustomerHandler} className={classes._icons} />
+          <CloseIcon
+            onClick={closeCustomerHandler}
+            className={classes._icons}
+          />
           <SaveIcon onClick={handleSubmit} className={classes._icons} />
         </div>
-
       </div>
-      <Typography className={classes._subheading} variant="h5">{t('Basic Data')}</Typography>
+      <Typography className={classes._subheading} variant="h5">
+        {t("Basic Data")}
+      </Typography>
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={4}>
           <Input
-            label={t('Name')}
+            label={t("Name")}
             name="name"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -118,7 +141,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('Number')}
+            label={t("Number")}
             name="number"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -128,7 +151,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={t('Alias')}
+            label={t("Alias")}
             name="alias"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -140,7 +163,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={t('Street')}
+            label={t("Street")}
             name="street"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -150,7 +173,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('House No.')}
+            label={t("House No.")}
             name="street_number"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -162,7 +185,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('Zipcode')}
+            label={t("Zipcode")}
             name="zipcode"
             onChange={customHandleChange}
             value={values.zipcode}
@@ -171,7 +194,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={t('City')}
+            label={t("City")}
             name="city"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -181,34 +204,37 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
-            label={t('Country')}
+            label={t("Country")}
             name="country"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.country}
             errors={errors}
-            options={
-              countries.map((c) => ({ label: c.name, value: c.code }))
-            }
+            options={countries.map((c) => ({ label: c.name, value: c.code }))}
           />
         </Grid>
       </Grid>
-      <Typography className={classes._subheading} variant="h5">{t('Contact')}</Typography>
+      <Typography className={classes._subheading} variant="h5">
+        {t("Contact")}
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
-            label={t('Salutation')}
+            label={t("Salutation")}
             name="salutation"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.salutation}
             errors={errors}
-            options={['Mr', 'Mrs', 'Ms', 'Dr'].map((o) => ({ label: o, value: o }))}
+            options={["Mr", "Mrs", "Ms", "Dr"].map((o) => ({
+              label: o,
+              value: o,
+            }))}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('First Name')}
+            label={t("First Name")}
             name="firstname"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -218,7 +244,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            label={t('Last Name')}
+            label={t("Last Name")}
             name="lastname"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -226,14 +252,12 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             errors={errors}
           />
         </Grid>
-
-
       </Grid>
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('Phone')}
+            label={t("Phone")}
             name="phone"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -244,7 +268,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
             className="font-size-12"
-            label={t('E-Mail')}
+            label={t("E-Mail")}
             type="email"
             name="email"
             onChange={handleChange}
@@ -263,15 +287,18 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
             onBlur={handleBlur}
             errors={errors}
           />
-          <Typography component="span" className="font-size-12">{t('Notify when Tour starts')}</Typography>
+          <Typography component="span" className="font-size-12">
+            {t("Notify when Tour starts")}
+          </Typography>
         </Grid>
       </Grid>
-      <Typography className={classes._subheading} variant="h5">{t('Tour')}</Typography>
+      <Typography className={classes._subheading} variant="h5">
+        {t("Tour")}
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
-            label={t('Tour')}
-
+            label={t("Tour")}
             name="tour_id"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -282,7 +309,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('Position')}
+            label={t("Position")}
             name="tour_position"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -292,34 +319,36 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
-            label={t('Deposit agreement')}
+            label={t("Deposit agreement")}
             name="deposit_agreement"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.deposit_agreement}
             errors={errors}
             options={[
-              { value: 'NONE', label: 'None' },
-              { value: 'BRING_KEY', label: 'Bring Key' },
-              { value: 'KEY_BOX', label: 'KeyBox' },
+              { value: "NONE", label: "None" },
+              { value: "BRING_KEY", label: "Bring Key" },
+              { value: "KEY_BOX", label: "KeyBox" },
             ].map((o) => ({ label: o.label, value: o.value }))}
           />
         </Grid>
-        {values.deposit_agreement === "KEY_BOX" && <Grid item xs={12} sm={6} md={4} lg={2}>
-          <Input
-            label={t('Keybox Code')}
-            name="keyboxCode"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.keyboxCode}
-            errors={errors}
-          />
-        </Grid>}
+        {values.deposit_agreement === "KEY_BOX" && (
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <Input
+              label={t("Keybox Code")}
+              name="keyboxCode"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.keyboxCode}
+              errors={errors}
+            />
+          </Grid>
+        )}
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('Latitude')}
+            label={t("Latitude")}
             name="latitude"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -330,7 +359,7 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
 
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
-            label={t('Longitude')}
+            label={t("Longitude")}
             name="longitude"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -340,6 +369,6 @@ const CustomerForm = ({ initialValues, handleAddCustomer, handleEditCustomer, ac
         </Grid>
       </Grid>
     </div>
-  )
-}
+  );
+};
 export default CustomerForm;

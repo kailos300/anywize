@@ -1,34 +1,29 @@
 // Mixins
-@import 'partials/mixins';
+@import "partials/mixins";
 
 // Variables
-@import 'partials/variables';
+@import "partials/variables";
 
 // Module states
-@import 'partials/state';
+@import "partials/state";
 
 // ========================
 // Template components
 // ========================
-@import 'partials/header';
+@import "partials/header";
 
 // ========================
 // Multi-use components
 // ========================
-@import 'partials/buttons';
-@import 'partials/grid';
-@import 'partials/forms';
-@import 'partials/common';
-@import 'partials/documents';
-@import 'partials/documents-updated';
-@import 'partials/annex';
-@import 'partials/rich-text-editor';
-@import 'partials/auth';
-
-
-
-
-
+@import "partials/buttons";
+@import "partials/grid";
+@import "partials/forms";
+@import "partials/common";
+@import "partials/documents";
+@import "partials/documents-updated";
+@import "partials/annex";
+@import "partials/rich-text-editor";
+@import "partials/auth";
 
 html,
 body,
@@ -211,30 +206,30 @@ h4 {
 }
 
 .yellow {
-  background-color:#FFD60A;
-  -mox-box-shadow: 0 0 1px #FFD60A;
-  -webkit-box-shadow: 0 0 1px #FFD60A;
-  box-shadow: 0 0 1px #FFD60A;
+  background-color: #ffd60a;
+  -mox-box-shadow: 0 0 1px #ffd60a;
+  -webkit-box-shadow: 0 0 1px #ffd60a;
+  box-shadow: 0 0 1px #ffd60a;
 }
 .orange {
-  background-color: #FF9F0B;
-  -mox-box-shadow: 0 0 1px #FF9F0B;
-  -webkit-box-shadow: 0 0 1px #FF9F0B;
-  box-shadow: 0 0 1px #FF9F0B;
+  background-color: #ff9f0b;
+  -mox-box-shadow: 0 0 1px #ff9f0b;
+  -webkit-box-shadow: 0 0 1px #ff9f0b;
+  box-shadow: 0 0 1px #ff9f0b;
 }
 
 .green {
-  background-color: #31D158;
-  -mox-box-shadow: 0 0 1px #31D158;
-  -webkit-box-shadow: 0 0 1px #31D158;
-  box-shadow: 0 0 1px #31D158;
+  background-color: #31d158;
+  -mox-box-shadow: 0 0 1px #31d158;
+  -webkit-box-shadow: 0 0 1px #31d158;
+  box-shadow: 0 0 1px #31d158;
 }
 
 .blue {
-  background-color: #4746AF;
-  -mox-box-shadow: 0 0 1px #4746AF;
-  -webkit-box-shadow: 0 0 1px #4746AF;
-  box-shadow: 0 0 1px #4746AF;
+  background-color: #4746af;
+  -mox-box-shadow: 0 0 1px #4746af;
+  -webkit-box-shadow: 0 0 1px #4746af;
+  box-shadow: 0 0 1px #4746af;
 }
 
 .primary {
@@ -244,26 +239,25 @@ h4 {
 .error {
   color: red !important;
 }
-.article_label{
+.article_label {
   display: inline-block;
-    width: 115px;
-    padding-left: 25px;
+  width: 115px;
+  padding-left: 25px;
 }
-.display-flex{
+.display-flex {
   display: flex;
 }
-.justify-space-between{
+.justify-space-between {
   justify-content: space-between;
 }
-.list-style-none{
+.list-style-none {
   list-style: none;
 }
-.flex-direction-row{
+.flex-direction-row {
   flex-direction: row;
 }
-.flex-unset{
+.flex-unset {
   flex: unset;
-
 }
 .custom-table-styles {
   span {
@@ -272,25 +266,25 @@ h4 {
   table {
     margin: 20px !important;
     width: 98% !important;
-    border-collapse: collapse; //added 
+    border-collapse: collapse; //added
   }
- thead{
-   text-align: left;
- }
- td{
-cursor: pointer;
- }
+  thead {
+    text-align: left;
+  }
+  td {
+    cursor: pointer;
+  }
   td,
   th {
     padding: 0px 16px !important;
     height: 50px;
     white-space: nowrap !important;
-    border-bottom: 1px solid rgba(224, 224, 224, 1); //added 
+    border-bottom: 1px solid rgba(224, 224, 224, 1); //added
   }
 
   tr:hover {
     // background-color: #eaeef1; previous
-    background-color: rgba(0, 0, 0, 0.04); //added 
+    background-color: rgba(0, 0, 0, 0.04); //added
   }
   th {
     background-color: #eaeef1 !important;

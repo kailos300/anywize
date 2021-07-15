@@ -34,7 +34,12 @@ export const logError = (error, type) => {
  *
  * @returns {Promise}
  */
-const httpRequest = async (dispatch, requestType = GET, actionType = "", opts = {}) => {
+const httpRequest = async (
+  dispatch,
+  requestType = GET,
+  actionType = "",
+  opts = {}
+) => {
   try {
     dispatch({
       type: actionType,
@@ -48,10 +53,10 @@ const httpRequest = async (dispatch, requestType = GET, actionType = "", opts = 
       reqArgs.push(opts.data || {});
     }
 
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       reqArgs.push({
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
     }

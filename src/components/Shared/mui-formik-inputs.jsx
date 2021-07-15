@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useTranslation } from 'react-i18next';
+import * as React from "react";
+import { useTranslation } from "react-i18next";
 import {
   TextField,
   Select as MaterialSelect,
@@ -10,9 +10,9 @@ import {
   FormHelperText,
   InputAdornment,
   IconButton,
-} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+} from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const getErrorForName = (errors, name) => {
   if (!errors) {
@@ -23,8 +23,8 @@ const getErrorForName = (errors, name) => {
     return errors[name];
   }
 
-  if (name.includes('.')) {
-    const split = name.split('.');
+  if (name.includes(".")) {
+    const split = name.split(".");
 
     if (errors[split[0]]) {
       let tmp = errors[split[0]];
@@ -71,25 +71,25 @@ export const Password = (props) => {
 
   return (
     <TextField
-      label={label || ''}
-      margin='normal'
+      label={label || ""}
+      margin="normal"
       name={name}
-      type={showPwd ? 'text' : 'password'}
-      value={value || ''}
+      type={showPwd ? "text" : "password"}
+      value={value || ""}
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
       InputProps={{
-        endAdornment:
-          <InputAdornment position='end'>
+        endAdornment: (
+          <InputAdornment position="end">
             <IconButton
-              aria-label='toggle password visibility'
+              aria-label="toggle password visibility"
               onClick={changeShowPwd}
             >
               {showPwd ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </IconButton>
-          </InputAdornment>,
-
+          </InputAdornment>
+        ),
       }}
       {...rest}
     />
@@ -102,11 +102,11 @@ export const Input = (props) => {
 
   return (
     <TextField
-      label={label || ''}
-      margin='dense'
+      label={label || ""}
+      margin="dense"
       name={name}
-      type={type || 'text'}
-      value={value || ''}
+      type={type || "text"}
+      value={value || ""}
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
@@ -121,11 +121,11 @@ export const InputOnlyNumbers = (props) => {
 
   return (
     <TextField
-      label={label || ''}
-      margin='dense'
+      label={label || ""}
+      margin="dense"
       name={name}
-      type={type || 'text'}
-      value={value || ''}
+      type={type || "text"}
+      value={value || ""}
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
@@ -142,26 +142,26 @@ export const InputOnlyNumbers = (props) => {
 };
 
 export const Select = (props) => {
-  const { type, label, name, errors, value, options, help, margin, ...rest } = props;
+  const { type, label, name, errors, value, options, help, margin, ...rest } =
+    props;
   const { t } = useTranslation();
 
   return (
-    <FormControl fullWidth margin={props.margin || 'none'}>
-      {
-        !!label &&
-        <InputLabel>{label || ''}</InputLabel>
-      }
+    <FormControl fullWidth margin={props.margin || "none"}>
+      {!!label && <InputLabel>{label || ""}</InputLabel>}
       <MaterialSelect
-        margin={margin || 'none'}
+        margin={margin || "none"}
         name={name}
-        value={value || ''}
+        value={value || ""}
         fullWidth={true}
         error={!!getErrorForName(errors, name)}
         {...rest}
       >
-        {
-          options.map((o, i) => <MenuItem key={i} value={o.value}>{o.label}</MenuItem>)
-        }
+        {options.map((o, i) => (
+          <MenuItem key={i} value={o.value}>
+            {o.label}
+          </MenuItem>
+        ))}
       </MaterialSelect>
       <FormHelperText error={!!getErrorForName(errors, name)}>
         <span>{getHelpOrError(help, errors, name, t)}</span>
@@ -176,11 +176,11 @@ export const Textarea = (props) => {
 
   return (
     <TextField
-      label={label || ''}
-      margin='normal'
+      label={label || ""}
+      margin="normal"
       name={name}
-      type={'text'}
-      value={value || ''}
+      type={"text"}
+      value={value || ""}
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
@@ -195,12 +195,7 @@ export const Checkbox = (props) => {
   const { label, name, value, ...rest } = props;
 
   return (
-    <MaterialCheckbox
-      checked={value}
-      value={value}
-      name={name}
-      {...rest}
-    />
+    <MaterialCheckbox checked={value} value={value} name={name} {...rest} />
   );
 };
 
@@ -219,11 +214,11 @@ export function ColorInput(props) {
 
   return (
     <TextField
-      label={label || ''}
-      margin='normal'
+      label={label || ""}
+      margin="normal"
       name={name}
-      type={type || 'text'}
-      value={value || ''}
+      type={type || "text"}
+      value={value || ""}
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
@@ -232,8 +227,8 @@ export function ColorInput(props) {
         endAdornment: (
           <InputAdornment position="end">
             <input
-              value={value || ''}
-              type='color'
+              value={value || ""}
+              type="color"
               name={name}
               onChange={handleChange}
             />

@@ -10,24 +10,23 @@ export const getColumns = (columns, t) => {
   return updatedColumns;
 };
 
-
-export const getActions = (tableTitle, callbackOnDelete ,addHandler) => {
+export const getActions = (tableTitle, callbackOnDelete, addHandler) => {
   let actions = [];
   actions.push(
-  //   {
-  //   icon: 'delete',
-  //   tooltip: 'Delete',
-  //   position: 'row',
-  //   onClick: callbackOnDelete,
-  // },
+    //   {
+    //   icon: 'delete',
+    //   tooltip: 'Delete',
+    //   position: 'row',
+    //   onClick: callbackOnDelete,
+    // },
     {
-      icon: 'add',
-      tooltip: 'Add',
-      iconProps: { style: {color: "#ADADAD",background:'#1F1F1F' } },
+      icon: "add",
+      tooltip: "Add",
+      iconProps: { style: { color: "#ADADAD", background: "#1F1F1F" } },
       isFreeAction: true,
-      onClick: addHandler
-    });
-
+      onClick: addHandler,
+    }
+  );
 
   return actions;
 };

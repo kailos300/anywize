@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { loginWithRedirect } from 'redux/slices/authSlice';
-import { PATHS } from 'util/appConstants';
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { loginWithRedirect } from "redux/slices/authSlice";
+import { PATHS } from "util/appConstants";
 
-import { selectAuthenticated } from 'redux/slices/authSlice';
+import { selectAuthenticated } from "redux/slices/authSlice";
 
-import LoginComponent from 'components/Login';
+import LoginComponent from "components/Login";
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -17,8 +17,8 @@ const Login = () => {
   const loginCallback = () => history.push(PATHS.dashboard);
 
   useEffect(() => {
-    if (localStorage.getItem('token') && authenticated) {
-      history.push(PATHS.dashboard)
+    if (localStorage.getItem("token") && authenticated) {
+      history.push(PATHS.dashboard);
     }
   }, [authenticated, history]);
 
@@ -32,9 +32,7 @@ const Login = () => {
     }
   };
 
-  return (
-    <LoginComponent onSubmit={onSubmit} error={error} />
-  );
+  return <LoginComponent onSubmit={onSubmit} error={error} />;
 };
 
 export default Login;

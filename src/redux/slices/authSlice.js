@@ -1,17 +1,17 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
-import { setCookie } from 'util/cookie-utils';
-import { storage } from 'util/storage';
-import { coreApi } from 'api/core';
+import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { setCookie } from "util/cookie-utils";
+import { storage } from "util/storage";
+import { coreApi } from "api/core";
 
-const baseUrl = '/auth';
+const baseUrl = "/auth";
 
 const initialState = {
-  authenticated: !!storage.get('token'),
+  authenticated: !!storage.get("token"),
   loading: false,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setAuthenticated: (state) => {
@@ -37,16 +37,15 @@ export const {
 } = authSlice.actions;
 export default authSlice.reducer;
 
-
-export const loginWithRedirect = (creds, callback) => async dispatch => {
+export const loginWithRedirect = (creds, callback) => async (dispatch) => {
   dispatch(setAuthLoading());
-  const url = baseUrl + '/login';
+  const url = baseUrl + "/login";
 
   try {
     const { token, tokenExpiration } = await coreApi.post(url, creds);
     if (token) {
-      setCookie('token', token, { maxAge: tokenExpiration });
-      await storage.set('token', token);
+      setCookie("token", token, { maxAge: tokenExpiration });
+      await storage.set("token", token);
       await dispatch(setAuthenticated());
 
       callback();
@@ -58,9 +57,14 @@ export const loginWithRedirect = (creds, callback) => async dispatch => {
   }
 };
 
-
 const authenticatedSelector = ({ auth }) => auth.authenticated;
 const authLoadingSelector = ({ auth }) => auth.loading;
 
-export const selectAuthenticated = createSelector(authenticatedSelector, authenticated => authenticated);
-export const selectAuthLoading = createSelector(authLoadingSelector, loading => loading);
+export const selectAuthenticated = createSelector(
+  authenticatedSelector,
+  (authenticated) => authenticated
+);
+export const selectAuthLoading = createSelector(
+  authLoadingSelector,
+  (loading) => loading
+);

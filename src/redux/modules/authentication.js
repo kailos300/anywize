@@ -2,7 +2,11 @@ import _ from "lodash";
 import { APP_NAMESPACE } from "../../util/redux-constants";
 import { get, post } from "../../util/http-utils";
 import { setCookie } from "../../util/cookie-utils";
-import { updateStore, buildGenericInitialState, handleError } from "../../util/store-utils";
+import {
+  updateStore,
+  buildGenericInitialState,
+  handleError,
+} from "../../util/store-utils";
 
 const AUTH_ENDPOINT_BASE = "auth";
 const typeBase = `${APP_NAMESPACE}/${AUTH_ENDPOINT_BASE}/`;
@@ -42,13 +46,12 @@ export const login = (credentials, desiredPath) => async (dispatch) => {
       // because of some unknown bug in the /dashboard component
       setTimeout(() => {
         window.location.href = "/dashboard";
-      }, 500)
+      }, 500);
     }
   } catch (err) {
     throw err;
   }
 };
-
 
 /**
  * setPostAuthPath  - Save Desired Pre-Auth Path to State
@@ -60,9 +63,6 @@ export const setPostAuthPath = (payload) => (dispatch) =>
     type: SET_POST_AUTH_PATH,
     payload,
   });
-
-
-
 
 /**
  * getAuthenticatedUser - Retrieves the logged in user's information
@@ -84,7 +84,7 @@ export const getAuthenticatedUser = () => async (dispatch) => {
 
 // Store
 const INITIAL_STATE = {
-  authenticated: localStorage.getItem('token') ? true : false,
+  authenticated: localStorage.getItem("token") ? true : false,
   user: "",
   ...buildGenericInitialState([
     CHANGE_AUTH,
@@ -94,15 +94,17 @@ const INITIAL_STATE = {
   ]),
 };
 
-const reducer =  (state = INITIAL_STATE, action) => {
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CHANGE_AUTH:
       return updateStore(state, action, {
-        authenticated: localStorage.getItem('token') ? true : false,
+        authenticated: localStorage.getItem("token") ? true : false,
         user: _.get(action, "payload.user.id"),
       });
     case GET_AUTHENTICATED_USER:
-      return updateStore(state, action, { user: _.get(action, "payload.user.id") });
+      return updateStore(state, action, {
+        user: _.get(action, "payload.user.id"),
+      });
     default:
       return state;
   }

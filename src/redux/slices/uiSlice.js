@@ -1,16 +1,16 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
   showMessage: false,
   message: {
-    description: '',
-    type: '',
+    description: "",
+    type: "",
   },
 };
 
 const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
     setShowMessage: (state, action) => {
@@ -30,18 +30,23 @@ const uiSlice = createSlice({
   },
 });
 
-export const {
-  setShowMessage,
-  setHideMessage,
-  setUiLoading,
-  setUiReady,
-} = uiSlice.actions;
+export const { setShowMessage, setHideMessage, setUiLoading, setUiReady } =
+  uiSlice.actions;
 export default uiSlice.reducer;
 
 const uiLoadingSelector = ({ ui }) => ui.loading;
 const showMessageSelector = ({ ui }) => ui.showMessage;
 const messageSelector = ({ ui }) => ui.message;
 
-export const selectUiLoading = createSelector(uiLoadingSelector, loading => loading);
-export const selectShowMessage = createSelector(showMessageSelector, showMessage => showMessage);
-export const selectMessage = createSelector(messageSelector, message => message);
+export const selectUiLoading = createSelector(
+  uiLoadingSelector,
+  (loading) => loading
+);
+export const selectShowMessage = createSelector(
+  showMessageSelector,
+  (showMessage) => showMessage
+);
+export const selectMessage = createSelector(
+  messageSelector,
+  (message) => message
+);
