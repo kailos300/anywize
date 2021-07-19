@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
+import TableCell from '@material-ui/core/TableCell';
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import TableContainer from '@material-ui/core/TableContainer';
+import Table from '@material-ui/core/Table';
+import TableRow from '@material-ui/core/TableRow';
 import clsx from "clsx";
 
 // Helpers
@@ -11,6 +17,7 @@ import { ORDERS_TABLE_COLUMNS } from "constants/ui-constants";
 import { getColumns, getActions } from "util/table-utils";
 import { mapTableData } from "util/helpers";
 import { PATHS } from "util/appConstants";
+import jsondata from './data.json'
 
 // Actions
 import {
@@ -62,17 +69,40 @@ const useStyles = makeStyles({
       color: "#F5F5F5",
     },
   },
+  _1F1F1F: {
+    background: '#1F1F1F',
+  },
+  _525252: {
+    background: '#525252',
+  },
+  _textalignright: {
+    textAlign: 'right',
+
+  },
+  _edit: {
+    background: '#6F9CEB',
+    borderRadius: '50%',
+    padding: '2px',
+    width: '13px',
+    height: '13px',
+  },
+  _pointer: {
+    cursor: 'pointer'
+  },
+  _width111: '111px',
 });
 
 const tableTitle = "CUSTOMERS";
 
 const OrderList = ({ confirm }) => {
+  const tableRef = useRef();
   const { t } = useTranslation("common");
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const loading = useSelector(selectOrderStatus);
   const orders = useSelector(selectOrders);
+  const [jsonData, setjsonData] = useState(jsondata)
 
   useEffect(() => {
     if (!orders.length && !loading) {
@@ -90,29 +120,104 @@ const OrderList = ({ confirm }) => {
   const actions = getActions(
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
-    () => addHandler()
+    () => addHandler(),
+    (e, rowData) => editHandler(rowData)
   );
   const addHandler = () => {
     history.push(PATHS.orders.add);
   };
+  const editHandler = (rowData) => {
+    console.log(rowData)
+    // history.push(PATHS.orders.edit.replace(':id', rowData.id))
+  }
+  const rowclick = (rowData) => {
+    tableRef.current.onToggleDetailPanel([rowData.tableData.id], rowData =>
+      rowData.list.map((data) =>
+        <TableContainer className={clsx(rowData.tableData.id % 2 == 0 ? classes._1F1F1F : classes._525252)}>
+          <Table>
+            <TableRow>
+              <TableCell className={classes._textalignright}>
+                {data.name}
+              </TableCell>
+              <TableCell className={classes._textalignright}>
+                {data.name}
+              </TableCell>
+              <TableCell className={classes._textalignright}>
+                {data.name}
+              </TableCell>
+              <TableCell className={classes._textalignright}>
+                {data.name}
+              </TableCell>
+              <TableCell className={classes._textalignright}>
+                <EditIcon onClick={() => editHandler(data)} className={clsx(classes._edit, classes._pointer)} />
+              </TableCell>
+              <TableCell className={classes._textalignright}>
+                <div>
+                  {console.log(data.checked)}
+                  <input
+                    onChange={(e) => { innerChangeHandler(e, data, rowData) }}
+                    className={'radio-checkbox'}
+                    id={`panel${data.id}`}
+                    type="checkbox"
+                    name="field"
+                    defaultChecked={data.checked} />
+                  <label for={`panel${data.id}`}><span><span></span></span></label>
+                </div>
+              </TableCell>
+              <TableCell className={clsx(classes._textalignright, classes._width111)}>
+                <DeleteIcon className={classes._pointer} />
+              </TableCell>
+            </TableRow>
+          </Table>
+        </TableContainer >
+      )
+    )
+  }
+  const checkChangeHandler = (e, rowData) => {
+    if (e.target.checked) {
+      setjsonData(
+        jsonData.map((x, index) => {
+          if (x.id !== rowData.id) {
+            x.mainCheck = false
+            x.list = x.list.map((subItem, subIndex) => {
+              return {
+                ...subItem,
+                checked: false
+              };
+            });
+
+            return x;
+          }
+          x.mainCheck = true
+          x.list = x.list.map((subItem, subIndex) => {
+            return {
+              ...subItem,
+              checked: true
+            };
+          });
+
+          return x;
+        }),
+      );
+
+    }
+  }
+  const innerChangeHandler = (e, data, rowData) => {
+    console.log(e.target.checked, data, rowData)
+  }
   if (loading) return <div className="loading">Loading..</div>;
 
   return (
-    // <>
-    //     <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
-    //         <Typography className="font-size-34" variant='h4'>{t('Orders')}</Typography>
-    //         <Button className="Primary-btn" onClick={addOrderHandler} color="primary" variant="contained">Add Order</Button>
-    //     </Paper>
-    <div className={clsx(classes._container, 'custom-table-styles order-table-styles')}>
+    <div className={clsx(classes._container, 'order-table')}>
       <MaterialTable
-        data={mapTableData(orders)}
+        tableRef={tableRef}
+        data={mapTableData(jsonData)}
         title={t(tableTitle)}
-        columns={getColumns(ORDERS_TABLE_COLUMNS, t)}
+        columns={getColumns(ORDERS_TABLE_COLUMNS((rowData) => rowclick(rowData), (e, rowData) => checkChangeHandler(e, rowData)), t)}
         // onRowClick={(e, rowData) => history.push(
         //     PATHS.orders.edit.replace(':id', rowData.id),
         // )}
         actions={actions}
-        // parentChildData={(row, rows) => rows.find(a => a.supplier_id === row.customer_id)}
         options={{
           paging: false,
           // maxBodyHeight: '85vh',
@@ -128,7 +233,7 @@ const OrderList = ({ confirm }) => {
             fontWeight: 'bold',
           },
           cellStyle: {
-            backgroundColor: '#121212',
+            // backgroundColor: '#121212',
             color: 'white',
             border: 'none',
             font: 'normal normal normal 12px/24px Roboto',
@@ -136,70 +241,20 @@ const OrderList = ({ confirm }) => {
           },
           showTitle: false,
           header: false,
-          rowStyle: { height: '71px' },
-          selection: true,
           showTextRowsSelected: false,
           showSelectAllCheckbox: false,
+          rowStyle: rowData => {
+            if (rowData.tableData.id % 2 == 0) {
+              return { backgroundColor: ' #1F1F1F ', height: '71px' };
+            }
+            else {
+              return { backgroundColor: '#525252', height: '71px' };
+
+            }
+          }
         }}
-        onTreeExpandChange={console.log('expanded')}
-        // onSelectionChange={rows => setSelected([...rows])}
-        detailPanel={[
-          {
-            tooltip: 'Show Name',
-            render: rowData => {
-              return (
-                <div
-                  style={{
-                    fontSize: 100,
-                    textAlign: 'center',
-                    color: 'white',
-                    backgroundColor: '#43A047',
-                  }}
-                >
-                  {rowData.id}
-                </div>
-              )
-            },
-          },
-          {
-            icon: 'account_circle',
-            tooltip: 'Show Surname',
-            render: rowData => {
-              return (
-                <div
-                  style={{
-                    fontSize: 100,
-                    textAlign: 'center',
-                    color: 'white',
-                    backgroundColor: '#E53935',
-                  }}
-                >
-                  {rowData.customer_id}
-                </div>
-              )
-            },
-          },
-          {
-            icon: 'favorite_border',
-            openIcon: 'favorite',
-            tooltip: 'Show Both',
-            render: rowData => {
-              return (
-                <div
-                  style={{
-                    fontSize: 100,
-                    textAlign: 'center',
-                    color: 'white',
-                    backgroundColor: '#FDD835',
-                  }}
-                >
-                  {rowData.id} {rowData.supplier_id}
-                </div>
-              )
-            },
-          },
-        ]}
       />
+
     </div>
     // </>
   )

@@ -1,3 +1,5 @@
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { PATHS } from "util/appConstants";
 
 export const MID_NAVIGATION_ROUTES = [
@@ -34,10 +36,30 @@ export const CUSTOMERS_TABLE_COLUMNS = [
   { title: "Billing Cycle" },
 ];
 
-export const ORDERS_TABLE_COLUMNS = [
-  { title: "Order id", field: "id" },
-  { title: "Description", field: "description" },
-];
+export const ORDERS_TABLE_COLUMNS = (rowclick, checkChangeHandler) => {
+  return [
+    { title: "Order id", field: "name" },
+    { title: "Description", field: "description" },
+    {
+      title: "Id+1",
+      render: rowData => <div style={{ textAlign: 'right' }}>
+        <input onChange={(e) => checkChangeHandler(e, rowData)}
+          className={'radio-checkbox'} id={rowData.id} type="checkbox" name="field" checked={rowData.mainCheck} />
+        <label for={rowData.id}><span><span></span></span></label>
+      </div>
+    },
+    {
+      title: "arrow",
+      render: rowData => <div style={{ textAlign: 'right', cursor: 'pointer' }}>
+        {rowData.tableData.showDetailPanel ?
+          <ExpandLessIcon onClick={() => rowclick(rowData)} />
+          :
+          <ExpandMoreIcon onClick={() => rowclick(rowData)} />
+        }
+      </div>
+    }
+  ];
+}
 
 export const checkPaths = [
   PATHS.tours.root,

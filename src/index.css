@@ -67,6 +67,9 @@ font-size: 12px !important;
 .order-table-styles >* tr:nth-child(odd) td{
   background-color:#1F1F1F !important;
 }
+.order-table tr td:last-child {
+  width: 20px !important;
+}
   /* .custom-table-styles tr:hover {
    
     background-color: rgba(0, 0, 0, 0.04); 
@@ -131,3 +134,61 @@ table.MuiTable-root {
 .map-container {
   min-height: 100vh;
 }
+
+
+.radio-checkbox[type=checkbox]:not(old){
+  width     :14px;
+  margin    : 0;
+  padding   : 0;
+  font-size : 1em;
+  opacity   : 0;
+}
+
+.radio-checkbox[type=checkbox]:not(old) + label{
+  display      : inline-block;
+  /* margin-left  : -2em; */
+  line-height  : 1.5em;
+}
+
+.radio-checkbox[type=checkbox]:not(old) + label > span{
+  display          : inline-block;
+  width            : 14px;
+  height           : 14px;
+  border           : 1px solid#ADADAD;
+  border-radius    : 50%;
+  background       : transparent;
+  vertical-align   : bottom;
+  margin: 1.2px;
+  transition: 0.5s;
+}
+.radio-checkbox[type=checkbox]:not(old):checked + label > span > span{
+  display          : block;
+  width            : 10px;
+  height           : 10px;
+  border           : 1px solid #6F9CEB;
+  border-radius    : 50%;
+  background       : #6F9CEB;
+  margin: 1.2px;
+  transition: 0.5s;
+
+}
+.radio-checkbox[type=checkbox]:not(old):checked + label > span {
+border           : 1px solid #6F9CEB;
+}
+.radio-checkbox[type=checkbox]:not(old):hover + label > span > span{
+  opacity: 1;
+  background-color: #ADADAD;
+  display          : inline-block;
+  width            : 10px;
+  height           : 10px;
+  border           : 1px solid#ADADAD;
+  border-radius    : 50%;
+  margin: 1.2px;
+}
+.radio-checkbox[type=checkbox]:not(old):checked:hover + label > span >span{
+  background       : #6F9CEB;
+  border           : 1px solid#6F9CEB;
+  margin: 1.2px;
+  transition: 0.5s;
+
+  }
