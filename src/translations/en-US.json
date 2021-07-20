@@ -47,11 +47,14 @@
   "Longitude": "Longitude",
   "Password": "Password",
   "Log in": "Log in",
-  "Customers": "Kunden",
-  "Tours": "Touren",
+  "Customers": "Customers",
+  "Tours": "Tours",
   "Customer": "Customer",
   "Notify": "Notify",
   "Yes": "Yes",
   "No": "No",
-  "Code": "Code"
+  "Code": "Code",
+  "Current tours": "Current tours",
+  "Recently finished tours": "Recently finished tours",
+  "Archive tours": "Archive tours"
 }

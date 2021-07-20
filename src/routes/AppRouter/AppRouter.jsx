@@ -11,6 +11,9 @@ import {
   EditTour,
   CustomersList,
   CustomerDetail,
+  CurrentTours,
+  RecentTours,
+  ArchiveTours,
   AddCustomer,
   EditCustomer,
   AddOrder,
@@ -34,6 +37,21 @@ const AppRouter = () => {
         exact
         path={PATHS.tours.detail}
         component={RequireAuth(TourDetail)}
+      />
+      <Route
+        exact
+        path={PATHS.tours.current}
+        component={RequireAuth(CurrentTours)}
+      />
+      <Route
+        exact
+        path={PATHS.tours.recent}
+        component={RequireAuth(RecentTours)}
+      />
+      <Route
+        exact
+        path={PATHS.tours.archive}
+        component={RequireAuth(ArchiveTours)}
       />
       {/**customers */}
       <Route

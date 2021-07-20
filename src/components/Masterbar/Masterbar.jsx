@@ -42,39 +42,30 @@ const useStyles = makeStyles({
     borderBottom: "1px solid #6F9CEB",
   },
 });
-const Masterbar = () => {
+const Masterbar = (props) => {
   const { t } = useTranslation();
-
   const classes = useStyles();
 
   return (
     <header className={classes._container}>
+      {console.log(props)}
       <Typography className={classes._title} variant="h4">
-        {t("Master Data")}
+        {t(props.name)}
       </Typography>
       <List className={classes._nav} component="nav">
-        <ListItem
-          activeClassName={classes._isactive}
-          className={classes._menuitem}
-          key={1}
-          component={NavLink}
-          to={PATHS.customers.root}
-        >
-          <ListItemText className={classes._nomargin}>
-            {t("Customers")}
-          </ListItemText>
-        </ListItem>
-        <ListItem
-          activeClassName={classes._isactive}
-          className={classes._menuitem}
-          key={1}
-          component={NavLink}
-          to={PATHS.tours.root}
-        >
-          <ListItemText className={classes._nomargin}>
-            {t("Tours")}
-          </ListItemText>
-        </ListItem>
+        {props.list.map((item) =>
+          <ListItem
+            activeClassName={classes._isactive}
+            className={classes._menuitem}
+            key={1}
+            component={NavLink}
+            to={item.path}
+          >
+            <ListItemText className={classes._nomargin}>
+              {t(item.name)}
+            </ListItemText>
+          </ListItem>)
+        }
       </List>
     </header>
   );

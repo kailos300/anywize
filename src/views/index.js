@@ -3,6 +3,9 @@ import ToursList from "./Tours/ToursList";
 import AddTour from "./Tours/AddTour";
 import EditTour from "./Tours/EditTour";
 import TourDetail from "./Tours/TourDetail";
+import CurrentTours from "./Tours/CurrentTours";
+import RecentTours from "./Tours/RecentTours";
+import ArchiveTours from "./Tours/ArchiveTours";
 import CustomersList from "./Customers/CustomersList";
 import AddCustomer from "./Customers/AddCustomer";
 import EditCustomer from "./Customers/EditCustomer";
@@ -21,6 +24,9 @@ export {
   TourDetail,
   CustomersList,
   CustomerDetail,
+  CurrentTours,
+  RecentTours,
+  ArchiveTours,
   AddCustomer,
   EditCustomer,
   OrderList,

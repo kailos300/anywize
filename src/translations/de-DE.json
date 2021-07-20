@@ -53,5 +53,8 @@
   "Notify": "Benachrichtigung",
   "Yes": "Ja",
   "No": "Nein",
-  "Code": "Code"
+  "Code": "Code",
+  "Current tours": "Aktuelle Touren",
+  "Recently finished tours": "Kürzlich beendete Touren",
+  "Archive tours": "Archiv Touren"
 }

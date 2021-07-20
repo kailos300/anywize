@@ -12,9 +12,24 @@ export const TOP_NAVIGATION_ROUTES = [
   { name: "Past Deliveries", path: "/dash" },
   { name: "New Orders", path: PATHS.orders.root },
 ];
+export const MASTER_DATA_BAR = {
+  name: 'Master Data',
+  list: [
+    { name: 'Customers', path: PATHS.customers.root },
+    { name: 'Tours', path: PATHS.tours.root }
+  ]
+}
+export const TOUR_DATA_BAR = {
+  name: 'Tours',
+  list: [
+    { name: 'Current tours', path: PATHS.tours.current },
+    { name: 'Recently finished tours', path: PATHS.tours.recent },
+    { name: 'Archive tours', path: PATHS.tours.archive }
 
+  ]
+}
 export const NAVIGATION_ROUTES = [
-  { name: "Tours", path: "/dash" },
+  { name: "Tours", path: PATHS.tours.current },
   { name: "Orders", path: PATHS.orders.root },
   { name: "Master Data", path: PATHS.customers.root },
   { name: "Past Deliveries", path: "/dash1" },
@@ -42,10 +57,10 @@ export const ORDERS_TABLE_COLUMNS = (rowclick, checkChangeHandler) => {
     { title: "Description", field: "description" },
     {
       title: "Id+1",
-      render: rowData => <div style={{ textAlign: 'right' }}>
+      render: rowData => <div style={{ textAlign: 'right', }}>
         <input onChange={(e) => checkChangeHandler(e, rowData)}
           className={'radio-checkbox'} id={rowData.id} type="checkbox" name="field" checked={rowData.mainCheck} />
-        <label for={rowData.id}><span><span></span></span></label>
+        <label for={rowData.id}><span><span style={{ margin: '1px' }}></span></span></label>
       </div>
     },
     {
@@ -71,3 +86,8 @@ export const checkPaths = [
   PATHS.customers.edit,
   PATHS.customers.detail,
 ];
+export const checkTourPaths = [
+  PATHS.tours.current,
+  PATHS.tours.recent,
+  PATHS.tours.archive
+]

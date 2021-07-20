@@ -6,6 +6,10 @@ export const PATHS = {
     add: "/tours/add",
     edit: "/tours/edit/:id",
     detail: "/tours/detail/:id",
+    current: '/tours/current',
+    recent: '/tours/recent',
+    archive: '/tours/archive',
+
   },
   customers: {
     root: "/customers",
@@ -18,6 +22,7 @@ export const PATHS = {
     add: "/orders/add",
     edit: "/orders/edit/:id",
   },
+
   customer: "/dash",
   dashboard: "/dashboard",
   addTour: "/tour/add",

@@ -151,7 +151,7 @@ const OrderList = ({ confirm }) => {
               <TableCell className={classes._textalignright}>
                 <EditIcon onClick={() => editHandler(data)} className={clsx(classes._edit, classes._pointer)} />
               </TableCell>
-              <TableCell className={classes._textalignright}>
+              <TableCell style={{ paddingRight: '30px' }} className={classes._textalignright}>
                 <div>
                   {console.log(data.checked)}
                   <input
@@ -160,7 +160,7 @@ const OrderList = ({ confirm }) => {
                     id={`panel${data.id}`}
                     type="checkbox"
                     name="field"
-                    defaultChecked={data.checked} />
+                    checked={data.checked} />
                   <label for={`panel${data.id}`}><span><span></span></span></label>
                 </div>
               </TableCell>
@@ -174,36 +174,64 @@ const OrderList = ({ confirm }) => {
     )
   }
   const checkChangeHandler = (e, rowData) => {
-    if (e.target.checked) {
-      setjsonData(
-        jsonData.map((x, index) => {
-          if (x.id !== rowData.id) {
-            x.mainCheck = false
-            x.list = x.list.map((subItem, subIndex) => {
-              return {
-                ...subItem,
-                checked: false
-              };
-            });
+    let newData = tableRef.current.state.data;
+    newData.map((x, index) => {
+      if (x.id !== rowData.id) {
+        x.list = x.list.map((subItem, subIndex) => {
+          return {
+            ...subItem,
+            checked: false
+          };
+        });
 
-            return x;
-          }
-          x.mainCheck = true
-          x.list = x.list.map((subItem, subIndex) => {
-            return {
-              ...subItem,
-              checked: true
-            };
-          });
+        x.mainCheck = false
+        return x;
+      }
+      x.mainCheck = e.target.checked
+      x.list = x.list.map((subItem, subIndex) => {
+        return {
+          ...subItem,
+          checked: e.target.checked
+        };
+      });
 
-          return x;
-        }),
-      );
-
-    }
+      return x;
+    })
+    setjsonData(tableRef.current.state.data)
   }
+
   const innerChangeHandler = (e, data, rowData) => {
-    console.log(e.target.checked, data, rowData)
+    let newData = tableRef.current.state.data;
+    newData.map((x, index) => {
+      if (x.id !== rowData.id) {
+        x.mainCheck = false
+        x.list = x.list.map((subItem, subIndex) => {
+          return {
+            ...subItem,
+            checked: false
+          };
+        });
+
+        return x;
+      }
+      x.list = x.list.map((subItem, subIndex) => {
+        if (subItem.id !== data.id) {
+          return {
+            ...subItem,
+          };
+        }
+        return {
+          ...subItem,
+          checked: e.target.checked
+        };
+      });
+
+      x.mainCheck = x.list.some((i) => i.checked == true)
+      return x;
+    })
+    setjsonData(tableRef.current.state.data)
+
+
   }
   if (loading) return <div className="loading">Loading..</div>;
 
@@ -237,7 +265,7 @@ const OrderList = ({ confirm }) => {
             color: 'white',
             border: 'none',
             font: 'normal normal normal 12px/24px Roboto',
-            padding: '0 16px'
+            // padding: '0 1   6px'
           },
           showTitle: false,
           header: false,

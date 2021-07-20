@@ -62,7 +62,7 @@ const Navbar = () => {
             activeClassName={classes._isactive}
             className={clsx(
               classes._menuitem,
-              location.pathname === "/tours" && item.name === "Master Data"
+              (location.pathname === "/tours" && item.name === "Master Data")
                 ? classes._isactive
                 : ""
             )}
