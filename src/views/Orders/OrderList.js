@@ -6,6 +6,8 @@ import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import TableCell from '@material-ui/core/TableCell';
 import EditIcon from "@material-ui/icons/Edit";
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from "@material-ui/icons/Delete";
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
@@ -92,7 +94,7 @@ const useStyles = makeStyles({
   _width111: '111px',
 });
 
-const tableTitle = "CUSTOMERS";
+const tableTitle = "ORDERS";
 
 const OrderList = ({ confirm }) => {
   const tableRef = useRef();
@@ -127,52 +129,9 @@ const OrderList = ({ confirm }) => {
     history.push(PATHS.orders.add);
   };
   const editHandler = (rowData) => {
-    console.log(rowData)
     // history.push(PATHS.orders.edit.replace(':id', rowData.id))
   }
-  const rowclick = (rowData) => {
-    tableRef.current.onToggleDetailPanel([rowData.tableData.id], rowData =>
-      rowData.list.map((data) =>
-        <TableContainer className={clsx(rowData.tableData.id % 2 == 0 ? classes._1F1F1F : classes._525252)}>
-          <Table>
-            <TableRow>
-              <TableCell className={classes._textalignright}>
-                {data.name}
-              </TableCell>
-              <TableCell className={classes._textalignright}>
-                {data.name}
-              </TableCell>
-              <TableCell className={classes._textalignright}>
-                {data.name}
-              </TableCell>
-              <TableCell className={classes._textalignright}>
-                {data.name}
-              </TableCell>
-              <TableCell className={classes._textalignright}>
-                <EditIcon onClick={() => editHandler(data)} className={clsx(classes._edit, classes._pointer)} />
-              </TableCell>
-              <TableCell style={{ paddingRight: '30px' }} className={classes._textalignright}>
-                <div>
-                  {console.log(data.checked)}
-                  <input
-                    onChange={(e) => { innerChangeHandler(e, data, rowData) }}
-                    className={'radio-checkbox'}
-                    id={`panel${data.id}`}
-                    type="checkbox"
-                    name="field"
-                    checked={data.checked} />
-                  <label for={`panel${data.id}`}><span><span></span></span></label>
-                </div>
-              </TableCell>
-              <TableCell className={clsx(classes._textalignright, classes._width111)}>
-                <DeleteIcon className={classes._pointer} />
-              </TableCell>
-            </TableRow>
-          </Table>
-        </TableContainer >
-      )
-    )
-  }
+
   const checkChangeHandler = (e, rowData) => {
     let newData = tableRef.current.state.data;
     newData.map((x, index) => {
@@ -197,10 +156,11 @@ const OrderList = ({ confirm }) => {
 
       return x;
     })
-    setjsonData(tableRef.current.state.data)
+    setjsonData(newData)
   }
 
   const innerChangeHandler = (e, data, rowData) => {
+    console.log(e, data, rowData)
     let newData = tableRef.current.state.data;
     newData.map((x, index) => {
       if (x.id !== rowData.id) {
@@ -229,9 +189,7 @@ const OrderList = ({ confirm }) => {
       x.mainCheck = x.list.some((i) => i.checked == true)
       return x;
     })
-    setjsonData(tableRef.current.state.data)
-
-
+    setjsonData(newData)
   }
   if (loading) return <div className="loading">Loading..</div>;
 
@@ -241,17 +199,12 @@ const OrderList = ({ confirm }) => {
         tableRef={tableRef}
         data={mapTableData(jsonData)}
         title={t(tableTitle)}
-        columns={getColumns(ORDERS_TABLE_COLUMNS((rowData) => rowclick(rowData), (e, rowData) => checkChangeHandler(e, rowData)), t)}
-        // onRowClick={(e, rowData) => history.push(
-        //     PATHS.orders.edit.replace(':id', rowData.id),
-        // )}
+        columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData)), t)}
         actions={actions}
         options={{
+          detailPanelColumnAlignment: 'right',
           paging: false,
-          // maxBodyHeight: '85vh',
-          // minBodyHeight: '85vh',
           actionsColumnIndex: -1,
-          // searchFieldAlignment: "left",
           search: false,
           headerStyle: {
             backgroundColor: '#121212',
@@ -261,11 +214,9 @@ const OrderList = ({ confirm }) => {
             fontWeight: 'bold',
           },
           cellStyle: {
-            // backgroundColor: '#121212',
             color: 'white',
             border: 'none',
             font: 'normal normal normal 12px/24px Roboto',
-            // padding: '0 1   6px'
           },
           showTitle: false,
           header: false,
@@ -277,10 +228,62 @@ const OrderList = ({ confirm }) => {
             }
             else {
               return { backgroundColor: '#525252', height: '71px' };
-
             }
           }
         }}
+        detailPanel={[
+          {
+            icon: () => <ExpandLessIcon />,
+            openIcon: () => <ExpandMoreIcon />,
+            render: rowData => {
+              return (
+                <>
+                  {rowData.list.map((data) =>
+                    <TableContainer className={clsx(rowData.tableData.id % 2 == 0 ? classes._1F1F1F : classes._525252)}>
+                      <Table>
+                        <TableRow>
+                          <TableCell className={classes._textalignright}>
+                            {data.name}
+                          </TableCell>
+                          <TableCell className={classes._textalignright}>
+                            {data.name}
+                          </TableCell>
+                          <TableCell className={classes._textalignright}>
+                            {data.name}
+                          </TableCell>
+                          <TableCell className={classes._textalignright}>
+                            {data.name}
+                          </TableCell>
+                          <TableCell className={classes._textalignright}>
+                            <EditIcon onClick={() => editHandler(data)} className={clsx(classes._edit, classes._pointer)} />
+                          </TableCell>
+                          <TableCell style={{ paddingRight: '30px' }} className={classes._textalignright}>
+                            <div >
+                              <input
+                                onChange={(e) => { innerChangeHandler(e, data, rowData) }}
+                                className={'radio-checkbox'}
+                                id={`panel${data.id}`}
+                                type="checkbox"
+                                name="field"
+                                checked={data.checked} />
+                              <label for={`panel${data.id}`}><span><span></span></span></label>
+                            </div>
+                          </TableCell>
+                          <TableCell className={clsx(classes._textalignright, classes._width111)}>
+                            <DeleteIcon className={classes._pointer} />
+                          </TableCell>
+                        </TableRow>
+                      </Table>
+                    </TableContainer >
+                  )
+                  }
+                </>
+
+              )
+            }
+
+          }
+        ]}
       />
 
     </div>
