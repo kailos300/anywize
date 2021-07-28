@@ -124,6 +124,7 @@ const CurrentTours = () => {
                         }
                         else {
                             return { backgroundColor: '#525252' };
+
                         }
                     }
 

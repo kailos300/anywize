@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import SettingsIcon from '@material-ui/icons/Settings';
 import clsx from "clsx";
 //assets
 import logo from "assets/img/logo.png";
@@ -71,7 +72,7 @@ const Navbar = () => {
             to={item.path}
           >
             <ListItemText className={classes._nomargin}>
-              {t(item.name)}
+              {item.name === 'Settings' ? < SettingsIcon className={'_settingicon'} /> : t(item.name)}
             </ListItemText>
           </ListItem>
         ))}
