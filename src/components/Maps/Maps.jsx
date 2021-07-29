@@ -38,6 +38,18 @@ const useStyles = makeStyles({
         width: '220px',
         justifyContent: 'space-between',
     },
+    _box: {
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '10px 15px',
+        border: '1px solid transparent',
+        cursor: 'pointer',
+        "&:hover": {
+            borderColor: "#6F9CEB",
+        },
+
+    },
     _search: {
         position: 'absolute',
         fontSize: '1.25em',
@@ -64,9 +76,11 @@ const useStyles = makeStyles({
     _525252: {
         background: '#525252',
     },
+    _6F9CEB: {
+        color: '#6F9CEB'
+    },
     _textalignright: {
         textAlign: 'right',
-
     },
     _edit: {
         background: '#6F9CEB',
@@ -113,13 +127,63 @@ export default function Maps() {
     // const [lat, setLat] = useState(42.35);
     // const [zoom, setZoom] = useState(9);
     useEffect(() => {
+        console.log(map)
         if (map.current) return; // initialize map only once
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: "mapbox://styles/infens/ckprj2dzt00zi19no4zckc7hv",
-            // center: [lng, lat],
-            // zoom: zoom
+            center: [-122.486052, 37.830348],
+            zoom: 15
         });
+        map.current.on('load', function () {
+            map.current.addSource('route', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': [
+                            [-122.483696, 37.833818],
+                            [-122.483482, 37.833174],
+                            [-122.483396, 37.8327],
+                            [-122.483568, 37.832056],
+                            [-122.48404, 37.831141],
+                            [-122.48404, 37.830497],
+                            [-122.483482, 37.82992],
+                            [-122.483568, 37.829548],
+                            [-122.48507, 37.829446],
+                            [-122.4861, 37.828802],
+                            [-122.486958, 37.82931],
+                            [-122.487001, 37.830802],
+                            [-122.487516, 37.831683],
+                            [-122.488031, 37.832158],
+                            [-122.488889, 37.832971],
+                            [-122.489876, 37.832632],
+                            [-122.490434, 37.832937],
+                            [-122.49125, 37.832429],
+                            [-122.491636, 37.832564],
+                            [-122.492237, 37.833378],
+                            [-122.493782, 37.833683]
+                        ]
+                    }
+                }
+            })
+
+        })
+        // map.current.addLayer({
+        //     'id': 'route',
+        //     'type': 'line',
+        //     'source': 'route',
+        //     'layout': {
+        //         'line-join': 'round',
+        //         'line-cap': 'round'
+        //     },
+        //     'paint': {
+        //         'line-color': '#888',
+        //         'line-width': 8
+        //     }
+        // });
     });
     const changeHandler = (e) => {
         setvalue(e.target.value)
@@ -146,8 +210,8 @@ export default function Maps() {
                 </div>
                 <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>On Map</Typography>
                 {[1, 1, 1].map((item, index) =>
-                    <Box style={{ color: 'white', background: index % 2 == 0 ? ' #1F1F1F ' : '#525252', display: 'flex', alignItems: 'center', padding: '10px 15px' }}>
-                        <MapIcon />
+                    <Box className={classes._box} style={{ background: index % 2 == 0 ? ' #1F1F1F ' : '#525252', }}>
+                        <MapIcon className={classes._6F9CEB} />
                         <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>T1.1</Typography>
                         <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>Routennamexy</Typography>
 
@@ -157,7 +221,7 @@ export default function Maps() {
 
                 <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>All Tours</Typography>
                 {Datasearch.map((item, index) =>
-                    <Box style={{ color: 'white', background: index % 2 == 0 ? ' #1F1F1F ' : '#525252', display: 'flex', alignItems: 'center', padding: '10px 15px' }}>
+                    <Box className={classes._box} style={{ background: index % 2 == 0 ? ' #1F1F1F ' : '#525252' }}>
                         <MapIcon />
                         <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>{item.title}</Typography>
                         <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>{item.name}</Typography>
