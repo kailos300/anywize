@@ -19,10 +19,14 @@ mapboxgl.accessToken =
 const useStyles = makeStyles({
     _container: {
         backgroundColor: "#121212",
-        minHeight: "100vh",
+        height: "100vh",
         float: 'left',
         padding: '20px 40px',
         boxSizing: 'border-box',
+        overflow: 'scroll',
+        "&::-webkit-scrollbar": {
+            display: 'none'
+        },
         "& .MuiInput-underline:before": {
             borderBottom: "1px solid #525252",
         },
@@ -42,9 +46,10 @@ const useStyles = makeStyles({
     },
     _cross: {
         marginLeft: '-20px',
-        fontsize: '1.25em',
+        fontSize: '1.25em',
         color: 'white',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        position: 'relative'
     },
     _input: {
         width: '100%',
@@ -83,7 +88,27 @@ export default function Maps() {
     const classes = useStyles();
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [value, setvalue] = useState('')
+    const [valuee, setvalue] = useState('');
+    const [tabledata, setTabledata] = useState([
+        { id: '1', title: 'T1.1', name: 'Routennamexy' },
+        { id: '2', title: 'T1.2', name: 'abcnnamexy' },
+        { id: '3', title: 'T1.3', name: 'xyzennamexy' },
+        { id: ' 4', title: 'T1.4', name: 'dertennamexy' },
+        { id: '5', title: 'T2.1', name: 'Reredtennamexy' },
+        { id: ' 6', title: 'T2.2', name: 'fdsfcennamexy' },
+        { id: '7', title: 'T2.3', name: 'sfcefdnnamexy' },
+        { id: ' 8', title: 'T3.1', name: 'grfdennamexy' },
+        { id: '9', title: 'T3.2', name: '4534nnamexy' },
+        { id: '10', title: 'T3.3', name: 'Rfdvfdnnamexy' },
+        { id: '11', title: 'T3.4', name: 'bvbcennamexy' },
+        { id: '12', title: 'T4.1', name: 'grehgtennamexy' },
+        { id: '13', title: 'T4.2', name: 'htgreafwnnamexy' },
+        { id: '14', title: 'T4.3', name: 'bgfgramexy' },
+        { id: '15', title: 'T4.4', name: 'g5etrgfdnnamexy' },
+        { id: '16', title: 'T4.5', name: 't45ersfmexy' },
+
+    ])
+    const [Datasearch, setDatasearch] = useState(tabledata)
     // const [lng, setLng] = useState(-70.9);
     // const [lat, setLat] = useState(42.35);
     // const [zoom, setZoom] = useState(9);
@@ -96,16 +121,28 @@ export default function Maps() {
             // zoom: zoom
         });
     });
-    const doSomethingWith = (value) => {
-        console.log(value)
+    const changeHandler = (e) => {
+        setvalue(e.target.value)
+    }
+    const doSomethingWith = () => {
+        let Datasearch = tabledata.filter(item => {
+            return Object.keys(item).some(key =>
+                item[key].toLowerCase().includes(valuee.toLowerCase())
+            )
+        })
+        setDatasearch(Datasearch)
+    }
+    const clearSearch = () => {
+        setvalue('')
+        setDatasearch(tabledata)
     }
     return (
         <div>
             <div style={{ width: '30%', display: 'inline-block' }} className={classes._container}>
                 <div className={classes._searchbox}>
                     <SearchIcon className={classes._search} />
-                    <TextField placeholder={'search'} className={classes._input} />
-                    <ClearIcon className={classes._cross} />
+                    <TextField placeholder={'search'} onKeyUp={doSomethingWith} onChange={(e) => changeHandler(e)} value={valuee} className={classes._input} />
+                    <ClearIcon className={classes._cross} onClick={clearSearch} />
                 </div>
                 <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>On Map</Typography>
                 {[1, 1, 1].map((item, index) =>
@@ -119,17 +156,17 @@ export default function Maps() {
                 )}
 
                 <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>All Tours</Typography>
-                {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, index) =>
+                {Datasearch.map((item, index) =>
                     <Box style={{ color: 'white', background: index % 2 == 0 ? ' #1F1F1F ' : '#525252', display: 'flex', alignItems: 'center', padding: '10px 15px' }}>
                         <MapIcon />
-                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>T1.1</Typography>
-                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>Routennamexy</Typography>
+                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>{item.title}</Typography>
+                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>{item.name}</Typography>
 
                     </Box>
 
                 )}
             </div>
-            <div style={{ width: '70%', display: 'inline-block' }}>
+            <div style={{ width: '70%', display: 'inline-block', minHeight: '100vh' }}>
                 <div ref={mapContainer} className="map-container" />
             </div>
         </div>
