@@ -11,6 +11,8 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import mapboxgl from "mapbox-gl";
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 import clsx from "clsx";
 
 mapboxgl.accessToken =
@@ -127,7 +129,6 @@ export default function Maps() {
     // const [lat, setLat] = useState(42.35);
     // const [zoom, setZoom] = useState(9);
     useEffect(() => {
-        console.log(map)
         if (map.current) return; // initialize map only once
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
@@ -135,6 +136,7 @@ export default function Maps() {
             center: [-122.486052, 37.830348],
             zoom: 15
         });
+        console.log(map.current.on)
         map.current.on('load', function () {
             map.current.addSource('route', {
                 'type': 'geojson',
@@ -171,19 +173,65 @@ export default function Maps() {
             })
 
         })
-        // map.current.addLayer({
-        //     'id': 'route',
-        //     'type': 'line',
-        //     'source': 'route',
-        //     'layout': {
-        //         'line-join': 'round',
-        //         'line-cap': 'round'
-        //     },
-        //     'paint': {
-        //         'line-color': '#888',
-        //         'line-width': 8
-        //     }
-        // });
+        map.current.addControl(new mapboxgl.NavigationControl(
+            {
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            }
+        ), 'bottom-right')
+        map.current.addControl(
+            new MapboxDirections({
+                accessToken: mapboxgl.accessToken
+            }),
+            'top-left'
+        );
+        setTimeout(() => {
+            map.current.addSource('urban-areas', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    "geometry": {
+                        'type': 'Polygon',
+                        'coordinates': [
+                            [
+                                [-67.13734, 45.13745],
+                                [-66.96466, 44.8097],
+                                [-68.03252, 44.3252],
+                                [-69.06, 43.98],
+                                [-70.11617, 43.68405],
+                                [-70.64573, 43.09008],
+                                [-70.75102, 43.08003],
+                                [-70.79761, 43.21973],
+                                [-70.98176, 43.36789],
+                                [-70.94416, 43.46633],
+                                [-71.08482, 45.30524],
+                                [-70.66002, 45.46022],
+                                [-70.30495, 45.91479],
+                                [-70.00014, 46.69317],
+                                [-69.23708, 47.44777],
+                                [-68.90478, 47.18479],
+                                [-68.2343, 47.35462],
+                                [-67.79035, 47.06624],
+                                [-67.79141, 45.70258],
+                                [-67.13734, 45.13745]
+                            ]
+                        ]
+                    }
+                }
+            });
+            map.current.addLayer({
+                'id': 'urban-areas-fill',
+                'type': 'line',
+                'source': 'urban-areas',
+                'layout': {},
+                'paint': {
+                    'line-color': '#6F9CEB',
+                    'line-width': 4
+                }
+            });
+        }, 1000);
     });
     const changeHandler = (e) => {
         setvalue(e.target.value)

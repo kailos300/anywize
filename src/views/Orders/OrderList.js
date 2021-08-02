@@ -36,6 +36,9 @@ const useStyles = makeStyles({
     backgroundColor: "#121212",
     padding: "60px 130px",
     minHeight: "100vh",
+    "&::-webkit-scrollbar": {
+      display: 'none'
+    },
     "& .MuiPaper-elevation2": {
       boxShadow: "none",
     },
@@ -123,7 +126,8 @@ const OrderList = ({ confirm }) => {
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
     () => addHandler(),
-    (e, rowData) => editHandler(rowData)
+    (e, rowData) => editHandler(rowData),
+    () => startTour()
   );
   const addHandler = () => {
     history.push(PATHS.orders.add);
@@ -158,7 +162,13 @@ const OrderList = ({ confirm }) => {
     })
     setjsonData(newData)
   }
+  const startTour = () => {
+    // if(!tableRef.current) return false;
+    let newData = jsonData;
+    let a = newData.some((i) => i.mainCheck == true)
+    return a
 
+  }
   const innerChangeHandler = (e, data, rowData) => {
     console.log(e, data, rowData)
     let newData = tableRef.current.state.data;

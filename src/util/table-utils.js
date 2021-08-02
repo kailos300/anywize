@@ -13,10 +13,18 @@ export const getColumns = (columns, t) => {
 };
 
 
-export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler) => {
+export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler, startTour) => {
   let actions = [];
   if (tableTitle == 'ORDERS') {
     actions.push(
+      {
+        icon: () => { return (<><span style={{ fontSize: '16px', fontWeight: 'normal', color: startTour() ? '#6F9CEB' : '#ADADAD' }}>Start Tour/s</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: startTour() ? '#6F9CEB' : '#ADADAD', height: '22px', width: '22px', marginRight: '15px' }} /></>) },
+        tooltip: 'Start Tours',
+        iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
+        isFreeAction: true,
+        // onClick: addHandler,
+        position: "row"
+      },
       {
         icon: 'add',
         tooltip: 'Add',
@@ -26,29 +34,8 @@ export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler
         position: "row"
       },
 
-      {
-        icon: 'edit',
-        tooltip: 'edit',
-        // iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
-        onClick: editHandler,
-        position: "row"
-      },
-      {
-        icon: 'delete',
-        tooltip: 'Delete',
-        position: 'row',
-        onClick: callbackOnDelete,
-      },
-      {
-        icon: () => { return (<><span style={{ fontSize: '18px', color: '#6F9CEB' }}>Start Tour/s</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: '#6F9CEB', height: '22px', width: '22px' }} /></>) },
-        tooltip: 'Start Tours',
-        iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
-        isFreeAction: true,
-        // onClick: addHandler,
-        position: "row"
-      },
     );
-    return;
+    return actions;
   }
   actions.push(
     {
