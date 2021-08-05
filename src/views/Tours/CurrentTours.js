@@ -123,12 +123,10 @@ const useStyles = makeStyles({
 const CurrentTours = () => {
     const myDivToFocus = useMemo(() => Array(jsondata.length).fill(0).map(i => React.createRef()), []);
     const tableRef = useRef();
-    // const myDivToFocus = useRef()
     const { t } = useTranslation("common");
     const [jsonData, setjsonData] = useState(jsondata)
     const classes = useStyles();
 
-    //.current is verification that your element has rendered
     const scroll = (scrollOffset, rowData) => {
         console.log(myDivToFocus)
         myDivToFocus[rowData.tableData.id].current.scrollLeft += scrollOffset;
@@ -138,7 +136,6 @@ const CurrentTours = () => {
     }
     const markFavourite = (e, rowData) => {
         let newData = tableRef.current.state.data
-
         newData.map((item, index) => {
             if (index == rowData.tableData.id) {
                 item.is_favourite = !item.is_favourite
@@ -151,8 +148,6 @@ const CurrentTours = () => {
             }
             return item;
         })
-        console.log(newData)
-
         setjsonData(newData)
     }
 

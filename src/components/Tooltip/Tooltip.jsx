@@ -58,16 +58,22 @@ const useStyles = makeStyles({
         cursor: 'pointer'
     }
 });
-export default function TooltipBar() {
+export default function TooltipBar(props) {
     const classes = useStyles();
 
     return (
         <div className={classes._tourdetailbar} >
-            <div className={classes._codetext}>
-                <span className={classes._codedetail}>Tourcode:</span> 762342837462
-                <br />
-                <span className={classes._codedetail}>Password:</span> 534rjdb76254
-            </div>
+            {props.name == 'callicon' ?
+                <div className={classes._codetext}>
+                    <span className={classes._codedetail}>Mobile:</span> 762342837462
+                </div>
+                :
+                <div className={classes._codetext}>
+                    <span className={classes._codedetail}>Tourcode:</span> 762342837462
+                    <br />
+                    <span className={classes._codedetail}>Password:</span> 534rjdb76254
+                </div>
+            }
             <FileCopyOutlinedIcon style={{ color: 'black', cursor: 'pointer' }} />
         </div>
     )

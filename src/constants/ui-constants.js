@@ -97,11 +97,16 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'progress', field: 'progress' },
     { title: 'noOfOrders', field: 'noOfOrders' },
     { title: 'DriversName', field: 'DriversName' },
-    { title: 'call', render: rowData => <CallIcon /> },
+    {
+      title: 'call', render: rowData =>
+        <Tooltip title={<TooltipBar name={'callicon'} />} placement="top" arrow interactive>
+          <CallIcon className={'hovericon'} style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} />
+        </Tooltip>
+    },
     {
       title: 'key', render: rowData =>
-        <Tooltip title={<TooltipBar />} placement="top" arrow interactive>
-          <VpnKeyIcon style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} className={'vpnkey'} />
+        <Tooltip title={<TooltipBar name={'vpnicon'} />} placement="top" arrow interactive>
+          <VpnKeyIcon className={'hovericon'} style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} />
         </Tooltip>
     },
   ]
