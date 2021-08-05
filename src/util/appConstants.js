@@ -22,7 +22,7 @@ export const PATHS = {
     add: "/orders/add",
     edit: "/orders/edit/:id",
   },
-
+  pastdeliveries: "/pastdeliveries",
   customer: "/dash",
   dashboard: "/dashboard",
   addTour: "/tour/add",

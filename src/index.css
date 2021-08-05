@@ -126,6 +126,7 @@ div.MuiToolbar-root {
 }
 div.MuiToolbar-root + div {
   order: 3;
+  position: unset !important;
 }
 table.MuiTable-root {
   order: 2;
@@ -257,7 +258,9 @@ border           : 1px solid #6F9CEB;
     visibility: visible;
     opacity: 1;
   }
-
+._settingicon{
+  vertical-align: middle;
+}
   ._settingicon:hover{
     transition: all 0.4s ease-in-out 0s;
     transform: rotate(0deg) !important;
@@ -267,4 +270,12 @@ border           : 1px solid #6F9CEB;
     transition: all 0.4s ease-in-out 0s;
  transform: rotate(100deg) !important;
     color: #6F9CEB
+  }
+
+   .MuiTooltip-tooltip{
+    background: unset !important;
+  }
+   .MuiTooltip-arrow{
+    width:unset !important;
+    color:unset !important;
   }

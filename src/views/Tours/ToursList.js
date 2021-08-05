@@ -28,6 +28,10 @@ const useStyles = makeStyles({
     backgroundColor: "#121212",
     padding: "60px 130px",
     minHeight: "100vh",
+    "& .MuiInputBase-input:active": {
+      color: "#F5F5F5",
+
+    },
     "& .MuiPaper-elevation2": {
       boxShadow: "none",
     },

@@ -43,12 +43,13 @@ class Api {
         if (error.response.status === 401) {
           const token = storage.get("token");
 
-          if (token) {
-            return this.axiosInstance(error.config);
-          } else {
-            storage.clear();
-          }
-        } else {
+          // if (token) {
+          console.log(error.config, "error")
+          // return this.axiosInstance(error.config);
+          // } else {
+          storage.clear();
+          // }
+          // } else {
           console.log(error);
           return Promise.reject(error);
         }
@@ -69,7 +70,7 @@ class Api {
       };
 
       const response = await this.axiosInstance({ url, ...options });
-
+      console.log(response)
       if (response) return response.data ?? response;
     } catch (error) {
       console.log(error);

@@ -243,8 +243,8 @@ const OrderList = ({ confirm }) => {
         }}
         detailPanel={[
           {
-            icon: () => <ExpandLessIcon />,
-            openIcon: () => <ExpandMoreIcon />,
+            icon: () => <ExpandMoreIcon />,
+            openIcon: () => <ExpandLessIcon />,
             render: rowData => {
               return (
                 <>

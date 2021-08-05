@@ -31,10 +31,12 @@ const useStyles = makeStyles({
     textDecoration: "none",
     padding: 0,
     color: "#F5F5F5",
-    font: "normal normal normal 22px / 40px Questrial",
     width: "unset",
     display: "unset",
     margin: "0 16px",
+    "& .MuiListItemText-primary": {
+      font: "normal normal normal 22px / 40px Questrial",
+    }
   },
   _nav: {
     display: "flex",

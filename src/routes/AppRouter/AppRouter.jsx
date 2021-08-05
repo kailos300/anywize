@@ -20,6 +20,7 @@ import {
   OrderList,
   EditOrder,
   Maps,
+  PastDeliveries
 } from "views";
 import { PATHS } from "../../util/appConstants";
 
@@ -88,6 +89,11 @@ const AppRouter = () => {
         exact
         path={PATHS.orders.edit}
         component={RequireAuth(EditOrder)}
+      />
+      <Route
+        exact
+        path={PATHS.pastdeliveries}
+        component={RequireAuth(PastDeliveries)}
       />
 
       <Redirect from={PATHS.root} to={PATHS.login} />

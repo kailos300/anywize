@@ -1,5 +1,6 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { coreApi } from "api/core";
+import { setShowMessage } from "redux/slices/uiSlice";
 
 export const APP_NAMESPACE = "mkrn-starter";
 const userPrefix = `${APP_NAMESPACE}/user`;
@@ -37,12 +38,18 @@ const userSlice = createSlice({
 export const { setUser, setUserSettings } = userSlice.actions;
 export default userSlice.reducer;
 
-export const fetchUserInfo = () => async (dispatch) => {
+export const fetchUserInfo = (history) => async (dispatch) => {
   const url = "/users/me";
   try {
     const user = await coreApi.fetch(url);
     dispatch(setUser(user));
   } catch (err) {
+
+    history.push('/login')
+    dispatch(setShowMessage({
+      description: "UNAUTHORIZED USER!",
+      type: "error",
+    }))
     console.log(err);
   }
 };

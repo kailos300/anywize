@@ -18,9 +18,10 @@ const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const authenticated = useSelector(selectAuthenticated);
+  // const authe = useSelector(selectUser)
 
   useEffect(() => {
-    dispatch(fetchUserInfo());
+    dispatch(fetchUserInfo(history));
   }, [dispatch]);
 
   useEffect(() => {

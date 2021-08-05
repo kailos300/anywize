@@ -4,6 +4,8 @@ import MapIcon from '@material-ui/icons/Map';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import CallIcon from '@material-ui/icons/Call';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import TooltipBar from 'components/Tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 import { PATHS } from "util/appConstants";
 
 export const MID_NAVIGATION_ROUTES = [
@@ -36,7 +38,7 @@ export const NAVIGATION_ROUTES = [
   { name: "Tours", path: PATHS.tours.current },
   { name: "Orders", path: PATHS.orders.root },
   { name: "Master Data", path: PATHS.customers.root },
-  { name: "Past Deliveries", path: "/dash1" },
+  { name: "Past Deliveries", path: PATHS.pastdeliveries },
   { name: "Maps", path: PATHS.maps },
   { name: "Settings", path: "/dash2" },
 ];
@@ -47,14 +49,24 @@ export const TOURS_TABLE_COLUMNS = [
 
 export const CUSTOMERS_TABLE_COLUMNS = [
   { title: "Group", field: "group" },
-  { title: "ID", field: "id", defaultSort: "desc" },
+  { title: "ID", field: "id", defaultSort: 'desc', sorting: true },
   { title: "Name 1", field: "name" },
   { title: "City", field: "cityValue" },
   { title: "Last Invoice Date", field: "invioc" },
   { title: "Account Manager" },
   { title: "Billing Cycle" },
 ];
+export const PAST_DELIVERIES_TABLE_COLUMNS = [
+  { title: "Date", field: "date" },
+  { title: "Time", field: "time" },
+  { title: "Order Number", field: "orderNumber" },
+  { title: "Order Description", field: "order" },
+  { title: "Tour", field: "tour" },
+  { title: "Tour Name", field: "tourName" },
+  { title: "Met Customer", field: "metCustomer" },
 
+
+]
 export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   return [
     { title: "Order id", field: "name" },
@@ -70,11 +82,11 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   ];
 }
 
-export const CURRENT_ORDER_COLUMNS = (tableRef) => {
+export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
       title: 'icon', render: rowData => <div>
-        <StarRateIcon style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '' }} />
+        <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '', cursor: 'pointer' }} />
         <MapIcon />
       </div>
     },
@@ -88,19 +100,10 @@ export const CURRENT_ORDER_COLUMNS = (tableRef) => {
     { title: 'call', render: rowData => <CallIcon /> },
     {
       title: 'key', render: rowData =>
-        <VpnKeyIcon style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '' }} className={'vpnkey'} />
+        <Tooltip title={<TooltipBar />} placement="top" arrow interactive>
+          <VpnKeyIcon style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} className={'vpnkey'} />
+        </Tooltip>
     },
-    // {
-    //   title: 'keyw', render: rowData =>
-    //     <>
-    //       <div style={{ background: "#6F9CEB", width: "100px", height: '100px' }}>
-
-    //       </div>
-
-    //     </>
-    // }
-
-
   ]
 }
 export const checkPaths = [

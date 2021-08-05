@@ -30,6 +30,9 @@ const useStyles = makeStyles({
     width: "unset",
     display: "unset",
     margin: "0 16px",
+    "& .MuiListItemText-primary": {
+      font: "normal normal normal 16px/28px Questrial",
+    }
   },
   _nav: {
     display: "flex",
@@ -48,7 +51,6 @@ const Masterbar = (props) => {
 
   return (
     <header className={classes._container}>
-      {console.log(props)}
       <Typography className={classes._title} variant="h4">
         {t(props.name)}
       </Typography>

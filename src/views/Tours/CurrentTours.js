@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import MaterialTable from "material-table";
@@ -8,11 +8,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 //helpers
-import { CURRENT_ORDER_COLUMNS } from "constants/ui-constants"
+import { CURRENT_TOURS_COLUMNS } from "constants/ui-constants"
 import { getColumns, getActions } from "util/table-utils";
 import { mapTableData } from "util/helpers";
 
@@ -63,6 +64,36 @@ const useStyles = makeStyles({
             color: "#F5F5F5",
         },
     },
+    _tourdetailbar: {
+        background: '#6F9CEB',
+        width: '255px',
+        height: '70px',
+        position: 'absolute',
+        right: 0,
+        marginTop: '-240px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: ' space-around',
+        color: 'black',
+        "&::before": {
+            content: '""',
+            height: 0,
+            width: 0,
+            position: 'absolute',
+            left: '46%',
+            bottom: '-40px',
+            border: '20px solid transparent',
+            borderTopColor: '#6F9CEB',
+            // borderRightColor: '#DA362A',
+        }
+    },
+    _codetext: {
+        fontSize: '15px',
+    },
+    _codedetail: {
+        fontSize: '15px',
+        fontWeight: 'bold',
+    },
     _1F1F1F: {
         background: '#1F1F1F',
     },
@@ -90,23 +121,57 @@ const useStyles = makeStyles({
     }
 });
 const CurrentTours = () => {
+    const myDivToFocus = useMemo(() => Array(jsondata.length).fill(0).map(i => React.createRef()), []);
     const tableRef = useRef();
-    const myDivToFocus = useRef()
+    // const myDivToFocus = useRef()
     const { t } = useTranslation("common");
-
+    const [jsonData, setjsonData] = useState(jsondata)
     const classes = useStyles();
 
     //.current is verification that your element has rendered
-    const scroll = (scrollOffset) => {
+    const scroll = (scrollOffset, rowData) => {
+        console.log(myDivToFocus)
+        myDivToFocus[rowData.tableData.id].current.scrollLeft += scrollOffset;
+    };
+    const vpnClick = (item) => {
+        console.log(item, 'e')
+    }
+    const markFavourite = (e, rowData) => {
+        let newData = tableRef.current.state.data
 
-        myDivToFocus.current.scrollLeft += scrollOffset;
+        newData.map((item, index) => {
+            if (index == rowData.tableData.id) {
+                item.is_favourite = !item.is_favourite
+                if (item.is_favourite) {
+                    array_move(newData, index, 0)
+                }
+                else if (!item.is_favourite) {
+                    array_move(newData, index, newData.length - 1)
+                }
+            }
+            return item;
+        })
+        console.log(newData)
+
+        setjsonData(newData)
+    }
+
+    function array_move(arr, old_index, new_index) {
+        if (new_index >= arr.length) {
+            var k = new_index - arr.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+        return arr;
     };
     return (
         <div className={clsx(classes._container, '')}>
             <MaterialTable
                 tableRef={tableRef}
-                data={mapTableData(jsondata)}
-                columns={getColumns(CURRENT_ORDER_COLUMNS(tableRef), t)}
+                data={mapTableData(jsonData)}
+                columns={getColumns(CURRENT_TOURS_COLUMNS(tableRef, markFavourite), t)}
                 options={{
                     detailPanelColumnAlignment: 'right',
                     header: false,
@@ -132,23 +197,24 @@ const CurrentTours = () => {
 
                 detailPanel={[
                     {
-                        icon: () => <ExpandLessIcon />,
-                        openIcon: () => <ExpandMoreIcon />,
+
+                        icon: () => <ExpandMoreIcon />,
+                        openIcon: () => <ExpandLessIcon />,
                         render: rowData => {
                             return (
                                 <div style={{ padding: '15px', background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }}>
+                                    {vpnClick(myDivToFocus[rowData.tableData.id])}
                                     <div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
-                                        <DoubleArrowIcon onClick={() => scroll(-12000)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
-                                        <NavigateBeforeIcon onClick={() => scroll(-100)} className={classes._fontsize12} />
+                                        <DoubleArrowIcon onClick={() => scroll(-12000, rowData)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
+                                        <NavigateBeforeIcon onClick={() => scroll(-100, rowData)} className={classes._fontsize12} />
                                     </div>
                                     <div style={{ width: '5%', float: 'right', margin: '25px 0', textAlign: 'center' }}>
-                                        <NavigateNextIcon onClick={() => scroll(100)} className={classes._fontsize12} />
-                                        <DoubleArrowIcon onClick={() => scroll(12000)} className={classes._fontsize12} />
+                                        <NavigateNextIcon onClick={() => scroll(100, rowData)} className={classes._fontsize12} />
+                                        <DoubleArrowIcon onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
                                     </div>
-                                    <div ref={myDivToFocus} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
+                                    <div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
                                         <div >
                                             <ProgressBar
-
                                                 className={'margin-30'}
                                                 percent={100}
                                                 width={'150%'}
@@ -171,7 +237,6 @@ const CurrentTours = () => {
                                             </ProgressBar>
                                         </div>
                                     </div>
-
                                 </div>
 
                             )

@@ -27,6 +27,20 @@ const useStyles = makeStyles({
     backgroundColor: "#121212",
     padding: "60px 130px",
     minHeight: "100vh",
+    "& .MuiInputBase-input": {
+      color: "#F5F5F5",
+    },
+    "& .MuiTableSortLabel-active": {
+      color: "#F5F5F5 ",
+      "& .MuiTableSortLabel-icon": {
+        color: "#F5F5F5 !important",
+
+      },
+    },
+    "& .MuiTableSortLabel-icon": {
+      color: "#F5F5F5 !important",
+
+    },
     "& .MuiPaper-elevation2": {
       boxShadow: "none",
     },
@@ -122,7 +136,7 @@ const CustomersList = ({ confirm }) => {
         }
         actions={actions}
         options={{
-          sorting: true,
+          // sorting: false,
           actionsColumnIndex: -1,
           searchFieldAlignment: "left",
           showTitle: false,
@@ -148,6 +162,7 @@ const CustomersList = ({ confirm }) => {
             color: "#F5F5F5",
           },
           rowStyle: { height: "38px" },
+
         }}
       />
     </div>
