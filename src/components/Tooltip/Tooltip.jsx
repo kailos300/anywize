@@ -60,7 +60,11 @@ const useStyles = makeStyles({
 });
 export default function TooltipBar(props) {
     const classes = useStyles();
-
+    const copyCode = () => {
+        props.name == 'callicon' ?
+            navigator.clipboard.writeText(`Mobile:${'762342837462'}`) :
+            navigator.clipboard.writeText(`Tourcode:${props.rowData.code}, Password:${props.rowData.password}`)
+    }
     return (
         <div className={classes._tourdetailbar} >
             {props.name == 'callicon' ?
@@ -69,12 +73,12 @@ export default function TooltipBar(props) {
                 </div>
                 :
                 <div className={classes._codetext}>
-                    <span className={classes._codedetail}>Tourcode:</span> 762342837462
+                    <span className={classes._codedetail}>Tourcode:</span> {props.rowData.code}
                     <br />
-                    <span className={classes._codedetail}>Password:</span> 534rjdb76254
+                    <span className={classes._codedetail}>Password:</span> {props.rowData.password}
                 </div>
             }
-            <FileCopyOutlinedIcon style={{ color: 'black', cursor: 'pointer' }} />
+            <FileCopyOutlinedIcon onClick={copyCode} style={{ color: 'black', cursor: 'pointer' }} />
         </div>
     )
 }

@@ -6,6 +6,8 @@ import authenticationReducer from "./modules/authentication";
 import tourReducer from "./slices/tourSlice";
 import customerReducer from "./slices/customerSlice";
 import orderReducer from "./slices/orderSlice";
+import pastDeliveriesReducer from "./slices/pastDeliveriesSlice";
+import routeReducer from "./slices/routeSlice";
 
 import uiReducer from "./slices/uiSlice";
 
@@ -20,6 +22,8 @@ const store = configureStore({
     tours: tourReducer,
     customers: customerReducer,
     orders: orderReducer,
+    pastDeliveries: pastDeliveriesReducer,
+    routes: routeReducer,
     ui: uiReducer,
   },
 });

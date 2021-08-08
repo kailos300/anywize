@@ -104,7 +104,7 @@ const ToursList = ({ confirm }) => {
   const addHandler = () => {
     history.push(PATHS.tours.add);
   };
-  if (loading) return <div className="loading">Loading..</div>;
+  if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
   return (
     <>
       {/* <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >

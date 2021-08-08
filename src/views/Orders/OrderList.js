@@ -31,6 +31,7 @@ import {
 
 // Components
 import withConfirm from "components/dialogs/delete";
+
 const useStyles = makeStyles({
   _container: {
     backgroundColor: "#121212",
@@ -113,6 +114,7 @@ const OrderList = ({ confirm }) => {
     if (!orders.length && !loading) {
       dispatch(getOrders());
     }
+    console.log(orders, "orders")
   }, [dispatch, orders, loading])
 
   const callbackOnDelete = (e, rowData) => {
@@ -163,11 +165,9 @@ const OrderList = ({ confirm }) => {
     setjsonData(newData)
   }
   const startTour = () => {
-    // if(!tableRef.current) return false;
     let newData = jsonData;
-    let a = newData.some((i) => i.mainCheck == true)
-    return a
-
+    let check = newData.some((i) => i.mainCheck == true)
+    return check;
   }
   const innerChangeHandler = (e, data, rowData) => {
     console.log(e, data, rowData)
@@ -201,10 +201,10 @@ const OrderList = ({ confirm }) => {
     })
     setjsonData(newData)
   }
-  if (loading) return <div className="loading">Loading..</div>;
-
+  if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
   return (
     <div className={clsx(classes._container, 'order-table')}>
+      {console.log(orders, " console.log(orders)")}
       <MaterialTable
         tableRef={tableRef}
         data={mapTableData(jsonData)}

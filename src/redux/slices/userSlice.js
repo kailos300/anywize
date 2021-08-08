@@ -42,6 +42,7 @@ export const fetchUserInfo = (history) => async (dispatch) => {
   const url = "/users/me";
   try {
     const user = await coreApi.fetch(url);
+    console.log(user)
     dispatch(setUser(user));
   } catch (err) {
 

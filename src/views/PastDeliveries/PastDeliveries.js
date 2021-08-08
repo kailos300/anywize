@@ -12,6 +12,13 @@ import { getColumns, getActions } from "util/table-utils";
 import { mapTableData } from "util/helpers";
 import { PATHS } from "util/appConstants";
 
+// Actions
+// import {
+//     getpastDeliveries,
+//     selectpastDeliveries,
+//     selectpastDeliveriesStatus
+// } from "redux/slices/cSlice";
+
 const useStyles = makeStyles({
     _container: {
         backgroundColor: "#121212",
@@ -68,9 +75,19 @@ const tableTitle = "PAST DELIVERIES ";
 
 const PastDeliveries = () => {
     const { t } = useTranslation("common");
+    const dispatch = useDispatch();
     const classes = useStyles();
+    // const loading = useSelector(selectOrderStatus);
+    // const orders = useSelector(selectOrders);
+
+    // useEffect(() => {
+    //     if (!orders.length) {
+    //         dispatch(getOrders());
+    //     }
+    // }, [dispatch, orders]);
     return (
         <div className={clsx(classes._container, "custom-table-styles")}>
+            {/* {console.log(orders, "orders")} */}
             <MaterialTable
                 icons={{
                     Filter: () => (
@@ -80,6 +97,7 @@ const PastDeliveries = () => {
                 columns={getColumns(PAST_DELIVERIES_TABLE_COLUMNS, t)}
 
                 options={{
+                    paging: false,
                     sorting: true,
                     actionsColumnIndex: -1,
                     searchFieldAlignment: "left",

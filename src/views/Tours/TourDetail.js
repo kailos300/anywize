@@ -89,9 +89,10 @@ const TourDetail = () => {
   const editTourHandler = () => {
     history.push(PATHS.tours.edit.replace(":id", id));
   };
-  if (loading || !tour) return <div className="loading">Loading..</div>;
+  if (!loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
   return (
     <div className={classes._container}>
+      {console.log(tour, loading)}
       <div className={classes._editbox}>
         <Typography className={classes._heading} variant="h4">
           {tour.name}

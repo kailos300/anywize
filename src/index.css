@@ -120,6 +120,7 @@ select {
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  color:white;
 }
 div.MuiToolbar-root {
   order: 1;
@@ -217,7 +218,7 @@ border           : 1px solid #6F9CEB;
   .RSPBprogressBar{
     margin: 30px;
   }
-  .hide-scrollbar::-webkit-scrollbar {
+  .hide-scrollbar::-webkit-scrollbar ,.activetours::-webkit-scrollbar{
     display: none;
   }
   .tooltip {

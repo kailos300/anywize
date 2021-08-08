@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import MaterialTable from "material-table";
@@ -20,6 +21,8 @@ import { mapTableData } from "util/helpers";
 //
 import jsondata from './data.json'
 
+//Actions
+import { selectRoutes, getRoutes, selectRouteStatus } from 'redux/slices/routeSlice';
 
 
 
@@ -29,6 +32,10 @@ const useStyles = makeStyles({
         backgroundColor: "#121212",
         padding: "60px 130px",
         minHeight: "100vh",
+        "& .MuiInputBase-root": {
+            color: "#F5F5F5",
+
+        },
         "& .MuiPaper-elevation2": {
             boxShadow: "none",
         },
@@ -36,6 +43,7 @@ const useStyles = makeStyles({
             border: "none",
             color: "white",
             fontSize: "12px",
+            width: "unset !important"
         },
         "& .MuiTableSortLabel-root:hover": {
             color: "#F5F5F5",
@@ -121,14 +129,22 @@ const useStyles = makeStyles({
     }
 });
 const CurrentTours = () => {
-    const myDivToFocus = useMemo(() => Array(jsondata.length).fill(0).map(i => React.createRef()), []);
+    const classes = useStyles();
+    const dispatch = useDispatch()
     const tableRef = useRef();
     const { t } = useTranslation("common");
-    const [jsonData, setjsonData] = useState(jsondata)
-    const classes = useStyles();
+    const routes = useSelector(selectRoutes);
+    const [tabledata, settableData] = useState(routes)
+    const loading = useSelector(selectRouteStatus);
+    const myDivToFocus = useMemo(() => Array(tabledata.length).fill(0).map(i => React.createRef()), []);
 
+    useEffect(() => {
+        if (!routes.length) {
+            dispatch(getRoutes())
+        }
+        settableData(routes)
+    }, [dispatch, routes])
     const scroll = (scrollOffset, rowData) => {
-        console.log(myDivToFocus)
         myDivToFocus[rowData.tableData.id].current.scrollLeft += scrollOffset;
     };
     const vpnClick = (item) => {
@@ -148,7 +164,12 @@ const CurrentTours = () => {
             }
             return item;
         })
-        setjsonData(newData)
+        settableData(newData)
+        console.log(newData, "newData")
+        console.log(routes, "newData")
+        console.log(tabledata, "newData")
+
+
     }
 
     function array_move(arr, old_index, new_index) {
@@ -161,13 +182,15 @@ const CurrentTours = () => {
         arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
         return arr;
     };
+    if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
     return (
         <div className={clsx(classes._container, '')}>
             <MaterialTable
                 tableRef={tableRef}
-                data={mapTableData(jsonData)}
+                data={mapTableData(tabledata)}
                 columns={getColumns(CURRENT_TOURS_COLUMNS(tableRef, markFavourite), t)}
                 options={{
+                    paging: false,
                     detailPanelColumnAlignment: 'right',
                     header: false,
                     searchFieldAlignment: "left",
@@ -218,12 +241,12 @@ const CurrentTours = () => {
                                                 unfilledBackground=""
                                             >
                                                 {
-                                                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((data, index) => <Step transition="scale">
+                                                    rowData.Orders.map((data, index) => <Step transition="scale">
                                                         {({ accomplished }) => (
                                                             <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
                                                                 <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
                                                                 <div style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={'ball-open'}></div>
-                                                                <div style={{ position: 'absolute', marginTop: '5px' }}>Alias</div>
+                                                                <div style={{ position: 'absolute', marginTop: '5px' }}>{data.description}</div>
                                                             </div>
                                                         )}
                                                     </Step>

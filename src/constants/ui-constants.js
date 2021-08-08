@@ -6,6 +6,7 @@ import CallIcon from '@material-ui/icons/Call';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import TooltipBar from 'components/Tooltip';
 import Tooltip from '@material-ui/core/Tooltip';
+import moment from 'moment';
 import { PATHS } from "util/appConstants";
 
 export const MID_NAVIGATION_ROUTES = [
@@ -37,8 +38,8 @@ export const TOUR_DATA_BAR = {
 export const NAVIGATION_ROUTES = [
   { name: "Tours", path: PATHS.tours.current },
   { name: "Orders", path: PATHS.orders.root },
-  { name: "Master Data", path: PATHS.customers.root },
   { name: "Past Deliveries", path: PATHS.pastdeliveries },
+  { name: "Master Data", path: PATHS.customers.root },
   { name: "Maps", path: PATHS.maps },
   { name: "Settings", path: "/dash2" },
 ];
@@ -86,26 +87,26 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
       title: 'icon', render: rowData => <div>
+        {console.log(rowData.is_favourite)}
         <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '', cursor: 'pointer' }} />
         <MapIcon />
       </div>
     },
-    { title: 'date', field: 'date' },
-    { title: 'time', field: 'time' },
+    { title: 'date', render: rowData => rowData.start_date !== null ? moment(rowData.start_date).format("DD.MM.YYYY HH:mm") : '' },
     { title: 'tour', field: 'tour' },
-    { title: 'name', field: 'name' },
+    { title: 'name', render: rowData => rowData.Tour.name },
     { title: 'progress', field: 'progress' },
     { title: 'noOfOrders', field: 'noOfOrders' },
-    { title: 'DriversName', field: 'DriversName' },
+    { title: 'DriversName', field: 'driver_name' },
     {
       title: 'call', render: rowData =>
-        <Tooltip title={<TooltipBar name={'callicon'} />} placement="top" arrow interactive>
+        <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement="top" arrow interactive>
           <CallIcon className={'hovericon'} style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} />
         </Tooltip>
     },
     {
       title: 'key', render: rowData =>
-        <Tooltip title={<TooltipBar name={'vpnicon'} />} placement="top" arrow interactive>
+        <Tooltip title={<TooltipBar name={'vpnicon'} rowData={rowData} />} placement="top" arrow interactive>
           <VpnKeyIcon className={'hovericon'} style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} />
         </Tooltip>
     },

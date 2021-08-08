@@ -14,26 +14,20 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     addNewOrder: (state, action) => {
-      console.log(state, "state", action);
+
       const { _id } = action.payload;
       state.orders[_id] = action.payload;
       state.order = action.payload;
     },
     setEditOrder: (state, action) => {
-      console.log(state, "state", action);
-
       const { id } = action.payload;
       state.orders[id] = action.payload;
       state.order = action.payload;
     },
     setOrder: (state, action) => {
-      console.log(state, "state", action);
-
       state.order = action.payload;
     },
     setOrders: (state, action) => {
-      console.log(state, "state", action);
-
       const orders = {};
       action.payload.forEach((order) => {
         orders[order.id] = order;
@@ -41,18 +35,12 @@ const orderSlice = createSlice({
       state.orders = orders;
     },
     removeOrder: (state, action) => {
-      console.log(state, "state");
-
       delete state.orders[action.payload];
     },
     setOrderLoading: (state) => {
-      console.log(state, "state");
-
       state.loading = true;
     },
     setOrderReady: (state) => {
-      console.log(state, "state");
-
       state.loading = false;
     },
   },
