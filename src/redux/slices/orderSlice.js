@@ -75,7 +75,7 @@ export const getOrders = () => async (dispatch) => {
   dispatch(setOrderLoading());
 
   try {
-    const orders = await coreApi.fetch(baseUrl);
+    const orders = await coreApi.fetch(`${baseUrl}?assigned_to_route=1customer_id=2`);
     dispatch(setOrders(orders));
   } catch (err) {
     console.log(err);

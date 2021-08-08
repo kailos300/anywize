@@ -113,7 +113,7 @@ const CustomersList = ({ confirm }) => {
   const addHandler = () => {
     history.push(PATHS.customers.add);
   };
-  if (loading) return <div className="loading">Loading..</div>;
+  if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
   return (
     <div className={clsx(classes._container, "custom-table-styles")}>
       {/* <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
