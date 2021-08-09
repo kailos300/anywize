@@ -77,7 +77,7 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
 
     {
       title: "Id+1",
-      render: rowData => <div style={{ textAlign: 'right', marginRight: '28px' }}>
+      render: rowData => <div style={{ textAlign: 'right', marginRight: '28px', marginTop: '-20px' }}>
         <input onChange={(e) => checkChangeHandler(e, rowData)}
           className={'radio-checkbox'} id={rowData.id} type="checkbox" name="field" checked={rowData.mainCheck} />
         <label for={rowData.id}><span><span style={{ margin: '1px' }}></span></span></label>

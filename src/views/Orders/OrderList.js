@@ -44,11 +44,12 @@ const useStyles = makeStyles({
       boxShadow: "none",
     },
     "& .MuiTableCell-root:first-child": {
-      width: ' 90px',
+      width: ' 90px !important ',
+      boxSizing: 'border-box',
       textAlign: 'center !important'
     },
     "& .MuiTableCell-root:nth-last-child(2)": {
-      width: ' 35px',
+      width: ' 35px !important',
     },
     "& .MuiTableCell-root:nth-last-child(3)": {
       textAlign: 'right',
@@ -58,7 +59,7 @@ const useStyles = makeStyles({
       border: "none",
       color: "white",
       fontSize: "12px",
-      width: "unset"
+      width: "unset !important"
     },
     "& .MuiTableSortLabel-root:hover": {
       color: "#F5F5F5",
