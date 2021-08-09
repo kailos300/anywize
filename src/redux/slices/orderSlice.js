@@ -2,6 +2,9 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { coreApi } from "api/core";
 import { setShowMessage } from "redux/slices/uiSlice";
 
+//helpers
+import { groupBy } from "util/helpers";
+
 const baseUrl = "/orders";
 const initialState = {
   orders: {},
@@ -75,8 +78,15 @@ export const getOrders = () => async (dispatch) => {
   dispatch(setOrderLoading());
 
   try {
-    const orders = await coreApi.fetch(`${baseUrl}?assigned_to_route=1customer_id=2`);
-    dispatch(setOrders(orders));
+    const orders = await coreApi.fetch(`${baseUrl}?assigned_to_route=1`);
+    let update = groupBy(orders, "route_id");
+    let array = []
+    update.map((data, index) => {
+      array.push({ list: data.map((item) => { return { ...item, checked: false } }), id: index, tourname: data[0].Customer.Tour.name, length: data.length, mainCheck: false, })
+      console.log(data[0].Customer.Tour.name)
+    })
+    console.log(array)
+    dispatch(setOrders(array));
   } catch (err) {
     console.log(err);
   } finally {

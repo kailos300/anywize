@@ -6,3 +6,15 @@
  */
 export const mapTableData = (data) =>
   data.map((item) => Object.assign({}, item));
+
+/**
+ * group same data from array
+ * @param array 
+ * @param key
+ */
+export const groupBy = (array, key) => {
+  return array.reduce((result, obj) => {
+    (result[obj[key]] = result[obj[key]] || []).push(obj);
+    return result;
+  }, []);
+};

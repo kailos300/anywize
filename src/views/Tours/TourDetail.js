@@ -89,7 +89,7 @@ const TourDetail = () => {
   const editTourHandler = () => {
     history.push(PATHS.tours.edit.replace(":id", id));
   };
-  if (!loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
+  if (loading || !tour) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
   return (
     <div className={classes._container}>
       {console.log(tour, loading)}

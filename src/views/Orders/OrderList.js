@@ -47,6 +47,7 @@ const useStyles = makeStyles({
       border: "none",
       color: "white",
       fontSize: "12px",
+      width: "unset !important"
     },
     "& .MuiTableSortLabel-root:hover": {
       color: "#F5F5F5",
@@ -82,7 +83,7 @@ const useStyles = makeStyles({
     background: '#525252',
   },
   _textalignright: {
-    textAlign: 'right',
+    // textAlign: 'right',
 
   },
   _edit: {
@@ -108,13 +109,13 @@ const OrderList = ({ confirm }) => {
   const history = useHistory();
   const loading = useSelector(selectOrderStatus);
   const orders = useSelector(selectOrders);
-  const [jsonData, setjsonData] = useState(jsondata)
+  const [jsonData, setjsonData] = useState(orders)
 
   useEffect(() => {
     if (!orders.length && !loading) {
       dispatch(getOrders());
     }
-    console.log(orders, "orders")
+    setjsonData(orders)
   }, [dispatch, orders, loading])
 
   const callbackOnDelete = (e, rowData) => {
@@ -135,7 +136,7 @@ const OrderList = ({ confirm }) => {
     history.push(PATHS.orders.add);
   };
   const editHandler = (rowData) => {
-    // history.push(PATHS.orders.edit.replace(':id', rowData.id))
+    history.push(PATHS.customers.edit.replace(':id', rowData.customer_id))
   }
 
   const checkChangeHandler = (e, rowData) => {
@@ -253,7 +254,10 @@ const OrderList = ({ confirm }) => {
                       <Table>
                         <TableRow>
                           <TableCell className={classes._textalignright}>
-                            {data.name}
+                            {' '}
+                          </TableCell>
+                          <TableCell className={classes._textalignright}>
+                            {data.Customer.name}
                           </TableCell>
                           <TableCell className={classes._textalignright}>
                             {data.name}
@@ -262,13 +266,13 @@ const OrderList = ({ confirm }) => {
                             {data.name}
                           </TableCell>
                           <TableCell className={classes._textalignright}>
-                            {data.name}
+                            {data.Customer.alias}
                           </TableCell>
                           <TableCell className={classes._textalignright}>
                             <EditIcon onClick={() => editHandler(data)} className={clsx(classes._edit, classes._pointer)} />
                           </TableCell>
                           <TableCell style={{ paddingRight: '30px' }} className={classes._textalignright}>
-                            <div >
+                            <div style={{ textAlign: 'right' }}>
                               <input
                                 onChange={(e) => { innerChangeHandler(e, data, rowData) }}
                                 className={'radio-checkbox'}

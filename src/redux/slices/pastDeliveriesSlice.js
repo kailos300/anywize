@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { coreApi } from "api/core";
 import { setShowMessage } from "redux/slices/uiSlice";
 
@@ -30,7 +30,7 @@ export const { setpastDeliveries, setpastDeliveriesLoading, setsetpastDeliveries
 export default pastDeliveriesSlice.reducer
 
 export const getpastDeliveries = () => async (dispatch) => {
-    const url = baseUrl + `/?customer_id=2`
+    const url = baseUrl
     dispatch(setpastDeliveriesLoading());
     try {
         const orders = await coreApi.fetch(url);
@@ -41,3 +41,16 @@ export const getpastDeliveries = () => async (dispatch) => {
         dispatch(setsetpastDeliveriesReady());
     }
 };
+
+// const  pastDeliverySelector = ({  pastDeliveries }) =>  pastDeliveries.pastDelivery;
+const pastDeliveriesSelector = ({ pastDeliveries }) => pastDeliveries.pastDeliveries;
+const pastDeliveryStatusSelector = ({ pastDeliveries }) => pastDeliveries.loading;
+
+// export const selectTour = createSelector(tourSelector, (tour) => tour);
+export const selectpastDeliveries = createSelector(pastDeliveriesSelector, (pastDeliveries) =>
+    Object.values(pastDeliveries)
+);
+export const selectpastDeliveriesStatus = createSelector(
+    pastDeliveryStatusSelector,
+    (loading) => loading
+);

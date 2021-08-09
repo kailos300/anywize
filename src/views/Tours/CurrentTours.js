@@ -22,7 +22,7 @@ import { mapTableData } from "util/helpers";
 import jsondata from './data.json'
 
 //Actions
-import { selectRoutes, getRoutes, selectRouteStatus } from 'redux/slices/routeSlice';
+import { selectCurrent, selectRoutes, getRoutes, selectRouteStatus, getCurrentRoutes, getFinisedRoutes } from 'redux/slices/routeSlice';
 
 
 
@@ -133,14 +133,15 @@ const CurrentTours = () => {
     const dispatch = useDispatch()
     const tableRef = useRef();
     const { t } = useTranslation("common");
-    const routes = useSelector(selectRoutes);
+    const routes = useSelector(selectCurrent);
     const [tabledata, settableData] = useState(routes)
     const loading = useSelector(selectRouteStatus);
     const myDivToFocus = useMemo(() => Array(tabledata.length).fill(0).map(i => React.createRef()), []);
 
     useEffect(() => {
         if (!routes.length) {
-            dispatch(getRoutes())
+            dispatch(getCurrentRoutes())
+
         }
         settableData(routes)
     }, [dispatch, routes])
@@ -162,9 +163,6 @@ const CurrentTours = () => {
             return item;
         })
         settableData(newData)
-        console.log(newData, "newData")
-        console.log(routes, "newData")
-        console.log(tabledata, "newData")
 
 
     }
@@ -226,7 +224,6 @@ const CurrentTours = () => {
                                         <NavigateNextIcon onClick={() => scroll(100, rowData)} className={classes._fontsize12} />
                                         <DoubleArrowIcon onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
                                     </div>
-                                    {console.log(myDivToFocus[rowData.tableData.id])}
                                     <div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
                                         <div >
                                             <ProgressBar

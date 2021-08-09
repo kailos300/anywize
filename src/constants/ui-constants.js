@@ -70,8 +70,11 @@ export const PAST_DELIVERIES_TABLE_COLUMNS = [
 ]
 export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   return [
-    { title: "Order id", field: "name" },
-    { title: "Description", field: "description" },
+    { title: "Order id", render: rowData => <span style={{ fontSize: '15px', fontWeight: 500 }}>T{rowData.tableData.id + 1}</span> },
+    { title: "Description", field: "tourname" },
+    { title: "", render: rowData => <span style={{ color: '#6F9CEB' }}> {rowData.length}<span style={{ marginLeft: '15px' }}>New Orders</span></span> },
+    { title: "", field: "" },
+
     {
       title: "Id+1",
       render: rowData => <div style={{ textAlign: 'right', marginRight: '28px' }}>
@@ -82,7 +85,14 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
     },
   ];
 }
-
+const count = (data) => {
+  var count = 0;
+  for (var i = 0; i < data.length; ++i) {
+    if (data[i].delivered_at == null)
+      count++;
+  }
+  return count;
+}
 export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
@@ -95,8 +105,18 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'date', render: rowData => rowData.start_date !== null ? moment(rowData.start_date).format("DD.MM.YYYY HH:mm") : '' },
     { title: 'tour', field: 'tour' },
     { title: 'name', render: rowData => rowData.Tour.name },
-    { title: 'progress', field: 'progress' },
-    { title: 'noOfOrders', field: 'noOfOrders' },
+    {
+      title: 'progress', render: rowData => {
+        console.log(rowData)
+        if (rowData.progress == "Complete") {
+          return <span style={{ color: '#6F9CEB' }}>{rowData.progress}</span>
+        }
+        else {
+          return <span>{rowData.progress}</span>
+        }
+      }
+    },
+    { title: 'noOfOrders', render: rowData => `${count(rowData.Orders)} / ${rowData.Orders.length}` },
     { title: 'DriversName', field: 'driver_name' },
     {
       title: 'call', render: rowData =>

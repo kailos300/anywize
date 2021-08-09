@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-
+import { makeStyles } from "@material-ui/core/styles";
 // Helpers
 import { PATHS } from "util/appConstants";
 
@@ -17,21 +17,29 @@ import { getTours, selectTours } from "redux/slices/tourSlice";
 // Components
 import CustomerForm from "components/Customers/form";
 
+const useStyles = makeStyles({
+  _container: {
+    backgroundColor: "#F5F5F5",
+    padding: "60px 130px",
+    minHeight: "100vh",
+  },
+})
 const currentAction = "EDIT";
 
 const EditCustomer = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const classes = useStyles();
   const { id } = useParams();
   const loading = useSelector(selectCustomerStatus);
   const customer = useSelector(selectCustomer);
   const tours = useSelector(selectTours);
 
   useEffect(() => {
-    if (id && !loading) {
+    if (id) {
       dispatch(getCustomer(id));
     }
-  }, [dispatch, id, loading]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (!tours.length) {
@@ -53,7 +61,7 @@ const EditCustomer = () => {
     history.push(PATHS.customers.root);
   };
 
-  if (loading || !customer) return <div className="loading">Loading..</div>;
+  if (loading || !customer) return <div className={classes._container}><div style={{ color: 'black' }} className="loading">Loading..</div></div>;
   return (
     <CustomerForm
       initialValues={customer}
