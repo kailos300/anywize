@@ -200,7 +200,7 @@ border           : 1px solid #6F9CEB;
     height: 15px;
     border: 1px solid #6F9CEB;
     border-radius: 50%;
-    background: #6F9CEB;
+    background: #6F9CEB !important;
   }
   .ball-open{
     display: block;
