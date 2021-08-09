@@ -29,6 +29,8 @@ import {
   deleteOrder,
 } from "redux/slices/orderSlice";
 
+import { createRoute } from 'redux/slices/routeSlice';
+
 // Components
 import withConfirm from "components/dialogs/delete";
 
@@ -142,6 +144,7 @@ const OrderList = ({ confirm }) => {
     (e, rowData) => callbackOnDelete(e, rowData),
     () => addHandler(),
     (e, rowData) => editHandler(rowData),
+    () => startTourCheck(),
     () => startTour()
   );
   const addHandler = () => {
@@ -177,10 +180,29 @@ const OrderList = ({ confirm }) => {
     })
     setjsonData(newData)
   }
-  const startTour = () => {
+  const startTourCheck = () => {
     let newData = jsonData;
     let check = newData.some((i) => i.mainCheck == true)
     return check;
+  }
+  const startTour = () => {
+    if (startTourCheck()) {
+      let checked = jsonData.find(data => data.mainCheck == true)
+      console.log(checked)
+      let tour = {
+        order_ids: [],
+        tour_id: checked.list[0].Customer.Tour.id
+      }
+      checked.list.map((data) => {
+        if (data.checked) {
+          tour.order_ids.push(data.id)
+        }
+      })
+      console.log(tour, "tour")
+      dispatch(createRoute(tour))
+
+
+    }
   }
   const innerChangeHandler = (e, data, rowData) => {
     console.log(e, data, rowData)

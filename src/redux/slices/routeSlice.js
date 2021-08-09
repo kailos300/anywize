@@ -174,6 +174,21 @@ export const getArchivedRoutes = () => async (dispatch) => {
         dispatch(setRouteReady())
     }
 }
+export const createRoute = (payload) => async (dispatch) => {
+    console.log(payload)
+    dispatch(setRouteLoading());
+
+    try {
+        const order = await coreApi.post(baseUrl, payload);
+        //   dispatch(addNewOrder(order));
+        console.log(order)
+        // return order;
+    } catch (err) {
+        console.log(err);
+    } finally {
+        dispatch(setRouteReady());
+    }
+};
 const routesSelector = ({ routes }) => routes.routes;
 const currentSelector = ({ routes }) => routes.current;
 const completedSelector = ({ routes }) => routes.completed;
