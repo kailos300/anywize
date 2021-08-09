@@ -85,11 +85,19 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
     },
   ];
 }
-const count = (data) => {
+const count = (data, progress) => {
+  console.log(progress)
   var count = 0;
   for (var i = 0; i < data.length; ++i) {
-    if (data[i].delivered_at == null)
-      count++;
+    if (progress == "Complete") {
+      if (data[i].delivered_at == null)
+        count++;
+    }
+    else {
+      if (data[i].delivered_at !== null)
+        count++;
+
+    }
   }
   return count;
 }
@@ -97,7 +105,6 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
       title: 'icon', render: rowData => <div>
-        {console.log(rowData.is_favourite)}
         <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '', cursor: 'pointer' }} />
         <MapIcon />
       </div>
@@ -107,7 +114,6 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'name', render: rowData => rowData.Tour.name },
     {
       title: 'progress', render: rowData => {
-        console.log(rowData)
         if (rowData.progress == "Complete") {
           return <span style={{ color: '#6F9CEB' }}>{rowData.progress}</span>
         }
@@ -116,7 +122,7 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
         }
       }
     },
-    { title: 'noOfOrders', render: rowData => `${count(rowData.Orders)} / ${rowData.Orders.length}` },
+    { title: 'noOfOrders', render: rowData => `${count(rowData.Orders, rowData.progress)} / ${rowData.Orders.length}` },
     { title: 'DriversName', field: 'driver_name' },
     {
       title: 'call', render: rowData =>

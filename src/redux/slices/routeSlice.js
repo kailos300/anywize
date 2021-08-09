@@ -59,11 +59,17 @@ const routeSlice = createSlice({
 
 export const { setRoutes, setRouteLoading, setRouteReady, setCompleted, setCurrent, setArchived } = routeSlice.actions;
 export default routeSlice.reducer;
-const count = (data) => {
+const count = (data, progress) => {
     var count = 0;
     for (var i = 0; i < data.length; ++i) {
-        if (data[i].delivered_at == null)
-            count++;
+        if (progress == "Complete") {
+            if (data[i].delivered_at !== null)
+                count++;
+        }
+        else {
+            if (data[i].delivered_at == null)
+                count++;
+        }
     }
     return count;
 }
@@ -91,7 +97,7 @@ export const getCurrentRoutes = () => async (dispatch) => {
     try {
         const routes = await coreApi.fetch(`${baseUrl}`);
         let update = routes.filter((data) => {
-            if (count(data.Orders) !== data.Orders.length) {
+            if (count(data.Orders, 'In Progress') == data.Orders.length) {
                 return {
                     ...data,
                 }
@@ -120,7 +126,7 @@ export const getFinisedRoutes = () => async (dispatch) => {
     try {
         const routes = await coreApi.fetch(`${baseUrl}`);
         let update = routes.filter((data) => {
-            if (count(data.Orders) == data.Orders.length) {
+            if (count(data.Orders, 'Complete') == data.Orders.length) {
 
                 return {
                     ...data,

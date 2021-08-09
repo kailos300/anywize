@@ -226,7 +226,6 @@ const ArchiveTours = () => {
                                         <NavigateNextIcon onClick={() => scroll(100, rowData)} className={classes._fontsize12} />
                                         <DoubleArrowIcon onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
                                     </div>
-                                    {console.log(myDivToFocus[rowData.tableData.id])}
                                     <div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
                                         <div >
                                             <ProgressBar
@@ -237,21 +236,21 @@ const ArchiveTours = () => {
                                                 filledBackground="#6F9CEB"
                                                 unfilledBackground=""
                                             >
-                                                {
-                                                    rowData.Orders.map((data, index) => <Step transition="scale">
-                                                        {({ accomplished }) => (
-                                                            <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
-                                                                <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
-                                                                <div style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
-                                                                <div style={{
-                                                                    position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
-                                                                    whiteSpace: 'nowrap',
-                                                                    overflow: 'hidden',
-                                                                }}>{data.description}</div>
-                                                            </div>
-                                                        )}
-                                                    </Step>
-                                                    )
+                                                {rowData.Orders.map((data, index) => <Step transition="scale">
+                                                    {({ accomplished }) => (
+                                                        <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
+                                                            <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
+                                                            {console.log(data.delivered_at, "data.delivered_at ")}
+                                                            <div style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
+                                                            <div style={{
+                                                                position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
+                                                                whiteSpace: 'nowrap',
+                                                                overflow: 'hidden',
+                                                            }}>{data.description}</div>
+                                                        </div>
+                                                    )}
+                                                </Step>
+                                                )
                                                 }
                                             </ProgressBar>
                                         </div>
@@ -263,8 +262,6 @@ const ArchiveTours = () => {
 
                     }
                 ]}
-            // icons={{ DetailPanel: () => <ExpandLessIcon /> }}
-            // openIcon={{ DetailPanel: () => <ExpandMoreIcon /> }}
             />
         </div>
     )
