@@ -44,14 +44,21 @@ const useStyles = makeStyles({
       boxShadow: "none",
     },
     "& .MuiTableCell-root:first-child": {
-      width: ' 90px ',
-      textAlign: 'center'
+      width: ' 90px',
+      textAlign: 'center !important'
+    },
+    "& .MuiTableCell-root:nth-last-child(2)": {
+      width: ' 35px',
+    },
+    "& .MuiTableCell-root:nth-last-child(3)": {
+      textAlign: 'right',
+      verticalAlign: 'bottom',
     },
     "& .MuiTableCell-root": {
       border: "none",
       color: "white",
       fontSize: "12px",
-      // width: "unset !important"
+      width: "unset"
     },
     "& .MuiTableSortLabel-root:hover": {
       color: "#F5F5F5",
