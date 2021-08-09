@@ -43,11 +43,15 @@ const useStyles = makeStyles({
     "& .MuiPaper-elevation2": {
       boxShadow: "none",
     },
+    "& .MuiTableCell-root:first-child": {
+      width: ' 90px ',
+      textAlign: 'center'
+    },
     "& .MuiTableCell-root": {
       border: "none",
       color: "white",
       fontSize: "12px",
-      width: "unset !important"
+      // width: "unset !important"
     },
     "& .MuiTableSortLabel-root:hover": {
       color: "#F5F5F5",
@@ -260,13 +264,13 @@ const OrderList = ({ confirm }) => {
                             {data.Customer.name}
                           </TableCell>
                           <TableCell className={classes._textalignright}>
-                            {data.name}
+                            {data.number}
                           </TableCell>
                           <TableCell className={classes._textalignright}>
-                            {data.name}
+                            {'orderdate'}
                           </TableCell>
                           <TableCell className={classes._textalignright}>
-                            {data.Customer.alias}
+                            {data.description}
                           </TableCell>
                           <TableCell className={classes._textalignright}>
                             <EditIcon onClick={() => editHandler(data)} className={clsx(classes._edit, classes._pointer)} />
