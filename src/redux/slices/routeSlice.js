@@ -68,7 +68,7 @@ const count = (data, progress) => {
         }
         else {
             if (data[i].delivered_at == null)
-                count++;
+                return true
         }
     }
     return count;
@@ -97,7 +97,7 @@ export const getCurrentRoutes = () => async (dispatch) => {
     try {
         const routes = await coreApi.fetch(`${baseUrl}`);
         let update = routes.filter((data) => {
-            if (count(data.Orders, 'In Progress') == data.Orders.length) {
+            if (count(data.Orders, 'In Progress')) {
                 return {
                     ...data,
                 }
@@ -127,7 +127,6 @@ export const getFinisedRoutes = () => async (dispatch) => {
         const routes = await coreApi.fetch(`${baseUrl}`);
         let update = routes.filter((data) => {
             if (count(data.Orders, 'Complete') == data.Orders.length) {
-
                 return {
                     ...data,
                 }
