@@ -82,7 +82,6 @@ export const getCustomers = () => async (dispatch) => {
 
   try {
     const customers = await coreApi.fetch(baseUrl);
-    console.log(customers);
     const newCustomers = map(customers, (o) =>
       extend({ cityValue: `${o.zipcode}, ${o.city}` }, o)
     );
@@ -155,11 +154,7 @@ export const deleteCustomer = (id) => async (dispatch) => {
   dispatch(setCustomerLoading());
 
   try {
-    console.log(url);
-
     const res = await coreApi.delete(url);
-    console.log(res);
-
     if (res) {
       dispatch(
         setShowMessage({

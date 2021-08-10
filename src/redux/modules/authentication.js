@@ -70,7 +70,6 @@ export const setPostAuthPath = (payload) => (dispatch) =>
  */
 export const getAuthenticatedUser = () => async (dispatch) => {
   try {
-    console.log('working')
     const response = await get(
       dispatch,
       GET_AUTHENTICATED_USER,

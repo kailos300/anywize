@@ -37,17 +37,14 @@ const tourSlice = createSlice({
       state.tours = tours;
     },
     removeTour: (state, action) => {
-      console.log(state, "state");
 
       delete state.tours[action.payload];
     },
     setTourLoading: (state) => {
-      console.log(state, "state");
 
       state.loading = true;
     },
     setTourReady: (state) => {
-      console.log(state, "state");
 
       state.loading = false;
     },

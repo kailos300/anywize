@@ -60,10 +60,10 @@ export const CUSTOMERS_TABLE_COLUMNS = [
 export const PAST_DELIVERIES_TABLE_COLUMNS = [
   { title: "Date", field: "date" },
   { title: "Time", field: "time" },
-  { title: "Order Number", field: "orderNumber" },
-  { title: "Order Description", field: "order" },
-  { title: "Tour", field: "tour" },
-  { title: "Tour Name", field: "tourName" },
+  { title: "Order Number", field: "number" },
+  { title: "Order Description", field: "description" },
+  { title: "Tour", field: "tourid", render: rowData => rowData.Customer.Tour.id },
+  { title: "Tour Name", field: "tourname", render: rowData => rowData.Customer.Tour.name },
   { title: "Met Customer", field: "metCustomer" },
 
 
@@ -127,13 +127,13 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     {
       title: 'call', render: rowData =>
         <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement="top" arrow interactive>
-          <CallIcon className={'hovericon'} style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} />
+          <CallIcon className={'hovericon'} />
         </Tooltip>
     },
     {
       title: 'key', render: rowData =>
         <Tooltip title={<TooltipBar name={'vpnicon'} rowData={rowData} />} placement="top" arrow interactive>
-          <VpnKeyIcon className={'hovericon'} style={{ color: rowData.tableData.showDetailPanel ? '#6F9CEB' : '', cursor: 'pointer' }} />
+          <VpnKeyIcon className={'hovericon'} />
         </Tooltip>
     },
   ]

@@ -22,7 +22,6 @@ const AddTour = () => {
   const loading = useSelector(selectTourStatus);
 
   const handleAddTour = async (payload) => {
-    console.log(payload);
     await dispatch(addTour(payload));
 
     dispatch(

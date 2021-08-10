@@ -79,11 +79,12 @@ export const getOrders = () => async (dispatch) => {
 
   try {
     const orders = await coreApi.fetch(`${baseUrl}?assigned_to_route=1`);
+    console.log(orders)
     let update = groupBy(orders, "route_id");
+    console.log(update)
     let array = []
     update.map((data, index) => {
       array.push({ list: data.map((item) => { return { ...item, checked: false } }), id: index, tourname: data[0].Customer.Tour.name, length: data.length, mainCheck: false, })
-      console.log(data[0].Customer.Tour.name)
     })
     console.log(array)
     dispatch(setOrders(array));

@@ -71,7 +71,6 @@ const CustomerForm = ({
           );
         }
         if (action === "EDIT") {
-          console.log("working");
           return await handleEditCustomer(
             values.id,
             pick(values, CustomerFormAllowedFields)

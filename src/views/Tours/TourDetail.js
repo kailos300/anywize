@@ -92,7 +92,6 @@ const TourDetail = () => {
   if (loading || !tour) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
   return (
     <div className={classes._container}>
-      {console.log(tour, loading)}
       <div className={classes._editbox}>
         <Typography className={classes._heading} variant="h4">
           {tour.name}

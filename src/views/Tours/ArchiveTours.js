@@ -162,10 +162,6 @@ const ArchiveTours = () => {
             return item;
         })
         settableData(newData)
-        console.log(newData, "newData")
-        console.log(routes, "newData")
-        console.log(tabledata, "newData")
-
 
     }
 
@@ -240,7 +236,6 @@ const ArchiveTours = () => {
                                                     {({ accomplished }) => (
                                                         <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
                                                             <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
-                                                            {console.log(data.delivered_at, "data.delivered_at ")}
                                                             <div style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
                                                             <div style={{
                                                                 position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',

@@ -19,7 +19,6 @@ const routeSlice = createSlice({
     initialState,
     reducers: {
         setRoutes: (state, action) => {
-            console.log(state, action)
             const routes = {};
             action.payload.forEach((route) => {
                 routes[route.id] = route;
@@ -29,7 +28,6 @@ const routeSlice = createSlice({
         setCurrent: (state, action) => {
             const routes = {};
             action.payload.forEach((route) => {
-                console.log(route)
                 routes[route.id] = route;
             });
             state.current = routes;
@@ -175,13 +173,11 @@ export const getArchivedRoutes = () => async (dispatch) => {
     }
 }
 export const createRoute = (payload) => async (dispatch) => {
-    console.log(payload)
     dispatch(setRouteLoading());
 
     try {
         const order = await coreApi.post(baseUrl, payload);
         //   dispatch(addNewOrder(order));
-        console.log(order)
         // return order;
     } catch (err) {
         console.log(err);

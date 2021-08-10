@@ -70,7 +70,6 @@ class Api {
       };
 
       const response = await this.axiosInstance({ url, ...options });
-      console.log(response)
       if (response) return response.data ?? response;
     } catch (error) {
       console.log(error);

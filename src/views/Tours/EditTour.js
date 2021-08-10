@@ -42,7 +42,6 @@ const EditTour = () => {
   }, [dispatch, id]);
 
   const handleEditTour = async (id, payload) => {
-    console.log(id, payload);
     await dispatch(editTour(id, payload));
 
     dispatch(

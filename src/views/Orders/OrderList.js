@@ -188,7 +188,6 @@ const OrderList = ({ confirm }) => {
   const startTour = () => {
     if (startTourCheck()) {
       let checked = jsonData.find(data => data.mainCheck == true)
-      console.log(checked)
       let tour = {
         order_ids: [],
         tour_id: checked.list[0].Customer.Tour.id
@@ -198,14 +197,12 @@ const OrderList = ({ confirm }) => {
           tour.order_ids.push(data.id)
         }
       })
-      console.log(tour, "tour")
       dispatch(createRoute(tour))
 
 
     }
   }
   const innerChangeHandler = (e, data, rowData) => {
-    console.log(e, data, rowData)
     let newData = tableRef.current.state.data;
     newData.map((x, index) => {
       if (x.id !== rowData.id) {
@@ -239,7 +236,6 @@ const OrderList = ({ confirm }) => {
   if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
   return (
     <div className={clsx(classes._container, 'order-table')}>
-      {console.log(orders, " console.log(orders)")}
       <MaterialTable
         tableRef={tableRef}
         data={mapTableData(jsonData)}

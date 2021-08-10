@@ -64,7 +64,6 @@ const CustomerForm = ({
           );
         }
         if (action === "EDIT") {
-          console.log("working");
           return await handleEditCustomer(
             values.id,
             pick(values, CustomerFormAllowedFields)
@@ -144,10 +143,10 @@ const CustomerForm = ({
           <Input
             label={"Street"}
             name="Street"
-            // onChange={handleChange}
-            // onBlur={handleBlur}
-            // value={values.number}
-            // errors={errors}
+          // onChange={handleChange}
+          // onBlur={handleBlur}
+          // value={values.number}
+          // errors={errors}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -166,10 +165,10 @@ const CustomerForm = ({
           <Input
             label={"Zipcode"}
             name="zipcode"
-            // onChange={handleChange}
-            // onBlur={handleBlur}
-            // value={values.number}
-            // errors={errors}
+          // onChange={handleChange}
+          // onBlur={handleBlur}
+          // value={values.number}
+          // errors={errors}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -251,20 +250,20 @@ const CustomerForm = ({
           <Input
             label={"Phone"}
             name="phone"
-            // onChange={handleChange}
-            // onBlur={handleBlur}
-            // value={values.number}
-            // errors={errors}
+          // onChange={handleChange}
+          // onBlur={handleBlur}
+          // value={values.number}
+          // errors={errors}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
             label={"Mobile"}
             name="mobile"
-            // onChange={handleChange}
-            // onBlur={handleBlur}
-            // value={values.number}
-            // errors={errors}
+          // onChange={handleChange}
+          // onBlur={handleBlur}
+          // value={values.number}
+          // errors={errors}
           />
         </Grid>
       </Grid>
@@ -350,10 +349,10 @@ const CustomerForm = ({
           <Input
             label={t("Latitude")}
             name="latitude"
-            // onChange={handleChange}
-            // onBlur={handleBlur}
-            // value={values.latitude}
-            // errors={errors}
+          // onChange={handleChange}
+          // onBlur={handleBlur}
+          // value={values.latitude}
+          // errors={errors}
           />
         </Grid>
 
@@ -361,10 +360,10 @@ const CustomerForm = ({
           <Input
             label={t("Longitude")}
             name="longitude"
-            // onChange={handleChange}
-            // onBlur={handleBlur}
-            // value={values.longitude}
-            // errors={errors}
+          // onChange={handleChange}
+          // onBlur={handleBlur}
+          // value={values.longitude}
+          // errors={errors}
           />
         </Grid>
       </Grid>
