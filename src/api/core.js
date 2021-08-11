@@ -41,7 +41,7 @@ class Api {
       },
       (error) => {
         if (error.response.status === 401) {
-          const token = storage.get("token");
+          // const token = storage.get("token");
 
           // if (token) {
           console.log(error.config, "error")

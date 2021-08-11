@@ -9,20 +9,17 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
 //helpers
 import { CURRENT_TOURS_COLUMNS } from "constants/ui-constants"
-import { getColumns, getActions } from "util/table-utils";
+import { getColumns } from "util/table-utils";
 import { mapTableData } from "util/helpers";
 
-//
-import jsondata from './data.json'
 
 //Actions
-import { selectCurrent, selectRoutes, getRoutes, selectRouteStatus, getCurrentRoutes, getFinisedRoutes } from 'redux/slices/routeSlice';
+import { selectCurrent, selectRouteStatus, getCurrentRoutes } from 'redux/slices/routeSlice';
 
 
 
@@ -136,7 +133,7 @@ const CurrentTours = () => {
     const routes = useSelector(selectCurrent);
     const [tabledata, settableData] = useState(routes)
     const loading = useSelector(selectRouteStatus);
-    const myDivToFocus = useMemo(() => Array(tabledata.length).fill(0).map(i => React.createRef()), []);
+    const myDivToFocus = useMemo(() => Array(tabledata.length).fill(0).map(i => React.createRef()), [tabledata.length]);
 
     useEffect(() => {
         if (!routes.length) {
@@ -151,7 +148,7 @@ const CurrentTours = () => {
     const markFavourite = (e, rowData) => {
         let newData = tableRef.current.state.data
         newData.map((item, index) => {
-            if (index == rowData.tableData.id) {
+            if (index === rowData.tableData.id) {
                 item.is_favourite = !item.is_favourite
                 if (item.is_favourite) {
                     array_move(newData, index, 0)
@@ -197,7 +194,7 @@ const CurrentTours = () => {
 
                     },
                     rowStyle: rowData => {
-                        if (rowData.tableData.id % 2 == 0) {
+                        if (rowData.tableData.id % 2 === 0) {
                             return { backgroundColor: ' #1F1F1F ' };
                         }
                         else {
@@ -215,7 +212,7 @@ const CurrentTours = () => {
                         openIcon: () => <ExpandLessIcon />,
                         render: rowData => {
                             return (
-                                <div style={{ padding: '15px', background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }}>
+                                <div style={{ padding: '15px', background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }}>
                                     <div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
                                         <DoubleArrowIcon onClick={() => scroll(-12000, rowData)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
                                         <NavigateBeforeIcon onClick={() => scroll(-100, rowData)} className={classes._fontsize12} />
@@ -240,7 +237,7 @@ const CurrentTours = () => {
                                                             <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
                                                                 <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
 
-                                                                <div style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
+                                                                <div style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
                                                                 <div style={{
                                                                     position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
                                                                     whiteSpace: 'nowrap',

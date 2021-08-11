@@ -1,5 +1,3 @@
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import MapIcon from '@material-ui/icons/Map';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import CallIcon from '@material-ui/icons/Call';
@@ -89,7 +87,7 @@ const count = (data, progress) => {
   console.log(progress)
   var count = 0;
   for (var i = 0; i < data.length; ++i) {
-    if (progress == "Complete") {
+    if (progress === "Complete") {
       if (data[i].delivered_at == null)
         count++;
     }
@@ -114,7 +112,7 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'name', render: rowData => rowData.Tour.name },
     {
       title: 'progress', render: rowData => {
-        if (rowData.progress == "Complete") {
+        if (rowData.progress === "Complete") {
           return <span style={{ color: '#6F9CEB' }}>{rowData.progress}</span>
         }
         else {

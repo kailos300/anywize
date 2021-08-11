@@ -1,29 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from '@material-ui/core/Drawer';
+// import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import MapIcon from '@material-ui/icons/Map';
+// import MapIcon from '@material-ui/icons/Map';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PersonIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
 import CallIcon from '@material-ui/icons/Call';
 import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded';
-import {
-    TextField
-} from "@material-ui/core";
 // import SearchBar from "material-ui-search-bar";
-import SearchIcon from '@material-ui/icons/Search';
-import ClearIcon from '@material-ui/icons/Clear';
+// import SearchIcon from '@material-ui/icons/Search';
+// import ClearIcon from '@material-ui/icons/Clear';
 import mapboxgl from "mapbox-gl";
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+// import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-import clsx from "clsx";
+// import clsx from "clsx";
 
 //Actions
-import { selectRoutes, getRoutes, getRoute, selectRouteStatus, selectRoute } from 'redux/slices/routeSlice';
+import { selectRoutes, getRoutes } from 'redux/slices/routeSlice';
 
 // owl carousel
 import OwlCarousel from 'react-owl-carousel';
@@ -146,9 +143,9 @@ export default function Maps() {
     const dispatch = useDispatch();
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [valuee, setvalue] = useState('');
+    // const [valuee, setvalue] = useState('');
     const routes = useSelector(selectRoutes)
-    const route = useSelector(selectRoute);
+    // const route = useSelector(selectRoute);
     // const [tabledata, setTabledata] = useState([
     //     { id: '1', title: 'T1.1', name: 'Routennamexy' },
     //     { id: '2', title: 'T1.2', name: 'abcnnamexy' },
@@ -168,8 +165,8 @@ export default function Maps() {
     //     { id: '16', title: 'T4.5', name: 't45ersfmexy' },
 
     // ])
-    const [tabledata, setTabledata] = useState(routes)
-    const [Datasearch, setDatasearch] = useState(tabledata)
+    // const [tabledata, setTabledata] = useState(routes)
+    // const [Datasearch, setDatasearch] = useState(tabledata)
     // const [lng, setLng] = useState(-70.9);
     // const [lat, setLat] = useState(42.35);
     // const [zoom, setZoom] = useState(9);
@@ -177,8 +174,8 @@ export default function Maps() {
         if (!routes.length) {
             dispatch(getRoutes());
         }
-        setTabledata(routes);
-        setDatasearch(routes);
+        // setTabledata(routes);
+        // setDatasearch(routes);
     }, [dispatch, routes,])
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -285,26 +282,26 @@ export default function Maps() {
             });
         }, 1000);
     });
-    const changeHandler = (e) => {
-        setvalue(e.target.value)
-    }
-    const doSomethingWith = () => {
-        let Datasearch = tabledata.filter(item => {
-            return Object.keys(item).some(key =>
-                item[key].toLowerCase().includes(valuee.toLowerCase())
-            )
-        })
-        setDatasearch(Datasearch)
-    }
-    const clearSearch = () => {
-        setvalue('')
-        setDatasearch(tabledata)
-    }
-    const displayRoute = (item) => {
-        console.log(item)
-        dispatch(getRoute(item.id))
-        console.log(route)
-    }
+    // const changeHandler = (e) => {
+    //     setvalue(e.target.value)
+    // }
+    // const doSomethingWith = () => {
+    //     let Datasearch = tabledata.filter(item => {
+    //         return Object.keys(item).some(key =>
+    //             item[key].toLowerCase().includes(valuee.toLowerCase())
+    //         )
+    //     })
+    //     setDatasearch(Datasearch)
+    // }
+    // const clearSearch = () => {
+    //     setvalue('')
+    //     setDatasearch(tabledata)
+    // }
+    // const displayRoute = (item) => {
+    //     console.log(item)
+    //     dispatch(getRoute(item.id))
+    //     console.log(route)
+    // }
     return (
         <div>
             <div style={{ width: '30%', display: 'inline-block' }} className={classes._container}>
@@ -388,7 +385,7 @@ export default function Maps() {
                     </div>
                     <h4 className={classes._galleryheading}>Orders</h4>
                     {[1, 1, 1].map((item, index) =>
-                        <Box className={classes._box} style={{ background: index % 2 == 0 ? ' #1F1F1F ' : '#525252', }}>
+                        <Box className={classes._box} style={{ background: index % 2 === 0 ? ' #1F1F1F ' : '#525252', }}>
                             <Typography style={{ marginLeft: '10px', fontSize: '12px', alignSelf: 'baseline' }}>111qqqq1</Typography>
                             <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</Typography>
                         </Box>

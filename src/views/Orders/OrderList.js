@@ -19,7 +19,6 @@ import { ORDERS_TABLE_COLUMNS } from "constants/ui-constants";
 import { getColumns, getActions } from "util/table-utils";
 import { mapTableData } from "util/helpers";
 import { PATHS } from "util/appConstants";
-import jsondata from './data.json'
 
 // Actions
 import {
@@ -182,24 +181,27 @@ const OrderList = ({ confirm }) => {
   }
   const startTourCheck = () => {
     let newData = jsonData;
-    let check = newData.some((i) => i.mainCheck == true)
+    let check = newData.some((i) => i.mainCheck === true)
     return check;
   }
   const startTour = () => {
     if (startTourCheck()) {
-      let checked = jsonData.find(data => data.mainCheck == true)
+      let checked = jsonData.find(data => data.mainCheck === true)
       let tour = {
         order_ids: [],
         tour_id: checked.list[0].Customer.Tour.id
       }
-      checked.list.map((data) => {
-        if (data.checked) {
-          tour.order_ids.push(data.id)
-        }
-      })
+      // checked.list.map((data) => {
+      //   if (data.checked) {
+      //     tour.order_ids.push(data.id)
+      //   }
+      // })
+      for (let data of checked.list) {
+          if (data.checked) {
+            tour.order_ids.push(data.id)
+          }
+      }
       dispatch(createRoute(tour))
-
-
     }
   }
   const innerChangeHandler = (e, data, rowData) => {
@@ -228,7 +230,7 @@ const OrderList = ({ confirm }) => {
         };
       });
 
-      x.mainCheck = x.list.some((i) => i.checked == true)
+      x.mainCheck = x.list.some((i) => i.checked === true)
       return x;
     })
     setjsonData(newData)
@@ -264,7 +266,7 @@ const OrderList = ({ confirm }) => {
           showTextRowsSelected: false,
           showSelectAllCheckbox: false,
           rowStyle: rowData => {
-            if (rowData.tableData.id % 2 == 0) {
+            if (rowData.tableData.id % 2 === 0) {
               return { backgroundColor: ' #1F1F1F ', height: '71px' };
             }
             else {
@@ -280,7 +282,7 @@ const OrderList = ({ confirm }) => {
               return (
                 <>
                   {rowData.list.map((data) =>
-                    <TableContainer className={clsx(rowData.tableData.id % 2 == 0 ? classes._1F1F1F : classes._525252)}>
+                    <TableContainer className={clsx(rowData.tableData.id % 2 === 0 ? classes._1F1F1F : classes._525252)}>
                       <Table>
                         <TableRow>
                           <TableCell className={classes._textalignright}>

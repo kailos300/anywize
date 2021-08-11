@@ -7,8 +7,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import { useTranslation } from "react-i18next";
 
-import { PATHS } from "util/appConstants";
-
 const useStyles = makeStyles({
   _container: {
     backgroundColor: "#1F1F1F",
