@@ -83,9 +83,12 @@ export const getOrders = () => async (dispatch) => {
     let update = groupBy(orders, "route_id");
     console.log(update)
     let array = []
-    update.map((data, index) => {
+
+    for (let index in update) {
+      let data = update[index]
       array.push({ list: data.map((item) => { return { ...item, checked: false } }), id: index, tourname: data[0].Customer.Tour.name, length: data.length, mainCheck: false, })
-    })
+    }
+
     console.log(array)
     dispatch(setOrders(array));
   } catch (err) {

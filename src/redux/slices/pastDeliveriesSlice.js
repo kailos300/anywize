@@ -1,6 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { coreApi } from "api/core";
-import { setShowMessage } from "redux/slices/uiSlice";
 
 const baseUrl = "/orders";
 const initialState = {

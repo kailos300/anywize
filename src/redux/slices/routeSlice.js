@@ -1,7 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { coreApi } from "api/core";
-import { setShowMessage } from "redux/slices/uiSlice";
-import moment from 'moment';
 
 const baseUrl = '/routes';
 
@@ -65,7 +63,7 @@ export default routeSlice.reducer;
 const count = (data, progress) => {
     var count = 0;
     for (var i = 0; i < data.length; ++i) {
-        if (progress == "Complete") {
+        if (progress === "Complete") {
             if (data[i].delivered_at !== null)
                 count++;
         }
@@ -116,9 +114,7 @@ export const getCurrentRoutes = () => async (dispatch) => {
                 return {
                     ...data,
                 }
-
             }
-
         })
         let newData = update.map((data) => {
             return {
@@ -141,7 +137,7 @@ export const getFinisedRoutes = () => async (dispatch) => {
     try {
         const routes = await coreApi.fetch(`${baseUrl}`);
         let update = routes.filter((data) => {
-            if (count(data.Orders, 'Complete') == data.Orders.length) {
+            if (count(data.Orders, 'Complete') === data.Orders.length) {
                 return {
                     ...data,
                 }
@@ -193,9 +189,7 @@ export const createRoute = (payload) => async (dispatch) => {
     dispatch(setRouteLoading());
 
     try {
-        const order = await coreApi.post(baseUrl, payload);
-        //   dispatch(addNewOrder(order));
-        // return order;
+       await coreApi.post(baseUrl, payload);
     } catch (err) {
         console.log(err);
     } finally {

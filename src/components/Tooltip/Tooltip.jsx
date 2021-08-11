@@ -61,13 +61,13 @@ const useStyles = makeStyles({
 export default function TooltipBar(props) {
     const classes = useStyles();
     const copyCode = () => {
-        props.name == 'callicon' ?
+        props.name === 'callicon' ?
             navigator.clipboard.writeText(`Mobile:${'762342837462'}`) :
             navigator.clipboard.writeText(`Tourcode:${props.rowData.code}, Password:${props.rowData.password}`)
     }
     return (
         <div className={classes._tourdetailbar} >
-            {props.name == 'callicon' ?
+            {props.name === 'callicon' ?
                 <div className={classes._codetext}>
                     <span className={classes._codedetail}>Mobile:</span> 762342837462
                 </div>

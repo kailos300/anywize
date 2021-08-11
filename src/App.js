@@ -22,7 +22,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchUserInfo(history));
-  }, [dispatch]);
+  }, [dispatch, history]);
 
   useEffect(() => {
     if (!authenticated) {

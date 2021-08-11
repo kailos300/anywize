@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
 import MaterialTable from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
 // Helpers
 import { PAST_DELIVERIES_TABLE_COLUMNS } from "constants/ui-constants";
-import { getColumns, getActions } from "util/table-utils";
+import { getColumns } from "util/table-utils";
 import { mapTableData } from "util/helpers";
-import { PATHS } from "util/appConstants";
 
 //Actions
 import {
@@ -70,8 +68,6 @@ const useStyles = makeStyles({
         fontSize: "12px",
     },
 });
-
-const tableTitle = "PAST DELIVERIES ";
 
 const PastDeliveries = () => {
     const { t } = useTranslation("common");

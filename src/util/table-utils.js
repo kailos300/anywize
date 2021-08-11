@@ -15,7 +15,7 @@ export const getColumns = (columns, t) => {
 
 export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler, startTourCheck, startTour) => {
   let actions = [];
-  if (tableTitle == 'ORDERS') {
+  if (tableTitle === 'ORDERS') {
     actions.push(
       {
         icon: () => { return (<><span style={{ fontSize: '16px', fontWeight: 'normal', color: startTourCheck() ? '#6F9CEB' : '#ADADAD' }}>Start Tour/s</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: startTourCheck() ? '#6F9CEB' : '#ADADAD', height: '22px', width: '22px', marginRight: '15px' }} /></>) },
