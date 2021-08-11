@@ -247,11 +247,7 @@ const CurrentTours = () => {
                                                             <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
                                                                 <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
 
-<<<<<<< HEAD
                                                                 <div onClick={() => redirectView(data, rowData)} style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
-=======
-                                                                <div style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
->>>>>>> 9d64e7b0613c48e208472a834fa7fbc4c6ae232c
                                                                 <div style={{
                                                                     position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
                                                                     whiteSpace: 'nowrap',
