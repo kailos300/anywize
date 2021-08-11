@@ -37,7 +37,7 @@ const Snackbar = () => {
     <div className={classes.root}>
       <MuiSnackbar
         open={type === "success"}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={6000}
         onClose={handleClose}
       >
@@ -50,7 +50,7 @@ const Snackbar = () => {
       </MuiSnackbar>
       <MuiSnackbar
         open={type === "error"}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={6000}
         onClose={handleClose}
       >

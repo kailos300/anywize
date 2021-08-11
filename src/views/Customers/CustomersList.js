@@ -19,8 +19,8 @@ import {
   deleteCustomer,
 } from "redux/slices/customerSlice";
 
-// Components
 import withConfirm from "components/dialogs/delete";
+import Loading from 'components/Shared/loading';
 
 const useStyles = makeStyles({
   _container: {
@@ -93,7 +93,7 @@ const CustomersList = ({ confirm }) => {
   const customers = useSelector(selectCustomers);
 
   useEffect(() => {
-    if (!customers.length) {
+    if (!customers.length && !loading) {
       dispatch(getCustomers());
     }
   }, [dispatch, customers]);
@@ -108,19 +108,15 @@ const CustomersList = ({ confirm }) => {
   const actions = getActions(
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
-    () => addHandler()
+    () => history.push(PATHS.customers.add)
   );
-  const addHandler = () => {
-    history.push(PATHS.customers.add);
-  };
-  if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
+
+  if (loading) {
+    return <Loading />
+  }
+
   return (
     <div className={clsx(classes._container, "custom-table-styles")}>
-      {/* <Paper style={{ padding: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }} elevation={3} >
-                <Typography className="font-size-34" variant='h4'>{t('Customers')}</Typography>
-                <Button className="Primary-btn" onClick={addCustomerHandler}  color="primary" variant="contained">Add Customer</Button>
-            </Paper> */}
-      {/* <div className={'custom-table-styles'}> */}
       <MaterialTable
         icons={{
           Filter: () => (

@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { PATHS } from "util/appConstants";
 
 // Actions
-import { initialValues } from "components/Orders/constants";
 import { getCustomers, selectCustomers } from "redux/slices/customerSlice";
 import { selectOrderStatus, addOrder } from "redux/slices/orderSlice";
 import { setShowMessage } from "redux/slices/uiSlice";
@@ -28,7 +27,7 @@ const AddOrder = () => {
     }
   }, [dispatch, customers]);
 
-  const handleAddOrder = async (payload) => {
+  const onSubmit = async (payload) => {
     await dispatch(addOrder(payload));
 
     dispatch(
@@ -44,8 +43,7 @@ const AddOrder = () => {
   if (loading) return <div>Loading..</div>;
   return (
     <OrderForm
-      initialValues={initialValues}
-      handleAddOrder={handleAddOrder}
+      onSubmit={onSubmit}
       action={currentAction}
       customerList={customers}
     />

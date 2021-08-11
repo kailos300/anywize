@@ -1,6 +1,8 @@
-import axios from "axios";
-import { storage } from "util/storage";
-import { parseMethod, interceptedMethods } from "./helpers";
+import axios from 'axios';
+import { storage } from 'util/storage';
+import { parseMethod, interceptedMethods } from './helpers';
+import store from 'redux/store';
+import { setShowMessage } from 'redux/slices/uiSlice';
 
 class Api {
   axiosInstance;
@@ -9,7 +11,7 @@ class Api {
     const baseURL = process.env.REACT_APP_API;
     this.axiosInstance = axios.create({
       baseURL,
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     });
 
     /**
@@ -18,8 +20,8 @@ class Api {
      */
     this.axiosInstance.interceptors.request.use(
       (config) => {
-        if (process.env.NODE_ENV === "development") {
-          if (config.method === "get") {
+        if (process.env.NODE_ENV === 'development') {
+          if (config.method === 'get') {
             console.info(`${config.method} - ${config.url}`);
           }
           if (interceptedMethods.some((m) => m === config.method)) {
@@ -27,7 +29,7 @@ class Api {
           }
         }
 
-        config.headers["Authorization"] = this.getAuthToken();
+        config.headers['Authorization'] = this.getAuthToken();
         return config;
       },
       (err) => {
@@ -41,27 +43,30 @@ class Api {
       },
       (error) => {
         if (error.response.status === 401) {
-          // const token = storage.get("token");
-
-          // if (token) {
-          console.log(error.config, "error")
-          // return this.axiosInstance(error.config);
-          // } else {
           storage.clear();
-          // }
-          // } else {
-          console.log(error);
-          return Promise.reject(error);
+
+          if (!window.location.href.includes('/login')) {
+            return window.location.href = '/login';
+          }
         }
+
+        if (error.response.status === 403) {
+          store.dispatch(setShowMessage({
+            description: 'Unauthorized',
+            type: 'error',
+          }));
+        }
+
+        throw error;
       }
     );
   }
 
   getAuthToken = () => {
-    return `Bearer ${storage.get("token")}`;
+    return `Bearer ${storage.get('token')}`;
   };
 
-  async fetch(url, method = "GET", data = {}, config) {
+  async fetch(url, method = 'GET', data = {}, config) {
     try {
       let options = {
         method: parseMethod(method),
@@ -78,27 +83,27 @@ class Api {
   }
 
   async post(url, data, config) {
-    return this.fetch(url, "POST", data, config);
+    return this.fetch(url, 'POST', data, config);
   }
 
   async put(url, data, config) {
-    return this.fetch(url, "PUT", data, config);
+    return this.fetch(url, 'PUT', data, config);
   }
 
   async patch(url, data, config) {
-    return this.fetch(url, "PATCH", data, config);
+    return this.fetch(url, 'PATCH', data, config);
   }
 
   async delete(url, config) {
-    return this.fetch(url, "DELETE", undefined, config);
+    return this.fetch(url, 'DELETE', undefined, config);
   }
 }
 
 // TODO: Set the url in .env file and use it from there. Create separate .env files for prod and dev
 const baseURL =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === 'production'
     ? window.location.origin
-    : "http://localhost:3000";
+    : 'http://localhost:3000';
 
 export { baseURL };
 export const coreApi = new Api(baseURL);

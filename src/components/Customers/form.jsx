@@ -1,48 +1,48 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Grid, Typography } from "@material-ui/core";
-import * as pick from "lodash/pick";
-import { useFormik } from "formik";
-import { makeStyles } from "@material-ui/core/styles";
-import countries from "iso-3166-country-list";
-import SaveIcon from "@material-ui/icons/Save";
-import CloseIcon from "@material-ui/icons/Close";
-import { useHistory, useParams } from "react-router-dom";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Grid, Typography } from '@material-ui/core';
+import * as pick from 'lodash/pick';
+import { useFormik } from 'formik';
+import { makeStyles } from '@material-ui/core/styles';
+import countries from 'iso-3166-country-list';
+import SaveIcon from '@material-ui/icons/Save';
+import CloseIcon from '@material-ui/icons/Close';
+import { useHistory, useParams } from 'react-router-dom';
 
-import { Input, Select, Checkbox } from "components/Shared/mui-formik-inputs";
+import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs';
 
-import { CustomerSchema } from "constants/validation-schemas";
-import { CustomerFormAllowedFields } from "constants/forms-submit-allowed-fields";
-import { PATHS } from "util/appConstants";
+import { CustomerSchema } from 'constants/validation-schemas';
+import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
+import { PATHS } from 'util/appConstants';
 
-const unzip = require("zip-to-city");
+const unzip = require('zip-to-city');
 
 const useStyles = makeStyles({
   _container: {
-    backgroundColor: "#F5F5F5",
-    padding: "60px 130px",
-    minHeight: "100vh",
+    backgroundColor: '#F5F5F5',
+    padding: '60px 130px',
+    minHeight: '100vh',
   },
   _editbox: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   _heading: {
-    font: "normal normal normal 28px/40px Questrial",
-    color: "#121212",
+    font: 'normal normal normal 28px/40px Questrial',
+    color: '#121212',
   },
   _icons: {
-    color: "#ADADAD",
-    width: "22px",
-    height: "22px",
-    cursor: "pointer",
-    paddingRight: "16px",
+    color: '#ADADAD',
+    width: '22px',
+    height: '22px',
+    cursor: 'pointer',
+    paddingRight: '16px',
   },
   _subheading: {
-    font: "normal normal 500 22px/32px Roboto",
-    color: " #121212",
-    marginTop: "44px",
+    font: 'normal normal 500 22px/32px Roboto',
+    color: ' #121212',
+    marginTop: '44px',
   },
 });
 const CustomerForm = ({
@@ -84,12 +84,17 @@ const CustomerForm = ({
 
   const {
     values,
-    handleBlur,
     handleChange,
     setFieldValue,
     errors,
     handleSubmit,
+    submitCount,
   } = formik;
+  let { handleBlur } = formik;
+
+  if (!submitCount) {
+    handleBlur = null;
+  }
 
   const customHandleChange = (e) => {
     const { value } = e.target;
@@ -104,11 +109,13 @@ const CustomerForm = ({
     setFieldValue("city", "");
     setFieldValue("country", "");
   };
+
   const closeCustomerHandler = () => {
     action === "ADD"
       ? history.push(PATHS.customers.root)
       : history.push(PATHS.customers.detail.replace(":id", id));
   };
+
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>

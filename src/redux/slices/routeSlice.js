@@ -1,200 +1,160 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { coreApi } from "api/core";
+import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { coreApi } from 'api/core';
+import { setShowMessage } from 'redux/slices/uiSlice';
+import moment from 'moment';
 
 const baseUrl = '/routes';
 
 const initialState = {
-    routes: {},
-    completed: {},
-    current: {},
-    archived: {},
-    route: null,
-    loading: false,
+	routes: [],
+	completed: [],
+	current: [],
+	archived: [],
+	route: null,
+	loading: false,
 }
 
 const routeSlice = createSlice({
-    name: 'routes',
-    initialState,
-    reducers: {
-        setRoutes: (state, action) => {
-            const routes = {};
-            action.payload.forEach((route) => {
-                routes[route.id] = route;
-            });
-            state.routes = routes;
-        },
-        setCurrent: (state, action) => {
-            const routes = {};
-            action.payload.forEach((route) => {
-                routes[route.id] = route;
-            });
-            state.current = routes;
-        },
-        setCompleted: (state, action) => {
-            const routes = {};
-            action.payload.forEach((route) => {
-                routes[route.id] = route;
-            });
-            state.completed = routes;
-        },
-        setArchived: (state, action) => {
-            const routes = {};
-            action.payload.forEach((route) => {
-                routes[route.id] = route;
-            });
-            state.archived = routes;
-        },
-        setRoute: (state, action) => {
-            console.log(state, action)
-            let route = { payload: action.payload, detail: '' }
-            state.route = action.payload;
-        },
-        setRouteLoading: (state) => {
-            state.loading = true;
-        },
-        setRouteReady: (state) => {
-            state.loading = false;
-        },
-    }
+	name: 'routes',
+	initialState,
+	reducers: {
+		setRoutes: (state, action) => {
+			state.routes = action.payload;
+		},
+		setCurrent: (state, action) => {
+			state.current = action.payload;
+		},
+		setCompleted: (state, action) => {
+			state.completed = action.payload;
+		},
+		setArchived: (state, action) => {
+			state.archived = action.payload;
+		},
+		setRoute: (state, action) => {
+			state.route = action.payload;
+		},
+		setRouteLoading: (state) => {
+			state.loading = true;
+		},
+		setRouteReady: (state) => {
+			state.loading = false;
+		},
+	}
 })
 
 export const { setRoutes, setRouteLoading, setRouteReady, setCompleted, setCurrent, setArchived, setRoute } = routeSlice.actions;
 export default routeSlice.reducer;
-const count = (data, progress) => {
-    var count = 0;
-    for (var i = 0; i < data.length; ++i) {
-        if (progress === "Complete") {
-            if (data[i].delivered_at !== null)
-                count++;
-        }
-        else {
-            if (data[i].delivered_at == null)
-                return true
-        }
-    }
-    return count;
-}
+
 export const getRoute = (id, detail) => async (dispatch) => {
-    const url = baseUrl + `/${id}`;
-    dispatch(setRouteLoading());
-    try {
-        const res = await coreApi.fetch(url);
-        dispatch(setRoute(res));
-    } catch (err) {
-        console.log(err);
-    } finally {
-        dispatch(setRouteReady());
-    }
+	const url = baseUrl + `/${id}`;
+	dispatch(setRouteLoading());
+	try {
+		const res = await coreApi.fetch(url);
+		dispatch(setRoute(res));
+	} catch (err) {
+		console.log(err);
+	} finally {
+		dispatch(setRouteReady());
+	}
 };
 export const getRoutes = () => async (dispatch) => {
-    dispatch(setRouteLoading());
-    try {
-        const routes = await coreApi.fetch(baseUrl);
-        let update = routes.map((data) => {
-            return {
-                ...data,
-                is_favourite: false,
-            }
-        })
-        dispatch(setRoutes(update));
-    }
-    catch (err) {
-        console.log(err);
-    }
-    finally {
-        dispatch(setRouteReady())
-    }
+	dispatch(setRouteLoading());
+	try {
+		const routes = await coreApi.fetch(baseUrl);
+		let update = routes.map((data) => {
+			return {
+				...data,
+				is_favourite: false,
+			}
+		})
+		dispatch(setRoutes(update));
+	}
+	catch (err) {
+		console.log(err);
+	}
+	finally {
+		dispatch(setRouteReady())
+	}
 }
 export const getCurrentRoutes = () => async (dispatch) => {
-    dispatch(setRouteLoading());
-    try {
-        const routes = await coreApi.fetch(`${baseUrl}`);
-        let update = routes.filter((data) => {
-            if (count(data.Orders, 'In Progress')) {
-                return {
-                    ...data,
-                }
-            }
-        })
-        let newData = update.map((data) => {
-            return {
-                ...data,
-                is_favourite: false,
-                progress: 'In Progress'
-            }
-        })
-        dispatch(setCurrent(newData));
-    }
-    catch (err) {
-        console.log(err);
-    }
-    finally {
-        dispatch(setRouteReady())
-    }
-}
-export const getFinisedRoutes = () => async (dispatch) => {
-    dispatch(setRouteLoading());
-    try {
-        const routes = await coreApi.fetch(`${baseUrl}`);
-        let update = routes.filter((data) => {
-            if (count(data.Orders, 'Complete') === data.Orders.length) {
-                return {
-                    ...data,
-                }
-            }
-        })
-        let newData = update.map((data) => {
-            return {
-                ...data,
-                is_favourite: false,
-                progress: 'Complete'
-            }
-        })
-        dispatch(setCompleted(newData));
-    }
-    catch (err) {
-        console.log(err);
-    }
-    finally {
-        dispatch(setRouteReady())
-    }
-}
-export const getArchivedRoutes = () => async (dispatch) => {
-    dispatch(setRouteLoading());
-    try {
-        const routes = await coreApi.fetch(`${baseUrl}?started=0&ended=0`);
-        let update = routes.map((data) => {
-            return {
-                ...data
-            }
-        })
-        let newData = update.map((data) => {
-            return {
-                ...data,
-                is_favourite: false,
-                progress: 'Archived'
-            }
-        })
+	dispatch(setRouteLoading());
+	try {
+		const routes = await coreApi.fetch(`${baseUrl}?ended=0`);
 
-        dispatch(setArchived(newData));
-    }
-    catch (err) {
-        console.log(err);
-    }
-    finally {
-        dispatch(setRouteReady())
-    }
+		const newData = routes.map((data) => {
+			return {
+				...data,
+				is_favourite: false,
+				progress: 'In Progress'
+			}
+		});
+
+		dispatch(setCurrent(newData));
+	} catch (err) {
+		console.log(err);
+	} finally {
+		dispatch(setRouteReady())
+	}
+};
+
+export const getFinisedRoutes = () => async (dispatch) => {
+	dispatch(setRouteLoading());
+	try {
+		const routes = await coreApi.fetch(`${baseUrl}?started=1&ended=1&end_date_from=${moment().subtract(5, 'days').startOf('day').format()}`);
+		const update = routes.filter((data) => {
+			return data.Orders.every((o) => o.delivered_at);
+		});
+		const newData = update.map((data) => {
+			return {
+				...data,
+				is_favourite: false,
+				progress: 'Complete'
+			}
+		});
+		dispatch(setCompleted(newData));
+	} catch (err) {
+		console.log(err);
+	} finally {
+		dispatch(setRouteReady())
+	}
+};
+
+export const getArchivedRoutes = () => async (dispatch) => {
+	dispatch(setRouteLoading());
+	try {
+		const routes = await coreApi.fetch(`${baseUrl}?started=1&ended=1&end_date_to=${moment().subtract(5, 'days').startOf('day').format()}`);
+		let update = routes.map((data) => {
+			return {
+				...data
+			}
+		})
+		let newData = update.map((data) => {
+			return {
+				...data,
+				is_favourite: false,
+				progress: 'Archived'
+			}
+		})
+
+		dispatch(setArchived(newData));
+	}
+	catch (err) {
+		console.log(err);
+	}
+	finally {
+		dispatch(setRouteReady())
+	}
 }
 export const createRoute = (payload) => async (dispatch) => {
-    dispatch(setRouteLoading());
+	dispatch(setRouteLoading());
 
-    try {
-       await coreApi.post(baseUrl, payload);
-    } catch (err) {
-        console.log(err);
-    } finally {
-        dispatch(setRouteReady());
-    }
+	try {
+		await coreApi.post(baseUrl, payload);
+	} catch (err) {
+		console.log(err);
+	} finally {
+		dispatch(setRouteReady());
+	}
 };
 const routesSelector = ({ routes }) => routes.routes;
 const routeSelector = ({ routes }) => routes.route
@@ -205,19 +165,11 @@ const routeStatusSelector = ({ routes }) => routes.loading;
 
 
 export const selectRoute = createSelector(routeSelector, (route) => route);
-export const selectCurrent = createSelector(currentSelector, (current) =>
-    Object.values(current)
-);
-export const selectCompleted = createSelector(completedSelector, (completed) =>
-    Object.values(completed)
-);
-export const selectArchived = createSelector(archivedSelector, (archived) =>
-    Object.values(archived)
-);
-export const selectRoutes = createSelector(routesSelector, (routes) =>
-    Object.values(routes)
-);
+export const selectCurrent = createSelector(currentSelector, (current) => current);
+export const selectCompleted = createSelector(completedSelector, (completed) => completed);
+export const selectArchived = createSelector(archivedSelector, (archived) => archived);
+export const selectRoutes = createSelector(routesSelector, (routes) => routes);
 export const selectRouteStatus = createSelector(
-    routeStatusSelector,
-    (loading) => loading
+	routeStatusSelector,
+	(loading) => loading
 );

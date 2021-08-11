@@ -8,7 +8,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 import { useHistory } from "react-router-dom";
 
-import { Input, InputOnlyNumbers, Select } from "../Shared/mui-formik-inputs";
+import { Input, InputOnlyNumbers, Autocomplete } from "../Shared/mui-formik-inputs";
 import { OrderSchema } from "constants/validation-schemas";
 import { OrderFormAllowedFields } from "constants/forms-submit-allowed-fields";
 import { PATHS } from "util/appConstants";
@@ -43,8 +43,7 @@ const useStyles = makeStyles({
 });
 const OrderForm = ({
   initialValues,
-  handleAddOrder,
-  handleEditOrder,
+  onSubmit,
   action,
   customerList,
 }) => {
@@ -57,25 +56,27 @@ const OrderForm = ({
     validateOnChange: false,
     validateOnBlur: true,
     validationSchema: OrderSchema,
-    initialValues: initialValues,
+    initialValues: {
+      customer_id: '',
+      description: '',
+      number: '',
+      ...initialValues,
+    },
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        if (action === "ADD") {
-          console.log(values, "values");
-          return await handleAddOrder(pick(values, OrderFormAllowedFields));
-        }
-        if (action === "EDIT") {
-          return await handleEditOrder(
-            values.id,
-            pick(values, OrderFormAllowedFields)
-          );
-        }
+        onSubmit(pick(values, OrderFormAllowedFields));
       } catch (err) {
         setSubmitting(false);
       }
     },
   });
-  const { values, handleBlur, handleChange, errors, handleSubmit } = formik;
+  const { values, handleChange, errors, handleSubmit, setFieldValue, submitCount } = formik;
+  let { handleBlur } = formik;
+
+  if (!submitCount) {
+    handleBlur = null;
+  }
+
   const closeOrderHandler = () => {
     // action == 'ADD' ?
     history.push(PATHS.orders.root);
@@ -93,22 +94,26 @@ const OrderForm = ({
           <SaveIcon onClick={handleSubmit} className={classes._icons} />
         </div>
       </div>
-      <Typography className={classes._subheading} variant="h5">
-        {t("Basic Data")}
-      </Typography>
-      <Grid style={{ padding: "20px" }} container spacing={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
-          <Select
-            label={t("Customer")}
-            name="customer_id"
-            onChange={handleChange}
+          <Autocomplete
             onBlur={handleBlur}
-            value={values.customer_id}
+            name="customer_id"
+            label="Customer"
             errors={errors}
-            options={customerList.map((o) => ({ label: o.id, value: o.id }))}
+            value={values.customer_id}
+            settings={{
+              disableClearable: true,
+              valueProp: 'id',
+              labelProp: 'alias',
+            }}
+            onChange={(selected) => {
+              setFieldValue('customer_id', selected.id);
+            }}
+            options={customerList}
+            required
           />
         </Grid>
-        {console.log(customerList)}
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
             label={t("Description")}

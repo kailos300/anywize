@@ -11,6 +11,7 @@ import { PATHS } from "util/appConstants";
 
 // Actions
 import { selectTour, selectTourStatus, getTour } from "redux/slices/tourSlice";
+import Loading from 'components/Shared/loading';
 
 const useStyles = makeStyles({
   _container: {
@@ -81,7 +82,7 @@ const TourDetail = () => {
   const tour = useSelector(selectTour);
 
   useEffect(() => {
-    if (id) {
+    if (id && !loading) {
       dispatch(getTour(id));
     }
   }, [dispatch, id]);
@@ -89,7 +90,11 @@ const TourDetail = () => {
   const editTourHandler = () => {
     history.push(PATHS.tours.edit.replace(":id", id));
   };
-  if (loading || !tour) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
+
+  if (loading || !tour) {
+    return <Loading />;
+  }
+
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>
