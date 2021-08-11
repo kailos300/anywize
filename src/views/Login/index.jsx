@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { loginWithRedirect } from "redux/slices/authSlice";
-import { PATHS } from "util/appConstants";
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginWithRedirect } from 'redux/slices/authSlice';
+import { PATHS } from 'util/appConstants';
 
-import { selectAuthenticated } from "redux/slices/authSlice";
-
-import LoginComponent from "components/Login";
+import { selectAuthenticated } from 'redux/slices/authSlice';
+import { setShowMessage } from 'redux/slices/uiSlice';
+import LoginComponent from 'components/Login';
 
 const Login = () => {
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   const authenticated = useSelector(selectAuthenticated);
@@ -17,7 +19,7 @@ const Login = () => {
   const loginCallback = () => history.push(PATHS.dashboard);
 
   useEffect(() => {
-    if (localStorage.getItem("token") && authenticated) {
+    if (localStorage.getItem('token') && authenticated) {
       history.push(PATHS.dashboard);
     }
   }, [authenticated, history]);
@@ -26,9 +28,10 @@ const Login = () => {
     try {
       await dispatch(loginWithRedirect(values, loginCallback));
     } catch (err) {
-      if (err.response && err.response.data) {
-        setError(err.response.data.error);
-      }
+      dispatch(setShowMessage({
+        type: 'error',
+        description: t('Email or password incorrect'),
+      }));
     }
   };
 

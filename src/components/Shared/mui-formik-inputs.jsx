@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useTranslation } from "react-i18next";
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   TextField,
   Select as MaterialSelect,
@@ -10,9 +10,10 @@ import {
   FormHelperText,
   InputAdornment,
   IconButton,
-} from "@material-ui/core";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+} from '@material-ui/core';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import MUIAutocomplete from '@material-ui/lab/Autocomplete';
 
 const getErrorForName = (errors, name) => {
   if (!errors) {
@@ -110,6 +111,7 @@ export const Input = (props) => {
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
+      inputProps={{ autoComplete: 'off' }}
       {...rest}
     />
   );
@@ -129,6 +131,7 @@ export const InputOnlyNumbers = (props) => {
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
+      inputProps={{ autoComplete: 'off' }}
       onChange={(e) => {
         if (!/^[0-9+-\s]*$/.test(e.target.value)) {
           return;
@@ -155,6 +158,13 @@ export const Select = (props) => {
         value={value || ""}
         fullWidth={true}
         error={!!getErrorForName(errors, name)}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left"
+          },
+          getContentAnchorEl: null
+        }}
         {...rest}
       >
         {options.map((o, i) => (
@@ -187,6 +197,7 @@ export const Textarea = (props) => {
       {...rest}
       multiline={true}
       rows={3}
+      inputProps={{ autoComplete: 'off' }}
     />
   );
 };
@@ -231,6 +242,7 @@ export function ColorInput(props) {
               type="color"
               name={name}
               onChange={handleChange}
+              autoComplete="off"
             />
           </InputAdornment>
         ),
@@ -239,3 +251,98 @@ export function ColorInput(props) {
     />
   );
 }
+
+export const Autocomplete = ({
+  name,
+  value,
+  label,
+  help,
+  errors,
+  options,
+  required,
+  onChange,
+  settings,
+  onBlur,
+  disabled,
+}) => {
+  const { t } = useTranslation();
+  const opts = {
+    disableClearable: false,
+    freeSolo: false,
+    valueProp: 'value',
+    labelProp: 'label',
+    filterOptions: null,
+    disableInputWhenNoOptions: true,
+    ...settings,
+  };
+
+  const getValue = (o) => {
+    if (typeof opts.valueProp === 'function') {
+      return opts.valueProp(o);
+    }
+
+    return o[opts.valueProp];
+  };
+
+  const getLabel = (o) => {
+    if (typeof opts.labelProp === 'function') {
+      return opts.labelProp(o);
+    }
+
+    return o[opts.labelProp];
+  };
+
+  // this prevents a bug when we have an input with
+  // options fetched from the api. The input loads before the api
+  // and later on the currently selected item is not properly marked.
+  if (!options.length && opts.disableInputWhenNoOptions) {
+    return (
+      <Select
+        name={name}
+        value={value}
+        label={label}
+        help={help}
+        errors={errors}
+        options={[{ label: t('No options'), value: null, disabled: true }]}
+        required={required}
+        onChange={null}
+        onBlur={null}
+        disabled={disabled}
+      />
+    );
+  }
+
+  return (
+    <FormControl fullWidth margin="none">
+      <MUIAutocomplete
+        id='new-select-autocomplete'
+        fullWidth
+        value={value ? options.find((o) => getValue(o) === value) : null}
+        options={options}
+        disableClearable={opts.disableClearable}
+        onChange={(event, newValue) => {
+          onChange(newValue);
+        }}
+        onBlur={onBlur}
+        disabled={disabled}
+        freeSolo={opts.freeSolo}
+        getOptionLabel={(option) => getLabel(option)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={t(label)}
+            required={required}
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: `off`,
+            }}
+            margin="dense"
+            error={!!getHelpOrError(null, errors, name, t)}
+            helperText={getHelpOrError(help, errors, name, t)}
+          />
+        )}
+        {...(opts.filterOptions ? { filterOptions: opts.filterOptions } : {})}
+      />
+    </FormControl>
+  );
+};

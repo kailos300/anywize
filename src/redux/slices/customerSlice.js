@@ -1,42 +1,23 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
-import * as map from "lodash/map";
-import * as extend from "lodash/extend";
-import { coreApi } from "api/core";
-import { setShowMessage } from "redux/slices/uiSlice";
+import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { coreApi } from 'api/core';
+import { setShowMessage } from 'redux/slices/uiSlice';
 
-const baseUrl = "/customers";
+const baseUrl = '/customers';
 const initialState = {
-  customers: {},
+  customers: [],
   customer: null,
   loading: false,
 };
 
 const customerSlice = createSlice({
-  name: "customers",
+  name: 'customers',
   initialState,
   reducers: {
-    addNewCustomer: (state, action) => {
-      const { id } = action.payload;
-      state.customers[id] = action.payload;
-      state.customer = action.payload;
-    },
-    setEditCustomer: (state, action) => {
-      const { id } = action.payload;
-      state.customers[id] = action.payload;
-      state.customer = action.payload;
-    },
     setCustomer: (state, action) => {
       state.customer = action.payload;
     },
     setCustomers: (state, action) => {
-      const customers = {};
-      action.payload.forEach((customer) => {
-        customers[customer.id] = customer;
-      });
-      state.customers = customers;
-    },
-    removeCustomer: (state, action) => {
-      delete state.customers[action.payload];
+      state.customers = action.payload;
     },
     setCustomerLoading: (state) => {
       state.loading = true;
@@ -45,7 +26,7 @@ const customerSlice = createSlice({
       state.loading = false;
     },
     emptyCustomers: (state) => {
-      state.customers = {};
+      state.customers = [];
       state.customer = null;
     },
   },
@@ -54,9 +35,6 @@ const customerSlice = createSlice({
 export const {
   setCustomer,
   setCustomers,
-  addNewCustomer,
-  setEditCustomer,
-  removeCustomer,
   setCustomerLoading,
   setCustomerReady,
   emptyCustomers,
@@ -82,10 +60,8 @@ export const getCustomers = () => async (dispatch) => {
 
   try {
     const customers = await coreApi.fetch(baseUrl);
-    const newCustomers = map(customers, (o) =>
-      extend({ cityValue: `${o.zipcode}, ${o.city}` }, o)
-    );
-    dispatch(setCustomers(newCustomers));
+
+    dispatch(setCustomers(customers));
   } catch (err) {
     console.log(err);
   } finally {
@@ -99,12 +75,11 @@ export const addCustomer = (payload) => async (dispatch) => {
   try {
     const customer = await coreApi.post(baseUrl, payload);
 
-    dispatch(addNewCustomer(customer));
     dispatch(emptyCustomers());
     dispatch(
       setShowMessage({
-        description: "Customer Added Successfully!",
-        type: "success",
+        description: 'Customer Added Successfully!',
+        type: 'success',
       })
     );
     return customer;
@@ -112,8 +87,8 @@ export const addCustomer = (payload) => async (dispatch) => {
     console.log(err);
     dispatch(
       setShowMessage({
-        description: "Can't Add! Customer",
-        type: "error",
+        description: 'Can\'t Add! Customer',
+        type: 'error',
       })
     );
   } finally {
@@ -127,21 +102,20 @@ export const editCustomer = (id, payload) => async (dispatch) => {
 
   try {
     const res = await coreApi.put(url, payload);
-    if (res) {
-      dispatch(emptyCustomers());
 
-      dispatch(
-        setShowMessage({
-          description: "Edited CUSTOMER Successfully",
-          type: "success",
-        })
-      );
-    }
+    dispatch(emptyCustomers());
+
+    dispatch(
+      setShowMessage({
+        description: 'Edited CUSTOMER Successfully',
+        type: 'success',
+      })
+    );
   } catch (err) {
     dispatch(
       setShowMessage({
-        description: "Failed editing customer. Please try again",
-        type: "error",
+        description: 'Failed editing customer. Please try again',
+        type: 'error',
       })
     );
   } finally {
@@ -154,20 +128,13 @@ export const deleteCustomer = (id) => async (dispatch) => {
   dispatch(setCustomerLoading());
 
   try {
-    const res = await coreApi.delete(url);
-    if (res) {
-      dispatch(
-        setShowMessage({
-          description: "DELETED CUSTOMER Successfully",
-          type: "success",
-        })
-      );
-      dispatch(removeCustomer(id));
-    }
+    await coreApi.delete(url);
+
+    dispatch(emptyCustomers());
     dispatch(
       setShowMessage({
-        description: "Can't DELETED CUSTOMER",
-        type: "error",
+        description: 'DELETED CUSTOMER Successfully',
+        type: 'success',
       })
     );
   } catch (err) {
@@ -185,9 +152,7 @@ export const selectCustomer = createSelector(
   customerSelector,
   (customer) => customer
 );
-export const selectCustomers = createSelector(customersSelector, (customers) =>
-  Object.values(customers)
-);
+export const selectCustomers = createSelector(customersSelector, (customers) => customers);
 export const selectCustomerStatus = createSelector(
   customerStatusSelector,
   (loading) => loading

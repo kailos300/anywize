@@ -2,12 +2,10 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { coreApi } from "api/core";
 import { setShowMessage } from "redux/slices/uiSlice";
 
-//helpers
-import { groupBy } from "util/helpers";
-
 const baseUrl = "/orders";
 const initialState = {
-  orders: {},
+  orders: [],
+  timestamp: null,
   order: null,
   loading: false,
 };
@@ -16,29 +14,12 @@ const orderSlice = createSlice({
   name: "orders",
   initialState,
   reducers: {
-    addNewOrder: (state, action) => {
-
-      const { _id } = action.payload;
-      state.orders[_id] = action.payload;
-      state.order = action.payload;
-    },
-    setEditOrder: (state, action) => {
-      const { id } = action.payload;
-      state.orders[id] = action.payload;
-      state.order = action.payload;
-    },
     setOrder: (state, action) => {
       state.order = action.payload;
     },
     setOrders: (state, action) => {
-      const orders = {};
-      action.payload.forEach((order) => {
-        orders[order.id] = order;
-      });
-      state.orders = orders;
-    },
-    removeOrder: (state, action) => {
-      delete state.orders[action.payload];
+      state.orders = action.payload;
+      state.timestamp = +new Date();
     },
     setOrderLoading: (state) => {
       state.loading = true;
@@ -46,17 +27,20 @@ const orderSlice = createSlice({
     setOrderReady: (state) => {
       state.loading = false;
     },
+    clearOrders: (state) => {
+      state.orders = [];
+      state.order = null;
+      state.timestamp = null;
+    }
   },
 });
 
 export const {
   setOrder,
   setOrders,
-  addNewOrder,
-  setEditOrder,
-  removeOrder,
   setOrderLoading,
   setOrderReady,
+  clearOrders,
 } = orderSlice.actions;
 export default orderSlice.reducer;
 
@@ -78,19 +62,26 @@ export const getOrders = () => async (dispatch) => {
   dispatch(setOrderLoading());
 
   try {
-    const orders = await coreApi.fetch(`${baseUrl}?assigned_to_route=1`);
-    console.log(orders)
-    let update = groupBy(orders, "route_id");
-    console.log(update)
-    let array = []
+    const orders = await coreApi.fetch(`${baseUrl}?assigned_to_route=0`);
 
-    for (let index in update) {
-      let data = update[index]
-      array.push({ list: data.map((item) => { return { ...item, checked: false } }), id: index, tourname: data[0].Customer.Tour.name, length: data.length, mainCheck: false, })
-    }
+    const grouped = orders.reduce((acc, order, i) => {
+      const { Tour } = order.Customer;
 
-    console.log(array)
-    dispatch(setOrders(array));
+      if (!acc[Tour.id]) {
+        acc[Tour.id] = {
+          Tour,
+          orders: [],
+          id: i,
+          mainCheck: false,
+        };
+      }
+
+      acc[Tour.id].orders.push(order);
+
+      return acc;
+    }, {});
+
+    dispatch(setOrders(Object.values(grouped)));
   } catch (err) {
     console.log(err);
   } finally {
@@ -103,7 +94,7 @@ export const addOrder = (payload) => async (dispatch) => {
 
   try {
     const order = await coreApi.post(baseUrl, payload);
-    dispatch(addNewOrder(order));
+    dispatch(clearOrders());
 
     return order;
   } catch (err) {
@@ -120,15 +111,13 @@ export const editOrder = (id, payload) => async (dispatch) => {
   try {
     const res = await coreApi.put(url, payload);
 
-    if (res) {
-      dispatch(setEditOrder({ ...payload, id }));
-      dispatch(
-        setShowMessage({
-          description: "Edited ORDER Successfully",
-          type: "success",
-        })
-      );
-    }
+    dispatch(clearOrders());
+    dispatch(
+      setShowMessage({
+        description: "Edited ORDER Successfully",
+        type: "success",
+      })
+    );
   } catch (err) {
     console.log(err);
     dispatch(
@@ -150,16 +139,13 @@ export const deleteOrder = (id) => async (dispatch) => {
   try {
     const res = await coreApi.delete(url);
 
-    if (res) {
-      dispatch(
-        setShowMessage({
-          description: "DELETED ORDER Successfully",
-          type: "success",
-        })
-      );
-      dispatch(removeOrder(id));
-      dispatch(getOrders());
-    }
+    dispatch(
+      setShowMessage({
+        description: "DELETED ORDER Successfully",
+        type: "success",
+      })
+    );
+    dispatch(clearOrders());
   } catch (err) {
     console.log(err);
   } finally {
@@ -172,10 +158,9 @@ const ordersSelector = ({ orders }) => orders.orders;
 const orderStatusSelector = ({ orders }) => orders.loading;
 
 export const selectOrder = createSelector(orderSelector, (order) => order);
-export const selectOrders = createSelector(ordersSelector, (orders) =>
-  Object.values(orders)
-);
+export const selectOrders = createSelector(ordersSelector, (orders) => orders);
 export const selectOrderStatus = createSelector(
   orderStatusSelector,
   (loading) => loading
 );
+export const selectOrdersTimestamp = createSelector(({ orders }) => orders.timestamp, o => o);

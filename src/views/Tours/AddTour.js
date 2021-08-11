@@ -1,44 +1,46 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // Helpers
-import { PATHS } from "util/appConstants";
+import { PATHS } from 'util/appConstants';
 
 // Actions
-import { initialValues } from "components/Tours/constants";
-import { selectTourStatus, addTour } from "redux/slices/tourSlice";
-import { setShowMessage } from "redux/slices/uiSlice";
+import { selectTourStatus, addTour } from 'redux/slices/tourSlice';
+import { setShowMessage } from 'redux/slices/uiSlice';
 
 // Components
-import TourForm from "components/Tours/form";
+import TourForm from 'components/Tours/form';
+import Loading from 'components/Shared/loading';
 
-const currentAction = "ADD";
+const currentAction = 'ADD';
 
 const AddTour = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const loading = useSelector(selectTourStatus);
 
-  const handleAddTour = async (payload) => {
+  const onSubmit = async (payload) => {
     await dispatch(addTour(payload));
 
     dispatch(
       setShowMessage({
-        description: "Tour Added Successfully!",
-        type: "success",
+        description: 'Tour Added Successfully!',
+        type: 'success',
       })
     );
 
     history.push(PATHS.tours.root);
   };
 
-  if (loading) return <div>Loading..</div>;
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <TourForm
-      initialValues={initialValues}
-      handleAddTour={handleAddTour}
+      onSubmit={onSubmit}
       action={currentAction}
     />
   );

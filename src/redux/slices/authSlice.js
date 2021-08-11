@@ -52,6 +52,7 @@ export const loginWithRedirect = (creds, callback) => async (dispatch) => {
     }
   } catch (err) {
     dispatch(setUnauthenticated());
+    throw err;
   } finally {
     dispatch(setAuthReady());
   }

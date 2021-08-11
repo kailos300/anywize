@@ -1,6 +1,11 @@
 import * as yup from "yup";
 
-export const TourSchema = yup.object().shape({});
+export const TourSchema = yup.object().shape({
+  transport_agent_id: yup.number().required('Required'),
+  name: yup.string().required('Required'),
+  description: yup.string().nullable(),
+  active: yup.bool(),
+});
 
 export const CustomerSchema = yup.object().shape({
   tour_id: yup.string().required("Required"),
@@ -18,4 +23,8 @@ export const CustomerSchema = yup.object().shape({
   longitude: yup.string().required("Required"),
 });
 
-export const OrderSchema = yup.object().shape({});
+export const OrderSchema = yup.object().shape({
+  customer_id: yup.number().required('Required'),
+  description: yup.string().required('Required'),
+  number: yup.string().nullable(),
+});

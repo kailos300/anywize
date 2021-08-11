@@ -17,6 +17,7 @@ import { setShowMessage } from "redux/slices/uiSlice";
 
 // Components
 import OrderForm from "components/Orders/form";
+import Loading from 'components/Shared/loading';
 
 const currentAction = "EDIT";
 
@@ -32,7 +33,7 @@ const EditOrder = () => {
     if (id) {
       dispatch(getOrder(id));
     }
-  }, [dispatch, id]);
+  }, []);
 
   useEffect(() => {
     if (!customers.length) {
@@ -40,7 +41,7 @@ const EditOrder = () => {
     }
   }, [dispatch, customers]);
 
-  const handleEditOrder = async (id, payload) => {
+  const onSubmit = async (payload) => {
     await dispatch(editOrder(id, payload));
 
     dispatch(
@@ -53,11 +54,14 @@ const EditOrder = () => {
     history.push(PATHS.orders.root);
   };
 
-  if (loading || !order) return <div className="loading">Loading..</div>;
+  if (loading || !order) {
+    return <Loading />
+  }
+
   return (
     <OrderForm
       initialValues={order}
-      handleEditOrder={handleEditOrder}
+      onSubmit={onSubmit}
       action={currentAction}
       customerList={customers}
     />

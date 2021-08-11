@@ -59,7 +59,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
+const TourForm = ({ initialValues, onSubmit, action }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
@@ -70,30 +70,34 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
     validateOnChange: false,
     validateOnBlur: true,
     validationSchema: TourSchema,
-    initialValues: initialValues,
+    initialValues: {
+      name: '',
+      description: '',
+      transport_agent_id: 1,
+      active: true,
+      ...initialValues,
+    },
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        if (action === "ADD") {
-          return await handleAddTour(pick(values, TourFormAllowedFields));
-        }
-        if (action === "EDIT") {
-          return await handleEditTour(
-            values.id,
-            pick(values, TourFormAllowedFields)
-          );
-        }
+        await onSubmit(pick(values, TourFormAllowedFields));
       } catch (err) {
         setSubmitting(false);
       }
     },
   });
-  const { values, handleBlur, handleChange, errors, handleSubmit } = formik;
+  const { values, handleChange, errors, handleSubmit, submitCount } = formik;
+  let { handleBlur } = formik;
+
+  if (!submitCount) {
+    handleBlur = null;
+  }
 
   const closeTourHandler = () => {
     action === "ADD"
       ? history.push(PATHS.tours.root)
-      : history.push(PATHS.customers.detail.replace(":id", id));
+      : history.push(PATHS.tours.detail.replace(":id", id));
   };
+
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>
@@ -102,7 +106,6 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
         </Typography>
         <div className={classes._dflex}>
           <div className={classes._dflex}>
-            {/* <span >Cancel</span> */}
             <CloseIcon
               onClick={closeTourHandler}
               title="close"
@@ -114,7 +117,6 @@ const TourForm = ({ initialValues, handleAddTour, handleEditTour, action }) => {
               onClick={handleSubmit}
               className={clsx(classes._icons, classes._save)}
             />
-            {/* <span>Save</span> */}
           </div>
         </div>
       </div>

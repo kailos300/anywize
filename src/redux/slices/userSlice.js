@@ -38,19 +38,11 @@ const userSlice = createSlice({
 export const { setUser, setUserSettings } = userSlice.actions;
 export default userSlice.reducer;
 
-export const fetchUserInfo = (history) => async (dispatch) => {
-  const url = "/users/me";
+export const fetchUserInfo = () => async (dispatch) => {
   try {
-    const user = await coreApi.fetch(url);
+    const user = await coreApi.fetch('/users/me');
     dispatch(setUser(user));
   } catch (err) {
-
-    history.push('/login')
-    dispatch(setShowMessage({
-      description: "UNAUTHORIZED USER!",
-      type: "error",
-    }))
-    console.log(err);
   }
 };
 

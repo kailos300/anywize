@@ -13,7 +13,6 @@ import CustomerDetail from "./Customers/CustomerDetail";
 import OrderList from "./Orders/OrderList";
 import AddOrder from "./Orders/AddOrder";
 import EditOrder from "./Orders/EditOrder";
-import Edit from "./Customers/edit";
 import Maps from "./Maps";
 import PastDeliveries from './PastDeliveries/PastDeliveries';
 
@@ -33,7 +32,6 @@ export {
   OrderList,
   AddOrder,
   EditOrder,
-  Edit,
   Maps,
   PastDeliveries
 };

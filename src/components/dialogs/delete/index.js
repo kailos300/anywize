@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useCallback } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import Typography from "@material-ui/core/Typography";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -11,8 +12,8 @@ const defaultOptions = {
   confirmationText: "Yes",
   cancellationText: "No",
   dialogProps: {},
-  onClose: () => {},
-  onCancel: () => {},
+  onClose: () => { },
+  onCancel: () => { },
 };
 
 const withConfirm = (WrappedComponent) => (props) => {
@@ -60,10 +61,10 @@ const withConfirm = (WrappedComponent) => (props) => {
         open={!!onConfirm}
         onClose={handleCancel}
       >
-        <DialogTitle>{t("Confirm!")}</DialogTitle>
+        <DialogTitle><Typography>{t("Confirm!")}</Typography></DialogTitle>
         {description && (
           <DialogContent>
-            <p
+            <Typography component="p"
               style={{ fontSize: "18px", color: "rgba(0,0,0,0.6)", margin: 0 }}
               dangerouslySetInnerHTML={{ __html: t(description) }}
             />

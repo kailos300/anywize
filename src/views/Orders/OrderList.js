@@ -1,24 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
-import MaterialTable from "material-table";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import MaterialTable from 'material-table';
+import { makeStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
-import EditIcon from "@material-ui/icons/Edit";
+import TableBody from '@material-ui/core/TableBody';
+import EditIcon from '@material-ui/icons/Edit';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteIcon from '@material-ui/icons/Delete';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
-import clsx from "clsx";
+import clsx from 'clsx';
 
 // Helpers
-import { ORDERS_TABLE_COLUMNS } from "constants/ui-constants";
-import { getColumns, getActions } from "util/table-utils";
-import { mapTableData } from "util/helpers";
-import { PATHS } from "util/appConstants";
+import { ORDERS_TABLE_COLUMNS } from 'constants/ui-constants';
+import { getColumns, getActions } from 'util/table-utils';
+import { mapTableData } from 'util/helpers';
+import { PATHS } from 'util/appConstants';
 
 // Actions
 import {
@@ -26,67 +27,68 @@ import {
   selectOrderStatus,
   getOrders,
   deleteOrder,
-} from "redux/slices/orderSlice";
-
+  selectOrdersTimestamp,
+} from 'redux/slices/orderSlice';
+import { setShowMessage } from 'redux/slices/uiSlice';
 import { createRoute } from 'redux/slices/routeSlice';
 
-// Components
-import withConfirm from "components/dialogs/delete";
+import Loading from 'components/Shared/loading';
+import withConfirm from 'components/dialogs/delete';
 
 const useStyles = makeStyles({
   _container: {
-    backgroundColor: "#121212",
-    padding: "60px 130px",
-    minHeight: "100vh",
-    "&::-webkit-scrollbar": {
+    backgroundColor: '#121212',
+    padding: '60px 130px',
+    minHeight: '100vh',
+    '&::-webkit-scrollbar': {
       display: 'none'
     },
-    "& .MuiPaper-elevation2": {
-      boxShadow: "none",
+    '& .MuiPaper-elevation2': {
+      boxShadow: 'none',
     },
-    "& .MuiTableCell-root:first-child": {
+    '& .MuiTableCell-root:first-child': {
       width: ' 90px !important ',
       boxSizing: 'border-box',
       textAlign: 'center !important'
     },
-    "& .MuiTableCell-root:nth-last-child(2)": {
+    '& .MuiTableCell-root:nth-last-child(2)': {
       width: ' 35px !important',
     },
-    "& .MuiTableCell-root:nth-last-child(3)": {
+    '& .MuiTableCell-root:nth-last-child(3)': {
       textAlign: 'right',
       verticalAlign: 'bottom',
     },
-    "& .MuiTableCell-root": {
-      border: "none",
-      color: "white",
-      fontSize: "12px",
-      width: "unset !important"
+    '& .MuiTableCell-root': {
+      border: 'none',
+      color: 'white',
+      fontSize: '12px',
+      width: 'unset !important'
     },
-    "& .MuiTableSortLabel-root:hover": {
-      color: "#F5F5F5",
+    '& .MuiTableSortLabel-root:hover': {
+      color: '#F5F5F5',
     },
-    "& .MuiTablePagination-root": {
-      border: "none",
-      color: "white",
+    '& .MuiTablePagination-root': {
+      border: 'none',
+      color: 'white',
     },
-    "& .MuiPaper-root ": {
-      backgroundColor: "#121212",
-      color: "white",
+    '& .MuiPaper-root ': {
+      backgroundColor: '#121212',
+      color: 'white',
     },
-    "& .MuiInput-underline:before": {
-      borderBottom: "1px solid #525252",
+    '& .MuiInput-underline:before': {
+      borderBottom: '1px solid #525252',
     },
-    "& .MuiInput-underline:hover:before": {
-      borderBottom: "1px solid #525252",
+    '& .MuiInput-underline:hover:before': {
+      borderBottom: '1px solid #525252',
     },
-    "& .MuiIconButton-root": {
-      color: "#F5F5F5",
+    '& .MuiIconButton-root': {
+      color: '#F5F5F5',
     },
-    "& .MuiSvgIcon-root": {
-      color: "#F5F5F5",
+    '& .MuiSvgIcon-root': {
+      color: '#F5F5F5',
     },
-    "& .MuiTypography-root": {
-      color: "#F5F5F5",
+    '& .MuiTypography-root': {
+      color: '#F5F5F5',
     },
   },
   _1F1F1F: {
@@ -112,28 +114,34 @@ const useStyles = makeStyles({
   _width111: '111px',
 });
 
-const tableTitle = "ORDERS";
+const tableTitle = 'ORDERS';
 
 const OrderList = ({ confirm }) => {
   const tableRef = useRef();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const loading = useSelector(selectOrderStatus);
   const orders = useSelector(selectOrders);
-  const [jsonData, setjsonData] = useState(orders)
+  const timestamp = useSelector(selectOrdersTimestamp);
+  const [jsonData, setjsonData] = useState(orders);
+
+  const fetchOrders = async () => {
+    await dispatch(getOrders());
+  };
 
   useEffect(() => {
-    if (!orders.length && !loading) {
-      dispatch(getOrders());
+    if (!orders.length && !loading && !timestamp) {
+      fetchOrders();
     }
-    setjsonData(orders)
-  }, [dispatch, orders, loading])
 
-  const callbackOnDelete = (e, rowData) => {
+    setjsonData(orders);
+  }, [orders, loading]);
+
+  const callbackOnDelete = (e, order) => {
     e.stopPropagation();
-    confirm(() => dispatch(deleteOrder(rowData.id)), {
+    confirm(() => dispatch(deleteOrder(order.id)), {
       description: "Are you sure?",
     });
   };
@@ -150,92 +158,101 @@ const OrderList = ({ confirm }) => {
     history.push(PATHS.orders.add);
   };
   const editHandler = (rowData) => {
-    history.push(PATHS.customers.edit.replace(':id', rowData.customer_id))
-  }
+    history.push(PATHS.orders.edit.replace(':id', rowData.id));
+  };
 
-  const checkChangeHandler = (e, rowData) => {
-    let newData = tableRef.current.state.data;
-    newData.map((x, index) => {
-      if (x.id !== rowData.id) {
-        x.list = x.list.map((subItem, subIndex) => {
-          return {
-            ...subItem,
-            checked: false
-          };
-        });
+  const checkChangeHandler = (e, clickedRow) => {
+    e.stopPropagation();
 
-        x.mainCheck = false
-        return x;
-      }
-      x.mainCheck = e.target.checked
-      x.list = x.list.map((subItem, subIndex) => {
+    const newData = tableRef.current.state.data.map((row) => {
+      if (row.id !== clickedRow.id) {
         return {
-          ...subItem,
-          checked: e.target.checked
+          ...row,
         };
-      });
+      }
 
-      return x;
-    })
+      return {
+        ...row,
+        mainCheck: e.target.checked,
+        orders: row.orders.map((o) => ({
+          ...o,
+          checked: e.target.checked,
+        })),
+      };
+    });
+
     setjsonData(newData)
-  }
+  };
+
   const startTourCheck = () => {
-    let newData = jsonData;
-    let check = newData.some((i) => i.mainCheck === true)
-    return check;
-  }
-  const startTour = () => {
-    if (startTourCheck()) {
-      let checked = jsonData.find(data => data.mainCheck === true)
-      let tour = {
-        order_ids: [],
-        tour_id: checked.list[0].Customer.Tour.id
-      }
-      // checked.list.map((data) => {
-      //   if (data.checked) {
-      //     tour.order_ids.push(data.id)
-      //   }
-      // })
-      for (let data of checked.list) {
-          if (data.checked) {
-            tour.order_ids.push(data.id)
-          }
-      }
-      dispatch(createRoute(tour))
+    return !!jsonData.find((row) => {
+      return row.orders.some((o) => o.checked);
+    });
+  };
+
+  const startTour = async () => {
+    if (!startTourCheck()) {
+      return;
     }
-  }
-  const innerChangeHandler = (e, data, rowData) => {
-    let newData = tableRef.current.state.data;
-    newData.map((x, index) => {
-      if (x.id !== rowData.id) {
-        x.mainCheck = false
-        x.list = x.list.map((subItem, subIndex) => {
-          return {
-            ...subItem,
-            checked: false
-          };
-        });
 
-        return x;
+    const rows = jsonData.filter((row) => {
+      return row.orders.some((o) => o.checked);
+    });
+
+    confirm(async () => {
+      let i = 0;
+
+      while (i < rows.length) {
+        await dispatch(createRoute({
+          order_ids: rows[i].orders.filter((o) => o.checked).map((o) => o.id),
+          tour_id: rows[i].Tour.id,
+        }));
+
+        i += 1;
       }
-      x.list = x.list.map((subItem, subIndex) => {
-        if (subItem.id !== data.id) {
-          return {
-            ...subItem,
-          };
-        }
-        return {
-          ...subItem,
-          checked: e.target.checked
-        };
-      });
 
-      x.mainCheck = x.list.some((i) => i.checked === true)
-      return x;
-    })
-    setjsonData(newData)
-  }
-  if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
+      dispatch(setShowMessage({
+        description: 'The routes where created successfully',
+        type: 'success',
+      }));
+
+      fetchOrders();
+    }, {
+      description: t(`Create Route(s) for the selected Orders from {{num}} Tours?`, { num: rows.length }),
+    });
+  };
+
+  const innerChangeHandler = (order) => {
+    // when an order is selected we go over the rows
+    // each row being a Tour that groups orders
+    const newData = tableRef.current.state.data.map((row) => {
+      // if the row (Tour) is not the same as the Order's
+      // we keep it as is
+      if (row.Tour.id !== order.Customer.Tour.id) {
+        return {
+          ...row,
+        };
+      }
+
+      // if the row (Tour) is the same as the Order we clicked
+      // we go over it's Orders. Changing the status of the clicked, leaving the
+      // rest as they were
+      return {
+        ...row,
+        orders: row.orders.map((o) => ({
+          ...o,
+          checked: o.id === order.id ? !o.checked : o.checked,
+        })),
+      };
+    });
+
+    setjsonData(newData);
+  };
+
+  if (loading) {
+    return <Loading />
+  };
+
   return (
     <div className={clsx(classes._container, 'order-table')}>
       <MaterialTable
@@ -281,44 +298,47 @@ const OrderList = ({ confirm }) => {
             render: rowData => {
               return (
                 <>
-                  {rowData.list.map((data) =>
-                    <TableContainer className={clsx(rowData.tableData.id % 2 === 0 ? classes._1F1F1F : classes._525252)}>
+                  {rowData.orders.map((order, i) =>
+                    <TableContainer className={clsx(rowData.tableData.id % 2 === 0 ? classes._1F1F1F : classes._525252)} key={i}>
                       <Table>
-                        <TableRow>
-                          <TableCell className={classes._textalignright}>
-                            {' '}
-                          </TableCell>
-                          <TableCell className={classes._textalignright}>
-                            {data.Customer.name}
-                          </TableCell>
-                          <TableCell className={classes._textalignright}>
-                            {data.number}
-                          </TableCell>
-                          <TableCell className={classes._textalignright}>
-                            {'orderdate'}
-                          </TableCell>
-                          <TableCell className={classes._textalignright}>
-                            {data.description}
-                          </TableCell>
-                          <TableCell className={classes._textalignright}>
-                            <EditIcon onClick={() => editHandler(data)} className={clsx(classes._edit, classes._pointer)} />
-                          </TableCell>
-                          <TableCell style={{ paddingRight: '30px' }} className={classes._textalignright}>
-                            <div style={{ textAlign: 'right' }}>
-                              <input
-                                onChange={(e) => { innerChangeHandler(e, data, rowData) }}
-                                className={'radio-checkbox'}
-                                id={`panel${data.id}`}
-                                type="checkbox"
-                                name="field"
-                                checked={data.checked} />
-                              <label for={`panel${data.id}`}><span><span></span></span></label>
-                            </div>
-                          </TableCell>
-                          <TableCell className={clsx(classes._textalignright, classes._width111)}>
-                            <DeleteIcon className={classes._pointer} />
-                          </TableCell>
-                        </TableRow>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell className={classes._textalignright}>
+                              {' '}
+                            </TableCell>
+                            <TableCell className={classes._textalignright}>
+                              {order.Customer.name}
+                            </TableCell>
+                            <TableCell className={classes._textalignright}>
+                              {order.number}
+                            </TableCell>
+                            <TableCell className={classes._textalignright}>
+                              {order.description}
+                            </TableCell>
+                            <TableCell className={classes._textalignright}>
+                              <EditIcon onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)} />
+                            </TableCell>
+                            <TableCell style={{ paddingRight: '30px' }} className={classes._textalignright}>
+                              <div style={{ textAlign: 'right' }}>
+                                <input
+                                  onChange={(e) => {
+                                    e.stopPropagation();
+
+                                    innerChangeHandler(order);
+                                  }}
+                                  className={'radio-checkbox'}
+                                  id={`panel${order.id}`}
+                                  type="checkbox"
+                                  name="field"
+                                  checked={!!order.checked} />
+                                <label htmlFor={`panel${order.id}`}><span><span></span></span></label>
+                              </div>
+                            </TableCell>
+                            <TableCell className={clsx(classes._textalignright, classes._width111)}>
+                              <DeleteIcon className={classes._pointer} onClick={(e) => callbackOnDelete(e, order)} />
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
                       </Table>
                     </TableContainer >
                   )
