@@ -283,3 +283,23 @@ border           : 1px solid #6F9CEB;
   .hovericon:hover{
     color: #6F9CEB !important;
   }
+
+  .owl-prev, .owl-next {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    color: white !important;
+    transform: translateY(-50%);
+    display: block !important;
+    border:0px solid black;
+}
+.owl-prev { left: -25px; }
+.owl-next { right: -25px; }
+.owl-prev i, .owl-next i {transform : scale(2,5); color: #ccc;}
+.owl-prev span, .owl-next span {
+  font-size: 25px;
+}
+.owl-prev:hover , .owl-next:hover{
+  background: unset !important;
+}

@@ -46,6 +46,10 @@ const routeSlice = createSlice({
             });
             state.archived = routes;
         },
+        setRoute: (state, action) => {
+
+            state.route = action.payload;
+        },
         setRouteLoading: (state) => {
             state.loading = true;
         },
@@ -55,7 +59,7 @@ const routeSlice = createSlice({
     }
 })
 
-export const { setRoutes, setRouteLoading, setRouteReady, setCompleted, setCurrent, setArchived } = routeSlice.actions;
+export const { setRoutes, setRouteLoading, setRouteReady, setCompleted, setCurrent, setArchived, setRoute } = routeSlice.actions;
 export default routeSlice.reducer;
 const count = (data, progress) => {
     var count = 0;
@@ -71,6 +75,19 @@ const count = (data, progress) => {
     }
     return count;
 }
+export const getRoute = (id) => async (dispatch) => {
+    const url = baseUrl + `/${id}`;
+    dispatch(setRouteLoading());
+
+    try {
+        const res = await coreApi.fetch(url);
+        dispatch(setRoute(res));
+    } catch (err) {
+        console.log(err);
+    } finally {
+        dispatch(setRouteReady());
+    }
+};
 export const getRoutes = () => async (dispatch) => {
     dispatch(setRouteLoading());
     try {
@@ -186,11 +203,14 @@ export const createRoute = (payload) => async (dispatch) => {
     }
 };
 const routesSelector = ({ routes }) => routes.routes;
+const routeSelector = ({ routes }) => routes.route
 const currentSelector = ({ routes }) => routes.current;
 const completedSelector = ({ routes }) => routes.completed;
 const archivedSelector = ({ routes }) => routes.archived;
+const routeStatusSelector = ({ routes }) => routes.loading;
 
-const tourStatusSelector = ({ routes }) => routes.loading;
+
+export const selectRoute = createSelector(routeSelector, (route) => route);
 export const selectCurrent = createSelector(currentSelector, (current) =>
     Object.values(current)
 );
@@ -204,6 +224,6 @@ export const selectRoutes = createSelector(routesSelector, (routes) =>
     Object.values(routes)
 );
 export const selectRouteStatus = createSelector(
-    tourStatusSelector,
+    routeStatusSelector,
     (loading) => loading
 );
