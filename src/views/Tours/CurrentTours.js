@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import MaterialTable from "material-table";
 import { useTranslation } from "react-i18next";
@@ -13,10 +14,12 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
+
 //helpers
 import { CURRENT_TOURS_COLUMNS } from "constants/ui-constants"
 import { getColumns, getActions } from "util/table-utils";
 import { mapTableData } from "util/helpers";
+import { PATHS } from "util/appConstants";
 
 //
 import jsondata from './data.json'
@@ -131,6 +134,7 @@ const useStyles = makeStyles({
 const CurrentTours = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const history = useHistory();
     const tableRef = useRef();
     const { t } = useTranslation("common");
     const routes = useSelector(selectCurrent);
@@ -177,6 +181,12 @@ const CurrentTours = () => {
         arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
         return arr;
     };
+    const redirectView = (data, rowData) => {
+        history.push({
+            pathname: PATHS.maps,
+            state: { detail: rowData.id }
+        })
+    }
     if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
     return (
         <div className={clsx(classes._container, '')}>
@@ -240,7 +250,7 @@ const CurrentTours = () => {
                                                             <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
                                                                 <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
 
-                                                                <div style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
+                                                                <div onClick={() => redirectView(data, rowData)} style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
                                                                 <div style={{
                                                                     position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
                                                                     whiteSpace: 'nowrap',

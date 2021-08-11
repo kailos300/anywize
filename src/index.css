@@ -201,6 +201,8 @@ border           : 1px solid #6F9CEB;
     border: 1px solid #6F9CEB;
     border-radius: 50%;
     background: #6F9CEB !important;
+    cursor: pointer;
+    
   }
   .ball-open{
     display: block;
@@ -210,6 +212,7 @@ border           : 1px solid #6F9CEB;
     border-radius: 50%;
     position: relative;
     z-index: 3;
+    cursor: pointer;
     /* background: #6F9CEB; */
   }
   .ball-open:hover{

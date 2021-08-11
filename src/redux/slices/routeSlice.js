@@ -47,7 +47,8 @@ const routeSlice = createSlice({
             state.archived = routes;
         },
         setRoute: (state, action) => {
-
+            console.log(state, action)
+            let route = { payload: action.payload, detail: '' }
             state.route = action.payload;
         },
         setRouteLoading: (state) => {
@@ -75,10 +76,9 @@ const count = (data, progress) => {
     }
     return count;
 }
-export const getRoute = (id) => async (dispatch) => {
+export const getRoute = (id, detail) => async (dispatch) => {
     const url = baseUrl + `/${id}`;
     dispatch(setRouteLoading());
-
     try {
         const res = await coreApi.fetch(url);
         dispatch(setRoute(res));

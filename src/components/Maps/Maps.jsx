@@ -1,37 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import MapIcon from '@material-ui/icons/Map';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import PersonIcon from '@material-ui/icons/Person';
-import EmailIcon from '@material-ui/icons/Email';
-import CallIcon from '@material-ui/icons/Call';
-import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
-import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded';
 import {
     TextField
 } from "@material-ui/core";
-// import SearchBar from "material-ui-search-bar";
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import mapboxgl from "mapbox-gl";
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
+import ReactMapGL, { Source, Marker, Layer } from 'react-map-gl';
+import PolylineOverlay from './canva';
 import clsx from "clsx";
+
+import Stopview from '../Stopview';
 
 //Actions
 import { selectRoutes, getRoutes, getRoute, selectRouteStatus, selectRoute } from 'redux/slices/routeSlice';
-
-// owl carousel
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
-
-mapboxgl.accessToken =
-    "pk.eyJ1IjoiaW5mZW5zIiwiYSI6ImNrcHJpd2t1czA4dHAyb21ucmEyN2hlNzAifQ.UqPpun5dr8HdvlPPrRvx6A";
 
 const useStyles = makeStyles({
     _container: {
@@ -114,177 +101,75 @@ const useStyles = makeStyles({
         fontSize: '12px',
         cursor: 'pointer'
     },
-    _routename: {
-        font: 'normal normal normal 18px/24px Roboto',
-        color: '#F5F5F5'
-    },
-    _customername: {
-        font: 'normal normal normal 22px/40px Questrial',
-        color: '#F5F5F5',
-        display: 'block',
-        margin: '20px 0'
-
-    },
-    _routedetails: {
-        display: 'flex',
-        alignItems: 'center',
-        color: '#F5F5F5',
-        font: 'normal normal normal 12px/24px Roboto',
-        margin: '20px 0',
-        lineHeight: '15px',
-    },
-    _left10: {
-        marginLeft: '10px'
-    },
-    _galleryheading: {
-        font: 'normal normal normal 18px/24px Roboto',
-        color: '#F5F5F5'
-    }
 });
-export default function Maps() {
+const layerStyle = {
+    id: 'point',
+    type: 'circle',
+    paint: {
+        'circle-radius': 10,
+        'circle-color': '#007cbf'
+    }
+};
+const geojson = {
+    type: 'FeatureCollection',
+    features: [
+        {
+            type: 'Feature', geometry: {
+                type: 'Point', coordinates: [
+                    [-98.6805000695619, 45.52296157064603],
+                    [-96.24554057836872, 41.79401556575908],
+                    [-93.51305954520183, 37.83125069657875],
+                    [-90.17336050466702, 35.88809083427388],
+                    [-84.70839843833323, 37.229328042041914],
+                    [-98.1249478532394, 36.606494480659364],
+                ]
+            }
+        }
+    ]
+};
+export default function Maps(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const [valuee, setvalue] = useState('');
+    const history = useHistory()
     const routes = useSelector(selectRoutes)
     const route = useSelector(selectRoute);
-    // const [tabledata, setTabledata] = useState([
-    //     { id: '1', title: 'T1.1', name: 'Routennamexy' },
-    //     { id: '2', title: 'T1.2', name: 'abcnnamexy' },
-    //     { id: '3', title: 'T1.3', name: 'xyzennamexy' },
-    //     { id: ' 4', title: 'T1.4', name: 'dertennamexy' },
-    //     { id: '5', title: 'T2.1', name: 'Reredtennamexy' },
-    //     { id: ' 6', title: 'T2.2', name: 'fdsfcennamexy' },
-    //     { id: '7', title: 'T2.3', name: 'sfcefdnnamexy' },
-    //     { id: ' 8', title: 'T3.1', name: 'grfdennamexy' },
-    //     { id: '9', title: 'T3.2', name: '4534nnamexy' },
-    //     { id: '10', title: 'T3.3', name: 'Rfdvfdnnamexy' },
-    //     { id: '11', title: 'T3.4', name: 'bvbcennamexy' },
-    //     { id: '12', title: 'T4.1', name: 'grehgtennamexy' },
-    //     { id: '13', title: 'T4.2', name: 'htgreafwnnamexy' },
-    //     { id: '14', title: 'T4.3', name: 'bgfgramexy' },
-    //     { id: '15', title: 'T4.4', name: 'g5etrgfdnnamexy' },
-    //     { id: '16', title: 'T4.5', name: 't45ersfmexy' },
-
-    // ])
+    const mapContainer = useRef(null);
+    const parkLayer = {
+        id: 'landuse_park',
+        type: 'fill',
+        source: 'mapbox',
+        'source-layer': 'landuse',
+        filter: ['==', 'class', 'park']
+    };
+    const map = useRef(null);
+    const [valuee, setvalue] = useState('');
     const [tabledata, setTabledata] = useState(routes)
     const [Datasearch, setDatasearch] = useState(tabledata)
-    // const [lng, setLng] = useState(-70.9);
-    // const [lat, setLat] = useState(42.35);
-    // const [zoom, setZoom] = useState(9);
+    const [stopView, setstopView] = useState(false);
+    const [stopinfo, setstopinfo] = useState('')
+    const [viewport, setViewport] = React.useState({
+        latitude: 37.7577,
+        longitude: -122.4376,
+        zoom: 8
+    });
+    const [parkColor, setParkColor] = React.useState('#8fa');
     useEffect(() => {
+        console.log(history.location)
         if (!routes.length) {
+            history.replace();
             dispatch(getRoutes());
+            setstopView(false)
         }
         setTabledata(routes);
         setDatasearch(routes);
+        console.log(props.location)
+        if (props.location.state) {
+            console.log(props.location.state.detail)
+            dispatch(getRoute(props.location.state.detail, 'detail'))
+            setstopinfo(route)
+            setstopView(true)
+        }
     }, [dispatch, routes,])
-    useEffect(() => {
-        if (map.current) return; // initialize map only once
-        map.current = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: "mapbox://styles/infens/ckprj2dzt00zi19no4zckc7hv",
-            center: [-122.486052, 37.830348],
-            zoom: 15
-        });
-        console.log(map.current.on)
-        map.current.on('load', function () {
-            map.current.addSource('route', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'properties': {},
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': [
-                            [-122.483696, 37.833818],
-                            [-122.483482, 37.833174],
-                            [-122.483396, 37.8327],
-                            [-122.483568, 37.832056],
-                            [-122.48404, 37.831141],
-                            [-122.48404, 37.830497],
-                            [-122.483482, 37.82992],
-                            [-122.483568, 37.829548],
-                            [-122.48507, 37.829446],
-                            [-122.4861, 37.828802],
-                            [-122.486958, 37.82931],
-                            [-122.487001, 37.830802],
-                            [-122.487516, 37.831683],
-                            [-122.488031, 37.832158],
-                            [-122.488889, 37.832971],
-                            [-122.489876, 37.832632],
-                            [-122.490434, 37.832937],
-                            [-122.49125, 37.832429],
-                            [-122.491636, 37.832564],
-                            [-122.492237, 37.833378],
-                            [-122.493782, 37.833683]
-                        ]
-                    }
-                }
-            })
-
-        })
-        map.current.addControl(new mapboxgl.NavigationControl(
-            {
-                positionOptions: {
-                    enableHighAccuracy: true
-                },
-                trackUserLocation: true
-            }
-        ), 'bottom-right')
-        // map.current.addControl(
-        //     new MapboxDirections({
-        //         accessToken: mapboxgl.accessToken
-        //     }),
-        //     'top-left'
-        // );
-        setTimeout(() => {
-            map.current.addSource('urban-areas', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    "geometry": {
-                        'type': 'Polygon',
-                        'coordinates': [
-                            [
-                                [-67.13734, 45.13745],
-                                [-66.96466, 44.8097],
-                                [-68.03252, 44.3252],
-                                [-69.06, 43.98],
-                                [-70.11617, 43.68405],
-                                [-70.64573, 43.09008],
-                                [-70.75102, 43.08003],
-                                [-70.79761, 43.21973],
-                                [-70.98176, 43.36789],
-                                [-70.94416, 43.46633],
-                                [-71.08482, 45.30524],
-                                [-70.66002, 45.46022],
-                                [-70.30495, 45.91479],
-                                [-70.00014, 46.69317],
-                                [-69.23708, 47.44777],
-                                [-68.90478, 47.18479],
-                                [-68.2343, 47.35462],
-                                [-67.79035, 47.06624],
-                                [-67.79141, 45.70258],
-                                [-67.13734, 45.13745]
-                            ]
-                        ]
-                    }
-                }
-            });
-            map.current.addLayer({
-                'id': 'urban-areas-fill',
-                'type': 'line',
-                'source': 'urban-areas',
-                'layout': {},
-                'paint': {
-                    'line-color': '#6F9CEB',
-                    'line-width': 4
-                }
-            });
-        }, 1000);
-    });
     const changeHandler = (e) => {
         setvalue(e.target.value)
     }
@@ -302,102 +187,80 @@ export default function Maps() {
     }
     const displayRoute = (item) => {
         console.log(item)
-        dispatch(getRoute(item.id))
+        dispatch(getRoute(item.id, ''))
         console.log(route)
     }
+
     return (
         <div>
+            {console.log(route, "route")}
             <div style={{ width: '30%', display: 'inline-block' }} className={classes._container}>
-                {/* <div className={classes._searchbox}>
+                {!stopView ? <> <div className={classes._searchbox}>
                     <SearchIcon className={classes._search} />
                     <TextField placeholder={'search'} onKeyUp={doSomethingWith} onChange={(e) => changeHandler(e)} value={valuee} className={classes._input} />
                     <ClearIcon className={classes._cross} onClick={clearSearch} />
                 </div>
-                <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>On Map</Typography>
-                {[1, 1, 1].map((item, index) =>
-                    <Box className={classes._box} style={{ background: index % 2 == 0 ? ' #1F1F1F ' : '#525252', }}>
-                        <MapIcon className={classes._6F9CEB} />
-                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>T1.1</Typography>
-                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>Routennamexy</Typography>
-                    </Box>
-
-                )}
-
-                <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>All Tours</Typography>
-                {Datasearch.map((item, index) =>
-                    <Box onClick={() => displayRoute(item)} className={classes._box} style={{ background: index % 2 == 0 ? ' #1F1F1F ' : '#525252' }}>
-                        <MapIcon />
-                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>T1.{index}</Typography>
-                        <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>{item.Tour.name}</Typography>
-
-                    </Box>
-
-                )} */}
-                <div>
-                    <div>
-                        <span className={classes._routename}>T1.1 Routenamexy</span>
-                        <span className={classes._customername} >TestCustomer GmbH</span>
-                    </div>
-                    <div>
-                        <span className={classes._routedetails}>
-                            <LocationOnIcon /><span className={classes._left10}>Taunusanlage 8 60329 Frankfurt am Main </span>
-                        </span>
-                        <span className={classes._routedetails}>
-                            <PersonIcon /><span className={classes._left10}>Max Mustermann </span>
-                        </span>
-                        <span className={classes._routedetails}>
-                            <EmailIcon /><span className={classes._left10}>Mustermann@gmail.com </span>
-                        </span>
-                        <span className={classes._routedetails}>
-                            <CallIcon /><span className={classes._left10}>+49 69 170758330 </span>
-                        </span>
-
-                    </div>
-                    <h4 className={classes._galleryheading}>Fotos</h4>
-                    <OwlCarousel className='owl-theme' loop margin={10} nav dots={false}>
-                        <div class='item'>
-                            <img src="https://picsum.photos/200/300" alt="" />
-                        </div>
-                        <div class='item'>
-                            <img src="https://picsum.photos/200/300" alt="" />
-                        </div>
-                        <div class='item'>
-                            <img src="https://picsum.photos/200/300" alt="" />
-
-                        </div>
-                        <div class='item'>
-                            <img src="https://picsum.photos/200/300" alt="" />
-
-                        </div>
-                    </OwlCarousel>
-                    <h4 className={classes._galleryheading}>Nachweis</h4>
-                    <div>
-                        <span className={classes._routedetails}>
-                            <NoteAddRoundedIcon /><span className={classes._left10}>Taunusanlage 8 60329 Frankfurt am Main </span>
-                        </span>
-                        <span className={classes._routedetails}>
-                            <MyLocationRoundedIcon /><span className={classes._left10}>Max Mustermann </span>
-                        </span>
-                        <span className={classes._routedetails}>
-                            <PersonIcon /><span className={classes._left10}>Mustermann@gmail.com </span>
-                        </span>
-                        <span className={classes._routedetails}>
-                            <CallIcon /><span className={classes._left10}>+49 69 170758330 </span>
-                        </span>
-
-                    </div>
-                    <h4 className={classes._galleryheading}>Orders</h4>
+                    <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>On Map</Typography>
                     {[1, 1, 1].map((item, index) =>
                         <Box className={classes._box} style={{ background: index % 2 == 0 ? ' #1F1F1F ' : '#525252', }}>
-                            <Typography style={{ marginLeft: '10px', fontSize: '12px', alignSelf: 'baseline' }}>111qqqq1</Typography>
-                            <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</Typography>
+                            <MapIcon className={classes._6F9CEB} />
+                            <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>T1.1</Typography>
+                            <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>Routennamexy</Typography>
                         </Box>
 
                     )}
-                </div>
+
+                    <Typography variant="h6" style={{ color: 'white', fontWeight: '200', margin: '30px 20px' }}>All Tours</Typography>
+                    {Datasearch.map((item, index) =>
+                        <Box onClick={() => displayRoute(item)} className={classes._box} style={{ background: index % 2 == 0 ? ' #1F1F1F ' : '#525252' }}>
+                            <MapIcon />
+                            <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>T1.{index}</Typography>
+                            <Typography style={{ marginLeft: '10px', fontSize: '12px' }}>{item.Tour.name}</Typography>
+
+                        </Box>
+
+                    )}
+                </>
+                    :
+                    <Stopview route={route} />
+                }
             </div>
             <div style={{ width: '70%', display: 'inline-block', minHeight: '100vh' }}>
-                <div ref={mapContainer} className="map-container" />
+                <ReactMapGL
+                    ref={mapContainer}
+                    // onLoad={addLines}
+                    {...viewport}
+                    mapStyle="mapbox://styles/infens/ckprj2dzt00zi19no4zckc7hv"
+                    mapboxApiAccessToken=
+                    "pk.eyJ1IjoiaW5mZW5zIiwiYSI6ImNrcHJpd2t1czA4dHAyb21ucmEyN2hlNzAifQ.UqPpun5dr8HdvlPPrRvx6A"
+                    width="100%"
+                    height="100vh"
+                    onViewportChange={(viewport) => setViewport(viewport)}
+                >
+                    <Source id="my-data" type="geojson" data={geojson}>
+                        <Layer {...layerStyle} />
+                    </Source>
+                    {/* <Layer {...parkLayer} paint={{ 'fill-color': parkColor }} /> */}
+
+                    {/* <Marker longitude={-98.6805000695619} latitude={45.52296157064603} >
+                        <div className="ball"></div>
+                    </Marker>
+                    <Marker longitude={-96.24554057836872} latitude={41.79401556575908}>
+                        <div className="ball"></div>
+                    </Marker>
+                    <Marker longitude={-93.51305954520183} latitude={37.83125069657875} >
+                        <div className="ball"></div>
+                    </Marker><Marker longitude={-90.17336050466702} latitude={35.88809083427388} >
+                        <div className="ball"></div>
+                    </Marker>
+                    <Marker longitude={-84.70839843833323} latitude={37.229328042041914} >
+                        <div className="ball"></div>
+                    </Marker>
+                    <Marker longitude={-98.1249478532394} latitude={36.606494480659364} >
+                        <div className="ball"></div>
+                    </Marker> */}
+
+                </ReactMapGL>
             </div>
         </div>
     );
