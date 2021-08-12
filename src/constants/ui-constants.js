@@ -38,7 +38,7 @@ export const NAVIGATION_ROUTES = [
   { name: 'Orders', path: PATHS.orders.root },
   { name: 'Past Deliveries', path: PATHS.pastdeliveries },
   { name: 'Master Data', path: PATHS.customers.root },
-  { name: 'Maps', path: PATHS.maps },
+  { name: 'Map', path: PATHS.tours.map },
   { name: 'Settings', path: '/dash2' },
 ];
 export const TOURS_TABLE_COLUMNS = [

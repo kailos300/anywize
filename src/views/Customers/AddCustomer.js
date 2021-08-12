@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { PATHS } from "util/appConstants";
 
 //Actions
-import { initialValues } from "components/Customers/constants";
 import { addCustomer } from "redux/slices/customerSlice";
 import { getTours, selectTours } from "redux/slices/tourSlice";
 
@@ -26,7 +25,7 @@ const AddCustomer = () => {
     }
   }, [dispatch, tours]);
 
-  const handleAddCustomer = async (payload) => {
+  const onSubmit = async (payload) => {
     await dispatch(addCustomer(payload)).then((res) =>
       res !== undefined ? history.push(PATHS.customers.root) : ""
     );
@@ -34,8 +33,7 @@ const AddCustomer = () => {
   return (
     <CustomerForm
       action={currentAction}
-      initialValues={initialValues}
-      handleAddCustomer={handleAddCustomer}
+      onSubmit={onSubmit}
       tourList={tours}
     />
   );
