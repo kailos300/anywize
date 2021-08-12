@@ -1,20 +1,21 @@
-import Login from "./Login";
-import ToursList from "./Tours/ToursList";
-import AddTour from "./Tours/AddTour";
-import EditTour from "./Tours/EditTour";
-import TourDetail from "./Tours/TourDetail";
-import CurrentTours from "./Tours/CurrentTours";
-import RecentTours from "./Tours/RecentTours";
-import ArchiveTours from "./Tours/ArchiveTours";
-import CustomersList from "./Customers/CustomersList";
-import AddCustomer from "./Customers/AddCustomer";
-import EditCustomer from "./Customers/EditCustomer";
-import CustomerDetail from "./Customers/CustomerDetail";
-import OrderList from "./Orders/OrderList";
-import AddOrder from "./Orders/AddOrder";
-import EditOrder from "./Orders/EditOrder";
-import Maps from "./Maps";
+import Login from './Login';
+import ToursList from './Tours/ToursList';
+import AddTour from './Tours/AddTour';
+import EditTour from './Tours/EditTour';
+import TourDetail from './Tours/TourDetail';
+import CurrentTours from './Tours/CurrentTours';
+import RecentTours from './Tours/RecentTours';
+import ArchiveTours from './Tours/ArchiveTours';
+import CustomersList from './Customers/CustomersList';
+import AddCustomer from './Customers/AddCustomer';
+import EditCustomer from './Customers/EditCustomer';
+import CustomerDetail from './Customers/CustomerDetail';
+import OrderList from './Orders/OrderList';
+import AddOrder from './Orders/AddOrder';
+import EditOrder from './Orders/EditOrder';
+import Maps from './Maps';
 import PastDeliveries from './PastDeliveries/PastDeliveries';
+import RoutesMap from './Routes/Map';
 
 export {
   Login,
@@ -33,5 +34,6 @@ export {
   AddOrder,
   EditOrder,
   Maps,
-  PastDeliveries
+  PastDeliveries,
+  RoutesMap,
 };

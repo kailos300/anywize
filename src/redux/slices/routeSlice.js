@@ -51,6 +51,8 @@ export const getRoute = (id, detail) => async (dispatch) => {
 	try {
 		const res = await coreApi.fetch(url);
 		dispatch(setRoute(res));
+
+		return res;
 	} catch (err) {
 		console.log(err);
 	} finally {
