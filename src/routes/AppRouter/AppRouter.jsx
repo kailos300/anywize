@@ -93,7 +93,7 @@ const AppRouter = () => {
         path={PATHS.pastdeliveries}
         component={RequireAuth(PastDeliveries)}
       />
-      <Route exact path={PATHS.tours.current.map} component={RequireAuth(RoutesMap)} />
+      <Route exact path={PATHS.tours.map} component={RequireAuth(RoutesMap)} />
       <Redirect to={PATHS.tours.current} />
     </Switch>
   );
