@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { APP_NAMESPACE } from "../../util/redux-constants";
 import { get, post } from "../../util/http-utils";
-import { setCookie } from "../../util/cookie-utils";
 import {
   updateStore,
   buildGenericInitialState,
@@ -40,7 +39,6 @@ export const login = (credentials, desiredPath) => async (dispatch) => {
 
     // If the login was successful, set the JWT as a cookie
     if (response) {
-      setCookie("token", response.token, { maxAge: response.tokenExpiration });
       localStorage.setItem("token", response.token);
       // letting this crap here because if you redirect with the router there's a loop
       // because of some unknown bug in the /dashboard component

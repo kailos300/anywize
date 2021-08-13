@@ -9,7 +9,7 @@ export const mapTableData = (data) =>
 
 /**
  * group same data from array
- * @param array 
+ * @param array
  * @param key
  */
 export const groupBy = (array, key) => {
@@ -18,3 +18,7 @@ export const groupBy = (array, key) => {
     return result;
   }, []);
 };
+
+export const delay = (s) => new Promise((r) => {
+  setTimeout(() => r(), s * 1000);
+});

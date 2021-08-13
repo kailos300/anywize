@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import MapIcon from '@material-ui/icons/Map';
+import clsx from 'clsx';
 
 const styles = makeStyles((theme) => ({
   _box: {
@@ -18,6 +19,9 @@ const styles = makeStyles((theme) => ({
       borderColor: '#6F9CEB',
     },
   },
+  blueBorder: {
+    borderColor: '#6F9CEB',
+  },
   textWhite: {
     color: '#FFF',
   },
@@ -26,7 +30,14 @@ const styles = makeStyles((theme) => ({
   },
 }));
 
-export default ({ routes, selectedRoutes, onSelect }) => {
+export default ({
+  routes,
+  selectedRoutes,
+  onSelect,
+  onRemove,
+  highlightRoute,
+  highlightedRouteId,
+}) => {
   const classes = styles();
   const { t } = useTranslation();
 
@@ -40,10 +51,19 @@ export default ({ routes, selectedRoutes, onSelect }) => {
       {
         selectedRoutes.map((route, i) => {
           return (
-            <Box className={classes._box} style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }} key={i}>
+            <Box
+              className={clsx(classes._box, {
+                [classes.blueBorder]: highlightedRouteId === route.id,
+              })}
+              style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }}
+              key={i}
+              onClick={() => onRemove(route)}
+              onMouseEnter={() => highlightRoute(route.id)}
+              onMouseLeave={() => highlightRoute(null)}
+            >
               <MapIcon className={classes._6F9CEB} />
               <Typography className={classes.textWhite} variant="body2">
-                <Box component="span" mx={3}>{route.id}</Box> {route.Tour.name}
+                <Box component="span" mx={3}>{route.uuid}</Box> {route.Tour.name}
               </Typography>
             </Box>
           );
@@ -65,7 +85,7 @@ export default ({ routes, selectedRoutes, onSelect }) => {
             >
               <MapIcon className={classes._6F9CEB} />
               <Typography className={classes.textWhite} variant="body2">
-                <Box component="span" mx={3}>{route.id}</Box> {route.Tour.name}
+                <Box component="span" mx={3}>{route.uuid}</Box> {route.Tour.name}
               </Typography>
             </Box>
           );

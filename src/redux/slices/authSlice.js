@@ -1,5 +1,4 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { setCookie } from "util/cookie-utils";
 import { storage } from "util/storage";
 import { coreApi } from "api/core";
 
@@ -44,7 +43,6 @@ export const loginWithRedirect = (creds, callback) => async (dispatch) => {
   try {
     const { token, tokenExpiration } = await coreApi.post(url, creds);
     if (token) {
-      setCookie("token", token, { maxAge: tokenExpiration });
       await storage.set("token", token);
       await dispatch(setAuthenticated());
 
