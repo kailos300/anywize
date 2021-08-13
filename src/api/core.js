@@ -55,6 +55,12 @@ class Api {
             description: 'Unauthorized',
             type: 'error',
           }));
+
+          storage.clear();
+
+          if (!window.location.href.includes('/login')) {
+            return window.location.href = '/login';
+          }
         }
 
         throw error;

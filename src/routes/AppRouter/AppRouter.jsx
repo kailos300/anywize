@@ -19,7 +19,8 @@ import {
   OrderList,
   EditOrder,
   Maps,
-  PastDeliveries
+  PastDeliveries,
+  RoutesMap,
 } from 'views';
 import { PATHS } from '../../util/appConstants';
 
@@ -92,7 +93,7 @@ const AppRouter = () => {
         path={PATHS.pastdeliveries}
         component={RequireAuth(PastDeliveries)}
       />
-
+      <Route exact path={PATHS.tours.map} component={RequireAuth(RoutesMap)} />
       <Redirect to={PATHS.tours.current} />
     </Switch>
   );

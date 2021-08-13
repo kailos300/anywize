@@ -16,6 +16,7 @@ import { getTours, selectTours } from "redux/slices/tourSlice";
 
 // Components
 import CustomerForm from "components/Customers/form";
+import Loading from 'components/Shared/loading';
 
 const useStyles = makeStyles({
   _container: {
@@ -36,7 +37,7 @@ const EditCustomer = () => {
   const tours = useSelector(selectTours);
 
   useEffect(() => {
-    if (id) {
+    if (id && !loading) {
       dispatch(getCustomer(id));
     }
   }, [dispatch, id]);
@@ -47,25 +48,20 @@ const EditCustomer = () => {
     }
   }, [dispatch, tours]);
 
-  const handleEditCustomer = async (id, payload) => {
+  const onSubmit = async (payload) => {
     await dispatch(editCustomer(id, payload));
-    // .then(data => console.log(data, "data"))
-    // .catch(error => console.log(error, "error"));
-
-    // dispatch(setShowMessage({
-    //     description: 'Customer Edited Successfully!',
-    //     type: 'success',
-
-    // }));
 
     history.push(PATHS.customers.root);
   };
 
-  if (loading || !customer) return <div className={classes._container}><div style={{ color: 'black' }} className="loading">Loading..</div></div>;
+  if (loading || !customer) {
+    return <Loading />
+  };
+
   return (
     <CustomerForm
       initialValues={customer}
-      handleEditCustomer={handleEditCustomer}
+      onSubmit={onSubmit}
       action={currentAction}
       tourList={tours}
     />

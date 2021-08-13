@@ -8,12 +8,11 @@ import countries from 'iso-3166-country-list';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import { useHistory, useParams } from 'react-router-dom';
-
 import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs';
-
 import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
 import { PATHS } from 'util/appConstants';
+import SelectGeoCoordinates from 'components/Maps/SelectGeoCoordinates';
 
 const unzip = require('zip-to-city');
 
@@ -47,8 +46,7 @@ const useStyles = makeStyles({
 });
 const CustomerForm = ({
   initialValues,
-  handleAddCustomer,
-  handleEditCustomer,
+  onSubmit,
   action,
   tourList,
 }) => {
@@ -62,20 +60,34 @@ const CustomerForm = ({
     validateOnChange: false,
     validateOnBlur: true,
     validationSchema: CustomerSchema,
-    initialValues: initialValues,
+    initialValues: {
+      number: '',
+      salutation: '',
+      firstname: '',
+      lastname: '',
+      notification: false,
+      tour: '',
+      position: '',
+      deposit_agreement: '',
+      keyboxCode: '',
+      tour_id: '', // required
+      tour_position: '', // required
+      name: '', // required
+      alias: '', // required
+      street: '', // required
+      street_number: '', // required
+      city: '', // required
+      zipcode: '', // required
+      country: '', // required
+      email: '', // required
+      phone: '', // required
+      latitude: '', // required
+      longitude: '', // required
+      ...initialValues,
+    },
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        if (action === "ADD") {
-          return await handleAddCustomer(
-            pick(values, CustomerFormAllowedFields)
-          );
-        }
-        if (action === "EDIT") {
-          return await handleEditCustomer(
-            values.id,
-            pick(values, CustomerFormAllowedFields)
-          );
-        }
+        await onSubmit(pick(values, CustomerFormAllowedFields));
       } catch (err) {
         setSubmitting(false);
       }
@@ -106,8 +118,8 @@ const CustomerForm = ({
       return;
     }
     setFieldValue("zipcode", value);
-    setFieldValue("city", "");
-    setFieldValue("country", "");
+    setFieldValue("city", '');
+    setFieldValue("country", '');
   };
 
   const closeCustomerHandler = () => {
@@ -351,8 +363,12 @@ const CustomerForm = ({
           </Grid>
         )}
       </Grid>
+
+      <Typography className={classes._subheading} variant="h5">
+        {t('Geolocation')}
+      </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={4} lg={2}>
+        <Grid item xs={12} sm={6} md={3} lg={3}>
           <Input
             label={t("Latitude")}
             name="latitude"
@@ -360,10 +376,11 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.latitude}
             errors={errors}
+            disabled
           />
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4} lg={2}>
+        <Grid item xs={12} sm={6} md={3} lg={3}>
           <Input
             label={t("Longitude")}
             name="longitude"
@@ -371,6 +388,17 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.longitude}
             errors={errors}
+            disabled
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <SelectGeoCoordinates
+            onChange={({ latitude, longitude }) => {
+              setFieldValue('latitude', latitude);
+              setFieldValue('longitude', longitude);
+            }}
+            latitude={values.latitude || 52.52321191756548}
+            longitude={values.longitude || 13.405897492100648}
           />
         </Grid>
       </Grid>
