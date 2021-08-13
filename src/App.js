@@ -49,8 +49,22 @@ const App = () => {
       }
       <AppRouter />
       <Snackbar />
+      <Example />
     </>
   );
 };
 
 export default App;
+
+const Example = () => {
+  const doomething = () => {
+    let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    array.push(2)
+    console.log(array)
+  }
+  return (
+    <>
+      {doomething()}
+    </>
+  )
+}

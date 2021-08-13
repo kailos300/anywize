@@ -21,7 +21,7 @@ import { mapTableData } from "util/helpers";
 import { PATHS } from "util/appConstants";
 
 //Actions
-import { selectCurrent, selectRouteStatus, getCurrentRoutes } from 'redux/slices/routeSlice';
+import { selectCurrent, selectRouteStatus, getCurrentRoutes, getRoute, selectRoute } from 'redux/slices/routeSlice';
 import Loading from 'components/Shared/loading';
 
 const useStyles = makeStyles({
@@ -132,6 +132,7 @@ const CurrentTours = () => {
 	const tableRef = useRef();
 	const { t } = useTranslation("common");
 	const routes = useSelector(selectCurrent);
+	const route = useSelector(selectRoute);
 	const [tabledata, settableData] = useState(routes)
 	const loading = useSelector(selectRouteStatus);
 	const myDivToFocus = useMemo(() => Array(tabledata.length).fill(0).map(i => React.createRef()), [tabledata.length]);
@@ -184,10 +185,15 @@ const CurrentTours = () => {
 			state: { detail: rowData.id }
 		})
 	}
+	const loadData = () => {
+		console.log("rowData")
+		// dispatch(getRoute(rowData.id))
+		// console.log(route, "route")
+	}
+
 	if (loading) {
 		return <Loading />;
 	}
-
 	return (
 		<div className={clsx(classes._container, '')}>
 			<MaterialTable
@@ -204,7 +210,6 @@ const CurrentTours = () => {
 						color: 'white',
 						border: 'none',
 						font: 'normal normal normal 12px/24px Roboto',
-
 					},
 					rowStyle: rowData => {
 						if (rowData.tableData.id % 2 === 0) {
@@ -212,39 +217,38 @@ const CurrentTours = () => {
 						}
 						else {
 							return { backgroundColor: '#525252' };
-
 						}
 					}
 
 				}}
 				detailPanel={[
 					{
-
 						icon: () => <ExpandMoreIcon />,
 						openIcon: () => <ExpandLessIcon />,
 						render: rowData => {
 							return (
 								<div style={{ padding: '15px', background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }}>
-									<div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
-										<DoubleArrowIcon onClick={() => scroll(-12000, rowData)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
-										<NavigateBeforeIcon onClick={() => scroll(-100, rowData)} className={classes._fontsize12} />
-									</div>
-									<div style={{ width: '5%', float: 'right', margin: '25px 0', textAlign: 'center' }}>
-										<NavigateNextIcon onClick={() => scroll(100, rowData)} className={classes._fontsize12} />
-										<DoubleArrowIcon onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
-									</div>
-									<div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
-										<div >
-											<ProgressBar
-												className={'margin-30'}
-												percent={100}
-												width={`${(rowData.Orders.length - 1) * 10}%`}
-												height={2}
-												filledBackground="#6F9CEB"
-												unfilledBackground=""
-											>
-												{
-													rowData.Orders.map((data, index) => (
+									{loadData}
+									<>
+										<div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
+											<DoubleArrowIcon onClick={() => scroll(-12000, rowData)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
+											<NavigateBeforeIcon onClick={() => scroll(-100, rowData)} className={classes._fontsize12} />
+										</div>
+										<div style={{ width: '5%', float: 'right', margin: '25px 0', textAlign: 'center' }}>
+											<NavigateNextIcon onClick={() => scroll(100, rowData)} className={classes._fontsize12} />
+											<DoubleArrowIcon onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
+										</div>
+										<div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
+											<div >
+												<ProgressBar
+													className={'margin-30'}
+													percent={100}
+													width={`${(rowData.Orders.length - 1) * 10}%`}
+													height={2}
+													filledBackground="#6F9CEB"
+													unfilledBackground=""
+												>
+													{rowData.Orders.map((data, index) => (
 														<Step transition="scale">
 															{({ accomplished }) => (
 																<div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
@@ -260,10 +264,11 @@ const CurrentTours = () => {
 															)}
 														</Step>
 													))
-												}
-											</ProgressBar>
+													}
+												</ProgressBar>
+											</div>
 										</div>
-									</div>
+									</>
 								</div>
 
 							)

@@ -47,14 +47,14 @@ export default routeSlice.reducer;
 
 export const getRoute = (id, detail) => async (dispatch) => {
 	const url = baseUrl + `/${id}`;
-	dispatch(setRouteLoading());
+	// dispatch(setRouteLoading());
 	try {
 		const res = await coreApi.fetch(url);
 		dispatch(setRoute(res));
 	} catch (err) {
 		console.log(err);
 	} finally {
-		dispatch(setRouteReady());
+		// dispatch(setRouteReady());
 	}
 };
 export const getRoutes = () => async (dispatch) => {
