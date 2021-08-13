@@ -20,7 +20,6 @@ html {
   width: 100%;
   margin: 0 !important;
   padding: 0 !important;
-  font-family: "Poppins" !important;
 }
 /* .custom-table-styles .MuiPaper-elevation2 {
   box-shadow:none !important;
@@ -71,8 +70,8 @@ font-size: 12px !important;
   width: 20px !important;
 }
   /* .custom-table-styles tr:hover {
-   
-    background-color: rgba(0, 0, 0, 0.04); 
+
+    background-color: rgba(0, 0, 0, 0.04);
   } */
 .custom-table-styles th {
   /* background-color: #eaeef1 !important; */
@@ -202,7 +201,7 @@ border           : 1px solid #6F9CEB;
     border-radius: 50%;
     background: #6F9CEB !important;
     cursor: pointer;
-    
+
   }
   .ball-open{
     display: block;

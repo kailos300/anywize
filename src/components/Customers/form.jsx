@@ -12,7 +12,7 @@ import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs';
 import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
 import { PATHS } from 'util/appConstants';
-import SelectGeoCoordinates from 'components/Maps/SelectGeoCoordinates';
+import SelectGeoCoordinates from 'components/Customers/SelectGeoCoordinates';
 
 const unzip = require('zip-to-city');
 

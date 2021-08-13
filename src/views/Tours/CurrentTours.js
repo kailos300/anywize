@@ -178,12 +178,10 @@ const CurrentTours = () => {
 		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 		return arr;
 	};
-	const redirectView = (data, rowData) => {
-		history.push({
-			pathname: PATHS.maps,
-			state: { detail: rowData.id }
-		})
+	const redirectView = (order, rowData) => {
+		history.push({ pathname: `${PATHS.tours.map}/${rowData.id}/${order.customer_id}` });
 	}
+
 	if (loading) {
 		return <Loading />;
 	}
