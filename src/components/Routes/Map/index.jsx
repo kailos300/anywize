@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ReactMapGL, { Source, Marker, Layer, FlyToInterpolator } from 'react-map-gl';
+import ReactMapGL, { Source, Marker, Layer, FlyToInterpolator, NavigationControl } from 'react-map-gl';
 import MarkerHouse from 'assets/markers/house.png';
 import MarkerTruck from 'assets/markers/truck.png';
 import Markers from './Markers';
@@ -130,7 +130,7 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
               geometry: {
                 type: 'LineString',
                 coordinates: route.RoutesNavigations.reduce((acc, cur) => {
-                  return acc.concat(cur.navigation.routes[0].geometry.coordinates);
+                  return acc.concat(cur.navigation?.routes[0].geometry.coordinates);
                 }, []),
               },
             };
@@ -139,6 +139,7 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
       >
         <Layer {...layerStyle} />
       </Source>
+      <NavigationControl style={{ bottom: 30, right: 20, backgroundColor: 'red' }} />
     </ReactMapGL>
   );
 };

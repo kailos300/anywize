@@ -21,6 +21,12 @@ export const CustomerSchema = yup.object().shape({
   phone: yup.string().required("Required"),
   latitude: yup.string().required("Required"),
   longitude: yup.string().required("Required"),
+  deposit_agreement: yup.string().required('Required'),
+  keybox_code: yup.mixed().when('deposit_agreement', {
+    is: 'KEY_BOX',
+    then: yup.string().required('Required'),
+    otherwise: yup.string().nullable(),
+  }),
 });
 
 export const OrderSchema = yup.object().shape({
