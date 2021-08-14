@@ -88,8 +88,8 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
       title: 'icon', render: rowData => <div>
-        <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '', cursor: 'pointer' }} />
-        <MapIcon />
+        <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }} />
+        <MapIcon style={{ color: '#ADADAD' }} />
       </div>
     },
     { title: 'date', render: rowData => rowData.start_date !== null ? moment(rowData.start_date).format('DD.MM.YYYY HH:mm') : '' },
@@ -109,7 +109,7 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'DriversName', field: 'driver_name' },
     {
       title: 'call', render: rowData =>
-        <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive>
+        <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
           <CallIcon className={'hovericon'} />
         </Tooltip>
     },

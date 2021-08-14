@@ -3,15 +3,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 const useStyles = makeStyles({
     _tourdetailbar: {
-        background: '#6F9CEB',
-        width: '255px',
-        height: '70px',
+        background: '#93B5F0',
+        width: '205px',
+        height: '57px',
         position: 'relative',
         // right: 0,
-        top: '-30px',
+        top: '-10px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: ' space-around',
+        marginLeft: '-25px',
         color: 'black',
         "&::before": {
             content: '""',
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
             left: '46%',
             bottom: '-36px',
             border: '20px solid transparent',
-            borderTopColor: '#6F9CEB',
+            borderTopColor: '#93B5F0',
             // borderRightColor: '#DA362A',
         }
     },
@@ -29,8 +30,13 @@ const useStyles = makeStyles({
         fontSize: '15px',
     },
     _codedetail: {
-        fontSize: '15px',
-        fontWeight: 'bold',
+        font: 'normal normal bold 12px/24px Roboto',
+        color: '#121212'
+    },
+    _codevalue: {
+        font: ' normal normal normal 12px/24px Roboto',
+        letterSpacing: '0px',
+        color: '#121212'
     },
     _1F1F1F: {
         background: '#1F1F1F',
@@ -69,13 +75,16 @@ export default function TooltipBar(props) {
         <div className={classes._tourdetailbar} >
             {props.name === 'callicon' ?
                 <div className={classes._codetext}>
-                    <span className={classes._codedetail}>Mobile:</span> 762342837462
+                    <span className={classes._codedetail}>Mobile:</span> <span className={classes._codevalue}>762342837462</span>
                 </div>
                 :
                 <div className={classes._codetext}>
-                    <span className={classes._codedetail}>Tourcode:</span> {props.rowData.code}
-                    <br />
-                    <span className={classes._codedetail}>Password:</span> {props.rowData.password}
+                    <div>
+                        <span className={classes._codedetail}>Tourcode:</span><span className={classes._codevalue}> {props.rowData.code}</span>
+                    </div>
+                    <div style={{ marginTop: '-5px' }}>
+                        <span className={classes._codedetail}>Password:</span> <span className={classes._codevalue}>{props.rowData.password}</span>
+                    </div>
                 </div>
             }
             <FileCopyOutlinedIcon onClick={copyCode} style={{ color: 'black', cursor: 'pointer' }} />

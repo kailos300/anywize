@@ -24,6 +24,10 @@ import { PATHS } from "util/appConstants";
 import { selectCurrent, selectRouteStatus, getCurrentRoutes, getRoute, selectRoute } from 'redux/slices/routeSlice';
 import Loading from 'components/Shared/loading';
 
+//assets
+import arrow from '../../assets/img/arrow.svg'
+import arrowpanel from '../../assets/img/arrow-panel.svg';
+
 const useStyles = makeStyles({
 	_container: {
 		backgroundColor: "#121212",
@@ -59,11 +63,14 @@ const useStyles = makeStyles({
 		"& .MuiInput-underline:hover:before": {
 			borderBottom: "1px solid #525252",
 		},
-		"& .MuiIconButton-root": {
+		"& .MuiIconButton-root *.MuiSvgIcon-root , .MuiIconButton-root": {
 			color: "#F5F5F5",
 		},
-		"& .MuiSvgIcon-root": {
-			color: "#F5F5F5",
+		"& .MuiTableCell-alignLeft *.MuiSvgIcon-root": {
+			color: "#ADADAD",
+			width: '22px',
+			height: '22px',
+			cursor: 'pointer',
 		},
 		"& .MuiTypography-root": {
 			color: "#F5F5F5",
@@ -122,7 +129,8 @@ const useStyles = makeStyles({
 	_width111: '111px',
 	_fontsize12: {
 		fontSize: '12px',
-		cursor: 'pointer'
+		cursor: 'pointer',
+		height: '8px',
 	}
 });
 const CurrentTours = () => {
@@ -186,7 +194,6 @@ const CurrentTours = () => {
 	}
 	return (
 		<div className={clsx(classes._container, '')}>
-			{console.log(routes)}
 			<MaterialTable
 				tableRef={tableRef}
 				data={mapTableData(tabledata)}
@@ -214,19 +221,32 @@ const CurrentTours = () => {
 				}}
 				detailPanel={[
 					{
-						icon: () => <ExpandMoreIcon />,
-						openIcon: () => <ExpandLessIcon />,
+						icon: () => <img src={arrowpanel} style={{
+							width: '22px',
+							height: ' 10px',
+							transform: ' rotate(180deg)'
+						}} />,
+						openIcon: () => <img src={arrowpanel} style={{
+							width: '22px',
+							height: ' 10px'
+						}} />,
 						render: rowData => {
 							return (
 								<div style={{ padding: '15px', background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }}>
 									<>
 										<div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
-											<DoubleArrowIcon onClick={() => scroll(-12000, rowData)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
-											<NavigateBeforeIcon onClick={() => scroll(-100, rowData)} className={classes._fontsize12} />
+											<div style={{ display: 'inline-block' }} onClick={() => scroll(-12000, rowData)}>
+												<img src={arrow} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
+												<img src={arrow} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
+											</div>
+											<img src={arrow} onClick={() => scroll(-100, rowData)} className={classes._fontsize12} style={{ marginLeft: '15px', transform: 'rotate(180deg)' }} />
 										</div>
 										<div style={{ width: '5%', float: 'right', margin: '25px 0', textAlign: 'center' }}>
-											<NavigateNextIcon onClick={() => scroll(100, rowData)} className={classes._fontsize12} />
-											<DoubleArrowIcon onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
+											<img style={{ marginRight: '15px', }} src={arrow} onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
+											<div style={{ display: 'inline-block' }} onClick={() => scroll(100, rowData)}>
+												<img src={arrow} className={classes._fontsize12} />
+												<img src={arrow} className={classes._fontsize12} />
+											</div>
 										</div>
 										<div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
 											<div >
