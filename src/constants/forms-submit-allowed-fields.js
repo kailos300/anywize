@@ -21,6 +21,7 @@ export const CustomerFormAllowedFields = [
   'latitude',
   'longitude',
   'deposit_agreement',
+  'keybox_code',
 ];
 
 export const OrderFormAllowedFields = ['customer_id', 'description', 'number'];

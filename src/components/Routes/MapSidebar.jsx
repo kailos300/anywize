@@ -83,7 +83,7 @@ export default ({
               key={i}
               onClick={() => onSelect(route)}
             >
-              <MapIcon className={classes._6F9CEB} />
+              <MapIcon />
               <Typography className={classes.textWhite} variant="body2">
                 <Box component="span" mx={3}>{route.uuid}</Box> {route.Tour.name}
               </Typography>
