@@ -35,6 +35,7 @@ const useStyles = makeStyles({
     height: "22px",
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
+    margin: '0 16px 0 0px',
   },
   _dflex: {
     display: "flex",
