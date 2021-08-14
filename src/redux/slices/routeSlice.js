@@ -51,8 +51,6 @@ export const getRoute = (id, detail) => async (dispatch) => {
 	try {
 		const res = await coreApi.fetch(url);
 		dispatch(setRoute(res));
-
-		return res;
 	} catch (err) {
 		console.log(err);
 	} finally {
@@ -86,6 +84,7 @@ export const getCurrentRoutes = () => async (dispatch) => {
 		const newData = routes.map((data) => {
 			return {
 				...data,
+				paths: data.pathway.map((item) => item.Orders.map((innerItem) => { return innerItem })),
 				is_favourite: false,
 				progress: 'In Progress'
 			}

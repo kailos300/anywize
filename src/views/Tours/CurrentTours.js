@@ -165,8 +165,6 @@ const CurrentTours = () => {
 			return item;
 		})
 		settableData(newData)
-
-
 	}
 
 	function array_move(arr, old_index, new_index) {
@@ -185,17 +183,13 @@ const CurrentTours = () => {
 			state: { detail: rowData.id }
 		})
 	}
-	const loadData = () => {
-		console.log("rowData")
-		// dispatch(getRoute(rowData.id))
-		// console.log(route, "route")
-	}
 
 	if (loading) {
 		return <Loading />;
 	}
 	return (
 		<div className={clsx(classes._container, '')}>
+			{console.log(routes)}
 			<MaterialTable
 				tableRef={tableRef}
 				data={mapTableData(tabledata)}
@@ -228,7 +222,6 @@ const CurrentTours = () => {
 						render: rowData => {
 							return (
 								<div style={{ padding: '15px', background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }}>
-									{loadData}
 									<>
 										<div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
 											<DoubleArrowIcon onClick={() => scroll(-12000, rowData)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />

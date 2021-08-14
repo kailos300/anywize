@@ -13,6 +13,7 @@ import logo from "assets/img/logo.png";
 
 // constants
 import { NAVIGATION_ROUTES } from "constants/ui-constants";
+import { PATHS } from "util/appConstants";
 
 const useStyles = makeStyles({
   _container: {
@@ -56,7 +57,7 @@ const Navbar = () => {
 
   return (
     <header className={classes._container}>
-      <Link>
+      <Link to={PATHS.tours.current}>
         <img className={classes._img} src={logo} alt="anywize logo" />
       </Link>
       <List className={classes._nav} component="nav">

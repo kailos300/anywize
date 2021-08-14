@@ -6,6 +6,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import { selectMessage, setHideMessage } from "redux/slices/uiSlice";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -17,7 +18,14 @@ const useStyles = makeStyles((theme) => ({
     "& > * + *": {
       marginTop: theme.spacing(2),
     },
+
   },
+  alert: {
+    borderRadius: '0px',
+  },
+  alerterror: {
+    backgroundColor: '#E30425'
+  }
 }));
 
 const Snackbar = () => {
@@ -41,7 +49,7 @@ const Snackbar = () => {
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity="success">
+        <Alert className={classes.alert} onClose={handleClose} severity="success">
           <div
             style={{ fontSize: "16px" }}
             dangerouslySetInnerHTML={{ __html: t(description) }}
@@ -54,7 +62,7 @@ const Snackbar = () => {
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity="error">
+        <Alert className={clsx(classes.alert, classes.alerterror)} onClose={handleClose} severity="error">
           <div
             style={{ fontSize: "16px" }}
             dangerouslySetInnerHTML={{ __html: t(description) }}
