@@ -69,7 +69,7 @@ const CustomerForm = ({
       tour: '',
       position: '',
       deposit_agreement: '',
-      keyboxCode: '',
+      keybox_code: '',
       tour_id: '', // required
       tour_position: '', // required
       name: '', // required
@@ -344,21 +344,23 @@ const CustomerForm = ({
             value={values.deposit_agreement}
             errors={errors}
             options={[
-              { value: "NONE", label: "None" },
-              { value: "BRING_KEY", label: "Bring Key" },
-              { value: "KEY_BOX", label: "KeyBox" },
+              { value: "NONE", label: t("None") },
+              { value: "BRING_KEY", label: t("Bring Key") },
+              { value: "KEY_BOX", label: t("KeyBox") },
             ].map((o) => ({ label: o.label, value: o.value }))}
+            required
           />
         </Grid>
         {values.deposit_agreement === "KEY_BOX" && (
           <Grid item xs={12} sm={6} md={4} lg={2}>
             <Input
               label={t("Keybox Code")}
-              name="keyboxCode"
+              name="keybox_code"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.keyboxCode}
+              value={values.keybox_code}
               errors={errors}
+              required={values.deposit_agreement === 'KEY_BOX'}
             />
           </Grid>
         )}
