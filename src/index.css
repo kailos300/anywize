@@ -223,6 +223,9 @@ border           : 1px solid #6F9CEB;
   .hide-scrollbar::-webkit-scrollbar ,.activetours::-webkit-scrollbar{
     display: none;
   }
+  .order-table .MuiPaper-elevation2 > div:nth-child(2) > div > div::-webkit-scrollbar{
+    display: none;
+  }
   .tooltip {
     position: relative;
     display: inline-block;
