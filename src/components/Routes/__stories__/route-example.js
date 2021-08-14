@@ -101,6 +101,17 @@ export default {
       "street_number": "123123",
       "city": "City",
       "country": "AR"
+    },
+    "Supplier": {
+      "id": 1,
+      "name": "Name - Sauer Group",
+      "coordinates": {
+        "type": "Point",
+        "coordinates": [
+          -59.67128397477,
+          -33.681292992081
+        ]
+      }
     }
   },
   "Orders": [

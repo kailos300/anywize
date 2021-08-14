@@ -1,8 +1,10 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import ReactMapGL, { Source, Marker, Layer } from 'react-map-gl';
-import Map, { CustomMarker } from '../Map';
+import ReactMapGL from 'react-map-gl';
+import Map from '../Map';
+import { CustomMarker } from '../Map/Markers';
 import Route from './route-example';
+import Stop from '../Stop';
 
 export default {
   title: 'Map',
@@ -45,4 +47,4 @@ export const Markers = (props) => {
     </ReactMapGL>
   );
 };
-
+export const CustomerStop = () => (<Stop route={Route} customer={Route.pathway[0]} />);

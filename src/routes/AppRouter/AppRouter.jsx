@@ -18,7 +18,6 @@ import {
   AddOrder,
   OrderList,
   EditOrder,
-  Maps,
   PastDeliveries,
   RoutesMap,
 } from 'views';
@@ -73,10 +72,6 @@ const AppRouter = () => {
         path={PATHS.customers.edit}
         component={RequireAuth(EditCustomer)}
       />
-      {/* <Route exact path={'/edit'} component={RequireAuth(Edit)} /> */}
-
-      <Route exact path={PATHS.maps} component={Maps} />
-      {/**orders */}
       <Route
         exact
         path={PATHS.orders.root}
@@ -93,7 +88,7 @@ const AppRouter = () => {
         path={PATHS.pastdeliveries}
         component={RequireAuth(PastDeliveries)}
       />
-      <Route exact path={PATHS.tours.map} component={RequireAuth(RoutesMap)} />
+      <Route exact path={`${PATHS.tours.map}/:routeId?/:customerId?`} component={RequireAuth(RoutesMap)} />
       <Redirect to={PATHS.tours.current} />
     </Switch>
   );
