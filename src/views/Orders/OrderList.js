@@ -90,6 +90,9 @@ const useStyles = makeStyles({
     '& .MuiTypography-root': {
       color: '#F5F5F5',
     },
+    '& .MuiTableCell-paddingNone:last-child div': {
+      marginRight: '30px'
+    },
   },
   _1F1F1F: {
     background: '#1F1F1F',
@@ -318,8 +321,8 @@ const OrderList = ({ confirm }) => {
                             <TableCell className={classes._textalignright}>
                               <EditIcon onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)} />
                             </TableCell>
-                            <TableCell style={{ paddingRight: '30px' }} className={classes._textalignright}>
-                              <div style={{ textAlign: 'right' }}>
+                            <TableCell style={{}} className={classes._textalignright}>
+                              <div style={{ textAlign: 'right', marginRight: '8px', marginTop: '-18px' }}>
                                 <input
                                   onChange={(e) => {
                                     e.stopPropagation();
@@ -335,7 +338,7 @@ const OrderList = ({ confirm }) => {
                               </div>
                             </TableCell>
                             <TableCell className={clsx(classes._textalignright, classes._width111)}>
-                              <DeleteIcon className={classes._pointer} onClick={(e) => callbackOnDelete(e, order)} />
+                              <DeleteIcon className={classes._pointer} style={{ marginRight: '20px' }} onClick={(e) => callbackOnDelete(e, order)} />
                             </TableCell>
                           </TableRow>
                         </TableBody>
