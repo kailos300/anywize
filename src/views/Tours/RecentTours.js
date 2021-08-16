@@ -17,6 +17,7 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import { CURRENT_TOURS_COLUMNS } from "constants/ui-constants"
 import { getColumns } from "util/table-utils";
 import { mapTableData } from "util/helpers";
+import Loading from 'components/Shared/loading';
 
 //Actions
 import { selectCompleted, selectRouteStatus, getFinisedRoutes } from 'redux/slices/routeSlice';
@@ -180,7 +181,7 @@ const RecentTours = () => {
 		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 		return arr;
 	};
-	if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
+	if (loading) return <Loading />;
 
 	return (
 		<div className={clsx(classes._container, '')}>

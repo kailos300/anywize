@@ -10,6 +10,8 @@ import { PAST_DELIVERIES_TABLE_COLUMNS } from "constants/ui-constants";
 import { getColumns } from "util/table-utils";
 import { mapTableData } from "util/helpers";
 
+import Loading from 'components/Shared/loading';
+
 //Actions
 import {
     getpastDeliveries,
@@ -81,7 +83,7 @@ const PastDeliveries = () => {
             dispatch(getpastDeliveries());
         }
     }, [dispatch, pastdeliveries]);
-    if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
+    if (loading) return <Loading />;
     return (
         <div className={clsx(classes._container, "custom-table-styles")}>
             {/* {console.log(orders, "orders")} */}

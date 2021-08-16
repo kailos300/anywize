@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
 import { PATHS, DEPOSIT_AGREEMENTS } from "util/appConstants";
-
+import Loading from 'components/Shared/loading';
 // Actions
 import {
   selectCustomer,
@@ -95,7 +95,7 @@ const CustomerDetail = () => {
   const editCustomerHandler = () => {
     history.push(PATHS.customers.edit.replace(":id", id));
   };
-  if (loading || !customer) return <div className="loading">Loading..</div>;
+  if (loading || !customer) return <Loading />;
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>
