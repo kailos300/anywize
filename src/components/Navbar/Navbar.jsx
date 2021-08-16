@@ -50,13 +50,14 @@ const useStyles = makeStyles({
     borderBottom: "1px solid #6F9CEB",
   },
 });
-const Navbar = () => {
+const Navbar = (props) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const location = useLocation();
 
   return (
     <header className={classes._container}>
+      {console.log(props, "props")}
       <Link to={PATHS.tours.current}>
         <img className={classes._img} src={logo} alt="anywize logo" />
       </Link>
@@ -66,14 +67,16 @@ const Navbar = () => {
             activeClassName={classes._isactive}
             className={clsx(
               classes._menuitem,
-              (location.pathname === "/tours" && item.name === "Master Data")
+              ((props.checkTourPaths().includes(location.pathname) && item.name === "Tours") || (props.checkPaths().includes(location.pathname) && item.name === "Master Data"))
                 ? classes._isactive
                 : ""
             )}
+
             key={index}
             component={NavLink}
             to={item.path}
           >
+            {console.log(item.name, "item.name")}
             <ListItemText className={classes._nomargin}>
               {item.name === 'Settings' ? < SettingsIcon className={'_settingicon'} /> : t(item.name)}
             </ListItemText>
