@@ -42,7 +42,7 @@ const App = () => {
     <>
       {location.pathname !== "/login" &&
         <>
-          <Navbar />
+          <Navbar checkTourPaths={checkTourPath} checkPaths={checkPath} />
           {checkPath().includes(location.pathname) && <Masterbar {...MASTER_DATA_BAR} />}
           {checkTourPath().includes(location.pathname) && <Masterbar {...TOUR_DATA_BAR} />}
         </>

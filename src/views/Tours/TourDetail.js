@@ -28,6 +28,7 @@ const useStyles = makeStyles({
     width: "22px",
     height: "22px",
     cursor: "pointer",
+    margin: '0 16px',
   },
   _editbox: {
     display: "flex",

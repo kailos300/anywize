@@ -4,6 +4,7 @@ import { Grid, Typography } from '@material-ui/core';
 import * as pick from 'lodash/pick';
 import { useFormik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from "clsx";
 import countries from 'iso-3166-country-list';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
@@ -36,7 +37,20 @@ const useStyles = makeStyles({
     width: '22px',
     height: '22px',
     cursor: 'pointer',
-    paddingRight: '16px',
+    transition: "all 0.3s ease-in-out",
+    margin: '0 16px 0 0px',
+  },
+  _save: {
+    "&:hover": {
+      transform: "scale(1.3)",
+      color: "#6F9CEB",
+    },
+  },
+  _close: {
+    "&:hover": {
+      transform: "scale(1.3)",
+      color: "#525252",
+    },
   },
   _subheading: {
     font: 'normal normal 500 22px/32px Roboto',
@@ -137,9 +151,9 @@ const CustomerForm = ({
         <div>
           <CloseIcon
             onClick={closeCustomerHandler}
-            className={classes._icons}
+            className={clsx(classes._icons, classes._close)}
           />
-          <SaveIcon onClick={handleSubmit} className={classes._icons} />
+          <SaveIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
         </div>
       </div>
       <Typography className={classes._subheading} variant="h5">

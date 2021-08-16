@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 import { useHistory } from "react-router-dom";
-
+import clsx from "clsx";
 import { Input, InputOnlyNumbers, Autocomplete } from "../Shared/mui-formik-inputs";
 import { OrderSchema } from "constants/validation-schemas";
 import { OrderFormAllowedFields } from "constants/forms-submit-allowed-fields";
@@ -33,7 +33,20 @@ const useStyles = makeStyles({
     width: "22px",
     height: "22px",
     cursor: "pointer",
-    paddingRight: "16px",
+    transition: "all 0.3s ease-in-out",
+    margin: '0 16px 0 0px',
+  },
+  _save: {
+    "&:hover": {
+      transform: "scale(1.3)",
+      color: "#6F9CEB",
+    },
+  },
+  _close: {
+    "&:hover": {
+      transform: "scale(1.3)",
+      color: "#525252",
+    },
   },
   _subheading: {
     font: "normal normal 500 22px/32px Roboto",
@@ -90,8 +103,8 @@ const OrderForm = ({
           {action === "ADD" ? t("New Order") : t("Edit Order")}
         </Typography>
         <div>
-          <CloseIcon onClick={closeOrderHandler} className={classes._icons} />
-          <SaveIcon onClick={handleSubmit} className={classes._icons} />
+          <CloseIcon onClick={closeOrderHandler} className={clsx(classes._icons, classes._close)} />
+          <SaveIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
         </div>
       </div>
       <Grid container spacing={2}>

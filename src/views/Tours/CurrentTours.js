@@ -21,8 +21,12 @@ import { mapTableData } from "util/helpers";
 import { PATHS } from "util/appConstants";
 
 //Actions
-import { selectCurrent, selectRouteStatus, getCurrentRoutes } from 'redux/slices/routeSlice';
+import { selectCurrent, selectRouteStatus, getCurrentRoutes, getRoute, selectRoute } from 'redux/slices/routeSlice';
 import Loading from 'components/Shared/loading';
+
+//assets
+import arrow from '../../assets/img/arrow.svg'
+import arrowpanel from '../../assets/img/arrow-panel.svg';
 
 const useStyles = makeStyles({
 	_container: {
@@ -59,11 +63,14 @@ const useStyles = makeStyles({
 		"& .MuiInput-underline:hover:before": {
 			borderBottom: "1px solid #525252",
 		},
-		"& .MuiIconButton-root": {
+		"& .MuiIconButton-root *.MuiSvgIcon-root , .MuiIconButton-root": {
 			color: "#F5F5F5",
 		},
-		"& .MuiSvgIcon-root": {
-			color: "#F5F5F5",
+		"& .MuiTableCell-alignLeft *.MuiSvgIcon-root": {
+			color: "#ADADAD",
+			width: '22px',
+			height: '22px',
+			cursor: 'pointer',
 		},
 		"& .MuiTypography-root": {
 			color: "#F5F5F5",
@@ -122,7 +129,8 @@ const useStyles = makeStyles({
 	_width111: '111px',
 	_fontsize12: {
 		fontSize: '12px',
-		cursor: 'pointer'
+		cursor: 'pointer',
+		height: '8px',
 	}
 });
 const CurrentTours = () => {
@@ -132,6 +140,7 @@ const CurrentTours = () => {
 	const tableRef = useRef();
 	const { t } = useTranslation("common");
 	const routes = useSelector(selectCurrent);
+	const route = useSelector(selectRoute);
 	const [tabledata, settableData] = useState(routes)
 	const loading = useSelector(selectRouteStatus);
 	const myDivToFocus = useMemo(() => Array(tabledata.length).fill(0).map(i => React.createRef()), [tabledata.length]);
@@ -164,8 +173,6 @@ const CurrentTours = () => {
 			return item;
 		})
 		settableData(newData)
-
-
 	}
 
 	function array_move(arr, old_index, new_index) {
@@ -185,7 +192,6 @@ const CurrentTours = () => {
 	if (loading) {
 		return <Loading />;
 	}
-
 	return (
 		<div className={clsx(classes._container, '')}>
 			<MaterialTable
@@ -202,7 +208,6 @@ const CurrentTours = () => {
 						color: 'white',
 						border: 'none',
 						font: 'normal normal normal 12px/24px Roboto',
-
 					},
 					rowStyle: rowData => {
 						if (rowData.tableData.id % 2 === 0) {
@@ -210,39 +215,50 @@ const CurrentTours = () => {
 						}
 						else {
 							return { backgroundColor: '#525252' };
-
 						}
 					}
 
 				}}
 				detailPanel={[
 					{
-
-						icon: () => <ExpandMoreIcon />,
-						openIcon: () => <ExpandLessIcon />,
+						icon: () => <img src={arrowpanel} style={{
+							width: '22px',
+							height: ' 10px',
+							transform: ' rotate(180deg)'
+						}} />,
+						openIcon: () => <img src={arrowpanel} style={{
+							width: '22px',
+							height: ' 10px'
+						}} />,
 						render: rowData => {
 							return (
 								<div style={{ padding: '15px', background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }}>
-									<div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
-										<DoubleArrowIcon onClick={() => scroll(-12000, rowData)} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
-										<NavigateBeforeIcon onClick={() => scroll(-100, rowData)} className={classes._fontsize12} />
-									</div>
-									<div style={{ width: '5%', float: 'right', margin: '25px 0', textAlign: 'center' }}>
-										<NavigateNextIcon onClick={() => scroll(100, rowData)} className={classes._fontsize12} />
-										<DoubleArrowIcon onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
-									</div>
-									<div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
-										<div >
-											<ProgressBar
-												className={'margin-30'}
-												percent={100}
-												width={`${(rowData.Orders.length - 1) * 10}%`}
-												height={2}
-												filledBackground="#6F9CEB"
-												unfilledBackground=""
-											>
-												{
-													rowData.Orders.map((data, index) => (
+									<>
+										<div style={{ width: '5%', float: 'left', margin: '25px 0', textAlign: 'center' }}>
+											<div style={{ display: 'inline-block' }} onClick={() => scroll(-12000, rowData)}>
+												<img src={arrow} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
+												<img src={arrow} className={classes._fontsize12} style={{ transform: 'rotate(180deg)' }} />
+											</div>
+											<img src={arrow} onClick={() => scroll(-100, rowData)} className={classes._fontsize12} style={{ marginLeft: '15px', transform: 'rotate(180deg)' }} />
+										</div>
+										<div style={{ width: '5%', float: 'right', margin: '25px 0', textAlign: 'center' }}>
+											<img style={{ marginRight: '15px', }} src={arrow} onClick={() => scroll(12000, rowData)} className={classes._fontsize12} />
+											<div style={{ display: 'inline-block' }} onClick={() => scroll(100, rowData)}>
+												<img src={arrow} className={classes._fontsize12} />
+												<img src={arrow} className={classes._fontsize12} />
+											</div>
+										</div>
+										<div ref={myDivToFocus[rowData.tableData.id]} className={'hide-scrollbar'} style={{ maxWidth: '90%', overflow: 'scroll', scrollBehavior: 'smooth' }}>
+											<div >
+												<ProgressBar
+													className={'margin-30'}
+													percent={100}
+													width={`${(rowData.Orders.length - 1) * 10}%`}
+													height={2}
+													filledBackground="#6F9CEB"
+													unfilledBackground=""
+												>
+													{rowData.paths.map((data, index) => (
 														<Step transition="scale">
 															{({ accomplished }) => (
 																<div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
@@ -258,10 +274,11 @@ const CurrentTours = () => {
 															)}
 														</Step>
 													))
-												}
-											</ProgressBar>
+													}
+												</ProgressBar>
+											</div>
 										</div>
-									</div>
+									</>
 								</div>
 
 							)

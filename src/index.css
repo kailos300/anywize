@@ -169,7 +169,7 @@ table.MuiTable-root {
   border           : 1px solid #6F9CEB;
   border-radius    : 50%;
   background       : #6F9CEB;
-  margin: 1.2px;
+  margin: 1px;
   transition: 0.5s;
 
 }
@@ -184,12 +184,12 @@ border           : 1px solid #6F9CEB;
   height           : 10px;
   border           : 1px solid#ADADAD;
   border-radius    : 50%;
-  margin: 1.2px;
+  margin: 1px;
 }
 .radio-checkbox[type=checkbox]:not(old):checked:hover + label > span >span{
   background       : #6F9CEB;
   border           : 1px solid#6F9CEB;
-  margin: 1.2px;
+  margin: 1px;
   transition: 0.5s;
 
   }
@@ -221,6 +221,9 @@ border           : 1px solid #6F9CEB;
     margin: 30px;
   }
   .hide-scrollbar::-webkit-scrollbar ,.activetours::-webkit-scrollbar{
+    display: none;
+  }
+  .order-table .MuiPaper-elevation2 > div:nth-child(2) > div > div::-webkit-scrollbar{
     display: none;
   }
   .tooltip {
@@ -282,6 +285,7 @@ border           : 1px solid #6F9CEB;
     width:unset !important;
     color:unset !important;
   }
+
   .hovericon:hover{
     color: #6F9CEB !important;
   }

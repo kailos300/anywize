@@ -70,12 +70,12 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   return [
     { title: 'Order id', render: rowData => <span style={{ fontSize: '15px', fontWeight: 500 }}>T{rowData.tableData.id + 1}</span> },
     { title: 'Description', field: 'Tour.name' },
-    { title: '', render: rowData => <span style={{ color: '#6F9CEB' }}> {rowData.length}<span style={{ marginLeft: '15px' }}>New Orders</span></span> },
+    { title: '', render: rowData => <span style={{ color: '#6F9CEB' }}> {rowData.orders.length}<span style={{ marginLeft: '15px' }}>{ } New Orders</span></span> },
     { title: '', field: '' },
 
     {
       title: 'Id+1',
-      render: rowData => <div style={{ textAlign: 'right', marginRight: '28px', marginTop: '-20px' }}>
+      render: rowData => <div style={{ textAlign: 'right', marginRight: '12px', marginTop: '-20px' }}>
         <input onChange={(e) => checkChangeHandler(e, rowData)}
           className={'radio-checkbox'} id={rowData.id} type='checkbox' name='field' checked={rowData.mainCheck} />
         <label htmlFor={rowData.id}><span><span style={{ margin: '1px' }}></span></span></label>
@@ -88,8 +88,8 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
       title: 'icon', render: rowData => <div>
-        <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '', cursor: 'pointer' }} />
-        <MapIcon />
+        <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }} />
+        <MapIcon style={{ color: '#ADADAD' }} />
       </div>
     },
     { title: 'date', render: rowData => rowData.start_date !== null ? moment(rowData.start_date).format('DD.MM.YYYY HH:mm') : '' },
@@ -109,7 +109,7 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'DriversName', field: 'driver_name' },
     {
       title: 'call', render: rowData =>
-        <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive>
+        <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
           <CallIcon className={'hovericon'} />
         </Tooltip>
     },

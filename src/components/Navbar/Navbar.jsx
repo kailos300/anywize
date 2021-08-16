@@ -13,6 +13,7 @@ import logo from "assets/img/logo.png";
 
 // constants
 import { NAVIGATION_ROUTES } from "constants/ui-constants";
+import { PATHS } from "util/appConstants";
 
 const useStyles = makeStyles({
   _container: {
@@ -49,14 +50,14 @@ const useStyles = makeStyles({
     borderBottom: "1px solid #6F9CEB",
   },
 });
-const Navbar = () => {
+const Navbar = (props) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const location = useLocation();
 
   return (
     <header className={classes._container}>
-      <Link>
+      <Link to={PATHS.tours.current}>
         <img className={classes._img} src={logo} alt="anywize logo" />
       </Link>
       <List className={classes._nav} component="nav">
@@ -65,10 +66,11 @@ const Navbar = () => {
             activeClassName={classes._isactive}
             className={clsx(
               classes._menuitem,
-              (location.pathname === "/tours" && item.name === "Master Data")
+              ((props.checkTourPaths().includes(location.pathname) && item.name === "Tours") || (props.checkPaths().includes(location.pathname) && item.name === "Master Data"))
                 ? classes._isactive
                 : ""
             )}
+
             key={index}
             component={NavLink}
             to={item.path}
