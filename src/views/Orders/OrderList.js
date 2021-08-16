@@ -115,7 +115,7 @@ const useStyles = makeStyles({
     width: '150px !important',
   },
   _edit: {
-    background: '#6F9CEB',
+    background: '#6F9CEB ',
     borderRadius: '50%',
     padding: '2px',
     width: '13px',
