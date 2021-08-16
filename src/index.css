@@ -289,7 +289,9 @@ border           : 1px solid #6F9CEB;
   .hovericon:hover{
     color: #6F9CEB !important;
   }
-
+.disabled-btn{
+  cursor: not-allowed !important;
+}
   .owl-prev, .owl-next {
     width: 15px;
     height: 100px;
@@ -297,7 +299,7 @@ border           : 1px solid #6F9CEB;
     top: 50%;
     color: white !important;
     transform: translateY(-50%);
-    display: block !important;
+    display: block !important;  
     border:0px solid black;
 }
 .owl-prev { left: -25px; }

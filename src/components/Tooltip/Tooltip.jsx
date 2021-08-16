@@ -68,14 +68,14 @@ export default function TooltipBar(props) {
     const classes = useStyles();
     const copyCode = () => {
         props.name === 'callicon' ?
-            navigator.clipboard.writeText(`Mobile:${'762342837462'}`) :
+            navigator.clipboard.writeText(`Mobile:${props.rowData.driver_phone}`) :
             navigator.clipboard.writeText(`Tourcode:${props.rowData.code}, Password:${props.rowData.password}`)
     }
     return (
         <div className={classes._tourdetailbar} >
             {props.name === 'callicon' ?
                 <div className={classes._codetext}>
-                    <span className={classes._codedetail}>Mobile:</span> <span className={classes._codevalue}>762342837462</span>
+                    <span className={classes._codedetail}>Mobile:</span> <span className={classes._codevalue}>{props.rowData.driver_phone}</span>
                 </div>
                 :
                 <div className={classes._codetext}>

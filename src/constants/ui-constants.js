@@ -68,7 +68,7 @@ export const PAST_DELIVERIES_TABLE_COLUMNS = [
 
 export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   return [
-    { title: 'Order id', render: rowData => <span style={{ fontSize: '15px', fontWeight: 500 }}>T{rowData.tableData.id + 1}</span> },
+    { title: 'Order id', render: rowData => <span style={{ fontSize: '15px', fontWeight: 500 }}>T{rowData.Tour.id}</span> },
     { title: 'Description', field: 'Tour.name' },
     { title: '', render: rowData => <span style={{ color: '#6F9CEB' }}> {rowData.orders.length}<span style={{ marginLeft: '15px' }}>{ } New Orders</span></span> },
     { title: '', field: '' },
@@ -109,9 +109,14 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'DriversName', field: 'driver_name' },
     {
       title: 'call', render: rowData =>
-        <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
-          <CallIcon className={'hovericon'} />
-        </Tooltip>
+        <>
+          {rowData.driver_name !== null ?
+            <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
+              <CallIcon className={'hovericon'} />
+            </Tooltip>
+            :
+            <CallIcon className={'disabled-btn'} disabled={true} />}
+        </>
     },
     {
       title: 'key', render: rowData =>
