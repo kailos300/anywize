@@ -109,9 +109,14 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
     { title: 'DriversName', field: 'driver_name' },
     {
       title: 'call', render: rowData =>
-        <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
-          <CallIcon className={'hovericon'} />
-        </Tooltip>
+        <>
+          {rowData.driver_name !== null ?
+            <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
+              <CallIcon className={'hovericon'} />
+            </Tooltip>
+            :
+            <CallIcon className={'disabled-btn'} disabled={true} />}
+        </>
     },
     {
       title: 'key', render: rowData =>

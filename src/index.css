@@ -289,7 +289,9 @@ border           : 1px solid #6F9CEB;
   .hovericon:hover{
     color: #6F9CEB !important;
   }
-
+.disabled-btn{
+  cursor: not-allowed !important;
+}
   .owl-prev, .owl-next {
     width: 15px;
     height: 100px;
