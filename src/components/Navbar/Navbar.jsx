@@ -57,7 +57,6 @@ const Navbar = (props) => {
 
   return (
     <header className={classes._container}>
-      {console.log(props, "props")}
       <Link to={PATHS.tours.current}>
         <img className={classes._img} src={logo} alt="anywize logo" />
       </Link>
@@ -76,7 +75,6 @@ const Navbar = (props) => {
             component={NavLink}
             to={item.path}
           >
-            {console.log(item.name, "item.name")}
             <ListItemText className={classes._nomargin}>
               {item.name === 'Settings' ? < SettingsIcon className={'_settingicon'} /> : t(item.name)}
             </ListItemText>

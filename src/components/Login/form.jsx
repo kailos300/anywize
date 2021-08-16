@@ -9,12 +9,16 @@ import { Input, Password } from "../Shared/mui-formik-inputs";
 import { makeStyles } from "@material-ui/core/styles";
 
 const styles = makeStyles((theme) => ({
+
   formInput: {
     background: "rgba(150, 147, 147, 0.1)",
     borderRadius: "0px",
     height: "32px",
     color: "#FFFFFF",
     marginBottom: "15px",
+    "& .MuiOutlinedInput-root": {
+      borderRadius: '0px'
+    }
   },
   loginButton: {
     background: "#6F9CEB",
