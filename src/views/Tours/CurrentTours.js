@@ -207,7 +207,7 @@ const CurrentTours = () => {
 					cellStyle: {
 						color: 'white',
 						border: 'none',
-						font: 'normal normal normal 12px/24px Roboto',
+						font: 'normal normal normal 18px/24px Roboto',
 					},
 					rowStyle: rowData => {
 						if (rowData.tableData.id % 2 === 0) {
