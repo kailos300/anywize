@@ -9,7 +9,7 @@ import TableBody from '@material-ui/core/TableBody';
 import EditIcon from '@material-ui/icons/Edit';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
@@ -338,7 +338,7 @@ const OrderList = ({ confirm }) => {
                               </div>
                             </TableCell>
                             <TableCell className={clsx(classes._textalignright, classes._width111)}>
-                              <DeleteIcon className={classes._pointer} style={{ marginRight: '20px' }} onClick={(e) => callbackOnDelete(e, order)} />
+                              <DeleteSharpIcon className={classes._pointer} style={{ marginRight: '20px', color: '#ADADAD' }} onClick={(e) => callbackOnDelete(e, order)} />
                             </TableCell>
                           </TableRow>
                         </TableBody>
