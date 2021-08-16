@@ -81,7 +81,7 @@ const RoutesMap = () => {
     }
 
     clearTimeout(timeout.current);
-    timeout.current = setTimeout(() => refreshSelected(), 10000);
+    timeout.current = setTimeout(() => refreshSelected(), 30000);
   }, [selectedRoutes, initialFetch]);
 
   const onRouteSelect = async (route) => {
@@ -134,6 +134,7 @@ const RoutesMap = () => {
               <MapSidebar
                 routes={routes.filter((r) => !selected.includes(r.id))}
                 selectedRoutes={selectedRoutes}
+                selectedRoutesIds={selected}
                 onSelect={onRouteSelect}
                 onRemove={onRouteRemove}
                 highlightRoute={highlightRoute}

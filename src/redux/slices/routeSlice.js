@@ -51,6 +51,8 @@ export const getRoute = (id, detail) => async (dispatch) => {
 	try {
 		const res = await coreApi.fetch(url);
 		dispatch(setRoute(res));
+
+		return res;
 	} catch (err) {
 		console.log(err);
 	} finally {
@@ -80,7 +82,7 @@ export const getCurrentRoutes = () => async (dispatch) => {
 	dispatch(setRouteLoading());
 	try {
 		const routes = await coreApi.fetch(`${baseUrl}?ended=0`);
-		console.log(routes, "routes")
+
 		const newData = routes.map((data) => {
 			let path = []
 			data.pathway.map((item) => item.Orders.map((innerItem) => { path.push(innerItem) }))

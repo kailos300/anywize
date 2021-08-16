@@ -9,6 +9,7 @@ const MAPBOX_MAP_STYLE = process.env.REACT_APP_MAPBOX_MAP_STYLE;
 
 export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
   const ref = useRef(null);
+  const [total, setTotal] = useState(0);
   const [viewport, setViewport] = useState({
     width: '100%',
     height: 'calc(100vh - 80px)',
@@ -22,7 +23,7 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
   };
 
   useEffect(() => {
-    if (routes.length) {
+    if (routes.length && routes.length !== total) {
       let latitude = routes[0].pathway[0].latitude;
       let longitude = routes[0].pathway[0].longitude;
 
@@ -33,6 +34,7 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
         longitude = last.location.coordinates[0];
       }
 
+      setTotal(routes.length);
       setViewport({
         ...viewport,
         latitude,
@@ -41,7 +43,7 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
         transitionInterpolator: new FlyToInterpolator(),
       });
     }
-  }, [routes]);
+  }, [routes, total]);
 
   const layerStyle = {
     id: 'line',
