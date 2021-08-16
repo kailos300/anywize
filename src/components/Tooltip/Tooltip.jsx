@@ -59,7 +59,7 @@ const useStyles = makeStyles({
     _pointer: {
         cursor: 'pointer'
     },
-    _width111: '111px',
+    _width111: '111px ',
     _fontsize12: {
         fontSize: '12px',
         cursor: 'pointer'
