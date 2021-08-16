@@ -258,7 +258,7 @@ const CurrentTours = () => {
 													filledBackground="#6F9CEB"
 													unfilledBackground=""
 												>
-													{rowData.Orders.map((data, index) => (
+													{rowData.paths.map((data, index) => (
 														<Step transition="scale">
 															{({ accomplished }) => (
 																<div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
