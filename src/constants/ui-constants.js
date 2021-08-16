@@ -87,7 +87,7 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
 export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
-      title: 'icon', render: rowData => <div>
+      title: 'icon', render: rowData => <div style={{ display: 'flex' }}>
         <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }} />
         <MapIcon style={{ color: '#ADADAD' }} />
       </div>

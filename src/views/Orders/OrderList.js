@@ -177,7 +177,8 @@ const OrderList = ({ confirm }) => {
     () => addHandler(),
     (e, rowData) => editHandler(rowData),
     () => startTourCheck(),
-    () => startTour()
+    () => startTour(),
+    t
   );
   const addHandler = () => {
     history.push(PATHS.orders.add);
