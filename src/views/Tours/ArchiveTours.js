@@ -244,21 +244,21 @@ const ArchiveTours = () => {
 											<ProgressBar
 												className={'margin-30'}
 												percent={100}
-												width={`${(rowData.Orders.length - 1) * 10}%`}
+												width={`${(rowData.pathway.length - 1) * 10}%`}
 												height={2}
 												filledBackground="#6F9CEB"
 												unfilledBackground=""
 											>
-												{rowData.Orders.map((data, index) => <Step transition="scale">
+												{rowData.pathway.map((data, index) => <Step transition="scale">
 													{({ accomplished }) => (
 														<div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
 															<div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
-															<div style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
+															<div style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }} className={data.Orders.every((o) => o.delivered_at) ? 'ball' : 'ball-open'}></div>
 															<div style={{
 																position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
 																whiteSpace: 'nowrap',
 																overflow: 'hidden',
-															}}>{data.description}</div>
+															}}>{data.alias}</div>
 														</div>
 													)}
 												</Step>
