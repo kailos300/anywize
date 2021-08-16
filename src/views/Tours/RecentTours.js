@@ -17,6 +17,7 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import { CURRENT_TOURS_COLUMNS } from "constants/ui-constants"
 import { getColumns } from "util/table-utils";
 import { mapTableData } from "util/helpers";
+import Loading from 'components/Shared/loading';
 
 //Actions
 import { selectCompleted, selectRouteStatus, getFinisedRoutes } from 'redux/slices/routeSlice';
@@ -180,7 +181,7 @@ const RecentTours = () => {
 		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 		return arr;
 	};
-	if (loading) return <div className={clsx(classes._container, '')}><div className="loading">Loading..</div></div>;
+	if (loading) return <Loading />;
 
 	return (
 		<div className={clsx(classes._container, '')}>
@@ -197,7 +198,7 @@ const RecentTours = () => {
 					cellStyle: {
 						color: 'white',
 						border: 'none',
-						font: 'normal normal normal 12px/24px Roboto',
+						font: 'normal normal normal 18px/24px Roboto',
 					},
 					rowStyle: rowData => {
 						if (rowData.tableData.id % 2 === 0) {
@@ -241,22 +242,22 @@ const RecentTours = () => {
 											<ProgressBar
 												className={'margin-30'}
 												percent={100}
-												width={`${(rowData.Orders.length - 1) * 10}%`}
+												width={`${(rowData.pathway.length - 1) * 10}%`}
 												height={2}
 												filledBackground="#6F9CEB"
 												unfilledBackground=""
 											>
 												{
-													rowData.Orders.map((data, index) => <Step transition="scale">
+													rowData.pathway.map((data, index) => <Step transition="scale">
 														{({ accomplished }) => (
 															<div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
 																<div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
-																<div style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }} className={data.delivered_at !== null ? 'ball' : 'ball-open'}></div>
+																<div style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }} className={data.Orders.every((o) => o.delivered_at) ? 'ball' : 'ball-open'}></div>
 																<div style={{
 																	position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
 																	whiteSpace: 'nowrap',
 																	overflow: 'hidden',
-																}}>{data.description}</div>
+																}}>{data.alias}</div>
 															</div>
 														)}
 													</Step>

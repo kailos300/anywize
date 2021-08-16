@@ -62,8 +62,12 @@ const useStyles = makeStyles({
       border: 'none',
       color: 'white',
       fontSize: '12px',
-      width: 'unset'
+      width: 'unset !important'
+
     },
+    // '& .MuiTableCell-root:nth-last-child(2)': {
+    //   width: 'unset !important'
+    // },
     '& .MuiTableSortLabel-root:hover': {
       color: '#F5F5F5',
     },
@@ -111,16 +115,28 @@ const useStyles = makeStyles({
     width: '150px !important',
   },
   _edit: {
-    background: '#6F9CEB',
+    background: '#6F9CEB ',
     borderRadius: '50%',
     padding: '2px',
     width: '13px',
     height: '13px',
+    position: 'relative',
+    top: "-2px",
   },
   _pointer: {
     cursor: 'pointer'
   },
   _width111: '111px',
+  _panel: {
+    "& .MuiTableCell-root:nth-child(2)": {
+      width: '160px !important'
+
+    },
+    "& .MuiTableCell-root:nth-child(3)": {
+      width: '150px !important'
+
+    },
+  }
 });
 
 const tableTitle = 'ORDERS';
@@ -161,7 +177,8 @@ const OrderList = ({ confirm }) => {
     () => addHandler(),
     (e, rowData) => editHandler(rowData),
     () => startTourCheck(),
-    () => startTour()
+    () => startTour(),
+    t
   );
   const addHandler = () => {
     history.push(PATHS.orders.add);
@@ -308,7 +325,7 @@ const OrderList = ({ confirm }) => {
               return (
                 <>
                   {rowData.orders.map((order, i) =>
-                    <TableContainer className={clsx(rowData.tableData.id % 2 === 0 ? classes._1F1F1F : classes._525252)} key={i}>
+                    <TableContainer className={clsx(rowData.tableData.id % 2 === 0 ? classes._1F1F1F : classes._525252, classes._panel)} key={i}>
                       <Table>
                         <TableBody>
                           <TableRow>

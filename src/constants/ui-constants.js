@@ -87,26 +87,37 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
 export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
-      title: 'icon', render: rowData => <div>
+      title: 'icon', render: rowData => <div style={{ display: 'flex' }}>
         <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }} />
         <MapIcon style={{ color: '#ADADAD' }} />
       </div>
     },
-    { title: 'date', render: rowData => rowData.start_date !== null ? moment(rowData.start_date).format('DD.MM.YYYY HH:mm') : '' },
+    {
+      title: 'date', render:
+        rowData => rowData.start_date !== null ?
+          <>
+            <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>
+              {moment(rowData.start_date).format('DD.MM.YYYY')}</span>
+            <span style={{ marginLeft: '15px', font: 'normal normal normal 18px/24px Roboto', color: '#F5F5F5' }}>
+              {moment(rowData.start_date).format('HH:mm')}
+            </span> </> : ''
+    },
     { title: 'tour', field: 'tour' },
-    { title: 'name', render: rowData => rowData.Tour.name },
+    {
+      title: 'name', render: rowData => rowData.Tour.name,
+    },
     {
       title: 'progress', render: rowData => {
         if (rowData.progress === 'Complete') {
-          return <span style={{ color: '#6F9CEB' }}>{rowData.progress}</span>
+          return <span style={{ color: '#6F9CEB', font: 'normal normal bold 18px/24px Roboto' }}>{rowData.progress}</span>
         }
         else {
-          return <span>{rowData.progress}</span>
+          return <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.progress}</span>
         }
       }
     },
     { title: 'noOfOrders', render: rowData => `${rowData.Orders.filter((o) => o.delivered_at).length} / ${rowData.Orders.length}` },
-    { title: 'DriversName', field: 'driver_name' },
+    { title: 'DriversName', field: 'driver_name', render: rowData => <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.driver_name}</span> },
     {
       title: 'call', render: rowData =>
         <>

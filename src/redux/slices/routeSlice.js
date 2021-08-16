@@ -82,13 +82,9 @@ export const getCurrentRoutes = () => async (dispatch) => {
 	dispatch(setRouteLoading());
 	try {
 		const routes = await coreApi.fetch(`${baseUrl}?ended=0`);
-
 		const newData = routes.map((data) => {
-			let path = []
-			data.pathway.map((item) => item.Orders.map((innerItem) => { path.push(innerItem) }))
 			return {
 				...data,
-				paths: path,
 				is_favourite: false,
 				progress: 'In Progress'
 			}
@@ -109,8 +105,6 @@ export const getFinisedRoutes = () => async (dispatch) => {
 			return data.Orders.every((o) => o.delivered_at);
 		});
 		const newData = update.map((data) => {
-			let path = []
-			data.pathway.map((item) => item.Orders.map((innerItem) => { path.push(innerItem) }))
 			return {
 				...data,
 				is_favourite: false,
@@ -135,8 +129,6 @@ export const getArchivedRoutes = () => async (dispatch) => {
 			}
 		})
 		let newData = update.map((data) => {
-			let path = []
-			data.pathway.map((item) => item.Orders.map((innerItem) => { path.push(innerItem) }))
 			return {
 				...data,
 				is_favourite: false,

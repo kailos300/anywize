@@ -13,12 +13,12 @@ export const getColumns = (columns, t) => {
 };
 
 
-export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler, startTourCheck, startTour) => {
+export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler, startTourCheck, startTour, t) => {
   let actions = [];
   if (tableTitle === 'ORDERS') {
     actions.push(
       {
-        icon: () => { return (<><span style={{ fontSize: '16px', fontWeight: 'normal', color: startTourCheck() ? '#6F9CEB' : '#ADADAD' }}>Start Tour/s</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: startTourCheck() ? '#6F9CEB' : '#ADADAD', height: '20px', width: '20px', marginRight: '15px' }} /></>) },
+        icon: () => { return (<><span style={{ fontSize: '16px', fontWeight: 'normal', color: startTourCheck() ? '#6F9CEB' : '#ADADAD' }}>{t('Start Tour/s')}</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: startTourCheck() ? '#6F9CEB' : '#ADADAD', height: '20px', width: '20px', marginRight: '15px' }} /></>) },
         tooltip: 'Start Tours',
         iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
         isFreeAction: true,

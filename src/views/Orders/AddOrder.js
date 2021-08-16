@@ -12,6 +12,8 @@ import { setShowMessage } from "redux/slices/uiSlice";
 
 // Components
 import OrderForm from "components/Orders/form";
+import Loading from 'components/Shared/loading';
+
 
 const currentAction = "ADD";
 
@@ -40,7 +42,7 @@ const AddOrder = () => {
     history.push(PATHS.orders.root);
   };
 
-  if (loading) return <div>Loading..</div>;
+  if (loading) return <Loading />;
   return (
     <OrderForm
       onSubmit={onSubmit}
