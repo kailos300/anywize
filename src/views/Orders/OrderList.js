@@ -62,7 +62,7 @@ const useStyles = makeStyles({
       border: 'none',
       color: 'white',
       fontSize: '12px',
-      width: 'unset !important'
+      width: 'unset'
     },
     '& .MuiTableSortLabel-root:hover': {
       color: '#F5F5F5',
@@ -103,6 +103,12 @@ const useStyles = makeStyles({
   _textalignright: {
     // textAlign: 'right',
 
+  },
+  _row1: {
+    width: '160px !important'
+  },
+  _row2: {
+    width: '150px !important',
   },
   _edit: {
     background: '#6F9CEB',
@@ -309,10 +315,10 @@ const OrderList = ({ confirm }) => {
                             <TableCell className={classes._textalignright}>
                               {' '}
                             </TableCell>
-                            <TableCell className={classes._textalignright}>
+                            <TableCell className={clsx(classes._textalignright, classes._row1)}>
                               {order.Customer.name}
                             </TableCell>
-                            <TableCell className={classes._textalignright}>
+                            <TableCell className={clsx(classes._textalignright, classes._row2)}>
                               {order.number}
                             </TableCell>
                             <TableCell className={classes._textalignright}>
