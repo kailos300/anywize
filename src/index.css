@@ -299,7 +299,7 @@ border           : 1px solid #6F9CEB;
     top: 50%;
     color: white !important;
     transform: translateY(-50%);
-    display: block !important;
+    display: block !important;  
     border:0px solid black;
 }
 .owl-prev { left: -25px; }

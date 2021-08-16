@@ -68,7 +68,7 @@ export const PAST_DELIVERIES_TABLE_COLUMNS = [
 
 export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   return [
-    { title: 'Order id', render: rowData => <span style={{ fontSize: '15px', fontWeight: 500 }}>T{rowData.tableData.id + 1}</span> },
+    { title: 'Order id', render: rowData => <span style={{ fontSize: '15px', fontWeight: 500 }}>T{rowData.Tour.id}</span> },
     { title: 'Description', field: 'Tour.name' },
     { title: '', render: rowData => <span style={{ color: '#6F9CEB' }}> {rowData.orders.length}<span style={{ marginLeft: '15px' }}>{ } New Orders</span></span> },
     { title: '', field: '' },
