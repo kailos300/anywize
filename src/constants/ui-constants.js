@@ -122,7 +122,7 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
       title: 'call', render: rowData =>
         <>
           {rowData.driver_name !== null ?
-            <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
+            <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive leaveDelay={2022220}>
               <CallIcon className={'hovericon'} />
             </Tooltip>
             :

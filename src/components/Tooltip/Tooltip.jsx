@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import copy from '../../assets/img/copy.svg'
 const useStyles = makeStyles({
     _tourdetailbar: {
         background: '#93B5F0',
@@ -87,7 +88,7 @@ export default function TooltipBar(props) {
                     </div>
                 </div>
             }
-            <FileCopyOutlinedIcon onClick={copyCode} style={{ color: 'black', cursor: 'pointer' }} />
+            <img src={copy} onClick={copyCode} style={{ color: 'black', cursor: 'pointer' }} />
         </div>
     )
 }
