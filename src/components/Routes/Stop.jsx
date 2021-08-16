@@ -18,6 +18,8 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 
+const URL = process.env.REACT_APP_API;
+
 const useStyles = makeStyles({
 	_box: {
 		color: 'white',
@@ -51,7 +53,11 @@ const useStyles = makeStyles({
 
 		'& svg': {
 			marginRight: '10px',
-		}
+		},
+
+		'& a': {
+			color: '#6F9CEB',
+		},
 	},
 	_galleryheading: {
 		color: '#F5F5F5',
@@ -135,6 +141,18 @@ const Stopview = ({ route, customer, onClose }) => {
 										<NoteAddRoundedIcon />&nbsp;
 										<Typography>
 											{moment(stop.time).format('DD.MM.YYYY HH:mm')}
+											{
+												!stop.goods_back && (
+													<>
+														<br />
+
+														<a href={`${URL}routes/${route.id}/proof-of-delivery/${customer.id}?taira=${localStorage.getItem('token')}`}>
+															{t('proof of delivery')}
+														</a>
+													</>
+												)
+											}
+
 										</Typography>
 									</div>
 									<div className={classes._routedetails}>

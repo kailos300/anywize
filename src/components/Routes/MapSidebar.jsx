@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import MapIcon from '@material-ui/icons/Map';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 
 const styles = makeStyles((theme) => ({
@@ -33,6 +34,7 @@ const styles = makeStyles((theme) => ({
 export default ({
   routes,
   selectedRoutes,
+  selectedRoutesIds,
   onSelect,
   onRemove,
   highlightRoute,
@@ -40,6 +42,17 @@ export default ({
 }) => {
   const classes = styles();
   const { t } = useTranslation();
+  const [loading, setLoading] = useState([]);
+
+  useEffect(() => {
+    setLoading((l) => l.filter((i) => !selectedRoutesIds.includes(i)));
+  }, [selectedRoutesIds]);
+
+  const handleOnSelect = (route) => {
+    setLoading(loading.concat(route.id));
+
+    return onSelect(route);
+  };
 
   return (
     <Box>
@@ -81,11 +94,18 @@ export default ({
               className={classes._box}
               style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }}
               key={i}
-              onClick={() => onSelect(route)}
+              onClick={() => handleOnSelect(route)}
             >
               <MapIcon />
-              <Typography className={classes.textWhite} variant="body2">
+              <Typography className={classes.textWhite} variant="body2" component="div">
                 <Box component="span" mx={3}>{route.uuid}</Box> {route.Tour.name}
+                {
+                  loading.includes(route.id) && (
+                    <Box component="span" ml={3} textAlign="right">
+                      <CircularProgress size={20} color="secondary" />
+                    </Box>
+                  )
+                }
               </Typography>
             </Box>
           );

@@ -42,6 +42,15 @@ class Api {
         return response;
       },
       (error) => {
+        if (!error.response) {
+          store.dispatch(setShowMessage({
+            description: 'The server is taking too long to respond. Please try again',
+            type: 'error',
+          }));
+
+          throw error;
+        }
+
         if (error.response.status === 401) {
           storage.clear();
 
