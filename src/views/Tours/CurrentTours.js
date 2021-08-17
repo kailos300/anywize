@@ -268,7 +268,10 @@ const CurrentTours = () => {
 
 																	<div onClick={() => redirectView(data, rowData)} style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.Orders.every((o) => o.delivered_at) ? 'ball' : 'ball-open'}></div>
 																	<div style={{
-																		position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
+																		position: 'absolute',
+																		marginTop: '5px',
+																		width: '100px',
+																		textOverflow: 'ellipsis',
 																		whiteSpace: 'nowrap',
 																		overflow: 'hidden',
 																	}}>{data.alias}</div>
