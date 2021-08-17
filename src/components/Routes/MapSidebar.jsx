@@ -76,6 +76,7 @@ export default ({
             >
               <MapIcon className={classes._6F9CEB} />
               <Typography className={classes.textWhite} variant="body2">
+                {console.log(route.uuid, "route.uuid")}
                 <Box component="span" mx={3}>{route.uuid}</Box> {route.Tour.name}
               </Typography>
             </Box>

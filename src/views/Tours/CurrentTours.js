@@ -194,6 +194,7 @@ const CurrentTours = () => {
 	}
 	return (
 		<div className={clsx(classes._container, '')}>
+			{console.log(tabledata)}
 			<MaterialTable
 				tableRef={tableRef}
 				data={mapTableData(tabledata)}

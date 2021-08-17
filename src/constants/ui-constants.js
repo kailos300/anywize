@@ -1,11 +1,12 @@
 import MapIcon from '@material-ui/icons/Map';
 import StarRateIcon from '@material-ui/icons/StarRate';
-import CallIcon from '@material-ui/icons/Call';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import CallSharpIcon from '@material-ui/icons/CallSharp';
+import VpnKeySharpIcon from '@material-ui/icons/VpnKeySharp';
 import TooltipBar from 'components/Tooltip';
 import Tooltip from '@material-ui/core/Tooltip';
 import moment from 'moment';
 import { PATHS } from 'util/appConstants';
+
 
 export const MID_NAVIGATION_ROUTES = [
   { name: 'Customers', path: PATHS.customers.root },
@@ -102,17 +103,17 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
               {moment(rowData.start_date).format('HH:mm')}
             </span> </> : ''
     },
-    { title: 'tour', field: 'tour' },
+    { title: 'tour', field: 'tour', render: rowData => <span >T.{rowData.uuid}</span> },
     {
       title: 'name', render: rowData => rowData.Tour.name,
     },
     {
       title: 'progress', render: rowData => {
         if (rowData.progress === 'Complete') {
-          return <span style={{ color: '#6F9CEB', font: 'normal normal bold 18px/24px Roboto' }}>{rowData.progress}</span>
+          return <span style={{ color: '#6F9CEB', font: 'normal normal normal 18px/24px Roboto' }}>{rowData.progress}</span>
         }
         else {
-          return <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.progress}</span>
+          return <span style={{ font: 'normal normal normal 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.progress}</span>
         }
       }
     },
@@ -122,17 +123,17 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
       title: 'call', render: rowData =>
         <>
           {rowData.driver_name !== null ?
-            <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
-              <CallIcon className={'hovericon'} />
+            <Tooltip title={<TooltipBar name={'CallSharpIcon'} rowData={rowData} />} placement='top' arrow interactive >
+              <CallSharpIcon className={'hovericon'} />
             </Tooltip>
             :
-            <CallIcon className={'disabled-btn'} disabled={true} />}
+            <CallSharpIcon className={'disabled-btn'} disabled={true} />}
         </>
     },
     {
       title: 'key', render: rowData =>
         <Tooltip title={<TooltipBar name={'vpnicon'} rowData={rowData} />} placement='top' arrow interactive>
-          <VpnKeyIcon className={'hovericon'} />
+          <VpnKeySharpIcon className={'hovericon'} />
         </Tooltip>
     },
   ]
