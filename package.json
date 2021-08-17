@@ -17,7 +17,7 @@
     "formik": "^2.2.9",
     "i18next": "^20.3.1",
     "iso-3166-country-list": "^0.2.0",
-    "mapbox-gl": "^2.3.1",
+    "mapbox-gl": "^2.4.1",
     "mapbox-gl-directions": "^3.0.3",
     "material-table": "^1.69.3",
     "material-ui-search-bar": "^1.0.0",
@@ -36,6 +36,7 @@
     "redux-thunk": "^2.3.0",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^1.0.1",
+    "worker-loader": "^3.0.8",
     "yup": "^0.32.9",
     "zip-to-city": "^0.1.1",
     "zipcodes": "^8.0.0"
