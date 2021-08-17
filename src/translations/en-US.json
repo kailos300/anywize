@@ -64,6 +64,7 @@
   "Time": "Time",
   "Order Number": "Order Number",
   "Order Description": "Order Description",
-  "Met Customer": "Met Customerww",
-  "Create Route(s) for the selected Orders from": "Create Route(s) for the selected Orders from"
+  "Met Customer": "Met Customer",
+  "Create Route(s) for the selected Orders from": "Create Route(s) for the selected Orders from",
+  "Are you sure?": "Are you sure?"
 }
