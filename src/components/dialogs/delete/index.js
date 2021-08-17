@@ -6,7 +6,17 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useTranslation } from "react-i18next";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles({
+  _dialog: {
+    "& .MuiPaper-root": {
+      backgroundColor: '#525252', borderRadius: '0px', color: 'white',
+      fontFamily: 'roboto !important',
+
+    }
+  }
+});
 const defaultOptions = {
   description: "",
   confirmationText: "Yes",
@@ -18,6 +28,7 @@ const defaultOptions = {
 
 const withConfirm = (WrappedComponent) => (props) => {
   const { t } = useTranslation("common");
+  const classes = useStyles();
   const [onConfirm, setOnConfirm] = useState(null);
   const [options, setOptions] = useState(defaultOptions);
   const {
@@ -56,6 +67,7 @@ const withConfirm = (WrappedComponent) => (props) => {
     <Fragment>
       <WrappedComponent {...props} confirm={confirm} />
       <Dialog
+        className={classes._dialog}
         fullWidth
         {...dialogProps}
         open={!!onConfirm}
@@ -65,17 +77,18 @@ const withConfirm = (WrappedComponent) => (props) => {
         {description && (
           <DialogContent>
             <Typography component="p"
-              style={{ fontSize: "18px", color: "rgba(0,0,0,0.6)", margin: 0 }}
+              style={{ fontSize: "18px", color: "white", margin: 0, fontFamily: 'roboto !important' }}
               dangerouslySetInnerHTML={{ __html: t(description) }}
             />
           </DialogContent>
         )}
 
         <DialogActions>
-          <Button style={{ color: "red" }} onClick={handleCancel}>
+          <Button style={{ color: "#6F9CEB", fontFamily: 'roboto !important' }} onClick={handleCancel}>
             {t(cancellationText)}
           </Button>
           <Button
+            style={{ color: "#6F9CEB", fontFamily: 'roboto !important' }}
             color="secondary"
             className="anti-bootstrap-button"
             onClick={handleConfirm}

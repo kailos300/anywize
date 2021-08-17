@@ -57,13 +57,14 @@
   "Current tours": "Aktuelle Touren",
   "Recently finished tours": "Kürzlich beendete Touren",
   "Archive tours": "Archiv Touren",
-  "Start Tour/s": "Start Tour/s",
-  "On map": "On map",
-  "All tours": "All tours",
-  "Date": "Date",
-  "Time": "Time",
-  "Order Number": "Order Number",
-  "Order Description": "Order Description",
-  "Met Customer": "Met Customerww",
-  "Create Route(s) for the selected Orders from": "Create Route(s) for the selected Orders from"
+  "Start Tour/s": "Tour/en Starten",
+  "On map": "Auf Karte",
+  "All tours": "Alle Touren",
+  "Date": "Datum",
+  "Time": "Uhrzeit",
+  "Order Number": "Auftragsnummer",
+  "Order Description": "Auftragsbeschreibung",
+  "Met Customer": "Kunden angetroffen",
+  "Create Route(s) for the selected Orders from": "Create Route(s) for the selected Orders from",
+  "Are you sure?": "Are you sure?"
 }
