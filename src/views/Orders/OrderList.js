@@ -35,6 +35,8 @@ import { createRoute } from 'redux/slices/routeSlice';
 import Loading from 'components/Shared/loading';
 import withConfirm from 'components/dialogs/delete';
 
+import pen from '../../assets/img/pen.svg';
+
 const useStyles = makeStyles({
   _container: {
     backgroundColor: '#121212',
@@ -121,7 +123,11 @@ const useStyles = makeStyles({
     width: '13px',
     height: '13px',
     position: 'relative',
-    top: "-2px",
+    top: "-7px",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    float: 'right', marginRight: 'unset !important',
   },
   _pointer: {
     cursor: 'pointer'
@@ -342,10 +348,13 @@ const OrderList = ({ confirm }) => {
                               {order.description}
                             </TableCell>
                             <TableCell className={classes._textalignright}>
-                              <EditIcon onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)} />
+                              {/* <EditIcon onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)} /> */}
+                              <div onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)}>
+                                <img src={pen} style={{ height: '10px' }} />
+                              </div>
                             </TableCell>
                             <TableCell style={{}} className={classes._textalignright}>
-                              <div style={{ textAlign: 'right', marginRight: '8px', marginTop: '-18px' }}>
+                              <div style={{ textAlign: 'right', marginRight: '8px', marginTop: '-20px' }}>
                                 <input
                                   onChange={(e) => {
                                     e.stopPropagation();

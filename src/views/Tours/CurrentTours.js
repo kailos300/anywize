@@ -194,6 +194,7 @@ const CurrentTours = () => {
 	}
 	return (
 		<div className={clsx(classes._container, '')}>
+			{console.log(tabledata)}
 			<MaterialTable
 				tableRef={tableRef}
 				data={mapTableData(tabledata)}
@@ -262,12 +263,15 @@ const CurrentTours = () => {
 														<Step transition="scale">
 															{({ accomplished }) => (
 																<div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
-																	<div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index}</div>
+																	<div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index + 1}</div>
 																	{console.log(data)}
 
 																	<div onClick={() => redirectView(data, rowData)} style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.Orders.every((o) => o.delivered_at) ? 'ball' : 'ball-open'}></div>
 																	<div style={{
-																		position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
+																		position: 'absolute',
+																		marginTop: '5px',
+																		width: '100px',
+																		textOverflow: 'ellipsis',
 																		whiteSpace: 'nowrap',
 																		overflow: 'hidden',
 																	}}>{data.alias}</div>

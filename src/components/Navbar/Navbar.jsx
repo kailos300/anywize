@@ -61,6 +61,7 @@ const Navbar = (props) => {
         <img className={classes._img} src={logo} alt="anywize logo" />
       </Link>
       <List className={classes._nav} component="nav">
+
         {NAVIGATION_ROUTES.map((item, index) => (
           <ListItem
             activeClassName={classes._isactive}
@@ -75,6 +76,10 @@ const Navbar = (props) => {
             component={NavLink}
             to={item.path}
           >
+            {console.log(props.checkTourPaths())}
+            {console.log(props.checkPaths())}
+            {console.log(props.checkTourPaths().includes(location.pathname) && item.name === "Tours")}
+            {console.log(props.checkPaths().includes(location.pathname) && item.name === "Master Data")}
             <ListItemText className={classes._nomargin}>
               {item.name === 'Settings' ? < SettingsIcon className={'_settingicon'} /> : t(item.name)}
             </ListItemText>
