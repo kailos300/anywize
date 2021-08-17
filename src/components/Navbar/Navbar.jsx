@@ -76,10 +76,10 @@ const Navbar = (props) => {
             component={NavLink}
             to={item.path}
           >
-            {/* {console.log(props.checkTourPaths())}
+            {console.log(props.checkTourPaths())}
             {console.log(props.checkPaths())}
             {console.log(props.checkTourPaths().includes(location.pathname) && item.name === "Tours")}
-            {console.log(props.checkPaths().includes(location.pathname) && item.name === "Master Data")} */}
+            {console.log(props.checkPaths().includes(location.pathname) && item.name === "Master Data")}
             <ListItemText className={classes._nomargin}>
               {item.name === 'Settings' ? < SettingsIcon className={'_settingicon'} /> : t(item.name)}
             </ListItemText>
