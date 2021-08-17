@@ -92,6 +92,7 @@ export const Password = (props) => {
           </InputAdornment>
         ),
       }}
+      className={"custom-input"}
       {...rest}
     />
   );
@@ -112,6 +113,7 @@ export const Input = (props) => {
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
       inputProps={{ autoComplete: 'off' }}
+      className={"custom-input"}
       {...rest}
     />
   );
@@ -132,6 +134,7 @@ export const InputOnlyNumbers = (props) => {
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
       inputProps={{ autoComplete: 'off' }}
+      className={"custom-input"}
       onChange={(e) => {
         if (!/^[0-9+-\s]*$/.test(e.target.value)) {
           return;
@@ -150,7 +153,7 @@ export const Select = (props) => {
   const { t } = useTranslation();
 
   return (
-    <FormControl fullWidth margin={props.margin || "none"}>
+    <FormControl fullWidth className={'custom-select-container'} margin={props.margin || "none"} >
       {!!label && <InputLabel>{label || ""}</InputLabel>}
       <MaterialSelect
         margin={margin || "none"}
@@ -158,6 +161,7 @@ export const Select = (props) => {
         value={value || ""}
         fullWidth={true}
         error={!!getErrorForName(errors, name)}
+        className={"custom-select"}
         MenuProps={{
           anchorOrigin: {
             vertical: "bottom",
@@ -197,6 +201,7 @@ export const Textarea = (props) => {
       {...rest}
       multiline={true}
       rows={3}
+      className={"custom-input"}
       inputProps={{ autoComplete: 'off' }}
     />
   );
@@ -233,6 +238,7 @@ export function ColorInput(props) {
       fullWidth={true}
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
+      className={"custom-input"}
       InputProps={{
         readOnly: true,
         endAdornment: (
@@ -339,6 +345,7 @@ export const Autocomplete = ({
             margin="dense"
             error={!!getHelpOrError(null, errors, name, t)}
             helperText={getHelpOrError(help, errors, name, t)}
+            className={"custom-input"}
           />
         )}
         {...(opts.filterOptions ? { filterOptions: opts.filterOptions } : {})}
