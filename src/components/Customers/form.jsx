@@ -259,7 +259,7 @@ const CustomerForm = ({
             value={values.salutation}
             errors={errors}
             options={["Mr", "Mrs", "Ms", "Dr"].map((o) => ({
-              label: o,
+              label: t(o),
               value: o,
             }))}
           />
