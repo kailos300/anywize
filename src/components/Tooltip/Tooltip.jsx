@@ -74,6 +74,7 @@ export default function TooltipBar(props) {
     }
     return (
         <div className={classes._tourdetailbar} >
+            {console.log(props, "props")}
             {props.name === 'callicon' ?
                 <div className={classes._codetext}>
                     <span className={classes._codedetail}>Mobile:</span> <span className={classes._codevalue}>{props.rowData.driver_phone}</span>
