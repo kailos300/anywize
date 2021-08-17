@@ -66,5 +66,21 @@
   "Order Description": "Order Description",
   "Met Customer": "Met Customer",
   "Create Route(s) for the selected Orders from": "Create Route(s) for the selected Orders from",
-  "Are you sure?": "Are you sure?"
+  "Are you sure?": "Are you sure?",
+  "Customer Added Successfully!": "Customer Added Successfully!",
+  "Can't Add! Customer": "Can't Add! Customer",
+  "Edited CUSTOMER Successfully": "Edited CUSTOMER Successfully",
+  "Failed editing customer. Please try again": "Failed editing customer. Please try again",
+  "DELETED CUSTOMER Successfully": "DELETED CUSTOMER Successfully",
+  "Edited ORDER Successfully": "Edited ORDER Successfully",
+  "Failed editing order. Please try again later": "Failed editing order. Please try again later",
+  "DELETED ORDER Successfully": "DELETED ORDER Successfully",
+  "Edited TOUR Successfully": "Edited TOUR Successfully",
+  "Failed editing tour. Please try again later": "Failed editing tour. Please try again later",
+  "DELETED TOUR Successfully": "DELETED TOUR Successfully",
+  "Email or password incorrect": "Email or password incorrect",
+  "Order Added Successfully!": "Order Added Successfully!",
+  "Order Edited Successfully!": "Order Edited Successfully!",
+  "Tour Added Successfully!": "Tour Added Successfully!",
+  "Tour Edited Successfully!": "Tour Edited Successfully!"
 }
