@@ -76,8 +76,7 @@ export default ({
             >
               <MapIcon className={classes._6F9CEB} />
               <Typography className={classes.textWhite} variant="body2">
-                {console.log(route.uuid, "route.uuid")}
-                <Box component="span" mx={3}>{route.uuid}</Box> {route.Tour.name}
+ <Box component="span" mx={3}><b>T{route.uuid}</b></Box> {route.Tour.name
               </Typography>
             </Box>
           );
@@ -99,7 +98,7 @@ export default ({
             >
               <MapIcon />
               <Typography className={classes.textWhite} variant="body2" component="div">
-                <Box component="span" mx={3}>{route.uuid}</Box> {route.Tour.name}
+                <Box component="span" mx={3}><b>T{route.uuid}</b></Box> {route.Tour.name}
                 {
                   loading.includes(route.id) && (
                     <Box component="span" ml={3} textAlign="right">
