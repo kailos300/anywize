@@ -3,9 +3,14 @@ import ReactMapGL, { Source, Marker, Layer, FlyToInterpolator, NavigationControl
 import MarkerHouse from 'assets/markers/house.png';
 import MarkerTruck from 'assets/markers/truck.png';
 import Markers from './Markers';
+import mapboxgl from 'mapbox-gl';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const MAPBOX_API_ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_API_ACCESS_TOKEN;
 const MAPBOX_MAP_STYLE = process.env.REACT_APP_MAPBOX_MAP_STYLE;
+
 
 export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
   const ref = useRef(null);
