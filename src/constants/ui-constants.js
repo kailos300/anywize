@@ -6,6 +6,9 @@ import TooltipBar from 'components/Tooltip';
 import Tooltip from '@material-ui/core/Tooltip';
 import moment from 'moment';
 import { PATHS } from 'util/appConstants';
+import star from '../assets/img/star.svg';
+import startblue from '../assets/img/startblue.svg';
+import map from '../assets/img/map.svg'
 
 
 export const MID_NAVIGATION_ROUTES = [
@@ -89,8 +92,8 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
   return [
     {
       title: 'icon', render: rowData => <div style={{ display: 'flex' }}>
-        <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }} />
-        <MapIcon style={{ color: '#ADADAD' }} />
+        <img src={rowData.is_favourite ? startblue : star} alt={'star.svg'} onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }} />
+        <img src={map} style={{ color: '#ADADAD', marginLeft: '20px' }} />
       </div>
     },
     {
