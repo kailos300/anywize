@@ -221,7 +221,7 @@ const CustomerDetail = () => {
             {t("Salutation")}
           </Typography>
           <Typography className={clsx(classes._detail)} variant="h6">
-            Mr.
+            {t('Mr.')}
           </Typography>
         </div>
         <div>

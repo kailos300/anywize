@@ -169,6 +169,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.name}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -189,6 +190,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.alias}
             errors={errors}
+            required
           />
         </Grid>
       </Grid>
@@ -201,6 +203,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.street}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -211,6 +214,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.street_number}
             errors={errors}
+            required
           />
         </Grid>
       </Grid>
@@ -222,6 +226,7 @@ const CustomerForm = ({
             onChange={customHandleChange}
             value={values.zipcode}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -232,6 +237,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.city}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -243,6 +249,7 @@ const CustomerForm = ({
             value={values.country}
             errors={errors}
             options={countries.map((c) => ({ label: c.name, value: c.code }))}
+            required
           />
         </Grid>
       </Grid>
@@ -295,6 +302,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.phone}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -307,6 +315,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.email}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -337,6 +346,7 @@ const CustomerForm = ({
             value={values.tour_id}
             errors={errors}
             options={tourList.map((o) => ({ label: o.name, value: o.id }))}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -347,6 +357,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.tour_position}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -393,6 +404,7 @@ const CustomerForm = ({
             value={values.latitude}
             errors={errors}
             disabled
+            required
           />
         </Grid>
 
@@ -405,6 +417,7 @@ const CustomerForm = ({
             value={values.longitude}
             errors={errors}
             disabled
+            required
           />
         </Grid>
         <Grid item xs={12}>
