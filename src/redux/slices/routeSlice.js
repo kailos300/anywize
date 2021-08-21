@@ -45,8 +45,8 @@ const routeSlice = createSlice({
 export const { setRoutes, setRouteLoading, setRouteReady, setCompleted, setCurrent, setArchived, setRoute } = routeSlice.actions;
 export default routeSlice.reducer;
 
-export const getRoute = (id, detail) => async (dispatch) => {
-	const url = baseUrl + `/${id}`;
+export const getRoute = (id, allDriverLocations = false) => async (dispatch) => {
+	const url = baseUrl + `/${id}${allDriverLocations ? '?allDriverLocations=1' : ''}`;
 	// dispatch(setRouteLoading());
 	try {
 		const res = await coreApi.fetch(url);
