@@ -214,6 +214,15 @@ border           : 1px solid #6F9CEB;
     cursor: pointer;
     /* background: #6F9CEB; */
   }
+  .red-ball{
+    display: block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #F78D94;
+    border-radius: 50%;
+    background-color: #F78D94;
+    cursor: pointer;
+  }
   .ball-open:hover{
     background: #EBEBEB !important;
     border: 1px solid #EBEBEB !important;

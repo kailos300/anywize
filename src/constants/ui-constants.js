@@ -15,7 +15,6 @@ export const MID_NAVIGATION_ROUTES = [
   { name: 'Customers', path: PATHS.customers.root },
   { name: 'Tours', path: PATHS.tours.root },
 ];
-
 export const TOP_NAVIGATION_ROUTES = [
   { name: 'Maps', path: '/dash' },
   { name: 'Past Deliveries', path: '/dash' },

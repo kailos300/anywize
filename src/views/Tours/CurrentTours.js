@@ -264,9 +264,12 @@ const CurrentTours = () => {
 															{({ accomplished }) => (
 																<div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
 																	<div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index + 1}</div>
-																	{console.log(data)}
+																	{console.log(data.Orders.every((o) => o.delivered_at), data.Orders)}
 
-																	<div onClick={() => redirectView(data, rowData)} style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={data.Orders.every((o) => o.delivered_at) ? 'ball' : 'ball-open'}></div>
+																	<div onClick={() => redirectView(data, rowData)} style={{ background: rowData.tableData.id % 2 == 0 ? ' #1F1F1F ' : '#525252' }} className={
+																		(data.Orders.every((o) => o.delivered_at) && !data.goods_back) ? 'ball' :
+																			(data.Orders.every((o) => o.delivered_at) && data.goods_back) ? 'red-ball' : data.Orders.every((o) => o.delivered_at) ? 'ball-open' : 'ball-open'
+																	}></div>
 																	<div style={{
 																		position: 'absolute',
 																		marginTop: '5px',
