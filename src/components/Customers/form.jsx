@@ -6,14 +6,15 @@ import { useFormik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from "clsx";
 import countries from 'iso-3166-country-list';
-import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
+import SaveSharpIcon from '@material-ui/icons/SaveSharp';
+import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { useHistory, useParams } from 'react-router-dom';
 import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs';
 import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
 import { PATHS } from 'util/appConstants';
 import SelectGeoCoordinates from 'components/Customers/SelectGeoCoordinates';
+
 
 const unzip = require('zip-to-city');
 
@@ -34,11 +35,10 @@ const useStyles = makeStyles({
   },
   _icons: {
     color: '#ADADAD',
-    width: '22px',
-    height: '22px',
     cursor: 'pointer',
     transition: "all 0.3s ease-in-out",
     margin: '0 16px 0 0px',
+    fontSize: '35px'
   },
   _save: {
     "&:hover": {
@@ -149,11 +149,13 @@ const CustomerForm = ({
           {action === "ADD" ? t("New Customer") : t("Edit Customer")}
         </Typography>
         <div>
-          <CloseIcon
+          <CloseSharpIcon
             onClick={closeCustomerHandler}
             className={clsx(classes._icons, classes._close)}
           />
-          <SaveIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
+
+          <SaveSharpIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
+
         </div>
       </div>
       <Typography className={classes._subheading} variant="h5">

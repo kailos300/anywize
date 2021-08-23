@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import SaveIcon from "@material-ui/icons/Save";
-import CloseIcon from "@material-ui/icons/Close";
+import SaveSharpIcon from '@material-ui/icons/SaveSharp';
+import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { useHistory, useParams } from "react-router-dom";
 import clsx from "clsx";
 import { Input } from "../Shared/mui-formik-inputs";
@@ -31,8 +31,7 @@ const useStyles = makeStyles({
   },
   _icons: {
     color: "#ADADAD",
-    width: "22px",
-    height: "22px",
+    fontSize: '35px',
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
     margin: '0 16px 0 0px',
@@ -107,14 +106,14 @@ const TourForm = ({ initialValues, onSubmit, action }) => {
         </Typography>
         <div className={classes._dflex}>
           <div className={classes._dflex}>
-            <CloseIcon
+            <CloseSharpIcon
               onClick={closeTourHandler}
               title="close"
               className={clsx(classes._icons, classes._close)}
             />
           </div>
           <div className={classes._dflex}>
-            <SaveIcon
+            <SaveSharpIcon
               onClick={handleSubmit}
               className={clsx(classes._icons, classes._save)}
             />
