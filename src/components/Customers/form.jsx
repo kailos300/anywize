@@ -56,6 +56,7 @@ const useStyles = makeStyles({
     font: 'normal normal 500 22px/32px Roboto',
     color: ' #121212',
     marginTop: '44px',
+    marginBottom: '40px',
   },
 });
 const CustomerForm = ({
