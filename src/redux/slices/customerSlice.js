@@ -111,6 +111,8 @@ export const editCustomer = (id, payload) => async (dispatch) => {
         type: 'success',
       })
     );
+
+    return res;
   } catch (err) {
     dispatch(
       setShowMessage({

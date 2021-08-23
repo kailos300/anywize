@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+body {
+  background-color: #121212;
+}
+
 #root,
 .app-container,
 body,
@@ -21,41 +25,7 @@ html {
   margin: 0 !important;
   padding: 0 !important;
 }
-/* .custom-table-styles .MuiPaper-elevation2 {
-  box-shadow:none !important;
-} */
-/* .custom-table-styles span {
-    white-space: nowrap !important;
-  }
-  .custom-table-styles table {
-    margin: 20px !important;
-    width: 98% !important;
-    border-collapse: collapse;
-  }
-  .custom-table-styles  thead{
-   text-align: left;
-   background: black;
- } */
-/* .MuiTableHead-root{
-   background: black !important;
- } */
-/* .custom-table-styles  td{
-cursor: pointer;
-font-size: 12px !important;
- }
- .custom-table-styles .MuiPaper-root{
-   background: black;
- }
- .custom-table-styles tr th{
-   background: black;
- }
- .custom-table-styles th {
-    padding: 0px 16px !important;
-    height: 50px;
-    white-space: nowrap !important;
 
-    font-size: 12px;
-  } */
 .custom-table-styles > * tr:nth-child(even) td {
   background-color: #1f1f1f !important;
 }
@@ -108,11 +78,7 @@ font-size: 12px !important;
 .MuiFormControl-marginNormal {
   margin-bottom: 3px !important;
 }
-label,
-input,
-select {
-  font-size: 12px !important;
-}
+
 .loading {
   position: absolute;
   left: 50%;
@@ -311,29 +277,4 @@ border           : 1px solid #6F9CEB;
 }
 .owl-prev:hover , .owl-next:hover{
   background: unset !important;
-}
-
-
-.custom-input {
-    background: #EBEBEB !important;
-}
-
-.custom-input label, .custom-select-container label {
-    padding-left: 16px !important;
-}
-
-.custom-input .MuiInputBase-root, .custom-select-container .MuiInputBase-root {
-    padding-left: 12px !important;
-}
-
-.custom-select-container {
-    background: #EBEBEB;
-    margin-top: 9px !important;
-    height: 40px;
-}
-
-.custom-select {
-    background: #EBEBEB !important;
-    margin-top: 12px !important;
-    font-size: 12px !important;
 }

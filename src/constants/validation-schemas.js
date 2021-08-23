@@ -22,6 +22,9 @@ export const CustomerSchema = yup.object().shape({
   latitude: yup.string().required("Required"),
   longitude: yup.string().required("Required"),
   deposit_agreement: yup.string().required('Required'),
+  contact_salutation: yup.string().required('Required'),
+  contact_name: yup.string().required('Required'),
+  contact_surname: yup.string().required('Required'),
   keybox_code: yup.mixed().when('deposit_agreement', {
     is: 'KEY_BOX',
     then: yup.string().required('Required'),

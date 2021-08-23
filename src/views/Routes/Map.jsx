@@ -12,6 +12,7 @@ import {
   getCurrentRoutes,
   getRoute,
 } from 'redux/slices/routeSlice';
+import { selectUser } from 'redux/slices/userSlice';
 import MapSidebar from 'components/Routes/MapSidebar';
 import Map from 'components/Routes/Map';
 import Stop from 'components/Routes/Stop';
@@ -31,18 +32,12 @@ const RoutesMap = () => {
   const timeout = useRef(null);
   const routes = useSelector(selectCurrent);
   const loading = useSelector(selectRouteStatus);
+  const user = useSelector(selectUser);
   const [selected, setSelected] = useState([]);
   const [selectedRoutes, setSelectedRoutes] = useState([]);
   const [highlighted, setHighlighted] = useState(null);
   const [selectedStop, setSelectedStop] = useState(null);
   const [initialFetch, setInitialFetch] = useState(false);
-
-  const fetchInitialRoute = async () => {
-    const id = parseInt(routeId, 10);
-
-    await onRouteSelect({ id });
-    setInitialFetch(true);
-  };
 
   const refreshSelected = async () => {
     let i = 0;
@@ -57,13 +52,46 @@ const RoutesMap = () => {
     }
 
     setSelectedRoutes(refreshed);
-  }
+  };
+
+  const fetchFavourites = async () => {
+    setInitialFetch(true);
+
+    let routesThatAreFavourite = [];
+
+    if (routeId) {
+      routesThatAreFavourite.push(routeId);
+    } else {
+      let favourites = localStorage.getItem('current-tours-favourites');
+      favourites = favourites ? favourites.split(',') : [];
+      favourites = favourites.map(Number);
+
+      routesThatAreFavourite = routes.filter((r) => favourites.includes(r.id))
+        .map((r) => r.id);
+    }
+
+    let i = 0;
+    const initiallySelected = [];
+
+    while (i < routesThatAreFavourite.length) {
+      try {
+        const full = await dispatch(getRoute(routesThatAreFavourite[i]));
+
+        initiallySelected.push(full);
+      } catch (err) { }
+
+      i += 1;
+    }
+
+    setSelected(routesThatAreFavourite);
+    setSelectedRoutes(initiallySelected);
+  };
 
   useEffect(() => {
-    if (routeId && !initialFetch) {
-      fetchInitialRoute();
+    if (routes.length && !initialFetch) {
+      fetchFavourites();
     }
-  }, [initialFetch]);
+  }, [routes, initialFetch]);
 
   useEffect(() => {
     if (!loading) {
@@ -76,7 +104,7 @@ const RoutesMap = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedRoutes.length && parseInt(routeId, 10) === selectedRoutes[0].id && parseInt(customerId, 10) && !initialFetch) {
+    if (selectedRoutes.length && parseInt(routeId, 10) === selectedRoutes[0].id && parseInt(customerId, 10) && initialFetch) {
       openStop(selectedRoutes[0].id, parseInt(customerId, 10));
     }
 
@@ -84,8 +112,15 @@ const RoutesMap = () => {
     timeout.current = setTimeout(() => refreshSelected(), 30000);
   }, [selectedRoutes, initialFetch]);
 
-  const onRouteSelect = async (route) => {
+  const onRouteSelect = async (route, addAsFavourite = true) => {
     const full = await dispatch(getRoute(route.id));
+
+    if (addAsFavourite) {
+      let favourites = localStorage.getItem('current-tours-favourites');
+      favourites = favourites ? favourites.split(',') : [];
+      favourites = favourites.concat([route.id]);
+      localStorage.setItem('current-tours-favourites', favourites.join(','));
+    }
 
     setSelected([route.id].concat(selected));
     setSelectedRoutes([full].concat(selectedRoutes));
@@ -149,6 +184,7 @@ const RoutesMap = () => {
             highlightRoute={highlightRoute}
             highlightedRouteId={highlighted}
             openStop={openStop}
+            user={user}
           />
         </Grid>
       </Grid>

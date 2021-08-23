@@ -53,11 +53,11 @@ const Masterbar = (props) => {
         {t(props.name)}
       </Typography>
       <List className={classes._nav} component="nav">
-        {props.list.map((item) =>
+        {props.list.map((item, i) =>
           <ListItem
             activeClassName={classes._isactive}
             className={classes._menuitem}
-            key={1}
+            key={i}
             component={NavLink}
             to={item.path}
           >

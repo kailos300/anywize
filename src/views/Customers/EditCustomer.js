@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 // Helpers
 import { PATHS } from "util/appConstants";
 
@@ -18,19 +17,11 @@ import { getTours, selectTours } from "redux/slices/tourSlice";
 import CustomerForm from "components/Customers/form";
 import Loading from 'components/Shared/loading';
 
-const useStyles = makeStyles({
-  _container: {
-    backgroundColor: "#F5F5F5",
-    padding: "60px 130px",
-    minHeight: "100vh",
-  },
-})
 const currentAction = "EDIT";
 
 const EditCustomer = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const classes = useStyles();
   const { id } = useParams();
   const loading = useSelector(selectCustomerStatus);
   const customer = useSelector(selectCustomer);

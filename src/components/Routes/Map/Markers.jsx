@@ -51,18 +51,18 @@ const styles = makeStyles((theme) => ({
 
 export const Pin = ({ color }) => {
   if (color === 'red') {
-    return (<img src={MarkerIconRed} />);
+    return (<img alt="marker" src={MarkerIconRed} />);
   }
 
   if (color === 'blue') {
-    return (<img src={MarkerIconBlue} />);
+    return (<img alt="marker" src={MarkerIconBlue} />);
   }
 
   if (color === 'orange') {
-    return (<img src={MarkerIconOrange} />);
+    return (<img alt="marker" src={MarkerIconOrange} />);
   }
 
-  return (<img src={MarkerIconGray} />);
+  return (<img alt="marker" src={MarkerIconGray} />);
 };
 
 export const CustomMarker = ({ lat, lng, color = 'gray', pinColor, onClick }) => {

@@ -61,11 +61,9 @@ const Navbar = (props) => {
         <img className={classes._img} src={logo} alt="anywize logo" />
       </Link>
       <List className={classes._nav} component="nav">
-
-        {console.log(location)}
         {NAVIGATION_ROUTES.map((item, index) => (
           <ListItem
-            activeClassName={location.pathname == item.path ? classes._isactive : ''}
+            activeClassName={location.pathname === item.path ? classes._isactive : ''}
             className={clsx(
               classes._menuitem,
               ((props.checkTourPaths().includes(location.pathname) && item.name === "Tours") || (props.checkPaths().includes(location.pathname) && item.name === "Master Data"))

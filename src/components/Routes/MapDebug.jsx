@@ -3,13 +3,11 @@ import Box from '@material-ui/core/Box';
 import orderBy from 'lodash/orderBy';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ReactMapGL, { Source, Marker, Layer, FlyToInterpolator, NavigationControl } from 'react-map-gl';
+import ReactMapGL, { Source, Marker, Layer, NavigationControl } from 'react-map-gl';
 import MarkerIconBlue from 'assets/markers/marker-icon-blue.png';
-import MarkerIconRed from 'assets/markers/marker-icon-red.png';
 import mapboxgl from 'mapbox-gl';
 import moment from 'moment';
 
@@ -233,7 +231,7 @@ export default ({ loading, route, onSubmit }) => {
             {
               !!route && route.pathway.map((r, i) => (
                 <Marker key={i} latitude={r.latitude} longitude={r.longitude}>
-                  <img src={MarkerIconBlue} />
+                  <img alt="icon" src={MarkerIconBlue} />
                 </Marker>
               ))
             }

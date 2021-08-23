@@ -71,7 +71,7 @@ export default ({
               className={clsx(classes._box, {
                 [classes.blueBorder]: highlightedRouteId === route.id,
               })}
-              style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }}
+              style={{ background: i % 2 === 0 ? ' #1F1F1F ' : '#525252', }}
               key={i}
               onClick={() => onRemove(route)}
               onMouseEnter={() => highlightRoute(route.id)}
@@ -95,7 +95,7 @@ export default ({
           return (
             <Box
               className={classes._box}
-              style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }}
+              style={{ background: i % 2 === 0 ? ' #1F1F1F ' : '#525252', }}
               key={i}
               onClick={() => handleOnSelect(route)}
             >
