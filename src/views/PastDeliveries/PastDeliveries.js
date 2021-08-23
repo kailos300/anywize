@@ -90,7 +90,7 @@ const PastDeliveries = () => {
     if (loading) return <Loading />;
     return (
         <div className={clsx(classes._container, "custom-table-styles")}>
-            {/* {console.log(orders, "orders")} */}
+            {console.log(pastdeliveries, "orders")}
             <MaterialTable
                 icons={{
                     Filter: () => (

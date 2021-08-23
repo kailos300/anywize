@@ -60,8 +60,8 @@ export const CUSTOMERS_TABLE_COLUMNS = [
 ];
 
 export const PAST_DELIVERIES_TABLE_COLUMNS = [
-  { title: 'Date', field: 'date' },
-  { title: 'Time', field: 'time' },
+  { title: 'Date', field: 'date', render: rowData => rowData.delivered_at !== null ? moment(rowData.delivered_at).format('DD.MM.YYYY') : '' },
+  { title: 'Time', field: 'time', render: rowData => rowData.delivered_at !== null ? moment(rowData.delivered_at).format('HH:mm') : '' },
   { title: 'Order Number', field: 'number' },
   { title: 'Order Description', field: 'description' },
   { title: 'Tour', field: 'tourid', render: rowData => rowData.Customer.Tour.id },
