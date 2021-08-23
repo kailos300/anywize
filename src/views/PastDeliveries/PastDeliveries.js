@@ -83,7 +83,7 @@ const PastDeliveries = () => {
     const pastdeliveries = useSelector(selectpastDeliveries);
 
     useEffect(() => {
-        if (!pastdeliveries.length) {
+        if (!pastdeliveries.length && !loading) {
             dispatch(getpastDeliveries());
         }
     }, [dispatch, pastdeliveries]);
