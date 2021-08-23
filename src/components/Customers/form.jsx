@@ -330,6 +330,7 @@ const CustomerForm = ({
             onChange={handleChange}
             onBlur={handleBlur}
             errors={errors}
+            style={{ color: '#6F9CEB' }}
           />
           <Typography component="span" className="font-size-12">
             {t("Notify when Tour starts")}
