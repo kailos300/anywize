@@ -41,6 +41,8 @@ const useStyles = makeStyles({
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
     margin: '0 16px 0 0px',
+    fontSize: '35px'
+
   },
   _dflex: {
     display: "flex",
@@ -51,18 +53,46 @@ const useStyles = makeStyles({
       transform: "scale(1.3)",
       color: "#6F9CEB",
     },
+    "&:hover + span": {
+      display: 'block',
+    }
   },
   _close: {
     "&:hover": {
       transform: "scale(1.3)",
       color: "#525252",
     },
+    "&:hover + span": {
+      display: 'block',
+    }
   },
   _subheading: {
     font: "normal normal 500 22px/32px Roboto",
     color: " #121212",
     marginTop: "44px",
   },
+  _edittext: {
+    // width: '24px',
+    height: '16px',
+    font: 'normal normal normal 14px / 20px Roboto',
+    padding: '4px 8px'
+  },
+  _cancel: {
+    color: '#525252',
+    font: ' normal normal normal 14px/20px Roboto',
+    display: 'none',
+    position: 'absolute',
+    marginLeft: '-55px',
+    transition: "all 0.3s ease-in-out",
+  },
+  _savetext: {
+    color: "#6F9CEB",
+    font: ' normal normal normal 14px/20px Roboto',
+    display: 'none',
+    position: 'absolute',
+    marginLeft: '35px',
+    transition: "all 0.3s ease-in-out",
+  }
 });
 
 const TourForm = ({ initialValues, onSubmit, action }) => {
@@ -117,12 +147,14 @@ const TourForm = ({ initialValues, onSubmit, action }) => {
               title="close"
               className={clsx(classes._icons, classes._close)}
             />
+            <Typography variant="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>Cancel</Typography>
           </div>
           <div className={classes._dflex}>
             <SaveSharpIcon
               onClick={handleSubmit}
               className={clsx(classes._icons, classes._save)}
             />
+            <Typography variant="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>Save</Typography>
           </div>
         </div>
       </div>

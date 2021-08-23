@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory, useParams } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
+
 import EditIcon from "@material-ui/icons/Edit";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
@@ -21,6 +22,13 @@ const useStyles = makeStyles({
     backgroundColor: "#121212",
     padding: "60px 130px",
     minHeight: "100vh",
+    "& .edittag": {
+      display: 'none',
+      position: 'absolute',
+      marginLeft: '20px',
+      transition: "all 0.3s ease-in-out",
+
+    },
   },
   _heading: {
     color: "#F5F5F5",
@@ -31,7 +39,13 @@ const useStyles = makeStyles({
     width: "22px",
     height: "22px",
     cursor: "pointer",
-    margin: '0 16px',
+    transition: "all 0.3s ease-in-out",
+    "&:hover": {
+      transform: "scale(1.3)",
+    },
+    "&:hover + span": {
+      display: 'block',
+    }
   },
   _editbox: {
     display: "flex",
@@ -74,6 +88,18 @@ const useStyles = makeStyles({
   _adressbox: {
     marginTop: "24px",
   },
+  _buttonbox: {
+    display: 'flex',
+    margin: '0 16px',
+
+  },
+  _edittext: {
+    width: '24px',
+    height: '16px',
+    color: '#6F9CEB',
+    font: 'normal normal normal 14px / 20px Roboto',
+    padding: '4px 8px'
+  }
 });
 
 const CustomerDetail = () => {
@@ -102,7 +128,10 @@ const CustomerDetail = () => {
         <Typography className={classes._heading} variant="h4">
           {customer.alias || customer.name}
         </Typography>
-        <EditIcon onClick={editCustomerHandler} className={classes._edit} />
+        <Box className={classes._buttonbox} component="div">
+          <EditIcon onClick={editCustomerHandler} className={classes._edit} />
+          <Typography variant="span" className={clsx(classes._edittext, 'edittag')}>Edit</Typography>
+        </Box>
       </div>
       <Typography className={classes._infoheading} variant="h5">
         {t("Basic Data")}
