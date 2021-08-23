@@ -277,7 +277,7 @@ const CurrentTours = () => {
 																		textOverflow: 'ellipsis',
 																		whiteSpace: 'nowrap',
 																		overflow: 'hidden',
-																	}}>{data.alias}</div>
+																	}}>{!data.alias ? data.name : data.alias}</div>
 																</div>
 															)}
 														</Step>

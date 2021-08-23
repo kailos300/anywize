@@ -257,7 +257,7 @@ const RecentTours = () => {
 																	position: 'absolute', marginTop: '5px', width: '50px', textOverflow: 'ellipsis',
 																	whiteSpace: 'nowrap',
 																	overflow: 'hidden',
-																}}>{data.alias}</div>
+																}}>{!data.alias ? data.name : data.alias}</div>
 															</div>
 														)}
 													</Step>
