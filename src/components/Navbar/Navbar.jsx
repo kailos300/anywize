@@ -23,6 +23,9 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    boxShadow: '0px 0px 4px #ffffff52',
+    position: 'relative',
+    zIndex: 1
   },
   _img: {
     width: "148px",
@@ -61,8 +64,6 @@ const Navbar = (props) => {
         <img className={classes._img} src={logo} alt="anywize logo" />
       </Link>
       <List className={classes._nav} component="nav">
-
-        {console.log(location)}
         {NAVIGATION_ROUTES.map((item, index) => (
           <ListItem
             activeClassName={location.pathname == item.path ? classes._isactive : ''}
