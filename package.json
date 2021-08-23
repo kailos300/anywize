@@ -16,6 +16,7 @@
     "cities": "^2.0.0",
     "formik": "^2.2.9",
     "i18next": "^20.3.1",
+    "i18next-browser-languagedetector": "^6.1.2",
     "iso-3166-country-list": "^0.2.0",
     "mapbox-gl": "^2.4.1",
     "mapbox-gl-directions": "^3.0.3",
@@ -52,7 +53,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off",
+      "import/no-anonymous-default-export": "off"
+    }
   },
   "browserslist": {
     "production": [

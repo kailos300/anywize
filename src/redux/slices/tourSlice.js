@@ -101,6 +101,8 @@ export const editTour = (id, payload) => async (dispatch) => {
         type: 'success',
       })
     );
+
+    return res;
   } catch (err) {
     dispatch(
       setShowMessage({
@@ -119,7 +121,7 @@ export const deleteTour = (id) => async (dispatch) => {
   dispatch(setTourLoading());
 
   try {
-    const res = await coreApi.delete(url);
+    await coreApi.delete(url);
 
     dispatch(clearTours());
     dispatch(

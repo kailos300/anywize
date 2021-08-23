@@ -9,7 +9,7 @@ import countries from 'iso-3166-country-list';
 import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import { useHistory, useParams } from 'react-router-dom';
-import { Input, Select, Checkbox } from 'components/Shared/mui-formik-inputs';
+import { Input, Select, Checkbox, Autocomplete } from 'components/Shared/mui-formik-inputs';
 import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
 import { PATHS } from 'util/appConstants';
@@ -76,10 +76,10 @@ const CustomerForm = ({
     validationSchema: CustomerSchema,
     initialValues: {
       number: '',
-      salutation: '',
-      firstname: '',
-      lastname: '',
-      notification: false,
+      contact_salutation: '',
+      contact_name: '',
+      contact_surname: '',
+      email_notifications: false,
       tour: '',
       position: '',
       deposit_agreement: '',
@@ -235,14 +235,22 @@ const CustomerForm = ({
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Select
-            label={t("Country")}
-            name="country"
-            onChange={handleChange}
+          <Autocomplete
             onBlur={handleBlur}
-            value={values.country}
+            name="country"
+            label="Country"
             errors={errors}
-            options={countries.map((c) => ({ label: c.name, value: c.code }))}
+            value={values.country}
+            settings={{
+              disableClearable: true,
+              valueProp: 'code',
+              labelProp: 'name',
+            }}
+            onChange={(selected) => {
+              setFieldValue('country', selected.code);
+            }}
+            options={countries}
+            required
           />
         </Grid>
       </Grid>
@@ -253,35 +261,38 @@ const CustomerForm = ({
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Select
             label={t("Salutation")}
-            name="salutation"
+            name="contact_salutation"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.salutation}
+            value={values.contact_salutation}
             errors={errors}
             options={["Mr", "Mrs", "Ms", "Dr"].map((o) => ({
               label: t(o),
               value: o,
             }))}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
             label={t("First Name")}
-            name="firstname"
+            name="contact_name"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.firstname}
+            value={values.contact_name}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
             label={t("Last Name")}
-            name="lastname"
+            name="contact_surname"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.lastname}
+            value={values.contact_surname}
             errors={errors}
+            required
           />
         </Grid>
       </Grid>
@@ -299,7 +310,6 @@ const CustomerForm = ({
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Input
-            className="font-size-12 custom-input"
             label={t("E-Mail")}
             type="email"
             name="email"
@@ -312,9 +322,9 @@ const CustomerForm = ({
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <br />
           <Checkbox
-            checked={values.notification}
-            value={values.notification}
-            name="notification"
+            checked={values.email_notifications}
+            value={values.email_notifications}
+            name="email_notifications"
             onChange={handleChange}
             onBlur={handleBlur}
             errors={errors}
@@ -415,6 +425,9 @@ const CustomerForm = ({
             }}
             latitude={values.latitude || 52.52321191756548}
             longitude={values.longitude || 13.405897492100648}
+            initialInputValue={
+              values.id ? `${values.street} ${values.street_number}, ${values.city}, ${values.country}` : ''
+            }
           />
         </Grid>
       </Grid>

@@ -118,6 +118,8 @@ export const editOrder = (id, payload) => async (dispatch) => {
         type: "success",
       })
     );
+
+    return res;
   } catch (err) {
     console.log(err);
     dispatch(
@@ -146,6 +148,8 @@ export const deleteOrder = (id) => async (dispatch) => {
       })
     );
     dispatch(clearOrders());
+
+    return res;
   } catch (err) {
     console.log(err);
   } finally {

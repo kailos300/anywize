@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMapGL, { Source, Marker, Layer, FlyToInterpolator, NavigationControl } from 'react-map-gl';
+import GpsIcon from '@material-ui/icons/GpsFixed';
+import Box from '@material-ui/core/Box';
 import MarkerHouse from 'assets/markers/house.png';
 import MarkerTruck from 'assets/markers/truck.png';
 import Markers from './Markers';
@@ -12,7 +14,7 @@ const MAPBOX_API_ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_API_ACCESS_TOKEN;
 const MAPBOX_MAP_STYLE = process.env.REACT_APP_MAPBOX_MAP_STYLE;
 
 
-export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
+export default ({ routes, highlightRoute, highlightedRouteId, openStop, user }) => {
   const ref = useRef(null);
   const [total, setTotal] = useState(0);
   const [viewport, setViewport] = useState({
@@ -26,6 +28,14 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
   const onMarkerClick = (routeId, customerId) => {
     openStop(routeId, customerId);
   };
+
+  useEffect(() => {
+    setViewport((v) => ({
+      ...v,
+      latitude: user?.Supplier?.coordinates.coordinates[1],
+      longitude: user?.Supplier?.coordinates.coordinates[0],
+    }));
+  }, [user]);
 
   useEffect(() => {
     if (routes.length && routes.length !== total) {
@@ -63,16 +73,6 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
     },
   };
 
-  const suppliers = routes.reduce((acc, route) => {
-    const included = acc.find((a) => a.id === route.Tour.Supplier.id);
-
-    if (!included) {
-      acc.push(route.Tour.Supplier);
-    }
-
-    return acc;
-  }, []);
-
   const onHover = (e) => {
     if (e.features.length) {
       const navigation = e.features.find((f) => f.source === 'navigation');
@@ -85,6 +85,17 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
     highlightRoute(null);
   };
 
+  const centerSupplier = () => {
+    if (user && user.Supplier) {
+      setViewport({
+        ...viewport,
+        latitude: user?.Supplier?.coordinates.coordinates[1],
+        longitude: user?.Supplier?.coordinates.coordinates[0],
+        transitionDuration: 1000,
+        transitionInterpolator: new FlyToInterpolator(),
+      });
+    }
+  };
 
   return (
     <ReactMapGL
@@ -96,12 +107,13 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
       ref={ref}
     >
       {
-        suppliers.map((supplier, i) => (
-          <Marker key={i} latitude={supplier.coordinates.coordinates[1]} longitude={supplier.coordinates.coordinates[0]}>
-            <img src={MarkerHouse} />
+        !!user && !!user.Supplier && (
+          <Marker latitude={user?.Supplier?.coordinates.coordinates[1]} longitude={user?.Supplier?.coordinates.coordinates[0]}>
+            <img alt="icon" src={MarkerHouse} />
           </Marker>
-        ))
+        )
       }
+
       {
         viewport.zoom > 14 && routes.map((route, i) => (
           <Markers route={route} onClick={onMarkerClick} key={i} />
@@ -117,7 +129,7 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
 
           return (
             <Marker key={i} latitude={last.location.coordinates[1]} longitude={last.location.coordinates[0]}>
-              <img src={MarkerTruck} />
+              <img alt="icon" src={MarkerTruck} />
             </Marker>
           );
         })
@@ -147,6 +159,19 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop }) => {
         <Layer {...layerStyle} />
       </Source>
       <NavigationControl style={{ bottom: 30, right: 20, backgroundColor: 'red' }} />
+      <Box
+        position="absolute"
+        bottom={120}
+        right={20}
+        px={0.3}
+        pt={0.5}
+        style={{ cursor: 'pointer' }}
+        bgcolor="white"
+        borderRadius={3}
+        onClick={centerSupplier}
+      >
+        <GpsIcon />
+      </Box>
     </ReactMapGL>
   );
 };

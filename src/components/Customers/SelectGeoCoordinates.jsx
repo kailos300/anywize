@@ -1,9 +1,9 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import throttle from 'lodash/throttle';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import Box from '@material-ui/core/Box';
-import ReactMapGL, { Source, Marker, NavigationControl } from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -31,7 +31,7 @@ function Pin(props) {
   );
 }
 
-export default ({ onChange, latitude, longitude }) => {
+const SelectGeoCoordinates = ({ onChange, latitude, longitude, initialInputValue }) => {
   const [marker, setMarker] = useState({
     latitude,
     longitude,
@@ -68,6 +68,10 @@ export default ({ onChange, latitude, longitude }) => {
   );
 
   useEffect(() => {
+    setInputValue(initialInputValue || '');
+  }, [])
+
+  useEffect(() => {
     let active = true;
 
     if (inputValue === '') {
@@ -96,7 +100,7 @@ export default ({ onChange, latitude, longitude }) => {
     };
   }, [value, inputValue, fetch]);
 
-  const onMarkerDragEnd = useCallback(event => {
+  const onMarkerDragEnd = (event) => {
     onChange({
       longitude: event.lngLat[0],
       latitude: event.lngLat[1]
@@ -105,7 +109,18 @@ export default ({ onChange, latitude, longitude }) => {
       longitude: event.lngLat[0],
       latitude: event.lngLat[1]
     });
-  }, []);
+  };
+
+  const handleClick = (e) => {
+    onChange({
+      longitude: e.lngLat[0],
+      latitude: e.lngLat[1]
+    });
+    setMarker({
+      longitude: e.lngLat[0],
+      latitude: e.lngLat[1]
+    });
+  };
 
   const onOptionSelected = (option) => {
     if (!option || !option.geometry) {
@@ -145,6 +160,7 @@ export default ({ onChange, latitude, longitude }) => {
           loading={loading}
           value={value}
           disableClearable
+          inputValue={inputValue}
           onChange={(event, newValue) => {
             setOptions(newValue ? [newValue, ...options] : options);
             setValue(newValue);
@@ -166,6 +182,7 @@ export default ({ onChange, latitude, longitude }) => {
         onViewportChange={setViewport}
         mapStyle={MAPBOX_MAP_STYLE}
         mapboxApiAccessToken={MAPBOX_API_ACCESS_TOKEN}
+        onClick={handleClick}
       >
         <Marker
           longitude={marker.longitude}
@@ -185,3 +202,5 @@ export default ({ onChange, latitude, longitude }) => {
 
   );
 }
+
+export default SelectGeoCoordinates;

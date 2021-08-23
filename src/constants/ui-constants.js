@@ -58,13 +58,10 @@ export const CUSTOMERS_TABLE_COLUMNS = [
 ];
 
 export const PAST_DELIVERIES_TABLE_COLUMNS = [
-  { title: 'Date', field: 'date' },
-  { title: 'Time', field: 'time' },
-  { title: 'Order Number', field: 'number' },
-  { title: 'Order Description', field: 'description' },
-  { title: 'Tour', field: 'tourid', render: rowData => rowData.Customer.Tour.id },
-  { title: 'Tour Name', field: 'tourname', render: rowData => rowData.Customer.Tour.name },
-  { title: 'Met Customer', field: 'metCustomer' },
+  { title: 'Customer alias', field: 'alias' },
+  { title: 'Customer name 1', field: 'name' },
+  { title: 'Tour', field: 'Tour.id' },
+  { title: 'Tour Name', field: 'Tour.name' },
 ];
 
 export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
@@ -85,13 +82,26 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   ];
 }
 
-export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
+export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite, redirectView) => {
   return [
     {
-      title: 'icon', render: rowData => <div style={{ display: 'flex' }}>
-        <StarRateIcon onClick={(e) => markFavourite(e, rowData)} style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }} />
-        <MapIcon style={{ color: '#ADADAD' }} />
-      </div>
+      title: 'icon',
+      render: (rowData) => (
+        <div style={{ display: 'flex' }}>
+          {
+            !!markFavourite && (
+              <StarRateIcon
+                onClick={(e) => markFavourite(e, rowData)}
+                style={{ color: rowData.is_favourite ? '#6F9CEB' : '#ADADAD', cursor: 'pointer' }}
+              />
+            )
+          }
+          <MapIcon
+            onClick={() => redirectView(null, rowData)}
+            style={{ color: '#ADADAD', cursor: 'pointer' }}
+          />
+        </div>
+      )
     },
     {
       title: 'date', render:
@@ -117,7 +127,10 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite) => {
         }
       }
     },
-    { title: 'noOfOrders', render: rowData => `${rowData.Orders.filter((o) => o.delivered_at).length} / ${rowData.Orders.length}` },
+    {
+      title: 'noOfOrders',
+      render: rowData => `${rowData.pathway.filter((p) => p.Orders.every((o) => o.delivered_at)).length} / ${rowData.pathway.length}`,
+    },
     { title: 'DriversName', field: 'driver_name', render: rowData => <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.driver_name}</span> },
     {
       title: 'call', render: rowData =>

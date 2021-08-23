@@ -22,6 +22,10 @@ export const CustomerFormAllowedFields = [
   'longitude',
   'deposit_agreement',
   'keybox_code',
+  'contact_name',
+  'contact_surname',
+  'contact_salutation',
+  'email_notifications',
 ];
 
 export const OrderFormAllowedFields = ['customer_id', 'description', 'number'];
