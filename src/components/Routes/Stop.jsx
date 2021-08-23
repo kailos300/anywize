@@ -61,7 +61,8 @@ const useStyles = makeStyles({
 	},
 	_galleryheading: {
 		color: '#F5F5F5',
-		marginBottom: '8px',
+		marginBottom: '25px',
+		marginTop: '60px',
 	}
 });
 
