@@ -19,6 +19,12 @@ const useStyles = makeStyles({
     backgroundColor: "#F5F5F5",
     padding: "60px 130px",
     minHeight: "100vh",
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: '#6F9CEB'
+    },
+    "& .MuiInput-underline:after": {
+      borderBottom: '2px solid #6F9CEB'
+    }
   },
   _editbox: {
     display: "flex",
