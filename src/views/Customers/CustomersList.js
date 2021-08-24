@@ -27,6 +27,10 @@ const useStyles = makeStyles({
     backgroundColor: "#121212",
     padding: "60px 130px",
     minHeight: "60vh",
+    "& .MuiTableCell-head .MuiTableSortLabel-root": {
+      position: 'relative',
+      marginBottom: '-20px',
+    },
     "& .MuiInputBase-input": {
       color: "#F5F5F5",
     },

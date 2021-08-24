@@ -4,8 +4,8 @@ import * as pick from "lodash/pick";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
-import SaveIcon from "@material-ui/icons/Save";
-import CloseIcon from "@material-ui/icons/Close";
+import SaveSharpIcon from '@material-ui/icons/SaveSharp';
+import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import { Input, InputOnlyNumbers, Autocomplete } from "../Shared/mui-formik-inputs";
@@ -18,6 +18,12 @@ const useStyles = makeStyles({
     backgroundColor: "#F5F5F5",
     padding: "60px 130px",
     minHeight: "100vh",
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: '#6F9CEB'
+    },
+    "& .MuiInput-underline:after": {
+      borderBottom: '2px solid #6F9CEB'
+    }
   },
   _editbox: {
     display: "flex",
@@ -30,8 +36,7 @@ const useStyles = makeStyles({
   },
   _icons: {
     color: "#ADADAD",
-    width: "22px",
-    height: "22px",
+    fontSize: '35px',
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
     margin: '0 16px 0 0px',
@@ -103,8 +108,8 @@ const OrderForm = ({
           {action === "ADD" ? t("New Order") : t("Edit Order")}
         </Typography>
         <div>
-          <CloseIcon onClick={closeOrderHandler} className={clsx(classes._icons, classes._close)} />
-          <SaveIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
+          <CloseSharpIcon onClick={closeOrderHandler} className={clsx(classes._icons, classes._close)} />
+          <SaveSharpIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
         </div>
       </div>
       <Grid container spacing={2}>
@@ -135,6 +140,8 @@ const OrderForm = ({
             onBlur={handleBlur}
             value={values.description}
             errors={errors}
+            required
+
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>

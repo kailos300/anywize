@@ -139,25 +139,39 @@ const TableExpansionPanel = ({ rowData, scroll, redirectView, myDivToFocus }) =>
               filledBackground="#6F9CEB"
               unfilledBackground=""
             >
-              {rowData.pathway.map((data, index) => (
-                <Step transition="scale" key={index}>
-                  {({ accomplished }) => (
-                    <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
-                      <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index + 1}</div>
+              {
+                rowData.pathway.map((data, index) => {
+                  const delivered = data.Orders.every((o) => o.delivered_at);
 
-                      <div onClick={() => redirectView(data, rowData)} style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }} className={data.Orders.every((o) => o.delivered_at) ? 'ball' : 'ball-open'}></div>
-                      <div style={{
-                        position: 'absolute',
-                        marginTop: '5px',
-                        width: '100px',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                      }}>{data.alias}</div>
-                    </div>
-                  )}
-                </Step>
-              ))
+                  return (
+                    <Step transition="scale" key={index}>
+                      {({ accomplished }) => (
+                        <div style={{ filter: `grayscale(${accomplished ? 0 : 40}%)` }}>
+                          <div style={{ marginTop: '-14px', position: 'absolute', textAlign: "center", width: '100%' }}>{index + 1}</div>
+
+                          <div
+                            onClick={() => redirectView(data, rowData)}
+                            style={{ background: rowData.tableData.id % 2 === 0 ? ' #1F1F1F ' : '#525252' }}
+                            className={(delivered && !data.goods_back)
+                              ? 'ball'
+                              : (delivered && data.goods_back)
+                                ? 'red-ball'
+                                : 'ball-open'
+                            }
+                          ></div>
+                          <div style={{
+                            position: 'absolute',
+                            marginTop: '5px',
+                            width: '100px',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                          }}>{data.alias || data.name}</div>
+                        </div>
+                      )}
+                    </Step>
+                  );
+                })
               }
             </ProgressBar>
           </div>

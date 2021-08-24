@@ -23,6 +23,9 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    boxShadow: '0px 0px 4px #ffffff52',
+    position: 'relative',
+    zIndex: 1
   },
   _img: {
     width: "148px",

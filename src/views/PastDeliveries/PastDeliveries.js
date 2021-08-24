@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'material-table';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,6 +14,8 @@ import TableHead from '@material-ui/core/TableHead';
 import MapIcon from '@material-ui/icons/Map';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 import clsx from 'clsx';
 import moment from 'moment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -19,7 +24,7 @@ import { PAST_DELIVERIES_TABLE_COLUMNS } from 'constants/ui-constants';
 import { getColumns } from 'util/table-utils';
 import { mapTableData } from 'util/helpers';
 import { PATHS } from 'util/appConstants';
-
+import { DatePicker } from 'components/Shared/mui-formik-inputs';
 import Loading from 'components/Shared/loading';
 
 import {
@@ -88,13 +93,20 @@ const useStyles = makeStyles({
 const PastDeliveries = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [form, setForm] = useState({
+    from: moment().subtract(1, 'month').startOf('month').toDate(),
+    to: moment().subtract(1, 'day').endOf('day').toDate(),
+  });
   const classes = useStyles();
-  const history = useHistory();
   const loading = useSelector(selectpastDeliveriesStatus);
   const pastdeliveries = useSelector(selectpastDeliveries);
 
-  const fetch = async () => {
-    await dispatch(getpastDeliveries({ from: '2021-08-01', to: '2021-08-31' }));
+  const fetch = async (params = form) => {
+    setForm(params);
+    await dispatch(getpastDeliveries({
+      from: moment(params.from).format('YYYY-MM-DD'),
+      to: moment(params.to).format('YYYY-MM-DD'),
+    }));
   };
 
   useEffect(() => {
@@ -111,6 +123,86 @@ const PastDeliveries = () => {
 
   return (
     <div className={clsx(classes._container)}>
+      <Box p={2} boxShadow={3} style={{ backgroundColor: 'rgb(31, 31, 31)' }} borderRadius={3}>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <Formik
+            initialValues={form}
+            validate={(values) => {
+              const errors = {};
+
+              if (!values.from) {
+                errors.from = 'Required';
+              }
+
+              if (!values.to) {
+                errors.to = 'Required';
+              }
+
+              return errors;
+            }}
+            onSubmit={(values) => {
+              fetch({
+                from: moment(values.from).toDate(),
+                to: moment(values.to).toDate(),
+              });
+            }}
+            render={({ values, setFieldValue, handleSubmit, errors }) => (
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={4}>
+                    <DatePicker
+                      onChange={(date) => {
+                        if (date && date.isValid) {
+                          setFieldValue('from', date);
+                        }
+
+                        if (date === null) {
+                          setFieldValue('from', null);
+                        }
+                      }}
+                      name="from"
+                      value={values.from}
+                      errors={errors}
+                      label="Date delivered from"
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <DatePicker
+                      onChange={(date) => {
+                        if (date && date.isValid) {
+                          setFieldValue('to', date);
+                        }
+
+                        if (date === null) {
+                          setFieldValue('to', null);
+                        }
+                      }}
+                      name="to"
+                      value={values.to}
+                      errors={errors}
+                      label="Date delivered to"
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={2}>
+                    <Box pt={2.8}>
+                      <Button
+                        color="primary"
+                        size="small"
+                        type="submit"
+                        variant="contained"
+                      >
+                        {t('Search')}
+                      </Button>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </form>
+            )}
+          />
+        </MuiPickersUtilsProvider>
+      </Box>
       <MaterialTable
         icons={{
           Filter: () => (
@@ -204,5 +296,6 @@ const PastDeliveries = () => {
       />
     </div>
   )
-}
+};
+
 export default PastDeliveries;

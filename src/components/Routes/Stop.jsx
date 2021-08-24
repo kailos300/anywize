@@ -60,7 +60,8 @@ const useStyles = makeStyles({
 	},
 	_galleryheading: {
 		color: '#F5F5F5',
-		marginBottom: '8px',
+		marginBottom: '25px',
+		marginTop: '60px',
 	}
 });
 
@@ -80,7 +81,7 @@ const Stopview = ({ route, customer, onClose }) => {
 			<Box p={2}>
 				<Box>
 					<Typography className={classes._routename}>T{route.uuid} {route.Tour.name}</Typography>
-					<Typography className={classes._customername}>{customer.name} {customer.alias}</Typography>
+					<Typography className={classes._customername}>{!customer.alias ? customer.name : customer.alias} </Typography>
 				</Box>
 				<Box>
 					<div className={classes._routedetails}>

@@ -11,6 +11,7 @@ import {
   InputAdornment,
   IconButton,
 } from '@material-ui/core';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import MUIAutocomplete from '@material-ui/lab/Autocomplete';
@@ -309,5 +310,33 @@ export const Autocomplete = ({
         {...(opts.filterOptions ? { filterOptions: opts.filterOptions } : {})}
       />
     </FormControl>
+  );
+};
+
+export const DatePicker = (props) => {
+  const { label, name, errors, value, help, onChange, required, disablePast, clearable } = props;
+  const { t } = useTranslation('common');
+
+  return (
+    <KeyboardDatePicker
+      name={name}
+      value={value}
+      placeholder="DD.MM.YYYY"
+      onChange={onChange}
+      disablePast={disablePast}
+      clearable={clearable}
+      format="DD.MM.YYYY"
+      label={<span style={{ color: 'white' }}>{t(label)}</span>}
+      margin="dense"
+      autoOk
+      inputProps={{
+        autoComplete: 'off',
+      }}
+      required={required}
+      fullWidth
+      autoOk
+      error={!!getHelpOrError(null, errors, name, t)}
+      helperText={getHelpOrError(help, errors, name, t)}
+    />
   );
 };

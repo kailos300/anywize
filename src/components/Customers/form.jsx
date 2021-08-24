@@ -6,14 +6,15 @@ import { useFormik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from "clsx";
 import countries from 'iso-3166-country-list';
-import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
+import SaveSharpIcon from '@material-ui/icons/SaveSharp';
+import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { useHistory, useParams } from 'react-router-dom';
 import { Input, Select, Checkbox, Autocomplete } from 'components/Shared/mui-formik-inputs';
 import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
 import { PATHS } from 'util/appConstants';
 import SelectGeoCoordinates from 'components/Customers/SelectGeoCoordinates';
+
 
 const unzip = require('zip-to-city');
 
@@ -22,6 +23,13 @@ const useStyles = makeStyles({
     backgroundColor: '#F5F5F5',
     padding: '60px 130px',
     minHeight: '100vh',
+    "& .MuiFormLabel-root.Mui-focused": {
+      color: '#6F9CEB'
+    },
+    "& .MuiInput-underline:after": {
+      borderBottom: '2px solid #6F9CEB'
+    }
+
   },
   _editbox: {
     display: 'flex',
@@ -34,29 +42,61 @@ const useStyles = makeStyles({
   },
   _icons: {
     color: '#ADADAD',
-    width: '22px',
-    height: '22px',
     cursor: 'pointer',
     transition: "all 0.3s ease-in-out",
     margin: '0 16px 0 0px',
+    fontSize: '35px'
   },
   _save: {
     "&:hover": {
       transform: "scale(1.3)",
       color: "#6F9CEB",
     },
+    "&:hover + span": {
+      display: 'block',
+    }
   },
   _close: {
     "&:hover": {
       transform: "scale(1.3)",
       color: "#525252",
     },
+    "&:hover + span": {
+      display: 'block',
+    }
   },
   _subheading: {
     font: 'normal normal 500 22px/32px Roboto',
     color: ' #121212',
     marginTop: '44px',
+    marginBottom: '40px',
   },
+  _dflex: {
+    display: "flex",
+    alignItems: "center",
+  },
+  _edittext: {
+    // width: '24px',
+    height: '16px',
+    font: 'normal normal normal 14px / 20px Roboto',
+    padding: '4px 8px'
+  },
+  _cancel: {
+    color: '#525252',
+    font: ' normal normal normal 14px/20px Roboto',
+    display: 'none',
+    position: 'absolute',
+    marginLeft: '-55px',
+    transition: "all 0.3s ease-in-out",
+  },
+  _savetext: {
+    color: "#6F9CEB",
+    font: ' normal normal normal 14px/20px Roboto',
+    display: 'none',
+    position: 'absolute',
+    marginLeft: '35px',
+    transition: "all 0.3s ease-in-out",
+  }
 });
 const CustomerForm = ({
   initialValues,
@@ -148,12 +188,21 @@ const CustomerForm = ({
         <Typography className={classes._heading} variant="h4">
           {action === "ADD" ? t("New Customer") : t("Edit Customer")}
         </Typography>
-        <div>
-          <CloseIcon
-            onClick={closeCustomerHandler}
-            className={clsx(classes._icons, classes._close)}
-          />
-          <SaveIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
+        <div className={classes._dflex}>
+          <div className={classes._dflex}>
+
+            <CloseSharpIcon
+              onClick={closeCustomerHandler}
+              className={clsx(classes._icons, classes._close)}
+            />
+            <Typography variant="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>Cancel</Typography>
+          </div>
+          <div className={classes._dflex}>
+
+            <SaveSharpIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
+            <Typography variant="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>Save</Typography>
+          </div>
+
         </div>
       </div>
       <Typography className={classes._subheading} variant="h5">
@@ -169,6 +218,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.name}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -189,6 +239,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.alias}
             errors={errors}
+            required
           />
         </Grid>
       </Grid>
@@ -201,6 +252,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.street}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -211,6 +263,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.street_number}
             errors={errors}
+            required
           />
         </Grid>
       </Grid>
@@ -222,6 +275,7 @@ const CustomerForm = ({
             onChange={customHandleChange}
             value={values.zipcode}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -232,6 +286,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.city}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -306,6 +361,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.phone}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -317,6 +373,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.email}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -328,6 +385,7 @@ const CustomerForm = ({
             onChange={handleChange}
             onBlur={handleBlur}
             errors={errors}
+            style={{ color: '#6F9CEB' }}
           />
           <Typography component="span" className="font-size-12">
             {t("Notify when Tour starts")}
@@ -347,6 +405,7 @@ const CustomerForm = ({
             value={values.tour_id}
             errors={errors}
             options={tourList.map((o) => ({ label: o.name, value: o.id }))}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -357,6 +416,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.tour_position}
             errors={errors}
+            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -403,6 +463,7 @@ const CustomerForm = ({
             value={values.latitude}
             errors={errors}
             disabled
+            required
           />
         </Grid>
 
@@ -415,6 +476,7 @@ const CustomerForm = ({
             value={values.longitude}
             errors={errors}
             disabled
+            required
           />
         </Grid>
         <Grid item xs={12}>

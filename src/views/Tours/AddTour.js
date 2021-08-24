@@ -1,16 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
-// Helpers
 import { PATHS } from 'util/appConstants';
 
-// Actions
 import { selectTourStatus, addTour } from 'redux/slices/tourSlice';
 import { setShowMessage } from 'redux/slices/uiSlice';
 
-// Components
 import TourForm from 'components/Tours/form';
 import Loading from 'components/Shared/loading';
 
@@ -46,7 +42,4 @@ const AddTour = () => {
   );
 };
 
-AddTour.propTypes = {
-  initialValues: PropTypes.object.isRequired,
-};
 export default AddTour;

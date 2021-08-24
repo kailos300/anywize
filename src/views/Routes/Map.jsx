@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
   },
+  _sidebar: {
+    maxHeight: '100vh',
+    overflow: 'scroll',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    },
+  }
 }));
 
 const RoutesMap = () => {
@@ -154,7 +161,7 @@ const RoutesMap = () => {
   return (
     <div className={clsx(classes._container, '')}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={3}>
+        <Grid className={classes._sidebar} item xs={12} sm={3}>
           {
             !!selectedStop && (
               <Stop
