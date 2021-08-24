@@ -27,7 +27,7 @@ const defaultOptions = {
 };
 
 const withConfirm = (WrappedComponent) => (props) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const classes = useStyles();
   const [onConfirm, setOnConfirm] = useState(null);
   const [options, setOptions] = useState(defaultOptions);

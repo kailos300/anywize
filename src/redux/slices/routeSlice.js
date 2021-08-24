@@ -1,6 +1,5 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { coreApi } from 'api/core';
-import { setShowMessage } from 'redux/slices/uiSlice';
 import moment from 'moment';
 
 const baseUrl = '/routes';
@@ -45,8 +44,8 @@ const routeSlice = createSlice({
 export const { setRoutes, setRouteLoading, setRouteReady, setCompleted, setCurrent, setArchived, setRoute } = routeSlice.actions;
 export default routeSlice.reducer;
 
-export const getRoute = (id, detail) => async (dispatch) => {
-	const url = baseUrl + `/${id}`;
+export const getRoute = (id, allDriverLocations = false) => async (dispatch) => {
+	const url = baseUrl + `/${id}${allDriverLocations ? '?allDriverLocations=1' : ''}`;
 	// dispatch(setRouteLoading());
 	try {
 		const res = await coreApi.fetch(url);
@@ -82,13 +81,18 @@ export const getCurrentRoutes = () => async (dispatch) => {
 	dispatch(setRouteLoading());
 	try {
 		const routes = await coreApi.fetch(`${baseUrl}?ended=0`);
+		let favourites = localStorage.getItem('current-tours-favourites');
+		favourites = favourites ? favourites.split(',') : [];
+		favourites = favourites.map(Number);
+
 		const newData = routes.map((data) => {
 			return {
 				...data,
-				is_favourite: false,
+				is_favourite: favourites.includes(data.id),
 				progress: 'In Progress'
 			}
-		});
+		}).sort((a, b) => b.is_favourite - a.is_favourite);
+
 		dispatch(setCurrent(newData));
 	} catch (err) {
 		console.log(err);
@@ -101,10 +105,8 @@ export const getFinisedRoutes = () => async (dispatch) => {
 	dispatch(setRouteLoading());
 	try {
 		const routes = await coreApi.fetch(`${baseUrl}?started=1&ended=1&end_date_from=${moment().subtract(5, 'days').startOf('day').format()}`);
-		const update = routes.filter((data) => {
-			return data.Orders.every((o) => o.delivered_at);
-		});
-		const newData = update.map((data) => {
+
+		const newData = routes.map((data) => {
 			return {
 				...data,
 				is_favourite: false,

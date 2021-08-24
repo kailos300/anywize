@@ -88,7 +88,7 @@ const useStyles = makeStyles({
 const tableTitle = "CUSTOMERS";
 
 const CustomersList = ({ confirm }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();

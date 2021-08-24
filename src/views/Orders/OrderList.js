@@ -6,7 +6,6 @@ import MaterialTable from 'material-table';
 import { makeStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import EditIcon from '@material-ui/icons/Edit';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
@@ -350,7 +349,7 @@ const OrderList = ({ confirm }) => {
                             <TableCell className={classes._textalignright}>
                               {/* <EditIcon onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)} /> */}
                               <div onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)}>
-                                <img src={pen} style={{ height: '10px' }} />
+                                <img alt="icon" src={pen} style={{ height: '10px' }} />
                               </div>
                             </TableCell>
                             <TableCell style={{}} className={classes._textalignright}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,7 +10,6 @@ import { setShowMessage } from 'redux/slices/uiSlice';
 import LoginComponent from 'components/Login';
 
 const Login = () => {
-  const [error, setError] = useState(null);
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -35,7 +34,7 @@ const Login = () => {
     }
   };
 
-  return <LoginComponent onSubmit={onSubmit} error={error} />;
+  return <LoginComponent onSubmit={onSubmit} />;
 };
 
 export default Login;

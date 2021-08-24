@@ -41,7 +41,7 @@ export const loginWithRedirect = (creds, callback) => async (dispatch) => {
   const url = baseUrl + "/login";
 
   try {
-    const { token, tokenExpiration } = await coreApi.post(url, creds);
+    const { token } = await coreApi.post(url, creds);
     if (token) {
       await storage.set("token", token);
       await dispatch(setAuthenticated());

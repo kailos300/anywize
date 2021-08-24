@@ -11,6 +11,7 @@ import {
   InputAdornment,
   IconButton,
 } from '@material-ui/core';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import MUIAutocomplete from '@material-ui/lab/Autocomplete';
@@ -92,7 +93,7 @@ export const Password = (props) => {
           </InputAdornment>
         ),
       }}
-      className={"custom-input"}
+      variant="filled"
       {...rest}
     />
   );
@@ -113,7 +114,7 @@ export const Input = (props) => {
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
       inputProps={{ autoComplete: 'off' }}
-      className={"custom-input"}
+      variant="filled"
       {...rest}
     />
   );
@@ -134,7 +135,7 @@ export const InputOnlyNumbers = (props) => {
       helperText={getHelpOrError(help, errors, name, t)}
       error={!!getErrorForName(errors, name)}
       inputProps={{ autoComplete: 'off' }}
-      className={"custom-input"}
+      variant="filled"
       onChange={(e) => {
         if (!/^[0-9+-\s]*$/.test(e.target.value)) {
           return;
@@ -153,15 +154,15 @@ export const Select = (props) => {
   const { t } = useTranslation();
 
   return (
-    <FormControl fullWidth className={'custom-select-container'} margin={props.margin || "none"} >
-      {!!label && <InputLabel>{label || ""}</InputLabel>}
+    <FormControl fullWidth margin="none" style={{ marginTop: '8px' }}>
+      {!!label && <InputLabel style={{ paddingLeft: '10px' }}>{label || ""}</InputLabel>}
       <MaterialSelect
-        margin={margin || "none"}
+        margin="dense"
         name={name}
         value={value || ""}
         fullWidth={true}
         error={!!getErrorForName(errors, name)}
-        className={"custom-select"}
+        variant="filled"
         MenuProps={{
           anchorOrigin: {
             vertical: "bottom",
@@ -201,7 +202,7 @@ export const Textarea = (props) => {
       {...rest}
       multiline={true}
       rows={3}
-      className={"custom-input"}
+      variant="filled"
       inputProps={{ autoComplete: 'off' }}
     />
   );
@@ -214,49 +215,6 @@ export const Checkbox = (props) => {
     <MaterialCheckbox checked={value} value={value} name={name} {...rest} />
   );
 };
-
-export function ColorInput(props) {
-  const { type, label, name, errors, value, help, onChange, ...rest } = props;
-  const { t } = useTranslation();
-
-  function handleChange(e) {
-    e.preventDefault();
-    e.persist();
-
-    if (e.target.value) {
-      onChange(e);
-    }
-  }
-
-  return (
-    <TextField
-      label={label || ""}
-      margin="normal"
-      name={name}
-      type={type || "text"}
-      value={value || ""}
-      fullWidth={true}
-      helperText={getHelpOrError(help, errors, name, t)}
-      error={!!getErrorForName(errors, name)}
-      className={"custom-input"}
-      InputProps={{
-        readOnly: true,
-        endAdornment: (
-          <InputAdornment position="end">
-            <input
-              value={value || ""}
-              type="color"
-              name={name}
-              onChange={handleChange}
-              autoComplete="off"
-            />
-          </InputAdornment>
-        ),
-      }}
-      {...rest}
-    />
-  );
-}
 
 export const Autocomplete = ({
   name,
@@ -314,6 +272,7 @@ export const Autocomplete = ({
         onChange={null}
         onBlur={null}
         disabled={disabled}
+        variant="filled"
       />
     );
   }
@@ -345,11 +304,39 @@ export const Autocomplete = ({
             margin="dense"
             error={!!getHelpOrError(null, errors, name, t)}
             helperText={getHelpOrError(help, errors, name, t)}
-            className={"custom-input"}
+            variant="filled"
           />
         )}
         {...(opts.filterOptions ? { filterOptions: opts.filterOptions } : {})}
       />
     </FormControl>
+  );
+};
+
+export const DatePicker = (props) => {
+  const { label, name, errors, value, help, onChange, required, disablePast, clearable } = props;
+  const { t } = useTranslation('common');
+
+  return (
+    <KeyboardDatePicker
+      name={name}
+      value={value}
+      placeholder="DD.MM.YYYY"
+      onChange={onChange}
+      disablePast={disablePast}
+      clearable={clearable}
+      format="DD.MM.YYYY"
+      label={<span style={{ color: 'white' }}>{t(label)}</span>}
+      margin="dense"
+      autoOk
+      inputProps={{
+        autoComplete: 'off',
+      }}
+      required={required}
+      fullWidth
+      autoOk
+      error={!!getHelpOrError(null, errors, name, t)}
+      helperText={getHelpOrError(help, errors, name, t)}
+    />
   );
 };

@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useHistory } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useHistory } from 'react-router-dom';
 
-import { PATHS } from "util/appConstants";
-import { checkPaths, checkTourPaths, MASTER_DATA_BAR, TOUR_DATA_BAR } from "constants/ui-constants";
+import { PATHS } from 'util/appConstants';
+import { checkPaths, checkTourPaths, MASTER_DATA_BAR, TOUR_DATA_BAR } from 'constants/ui-constants';
 
-import { fetchUserInfo } from "redux/slices/userSlice";
-import { selectAuthenticated } from "redux/slices/authSlice";
+import { fetchUserInfo } from 'redux/slices/userSlice';
+import { selectAuthenticated } from 'redux/slices/authSlice';
 
-import AppRouter from "./routes/AppRouter";
-import Snackbar from "components/Snackbar";
-import Navbar from "components/Navbar";
-import Masterbar from "components/Masterbar";
+import AppRouter from './routes/AppRouter';
+import Snackbar from 'components/Snackbar';
+import Navbar from 'components/Navbar';
+import Masterbar from 'components/Masterbar';
 
 const App = () => {
   const location = useLocation();

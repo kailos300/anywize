@@ -1,8 +1,7 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { coreApi } from "api/core";
-import { setShowMessage } from "redux/slices/uiSlice";
+import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { coreApi } from 'api/core';
 
-export const APP_NAMESPACE = "mkrn-starter";
+export const APP_NAMESPACE = 'mkrn-starter';
 const userPrefix = `${APP_NAMESPACE}/user`;
 const usersPrefix = `${APP_NAMESPACE}/users`;
 const authUserPrefix = `${APP_NAMESPACE}/auth`;

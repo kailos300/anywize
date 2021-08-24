@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const Snackbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [t] = useTranslation("common");
+  const [t] = useTranslation();
   const { description, type } = useSelector(selectMessage);
 
   const handleClose = (event, reason) => {

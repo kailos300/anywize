@@ -29,6 +29,9 @@ const styles = makeStyles((theme) => ({
   _6F9CEB: {
     color: '#6F9CEB'
   },
+  padding: {
+    padding: '0px 15px'
+  }
 }));
 
 export default ({
@@ -57,7 +60,7 @@ export default ({
   return (
     <Box>
       <Box my={4}>
-        <Typography className={classes.textWhite} variant="h6">
+        <Typography className={clsx(classes.textWhite, classes.padding)} variant="h6">
           {t('On map')}
         </Typography>
       </Box>
@@ -68,7 +71,7 @@ export default ({
               className={clsx(classes._box, {
                 [classes.blueBorder]: highlightedRouteId === route.id,
               })}
-              style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }}
+              style={{ background: i % 2 === 0 ? ' #1F1F1F ' : '#525252', }}
               key={i}
               onClick={() => onRemove(route)}
               onMouseEnter={() => highlightRoute(route.id)}
@@ -83,7 +86,7 @@ export default ({
         })
       }
       <Box my={4}>
-        <Typography className={classes.textWhite} variant="h6">
+        <Typography className={clsx(classes.textWhite, classes.padding)} variant="h6">
           {t('All tours')}
         </Typography>
       </Box>
@@ -92,7 +95,7 @@ export default ({
           return (
             <Box
               className={classes._box}
-              style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }}
+              style={{ background: i % 2 === 0 ? ' #1F1F1F ' : '#525252', }}
               key={i}
               onClick={() => handleOnSelect(route)}
             >

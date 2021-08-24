@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
-import MapIcon from '@material-ui/icons/Map';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PersonIcon from '@material-ui/icons/Person';
 import EmailIcon from '@material-ui/icons/Email';
@@ -93,7 +92,7 @@ const Stopview = ({ route, customer, onClose }) => {
 					</div>
 					<div className={classes._routedetails}>
 						<PersonIcon />&nbsp;
-						<Typography>John Doe</Typography>
+						<Typography>{customer.contact_salutation} {customer.contact_name} {customer.contact_surname}</Typography>
 					</div>
 					<div className={classes._routedetails}>
 						<EmailIcon />&nbsp;
@@ -181,7 +180,7 @@ const Stopview = ({ route, customer, onClose }) => {
 
 				{
 					customer.Orders.map((order, i) =>
-						<Box key={i} className={classes._box} style={{ background: i % 2 == 0 ? ' #1F1F1F ' : '#525252', }}>
+						<Box key={i} className={classes._box} style={{ background: i % 2 === 0 ? ' #1F1F1F ' : '#525252', }}>
 							<Box flex={1} pr={3}>
 								<Typography variant="body2">{order.number}</Typography>
 							</Box>

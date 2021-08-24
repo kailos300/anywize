@@ -250,7 +250,7 @@ const CustomerDetail = () => {
             {t("Salutation")}
           </Typography>
           <Typography className={clsx(classes._detail)} variant="h6">
-            {t('Mr.')}
+            {t(customer.contact_salutation)}
           </Typography>
         </div>
         <div>
@@ -264,7 +264,7 @@ const CustomerDetail = () => {
             className={clsx(classes._name, classes._detail)}
             variant="h6"
           >
-            Mark
+            {customer.contact_name}
           </Typography>
         </div>
         <div>
@@ -272,7 +272,7 @@ const CustomerDetail = () => {
             {t("Last Name")}
           </Typography>
           <Typography className={classes._detail} variant="h6">
-            Meyer
+            {customer.contact_surname}
           </Typography>
         </div>
       </div>
