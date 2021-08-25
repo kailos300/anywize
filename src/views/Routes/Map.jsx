@@ -67,7 +67,7 @@ const RoutesMap = () => {
     let routesThatAreFavourite = [];
 
     if (routeId) {
-      routesThatAreFavourite.push(routeId);
+      routesThatAreFavourite.push(parseInt(routeId, 10));
     } else {
       let favourites = localStorage.getItem('current-tours-favourites');
       favourites = favourites ? favourites.split(',') : [];

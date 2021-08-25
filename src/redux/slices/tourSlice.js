@@ -97,7 +97,7 @@ export const editTour = (id, payload) => async (dispatch) => {
     dispatch(clearTours());
     dispatch(
       setShowMessage({
-        description: 'Edited TOUR Successfully',
+        description: 'Tour modified successfully',
         type: 'success',
       })
     );
@@ -126,7 +126,7 @@ export const deleteTour = (id) => async (dispatch) => {
     dispatch(clearTours());
     dispatch(
       setShowMessage({
-        description: 'DELETED TOUR Successfully',
+        description: 'Tour deleted successfully',
         type: 'success',
       })
     );
@@ -136,6 +136,16 @@ export const deleteTour = (id) => async (dispatch) => {
     dispatch(setTourReady());
   }
 };
+
+export const getNextPosition = (id) => async (dispatch) => {
+  try {
+    const data = await coreApi.fetch(`${baseUrl}/${id}/next-position`);
+
+    return data.tour_position;
+  } catch (err) {
+    return null;
+  }
+}
 
 const tourSelector = ({ tours }) => tours.tour;
 const toursSelector = ({ tours }) => tours.tours;

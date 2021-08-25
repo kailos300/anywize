@@ -34,15 +34,18 @@ const AddOrder = () => {
 
     dispatch(
       setShowMessage({
-        description: "Order Added Successfully!",
+        description: "Order created successfully",
         type: "success",
       })
     );
 
-    history.push(PATHS.orders.root);
+    history.push(PATHS.orders.add);
   };
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <OrderForm
       onSubmit={onSubmit}
