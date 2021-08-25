@@ -36,13 +36,6 @@ const EditTour = () => {
   const onSubmit = async (payload) => {
     await dispatch(editTour(id, payload));
 
-    dispatch(
-      setShowMessage({
-        description: 'Tour Edited Successfully!',
-        type: 'success',
-      })
-    );
-
     history.push(PATHS.tours.root);
   };
 

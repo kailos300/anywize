@@ -12,10 +12,8 @@ import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded';
 import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
-// owl carousel
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 const URL = process.env.REACT_APP_API;
 
@@ -62,7 +60,11 @@ const useStyles = makeStyles({
 		color: '#F5F5F5',
 		marginBottom: '25px',
 		marginTop: '60px',
-	}
+	},
+	picture: {
+		maxWidth: '100%',
+		cursor: 'pointer',
+	},
 });
 
 const Stopview = ({ route, customer, onClose }) => {
@@ -111,26 +113,35 @@ const Stopview = ({ route, customer, onClose }) => {
 								(!!stop.signature_file || !!stop.pictures.length) && (
 									<Box mt={4}>
 										<Typography variant="h6" className={classes._galleryheading}>{t('Photos')}</Typography>
-										<OwlCarousel className='owl-theme' margin={10} nav dots={false}>
+										<Carousel
+											infiniteLoop={true}
+											autoPlay={false}
+											showArrows={true}
+											showIndicators={false}
+											showThumbs={false}
+											onClickItem={(i) => {
+												if (i === 0 && stop.signature_file) {
+													return window.open(stop.signature_file, '_blank');
+												}
+
+												return window.open(stop.pictures[stop.signature_file ? i - 1 : i], '_blank');
+											}}
+										>
 											{
 												stop.signature_file && (
-													<div className="item">
-														<a href={stop.signature_file} download>
-															<img src={stop.signature_file} alt="" />
-														</a>
-													</div>
+													<Box>
+														<img className={classes.picture} src={stop.signature_file} alt="" />
+													</Box>
 												)
 											}
 											{
 												stop.pictures.map((p) => (
-													<div className="item" key={p}>
-														<a href={p} download>
-															<img src={p} alt="" />
-														</a>
-													</div>
+													<Box key={p}>
+														<img className={classes.picture} src={p} alt="" />
+													</Box>
 												))
 											}
-										</OwlCarousel>
+										</Carousel>
 									</Box>
 								)
 							}
@@ -146,7 +157,7 @@ const Stopview = ({ route, customer, onClose }) => {
 													<>
 														<br />
 
-														<a href={`${URL}routes/${route.id}/proof-of-delivery/${customer.id}?taira=${localStorage.getItem('token')}`}>
+														<a href={`${URL}routes/${route.id}/proof-of-delivery/${customer.id}?taira=${localStorage.getItem('token')}`} target="_blank">
 															{t('proof of delivery')}
 														</a>
 													</>
