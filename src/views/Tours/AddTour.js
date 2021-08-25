@@ -22,7 +22,7 @@ const AddTour = () => {
 
     dispatch(
       setShowMessage({
-        description: 'Tour Added Successfully!',
+        description: 'Tour created successfully',
         type: 'success',
       })
     );

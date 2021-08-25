@@ -45,6 +45,13 @@ export const fetchUserInfo = () => async (dispatch) => {
   }
 };
 
+export const logout = () => async (dispatch) => {
+  dispatch(setUser(null));
+  localStorage.removeItem('token');
+
+  return window.location.href = '/login';
+};
+
 const userSelector = (state) => state.newUser.user;
 
 export const selectUser = createSelector(userSelector, (user) => user);

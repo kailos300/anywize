@@ -240,19 +240,7 @@ border           : 1px solid #6F9CEB;
     visibility: visible;
     opacity: 1;
   }
-._settingicon{
-  vertical-align: middle;
-}
-  ._settingicon:hover{
-    transition: all 0.4s ease-in-out 0s;
-    transform: rotate(0deg) !important;
 
-  }
-  ._settingicon:hover{
-    transition: all 0.4s ease-in-out 0s;
- transform: rotate(100deg) !important;
-    color: #6F9CEB
-  }
 
    .MuiTooltip-tooltip{
     background: unset !important;

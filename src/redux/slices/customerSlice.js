@@ -78,7 +78,7 @@ export const addCustomer = (payload) => async (dispatch) => {
     dispatch(emptyCustomers());
     dispatch(
       setShowMessage({
-        description: 'Customer Added Successfully!',
+        description: 'Customer created successfully',
         type: 'success',
       })
     );
@@ -87,7 +87,7 @@ export const addCustomer = (payload) => async (dispatch) => {
     console.log(err);
     dispatch(
       setShowMessage({
-        description: 'Can\'t Add! Customer',
+        description: 'Failed to create customer',
         type: 'error',
       })
     );
@@ -107,7 +107,7 @@ export const editCustomer = (id, payload) => async (dispatch) => {
 
     dispatch(
       setShowMessage({
-        description: 'Edited CUSTOMER Successfully',
+        description: 'Customer modified successfully',
         type: 'success',
       })
     );
@@ -135,7 +135,7 @@ export const deleteCustomer = (id) => async (dispatch) => {
     dispatch(emptyCustomers());
     dispatch(
       setShowMessage({
-        description: 'DELETED CUSTOMER Successfully',
+        description: 'Customer deleted successfully',
         type: 'success',
       })
     );

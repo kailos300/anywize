@@ -114,7 +114,7 @@ export const editOrder = (id, payload) => async (dispatch) => {
     dispatch(clearOrders());
     dispatch(
       setShowMessage({
-        description: "Edited ORDER Successfully",
+        description: "Order modified successfully",
         type: "success",
       })
     );
@@ -143,7 +143,7 @@ export const deleteOrder = (id) => async (dispatch) => {
 
     dispatch(
       setShowMessage({
-        description: "DELETED ORDER Successfully",
+        description: "Order deleted successfully",
         type: "success",
       })
     );

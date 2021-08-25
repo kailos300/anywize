@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Typography } from '@material-ui/core';
 import * as pick from 'lodash/pick';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from "clsx";
@@ -14,7 +15,7 @@ import { CustomerSchema } from 'constants/validation-schemas';
 import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
 import { PATHS } from 'util/appConstants';
 import SelectGeoCoordinates from 'components/Customers/SelectGeoCoordinates';
-
+import { getNextPosition } from 'redux/slices/tourSlice';
 
 const unzip = require('zip-to-city');
 
@@ -107,6 +108,7 @@ const CustomerForm = ({
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   const formik = useFormik({
@@ -182,6 +184,14 @@ const CustomerForm = ({
       : history.push(PATHS.customers.detail.replace(":id", id));
   };
 
+  const handleTourChange = async (id) => {
+    const position = await dispatch(getNextPosition(id));
+
+    if (position) {
+      setFieldValue('tour_position', position);
+    }
+  };
+
   return (
     <div className={classes._container}>
       <div className={classes._editbox}>
@@ -195,12 +205,12 @@ const CustomerForm = ({
               onClick={closeCustomerHandler}
               className={clsx(classes._icons, classes._close)}
             />
-            <Typography variant="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>Cancel</Typography>
+            <Typography component="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>Cancel</Typography>
           </div>
           <div className={classes._dflex}>
 
             <SaveSharpIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
-            <Typography variant="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>Save</Typography>
+            <Typography component="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>Save</Typography>
           </div>
 
         </div>
@@ -321,7 +331,7 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.contact_salutation}
             errors={errors}
-            options={["Mr", "Mrs", "Ms", "Dr"].map((o) => ({
+            options={["Mr", "Ms", "Dr"].map((o) => ({
               label: t(o),
               value: o,
             }))}
@@ -400,7 +410,13 @@ const CustomerForm = ({
           <Select
             label={t("Tour")}
             name="tour_id"
-            onChange={handleChange}
+            onChange={(e) => {
+              const { value } = e.target;
+
+              handleTourChange(value);
+
+              return handleChange(e);
+            }}
             onBlur={handleBlur}
             value={values.tour_id}
             errors={errors}

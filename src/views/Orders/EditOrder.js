@@ -44,13 +44,6 @@ const EditOrder = () => {
   const onSubmit = async (payload) => {
     await dispatch(editOrder(id, payload));
 
-    dispatch(
-      setShowMessage({
-        description: "Order Edited Successfully!",
-        type: "success",
-      })
-    );
-
     history.push(PATHS.orders.root);
   };
 
