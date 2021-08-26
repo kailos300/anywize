@@ -8,6 +8,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 import SettingsIcon from '@material-ui/icons/Settings';
 import clsx from "clsx";
 //assets
@@ -68,7 +70,7 @@ const useStyles = makeStyles({
 });
 
 const Navbar = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -80,6 +82,11 @@ const Navbar = (props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const changeLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'de' ? 'en' : 'de');
+    handleClose();
   };
 
   return (
@@ -130,6 +137,15 @@ const Navbar = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
+          <MenuItem>
+            <Typography component="span">
+              EN
+            </Typography>
+            <Switch checked={i18n.language === 'de'} onChange={changeLanguage} />
+            <Typography component="span">
+              DE
+            </Typography>
+          </MenuItem>
           <MenuItem onClick={(e) => {
             e.preventDefault();
 

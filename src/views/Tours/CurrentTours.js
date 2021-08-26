@@ -135,8 +135,10 @@ const CurrentTours = () => {
 			<MaterialTable
 				tableRef={tableRef}
 				data={mapTableData(tabledata)}
-				columns={getColumns(CURRENT_TOURS_COLUMNS(tableRef, markFavourite, redirectView), t)}
+				columns={getColumns(CURRENT_TOURS_COLUMNS(tableRef, markFavourite, redirectView, t), t)}
 				options={{
+					pageSize: 50,
+					pageSizeOptions: [50, 100],
 					sorting: false,
 					paging: false,
 					detailPanelColumnAlignment: 'right',

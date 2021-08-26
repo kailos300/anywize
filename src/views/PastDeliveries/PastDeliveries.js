@@ -212,6 +212,8 @@ const PastDeliveries = () => {
         columns={getColumns(PAST_DELIVERIES_TABLE_COLUMNS, t)}
         data={mapTableData(pastdeliveries)}
         options={{
+          pageSize: 50,
+          pageSizeOptions: [50, 100],
           paging: false,
           sorting: false,
           actionsColumnIndex: -1,
