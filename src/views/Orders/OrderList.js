@@ -293,6 +293,8 @@ const OrderList = ({ confirm }) => {
         columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData)), t)}
         actions={actions}
         options={{
+          pageSize: 50,
+          pageSizeOptions: [50, 100],
           detailPanelColumnAlignment: 'right',
           paging: false,
           actionsColumnIndex: -1,

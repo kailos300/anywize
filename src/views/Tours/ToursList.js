@@ -134,6 +134,8 @@ const ToursList = ({ confirm }) => {
           }
           actions={actions}
           options={{
+            pageSize: 50,
+            pageSizeOptions: [50, 100],
             actionsColumnIndex: -1,
             searchFieldAlignment: 'left',
             showTitle: false,

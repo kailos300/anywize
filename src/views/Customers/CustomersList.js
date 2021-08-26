@@ -136,7 +136,8 @@ const CustomersList = ({ confirm }) => {
         }
         actions={actions}
         options={{
-          // sorting: false,
+          pageSize: 50,
+          pageSizeOptions: [50, 100],
           actionsColumnIndex: -1,
           searchFieldAlignment: "left",
           showTitle: false,

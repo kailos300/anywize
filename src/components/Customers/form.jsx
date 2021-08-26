@@ -335,7 +335,6 @@ const CustomerForm = ({
               label: t(o),
               value: o,
             }))}
-            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -346,7 +345,6 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.contact_name}
             errors={errors}
-            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -357,7 +355,6 @@ const CustomerForm = ({
             onBlur={handleBlur}
             value={values.contact_surname}
             errors={errors}
-            required
           />
         </Grid>
       </Grid>
