@@ -102,7 +102,7 @@ const Navbar = (props) => {
 
           return (
             <ListItem
-              activeClassName={location.pathname === item.path ? classes._isactive : ''}
+              activeClassName={location.pathname.includes(item.path) ? classes._isactive : ''}
               className={clsx(
                 classes._menuitem,
                 ((props.checkTourPaths().includes(location.pathname) && item.name === "Tours") || (props.checkPaths().includes(location.pathname) && item.name === "Master Data"))
