@@ -112,7 +112,7 @@ const CustomersList = ({ confirm }) => {
   const actions = getActions(
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
-    () => history.push(PATHS.customers.add)
+    () => history.push(PATHS.customers.add), null, null, null, t
   );
 
   if (loading) {
@@ -136,7 +136,8 @@ const CustomersList = ({ confirm }) => {
         }
         actions={actions}
         options={{
-          // sorting: false,
+          pageSize: 50,
+          pageSizeOptions: [50, 100],
           actionsColumnIndex: -1,
           searchFieldAlignment: "left",
           showTitle: false,

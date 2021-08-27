@@ -80,7 +80,7 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler) => {
   ];
 }
 
-export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite, redirectView) => {
+export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite, redirectView, t) => {
   return [
     {
       title: 'icon',
@@ -118,10 +118,10 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite, redirectView) => 
     {
       title: 'progress', render: rowData => {
         if (rowData.progress === 'Complete') {
-          return <span style={{ color: '#6F9CEB', font: 'normal normal normal 18px/24px Roboto' }}>{rowData.progress}</span>
+          return <span style={{ color: '#6F9CEB', font: 'normal normal normal 18px/24px Roboto' }}>{t(rowData.progress)}</span>
         }
         else {
-          return <span style={{ font: 'normal normal normal 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.progress}</span>
+          return <span style={{ font: 'normal normal normal 18px/24px Roboto', color: '#F5F5F5' }}>{t(rowData.progress)}</span>
         }
       }
     },
