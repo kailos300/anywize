@@ -139,21 +139,23 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop, user }) 
         type="geojson"
         data={{
           type: 'FeatureCollection',
-          features: routes.map((route) => {
-            return {
-              type: 'Feature',
-              id: route.id,
-              properties: {
-                color: highlightedRouteId === route.id ? '#6F9CEB' : 'white',
-              },
-              geometry: {
-                type: 'LineString',
-                coordinates: route.RoutesNavigations.reduce((acc, cur) => {
-                  return acc.concat(cur.navigation?.routes[0].geometry.coordinates);
-                }, []),
-              },
-            };
-          }),
+          features: routes.reduce((acc, route) => {
+            const arr = route.RoutesNavigations.map((rn) => {
+              return {
+                type: 'Feature',
+                id: route.id,
+                properties: {
+                  color: highlightedRouteId === route.id ? '#6F9CEB' : '#cdddf8',
+                },
+                geometry: {
+                  type: 'LineString',
+                  coordinates: rn.navigation?.routes[0].geometry.coordinates,
+                },
+              }
+            });
+
+            return acc.concat(arr);
+          }, []),
         }}
       >
         <Layer {...layerStyle} />
