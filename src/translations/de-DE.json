@@ -42,7 +42,7 @@
   "Tour": "Tour",
   "Position": "Position",
   "Deposit agreement": "Ablagevereinbarung",
-  "Keybox Code": "Tastaturkürzel",
+  "Keybox Code": "Schlüsselbox-Code",
   "Latitude": "Breitengrad",
   "Longitude": "Längengrad",
   "Password": "Passwort",
@@ -91,5 +91,5 @@
   "Dr": "Dr.",
   "None": "Keine",
   "Bring Key": "Schlüssel mitbringen",
-  "KeyBox": "KeyBox"
+  "KeyBox": "Schlüsselbox"
 }
