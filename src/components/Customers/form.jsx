@@ -205,12 +205,12 @@ const CustomerForm = ({
               onClick={closeCustomerHandler}
               className={clsx(classes._icons, classes._close)}
             />
-            <Typography component="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>Cancel</Typography>
+            <Typography component="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>{t('Cancel')}</Typography>
           </div>
           <div className={classes._dflex}>
 
             <SaveSharpIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
-            <Typography component="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>Save</Typography>
+            <Typography component="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>{t('Save')}</Typography>
           </div>
 
         </div>

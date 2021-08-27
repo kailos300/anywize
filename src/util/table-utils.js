@@ -27,7 +27,7 @@ export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler
       },
       {
         icon: 'add',
-        tooltip: 'Add',
+        tooltip: t('Add'),
         iconProps: { style: { color: "#ADADAD", background: '#1F1F1F', marginRight: '15px' } },
         isFreeAction: true,
         onClick: addHandler,
@@ -40,7 +40,7 @@ export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler
   actions.push(
     {
       icon: 'add',
-      tooltip: 'Add',
+      tooltip: t('Add'),
       iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
       isFreeAction: true,
       onClick: addHandler,

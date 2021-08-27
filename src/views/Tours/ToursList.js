@@ -106,7 +106,7 @@ const ToursList = ({ confirm }) => {
   const actions = getActions(
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
-    () => addHandler()
+    () => addHandler(), null, null, null, t
   );
   const addHandler = () => {
     history.push(PATHS.tours.add);

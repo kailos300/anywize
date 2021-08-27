@@ -9,7 +9,7 @@ export const PATHS = {
     current: '/tours/current',
     recent: '/tours/recent',
     archive: '/tours/archive',
-    map: '/tours/current/map',
+    map: '/map/current',
   },
   customers: {
     root: '/customers',

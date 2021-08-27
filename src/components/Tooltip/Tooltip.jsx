@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from "@material-ui/core/styles";
-import copy from '../../assets/img/copy.svg'
+import copy from '../../assets/img/copy.svg';
+
 const useStyles = makeStyles({
   _tourdetailbar: {
     background: '#93B5F0',
@@ -66,11 +68,13 @@ const useStyles = makeStyles({
 });
 export default function TooltipBar(props) {
   const classes = useStyles();
+  const { t } = useTranslation();
   const copyCode = () => {
     props.name === 'callicon' ?
       navigator.clipboard.writeText(`Mobile:${props.rowData.driver_phone}`) :
       navigator.clipboard.writeText(`Tourcode:${props.rowData.code}, Password:${props.rowData.password}`)
-  }
+  };
+
   return (
     <div className={classes._tourdetailbar} >
       {console.log(props, "props")}
@@ -81,10 +85,10 @@ export default function TooltipBar(props) {
         :
         <div className={classes._codetext}>
           <div>
-            <span className={classes._codedetail}>Tourcode:</span><span className={classes._codevalue}> {props.rowData.code}</span>
+            <span className={classes._codedetail}>{t('Tourcode')}:</span><span className={classes._codevalue}> {props.rowData.code}</span>
           </div>
           <div style={{ marginTop: '-5px' }}>
-            <span className={classes._codedetail}>Password:</span> <span className={classes._codevalue}>{props.rowData.password}</span>
+            <span className={classes._codedetail}>{t('Password')}:</span> <span className={classes._codevalue}>{props.rowData.password}</span>
           </div>
         </div>
       }

@@ -112,7 +112,7 @@ const CustomersList = ({ confirm }) => {
   const actions = getActions(
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
-    () => history.push(PATHS.customers.add)
+    () => history.push(PATHS.customers.add), null, null, null, t
   );
 
   if (loading) {

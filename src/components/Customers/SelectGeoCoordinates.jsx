@@ -171,7 +171,7 @@ const SelectGeoCoordinates = ({ onChange, latitude, longitude, initialInputValue
             setInputValue(newInputValue);
           }}
           renderInput={(params) => (
-            <TextField {...params} label="Search location" variant="outlined" fullWidth />
+            <TextField {...params} label={t("Search location")} variant="outlined" fullWidth />
           )}
         />
       </FormControl>
