@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 // Helpers
 import { TOURS_TABLE_COLUMNS } from 'constants/ui-constants';
-import { getColumns, getActions } from 'util/table-utils';
+import { getColumns, getActions, getLocalization } from "util/table-utils";
 import { mapTableData } from 'util/helpers';
 import { PATHS } from 'util/appConstants';
 
@@ -133,6 +133,7 @@ const ToursList = ({ confirm }) => {
             history.push(PATHS.tours.detail.replace(':id', rowData.id))
           }
           actions={actions}
+          localization={getLocalization(t)}
           options={{
             pageSize: 50,
             pageSizeOptions: [50, 100],
