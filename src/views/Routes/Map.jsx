@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
+import io from 'socket.io-client';
 
 //Actions
 import {
@@ -16,6 +17,8 @@ import { selectUser } from 'redux/slices/userSlice';
 import MapSidebar from 'components/Routes/MapSidebar';
 import Map from 'components/Routes/Map';
 import Stop from 'components/Routes/Stop';
+
+const API_URL = process.env.REACT_APP_API.replace('/api/', '');
 
 const useStyles = makeStyles((theme) => ({
   _container: {
@@ -36,23 +39,30 @@ const RoutesMap = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { routeId, customerId } = useParams();
-  const timeout = useRef(null);
   const routes = useSelector(selectCurrent);
   const loading = useSelector(selectRouteStatus);
   const user = useSelector(selectUser);
-  const [selected, setSelected] = useState([]);
+  const [selected, _setSelected] = useState([]);
   const [selectedRoutes, setSelectedRoutes] = useState([]);
   const [highlighted, setHighlighted] = useState(null);
   const [selectedStop, setSelectedStop] = useState(null);
   const [initialFetch, setInitialFetch] = useState(false);
+  const [socket, setSocket] = useState(null);
+
+  // hack to keep this updated to be used with refreshSelected
+  // which is called from a hook
+  const selectedRef = useRef(selected);
+  const setSelected = (s) => {
+    selectedRef.current = s;
+    _setSelected(s);
+  };
 
   const refreshSelected = async () => {
     let i = 0;
 
     const refreshed = [];
-
-    while (i < selected.length) {
-      const r = await dispatch(getRoute(selected[i]));
+    while (i < selectedRef.current.length) {
+      const r = await dispatch(getRoute(selectedRef.current[i]));
 
       refreshed.push(r);
       i += 1;
@@ -101,22 +111,45 @@ const RoutesMap = () => {
   }, [routes, initialFetch]);
 
   useEffect(() => {
+    if (!socket) {
+      const newSocket = io(API_URL, {
+        query: { token: localStorage.getItem('token') },
+      });
+
+      setSocket(newSocket);
+    }
+
+    return () => socket ? socket.close() : null;
+  }, []);
+
+  // socket stuff
+  useEffect(() => {
+    if (socket) {
+      socket.emit('subscribe', { routes: selected });
+
+      socket.on('route-updated', (data) => {
+        refreshSelected();
+      });
+    }
+  }, [socket]);
+
+  // more socket stuff
+  useEffect(() => {
+    if (socket) {
+      socket.emit('subscribe', { routes: selected });
+    }
+  }, [JSON.stringify(selected)]);
+
+  useEffect(() => {
     if (!loading) {
       dispatch(getCurrentRoutes());
     }
-
-    return () => {
-      clearTimeout(timeout.current);
-    };
   }, []);
 
   useEffect(() => {
     if (selectedRoutes.length && parseInt(routeId, 10) === selectedRoutes[0].id && parseInt(customerId, 10) && initialFetch) {
       openStop(selectedRoutes[0].id, parseInt(customerId, 10));
     }
-
-    clearTimeout(timeout.current);
-    timeout.current = setTimeout(() => refreshSelected(), 30000);
   }, [selectedRoutes, initialFetch]);
 
   const onRouteSelect = async (route, addAsFavourite = true) => {

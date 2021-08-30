@@ -13,7 +13,6 @@ import {
   editOrder,
 } from "redux/slices/orderSlice";
 import { getCustomers, selectCustomers } from "redux/slices/customerSlice";
-import { setShowMessage } from "redux/slices/uiSlice";
 
 // Components
 import OrderForm from "components/Orders/form";
