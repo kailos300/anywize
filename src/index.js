@@ -19,7 +19,7 @@ import theme from 'config/theme';
 
 i18next.use(LanguageDetector).init({
   interpolation: { escapeValue: false },
-  fallbackLng: 'en',
+  fallbackLng: 'de',
   defaultNS: 'common',
   resources: {
     en: {

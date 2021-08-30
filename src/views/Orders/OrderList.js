@@ -16,7 +16,7 @@ import clsx from 'clsx';
 
 // Helpers
 import { ORDERS_TABLE_COLUMNS } from 'constants/ui-constants';
-import { getColumns, getActions } from 'util/table-utils';
+import { getColumns, getActions, getLocalization } from "util/table-utils";
 import { mapTableData } from 'util/helpers';
 import { PATHS } from 'util/appConstants';
 
@@ -148,7 +148,7 @@ const tableTitle = 'ORDERS';
 
 const OrderList = ({ confirm }) => {
   const tableRef = useRef();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
@@ -292,6 +292,7 @@ const OrderList = ({ confirm }) => {
         title={t(tableTitle)}
         columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData)), t)}
         actions={actions}
+        localization={getLocalization(t)}
         options={{
           pageSize: 50,
           pageSizeOptions: [50, 100],
