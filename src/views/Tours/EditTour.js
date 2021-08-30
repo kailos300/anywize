@@ -12,7 +12,6 @@ import {
   getTour,
   editTour,
 } from 'redux/slices/tourSlice';
-import { setShowMessage } from 'redux/slices/uiSlice';
 
 // Components
 import TourForm from 'components/Tours/form';

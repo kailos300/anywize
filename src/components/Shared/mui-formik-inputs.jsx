@@ -334,7 +334,6 @@ export const DatePicker = (props) => {
       }}
       required={required}
       fullWidth
-      autoOk
       error={!!getHelpOrError(null, errors, name, t)}
       helperText={getHelpOrError(help, errors, name, t)}
     />
