@@ -9,7 +9,7 @@ import { PATHS } from 'util/appConstants';
 
 //helpers
 import { CURRENT_TOURS_COLUMNS } from 'constants/ui-constants'
-import { getColumns } from 'util/table-utils';
+import { getColumns, getLocalization } from "util/table-utils";
 import { mapTableData } from 'util/helpers';
 import Loading from 'components/Shared/loading';
 import TableExpansionPanel from 'components/Routes/TableExpansionPanel';
@@ -111,6 +111,7 @@ const RecentTours = () => {
 			<MaterialTable
 				tableRef={tableRef}
 				data={mapTableData(tabledata)}
+				localization={getLocalization(t)}
 				columns={getColumns(CURRENT_TOURS_COLUMNS(tableRef, null, redirectView, t), t)}
 				options={{
 					pageSize: 50,

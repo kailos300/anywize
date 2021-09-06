@@ -52,3 +52,26 @@ export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler
 
   return actions;
 };
+
+export const getLocalization = (t) => {
+  return {
+    pagination: {
+      labelRowsSelect: t('rows'),
+      labelDisplayedRows: `{from}-{to} ${t('of')} {count}`,
+    },
+    toolbar: {
+      nRowsSelected: `{0} ${t('row(s)')} ${t('selected')}`,
+      searchTooltip: t('Search'),
+      searchPlaceholder: t('Search'),
+    },
+    header: {
+      actions: t('Actions'),
+    },
+    body: {
+      emptyDataSourceMessage: t('No records to display'),
+      filterRow: {
+        filterTooltip: t('Filter'),
+      },
+    },
+  };
+};

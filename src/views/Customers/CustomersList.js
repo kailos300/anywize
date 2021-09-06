@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 // Helpers
 import { CUSTOMERS_TABLE_COLUMNS } from "constants/ui-constants";
-import { getColumns, getActions } from "util/table-utils";
+import { getColumns, getActions, getLocalization } from "util/table-utils";
 import { mapTableData } from "util/helpers";
 import { PATHS } from "util/appConstants";
 
@@ -135,6 +135,7 @@ const CustomersList = ({ confirm }) => {
           history.push(PATHS.customers.detail.replace(":id", rowData.id))
         }
         actions={actions}
+        localization={getLocalization(t)}
         options={{
           pageSize: 50,
           pageSizeOptions: [50, 100],

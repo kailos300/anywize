@@ -21,7 +21,7 @@ import moment from 'moment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { PAST_DELIVERIES_TABLE_COLUMNS } from 'constants/ui-constants';
-import { getColumns } from 'util/table-utils';
+import { getColumns, getLocalization } from "util/table-utils";
 import { mapTableData } from 'util/helpers';
 import { PATHS } from 'util/appConstants';
 import { DatePicker } from 'components/Shared/mui-formik-inputs';
@@ -211,6 +211,7 @@ const PastDeliveries = () => {
         }}
         columns={getColumns(PAST_DELIVERIES_TABLE_COLUMNS, t)}
         data={mapTableData(pastdeliveries)}
+        localization={getLocalization(t)}
         options={{
           pageSize: 50,
           pageSizeOptions: [50, 100],

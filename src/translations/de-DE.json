@@ -110,5 +110,12 @@
   "Date delivered from": "Datum geliefert von",
   "Edit": "Bearbeiten",
   "Customer alias": "Kunden-Alias",
-  "Customer name 1": "Kundenname 1"
+  "Customer name 1": "Kundenname 1",
+  "Actions": "Aktion",
+  "Filter": "Filter",
+  "of": "von",
+  "selected": "ausgewählt",
+  "row": "Reihe",
+  "row(s)": "Reihe(n)",
+  "rows": "Reihen"
 }
