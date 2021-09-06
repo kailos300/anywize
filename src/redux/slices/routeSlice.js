@@ -104,7 +104,7 @@ export const getCurrentRoutes = () => async (dispatch) => {
 export const getFinisedRoutes = () => async (dispatch) => {
 	dispatch(setRouteLoading());
 	try {
-		const routes = await coreApi.fetch(`${baseUrl}?started=1&ended=1&end_date_from=${moment().subtract(5, 'days').startOf('day').format()}`);
+		const routes = await coreApi.fetch(`${baseUrl}?started=1&ended=1&end_date_from=${moment().utc().subtract(5, 'days').startOf('day').format('YYYY-MM-DD')}`);
 
 		const newData = routes.map((data) => {
 			return {
@@ -124,7 +124,7 @@ export const getFinisedRoutes = () => async (dispatch) => {
 export const getArchivedRoutes = () => async (dispatch) => {
 	dispatch(setRouteLoading());
 	try {
-		const routes = await coreApi.fetch(`${baseUrl}?started=1&ended=1&end_date_to=${moment().subtract(5, 'days').startOf('day').format()}`);
+		const routes = await coreApi.fetch(`${baseUrl}?started=1&ended=1&end_date_to=${moment().utc().subtract(5, 'days').startOf('day').format('YYYY-MM-DD')}`);
 		let update = routes.map((data) => {
 			return {
 				...data
