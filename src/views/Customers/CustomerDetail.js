@@ -148,7 +148,7 @@ const CustomerDetail = () => {
             className={clsx(classes._detail, classes._width11)}
             variant="h6"
           >
-            {customer.id}
+            {customer.number}
           </Typography>
         </div>
         <div>

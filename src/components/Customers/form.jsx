@@ -1,14 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Box } from '@material-ui/core';
 import * as pick from 'lodash/pick';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from "clsx";
 import countries from 'iso-3166-country-list';
-import SaveSharpIcon from '@material-ui/icons/SaveSharp';
-import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { useHistory, useParams } from 'react-router-dom';
 import { Input, Select, Checkbox, Autocomplete } from 'components/Shared/mui-formik-inputs';
 import { CustomerSchema } from 'constants/validation-schemas';
@@ -16,6 +13,7 @@ import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields
 import { PATHS } from 'util/appConstants';
 import SelectGeoCoordinates from 'components/Customers/SelectGeoCoordinates';
 import { getNextPosition } from 'redux/slices/tourSlice';
+import FormCancelSaveButton from 'components/Shared/FormCancelSaveButtons';
 
 const unzip = require('zip-to-city');
 
@@ -76,28 +74,6 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
   },
-  _edittext: {
-    // width: '24px',
-    height: '16px',
-    font: 'normal normal normal 14px / 20px Roboto',
-    padding: '4px 8px'
-  },
-  _cancel: {
-    color: '#525252',
-    font: ' normal normal normal 14px/20px Roboto',
-    display: 'none',
-    position: 'absolute',
-    marginLeft: '-55px',
-    transition: "all 0.3s ease-in-out",
-  },
-  _savetext: {
-    color: "#6F9CEB",
-    font: ' normal normal normal 14px/20px Roboto',
-    display: 'none',
-    position: 'absolute',
-    marginLeft: '35px',
-    transition: "all 0.3s ease-in-out",
-  }
 });
 const CustomerForm = ({
   initialValues,
@@ -157,6 +133,8 @@ const CustomerForm = ({
     errors,
     handleSubmit,
     submitCount,
+    isValid,
+    isSubmitting,
   } = formik;
   let { handleBlur } = formik;
 
@@ -194,27 +172,22 @@ const CustomerForm = ({
 
   return (
     <div className={classes._container}>
-      <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">
-          {action === "ADD" ? t("New Customer") : t("Edit Customer")}
-        </Typography>
-        <div className={classes._dflex}>
-          <div className={classes._dflex}>
-
-            <CloseSharpIcon
-              onClick={closeCustomerHandler}
-              className={clsx(classes._icons, classes._close)}
+      <Box display="flex" mb={4}>
+        <Box flex={3}>
+          <Typography className={classes._heading} variant="h4">
+            {action === "ADD" ? t("New Customer") : t("Edit Customer")}
+          </Typography>
+        </Box>
+        <Box flex={1} textAlign="right" position="relative">
+          <Box position="absolute" right={0}>
+            <FormCancelSaveButton
+              disabled={!isValid || isSubmitting}
+              onCancel={closeCustomerHandler}
+              onSave={handleSubmit}
             />
-            <Typography component="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>{t('Cancel')}</Typography>
-          </div>
-          <div className={classes._dflex}>
-
-            <SaveSharpIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
-            <Typography component="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>{t('Save')}</Typography>
-          </div>
-
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
       <Typography className={classes._subheading} variant="h5">
         {t("Basic Data")}
       </Typography>

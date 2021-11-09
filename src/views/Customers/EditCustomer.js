@@ -42,7 +42,7 @@ const EditCustomer = () => {
   const onSubmit = async (payload) => {
     await dispatch(editCustomer(id, payload));
 
-    history.push(PATHS.customers.root);
+    history.push(PATHS.customers.detail.replace(':id', id));
   };
 
   if (loading || !customer) {

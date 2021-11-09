@@ -69,15 +69,15 @@
   "Are you sure?": "Sind Sie sicher?",
   "Customer created successfully": "Kunde erfolgreich hinzugefügt!",
   "Can't Add! Customer": "Kann nicht hinzufügen! Kunde",
-  "Customer modified successfully": "CUSTOMER erfolgreich editiert",
+  "Customer modified successfully": "Kunden erfolgreich editiert",
   "Failed editing customer. Please try again": "Bearbeitung des Kunden fehlgeschlagen. Bitte versuchen Sie es erneut",
-  "Customer deleted successfully": "KUNDE LÖSCHEN Erfolgreich",
+  "Customer deleted successfully": "Kunde löschen Erfolgreich",
   "Order modified successfully": "Erfolgreich bearbeiteter Auftrag",
   "Failed editing order. Please try again later": "Bearbeitung des Auftrags fehlgeschlagen. Bitte versuchen Sie es später noch einmal",
-  "Order deleted successfully": "AUFTRAG LÖSCHEN Erfolgreich",
-  "Tour modified successfully": "Erfolgreich bearbeitete TOUR",
+  "Order deleted successfully": "Auftrag löschen Erfolgreich",
+  "Tour modified successfully": "Erfolgreich bearbeitete touren",
   "Failed editing tour. Please try again later": "Bearbeitungstour fehlgeschlagen. Bitte versuchen Sie es später noch einmal",
-  "Tour deleted successfully": "TOUR LÖSCHEN Erfolgreich",
+  "Tour deleted successfully": "Touren löschen erfolgreich",
   "Email or password incorrect": "E-Mail oder Passwort falsch",
   "Order created successfully": "Auftrag erfolgreich hinzugefügt!",
   "Order Edited Successfully!": "Bestellung erfolgreich editiert!",
@@ -117,5 +117,6 @@
   "selected": "ausgewählt",
   "row": "Reihe",
   "row(s)": "Reihe(n)",
-  "rows": "Reihen"
+  "rows": "Reihen",
+  "Photos": "Fotos"
 }

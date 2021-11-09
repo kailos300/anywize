@@ -11,6 +11,7 @@ import CallIcon from '@material-ui/icons/Call';
 import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded';
 import CloseIcon from '@material-ui/icons/Close';
+import BackIcon from '@material-ui/icons/SettingsBackupRestore';
 import moment from 'moment';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
@@ -62,7 +63,8 @@ const useStyles = makeStyles({
 		marginTop: '60px',
 	},
 	picture: {
-		maxWidth: '100%',
+		width: 'auto',
+		maxHeight: '300px',
 		cursor: 'pointer',
 	},
 });
@@ -110,7 +112,7 @@ const Stopview = ({ route, customer, onClose }) => {
 					!!stop && (
 						<>
 							{
-								(!!stop.signature_file || !!stop.pictures.length) && (
+								(!!stop.pictures.length) && (
 									<Box mt={4}>
 										<Typography variant="h6" className={classes._galleryheading}>{t('Photos')}</Typography>
 										<Carousel
@@ -120,20 +122,10 @@ const Stopview = ({ route, customer, onClose }) => {
 											showIndicators={false}
 											showThumbs={false}
 											onClickItem={(i) => {
-												if (i === 0 && stop.signature_file) {
-													return window.open(stop.signature_file, '_blank');
-												}
-
-												return window.open(stop.pictures[stop.signature_file ? i - 1 : i], '_blank');
+												return window.open(stop.pictures[i], '_blank');
 											}}
+											statusFormatter={(c, total) => `${c} ${t('of')} ${total}`}
 										>
-											{
-												stop.signature_file && (
-													<Box>
-														<img className={classes.picture} src={stop.signature_file} alt="" />
-													</Box>
-												)
-											}
 											{
 												stop.pictures.map((p) => (
 													<Box key={p}>
@@ -166,6 +158,14 @@ const Stopview = ({ route, customer, onClose }) => {
 
 										</Typography>
 									</div>
+									{
+										!!stop.goods_back && (
+											<div className={classes._routedetails}>
+												<BackIcon />
+												<Typography>{t(stop.reason)}</Typography>
+											</div>
+										)
+									}
 									<div className={classes._routedetails}>
 										<MyLocationRoundedIcon />&nbsp;
 										<Typography>

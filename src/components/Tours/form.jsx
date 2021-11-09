@@ -1,18 +1,16 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import * as pick from "lodash/pick";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import SaveSharpIcon from '@material-ui/icons/SaveSharp';
-import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { useHistory, useParams } from "react-router-dom";
-import clsx from "clsx";
 import { Input } from "../Shared/mui-formik-inputs";
 import { TourSchema } from "constants/validation-schemas";
 import { TourFormAllowedFields } from "constants/forms-submit-allowed-fields";
 import { PATHS } from "util/appConstants";
+import FormCancelSaveButton from 'components/Shared/FormCancelSaveButtons';
 
 const useStyles = makeStyles({
   _container: {
@@ -119,7 +117,7 @@ const TourForm = ({ initialValues, onSubmit, action }) => {
       }
     },
   });
-  const { values, handleChange, errors, handleSubmit, submitCount } = formik;
+  const { values, handleChange, errors, handleSubmit, submitCount, isValid, isSubmitting } = formik;
   let { handleBlur } = formik;
 
   if (!submitCount) {
@@ -134,28 +132,22 @@ const TourForm = ({ initialValues, onSubmit, action }) => {
 
   return (
     <div className={classes._container}>
-      <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">
-          {action === "ADD" ? t("New Tour") : t("Edit Tour")}
-        </Typography>
-        <div className={classes._dflex}>
-          <div className={classes._dflex}>
-            <CloseSharpIcon
-              onClick={closeTourHandler}
-              title="close"
-              className={clsx(classes._icons, classes._close)}
+      <Box display="flex" mb={4}>
+        <Box flex={3}>
+          <Typography className={classes._heading} variant="h4">
+            {action === "ADD" ? t("New Tour") : t("Edit Tour")}
+          </Typography>
+        </Box>
+        <Box flex={1} textAlign="right" position="relative">
+          <Box position="absolute" right={0}>
+            <FormCancelSaveButton
+              disabled={!isValid || isSubmitting}
+              onCancel={closeTourHandler}
+              onSave={handleSubmit}
             />
-            <Typography variant="span" className={clsx(classes._edittext, classes._cancel, 'edittag')}>Cancel</Typography>
-          </div>
-          <div className={classes._dflex}>
-            <SaveSharpIcon
-              onClick={handleSubmit}
-              className={clsx(classes._icons, classes._save)}
-            />
-            <Typography variant="span" className={clsx(classes._edittext, classes._savetext, 'edittag')}>Save</Typography>
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Input
