@@ -160,10 +160,13 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop, user }) 
       >
         <Layer {...layerStyle} />
       </Source>
-      <NavigationControl style={{ bottom: 30, right: 20, backgroundColor: 'red' }} />
+      <NavigationControl
+        style={{ bottom: 30, right: 20, backgroundColor: 'red' }}
+        showCompass={false}
+      />
       <Box
         position="absolute"
-        bottom={120}
+        bottom={85}
         right={20}
         px={0.3}
         pt={0.5}

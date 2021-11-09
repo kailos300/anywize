@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from 'react-redux';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -20,18 +22,7 @@ import { NAVIGATION_ROUTES } from "constants/ui-constants";
 import { PATHS } from "util/appConstants";
 import { logout } from 'redux/slices/userSlice';
 
-const useStyles = makeStyles({
-  _container: {
-    backgroundColor: "#121212",
-    height: "72px",
-    padding: "0 130px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    boxShadow: '0px 0px 4px #ffffff52',
-    position: 'relative',
-    zIndex: 1
-  },
+const useStyles = makeStyles((theme) => ({
   _img: {
     width: "148px",
     height: "29px",
@@ -66,8 +57,23 @@ const useStyles = makeStyles({
       transform: 'rotate(0deg) !important',
       color: '#6F9CEB',
     },
-  }
-});
+  },
+  appbar: {
+    backgroundColor: '#121212',
+  },
+  toolbar: {
+    paddingLeft: '130px',
+    paddingRight: '130px',
+    boxShadow: '0px 0px 4px #ffffff52',
+    display: 'flex',
+    justifyContent: 'space-between',
+
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: '20px',
+      paddingRight: '20px',
+    }
+  },
+}));
 
 const Navbar = (props) => {
   const { t, i18n } = useTranslation();
@@ -90,72 +96,74 @@ const Navbar = (props) => {
   };
 
   return (
-    <header className={classes._container}>
-      <Link to={PATHS.tours.current}>
-        <img className={classes._img} src={logo} alt="anywize logo" />
-      </Link>
-      <List className={classes._nav} component="nav">
-        {NAVIGATION_ROUTES.map((item, index) => {
-          if (item.name === 'Settings') {
-            return null;
-          }
+    <AppBar position="fixed" className={classes.appbar}>
+      <Toolbar className={classes.toolbar}>
+        <Link to={PATHS.tours.current}>
+          <img className={classes._img} src={logo} alt="anywize logo" />
+        </Link>
+        <List className={classes._nav} component="nav">
+          {NAVIGATION_ROUTES.map((item, index) => {
+            if (item.name === 'Settings') {
+              return null;
+            }
 
-          return (
-            <ListItem
-              activeClassName={location.pathname.includes(item.path) ? classes._isactive : ''}
-              className={clsx(
-                classes._menuitem,
-                ((props.checkTourPaths().includes(location.pathname) && item.name === "Tours") || (props.checkPaths().includes(location.pathname) && item.name === "Master Data"))
-                  ? classes._isactive
-                  : ""
-              )}
+            return (
+              <ListItem
+                activeClassName={location.pathname.includes(item.path) ? classes._isactive : ''}
+                className={clsx(
+                  classes._menuitem,
+                  ((props.checkTourPaths().includes(location.pathname) && item.name === "Tours") || (props.checkPaths().includes(location.pathname) && item.name === "Master Data"))
+                    ? classes._isactive
+                    : ""
+                )}
 
-              key={index}
-              component={NavLink}
-              to={item.path}
-            >
-              <ListItemText className={classes._nomargin}>
-                {t(item.name)}
-              </ListItemText>
-            </ListItem>
-          );
-        })}
-        <ListItem
-          className={clsx(classes._menuitem)}
-          onClick={handleClick}
-        >
-          <ListItemText className={classes._nomargin}>
-            <SettingsIcon className={classes._settingicon} />
-          </ListItemText>
-        </ListItem>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-          getContentAnchorEl={null}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem>
-            <Typography component="span">
-              EN
-            </Typography>
-            <Switch checked={i18n.language === 'de'} onChange={changeLanguage} />
-            <Typography component="span">
-              DE
-            </Typography>
-          </MenuItem>
-          <MenuItem onClick={(e) => {
-            e.preventDefault();
+                key={index}
+                component={NavLink}
+                to={item.path}
+              >
+                <ListItemText className={classes._nomargin}>
+                  {t(item.name)}
+                </ListItemText>
+              </ListItem>
+            );
+          })}
+          <ListItem
+            className={clsx(classes._menuitem)}
+            onClick={handleClick}
+          >
+            <ListItemText className={classes._nomargin}>
+              <SettingsIcon className={classes._settingicon} />
+            </ListItemText>
+          </ListItem>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            getContentAnchorEl={null}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem>
+              <Typography component="span">
+                EN
+              </Typography>
+              <Switch checked={i18n.language === 'de'} onChange={changeLanguage} />
+              <Typography component="span">
+                DE
+              </Typography>
+            </MenuItem>
+            <MenuItem onClick={(e) => {
+              e.preventDefault();
 
-            dispatch(logout());
-          }}>
-            {t('Logout')}
-          </MenuItem>
-        </Menu>
-      </List>
-    </header>
+              dispatch(logout());
+            }}>
+              {t('Logout')}
+            </MenuItem>
+          </Menu>
+        </List>
+      </Toolbar>
+    </AppBar>
   );
 };
 

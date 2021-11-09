@@ -3,9 +3,10 @@ export const getColumns = (columns, t) => {
   let updatedColumns = [];
   for (let column of columns) {
     updatedColumns.push({
+      ...column,
       title: t(column.title),
       field: column.field,
-      render: column.render
+      render: column.render,
     });
   }
 

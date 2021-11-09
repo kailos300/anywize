@@ -272,7 +272,7 @@ const PastDeliveries = () => {
                           <TableCell>{order.Route.uuid}</TableCell>
                           <TableCell>{moment(order.delivered_at).format('DD.MM.YYYY')}</TableCell>
                           <TableCell>{moment(order.delivered_at).format('HH:mm')}</TableCell>
-                          <TableCell>{order.number}</TableCell>
+                          <TableCell>{order.Route.uuid}</TableCell>
                           <TableCell>{order.description}</TableCell>
                           <TableCell>{order.Route?.Stops[0]?.meet_customer ? t('Yes') : t('No')}</TableCell>
                           <TableCell>

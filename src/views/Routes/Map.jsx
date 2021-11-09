@@ -219,13 +219,15 @@ const RoutesMap = () => {
           }
         </Grid>
         <Grid item xs={12} sm={9}>
-          <Map
-            routes={selectedRoutes}
-            highlightRoute={highlightRoute}
-            highlightedRouteId={highlighted}
-            openStop={openStop}
-            user={user}
-          />
+          <div>
+            <Map
+              routes={selectedRoutes}
+              highlightRoute={highlightRoute}
+              highlightedRouteId={highlighted}
+              openStop={openStop}
+              user={user}
+            />
+          </div>
         </Grid>
       </Grid>
     </div>

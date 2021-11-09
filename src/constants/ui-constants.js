@@ -46,7 +46,7 @@ export const TOURS_TABLE_COLUMNS = [
 ];
 
 export const CUSTOMERS_TABLE_COLUMNS = [
-  { title: 'ID', field: 'id', defaultSort: 'desc', sorting: true },
+  { title: 'ID', field: 'number', defaultSort: 'desc', sorting: true },
   { title: 'Alias', field: 'alias' },
   { title: 'Name 1', field: 'name' },
   { title: 'Zipcode', field: 'zipcode' },
@@ -99,17 +99,31 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite, redirectView, t) 
             style={{ color: '#ADADAD', cursor: 'pointer' }}
           />
         </div>
-      )
+      ),
+      customFilterAndSearch: (v, row) => {
+        const regex = new RegExp(v, 'gi');
+
+        return regex.test(row.pathway
+          .map((p) => `${p.email} ${p.phone} ${p.street} ${p.city} ${p.alias} ${p.name}`)
+          .concat([row.uuid])
+          .join(' '));
+      }
     },
     {
-      title: 'date', render:
-        rowData => rowData.start_date !== null ?
+      title: 'date',
+      render: (rowData) => {
+        if (!rowData.start_date) {
+          return '-';
+        }
+
+        return (
           <>
             <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>
-              {moment(rowData.start_date).format('DD.MM.YYYY')}</span>
-            <span style={{ marginLeft: '15px', font: 'normal normal normal 18px/24px Roboto', color: '#F5F5F5' }}>
-              {moment(rowData.start_date).format('HH:mm')}
-            </span> </> : ''
+              {moment(rowData.start_date).format('DD.MM.YYYY')} {moment(rowData.start_date).format('HH:mm')}
+            </span>
+          </>
+        );
+      }
     },
     { title: 'tour', field: 'tour', render: rowData => <span >T.{rowData.uuid}</span> },
     {
@@ -118,20 +132,34 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite, redirectView, t) 
     {
       title: 'progress', render: rowData => {
         if (rowData.progress === 'Complete') {
-          return <span style={{ color: '#6F9CEB', font: 'normal normal normal 18px/24px Roboto' }}>{t(rowData.progress)}</span>
+          return (
+            <span style={{ color: '#6F9CEB', font: 'normal normal normal 18px/24px Roboto' }}>
+              {t(rowData.progress)}
+              <small style={{ display: 'block' }}>
+                {moment(rowData.end_date).format('DD.MM.YYYY')} {moment(rowData.end_date).format('HH:mm')}
+              </small>
+            </span>
+          )
         }
-        else {
-          return <span style={{ font: 'normal normal normal 18px/24px Roboto', color: '#F5F5F5' }}>{t(rowData.progress)}</span>
-        }
+
+        return (
+          <span style={{ font: 'normal normal normal 18px/24px Roboto', color: '#F5F5F5' }}>{t(rowData.progress)}</span>
+        )
       }
     },
     {
       title: 'noOfOrders',
       render: rowData => `${rowData.pathway.filter((p) => p.Orders.every((o) => o.delivered_at)).length} / ${rowData.pathway.length}`,
     },
-    { title: 'DriversName', field: 'driver_name', render: rowData => <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.driver_name}</span> },
     {
-      title: 'call', render: rowData =>
+      title: 'DriversName',
+      field: 'driver_name',
+      render: rowData => <span style={{ font: 'normal normal bold 18px/24px Roboto', color: '#F5F5F5' }}>{rowData.driver_name || '-'}</span>,
+
+    },
+    {
+      title: 'call',
+      render: rowData =>
         <>
           {rowData.driver_name !== null ?
             <Tooltip title={<TooltipBar name={'callicon'} rowData={rowData} />} placement='top' arrow interactive >
@@ -142,7 +170,8 @@ export const CURRENT_TOURS_COLUMNS = (tableRef, markFavourite, redirectView, t) 
         </>
     },
     {
-      title: 'key', render: rowData =>
+      title: 'key',
+      render: rowData =>
         <Tooltip title={<TooltipBar name={'vpnicon'} rowData={rowData} />} placement='top' arrow interactive>
           <VpnKeySharpIcon className={'hovericon'} />
         </Tooltip>
