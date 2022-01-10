@@ -26,12 +26,19 @@ import { mapTableData } from 'util/helpers';
 import { PATHS } from 'util/appConstants';
 import { DatePicker } from 'components/Shared/mui-formik-inputs';
 import Loading from 'components/Shared/loading';
-
 import {
   getpastDeliveries,
   selectpastDeliveries,
   selectpastDeliveriesStatus
 } from 'redux/slices/pastDeliveriesSlice';
+import "moment/locale/en-gb";
+import "moment/locale/de";
+
+const locales = {
+  'en-us': 'en',
+  en: 'en',
+  de: 'de'
+};
 
 const useStyles = makeStyles({
   _container: {
@@ -91,7 +98,7 @@ const useStyles = makeStyles({
 });
 
 const PastDeliveries = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     from: moment().subtract(1, 'month').startOf('month').toDate(),
@@ -124,7 +131,7 @@ const PastDeliveries = () => {
   return (
     <div className={clsx(classes._container)}>
       <Box p={2} boxShadow={3} style={{ backgroundColor: 'rgb(31, 31, 31)' }} borderRadius={3}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
+        <MuiPickersUtilsProvider utils={MomentUtils} locale={locales[i18n.language.toLowerCase()]}>
           <Formik
             initialValues={form}
             validate={(values) => {

@@ -249,7 +249,7 @@ const OrderList = ({ confirm }) => {
 
       fetchOrders();
     }, {
-      description: `${t('Create Route(s) for the selected Orders from')} {{num}} ${t('Tours')}?`, num: rows.length,
+      description: `${t('Create Route(s) for the selected Orders from')} ${rows.length} ${t('Tours')}?`
     });
   };
 
@@ -290,7 +290,7 @@ const OrderList = ({ confirm }) => {
         tableRef={tableRef}
         data={mapTableData(jsonData)}
         title={t(tableTitle)}
-        columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData)), t)}
+        columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData), t), t)}
         actions={actions}
         localization={getLocalization(t)}
         options={{

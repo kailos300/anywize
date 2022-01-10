@@ -10,13 +10,25 @@ const theme = createMuiTheme({
     MuiFilledInput: {
       root: {
         fontSize: '12px',
+        borderTopLeftRadius: '0px',
+        borderTopRightRadius: '0px',
       },
     },
     MuiSelect: {
       root: {
         fontSize: '12px',
       }
-    }
+    },
+    MuiButton: {
+      root: {
+        borderRadius: '0px',
+      },
+    },
+    MuiFormHelperText: {
+      contained: {
+        'margin-left': 0,
+      },
+    },
   },
   palette: {
     primary: {

@@ -15,6 +15,9 @@ import { KeyboardDatePicker } from '@material-ui/pickers';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import MUIAutocomplete from '@material-ui/lab/Autocomplete';
+import UnCheckedIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
+import CheckedIcon from '@material-ui/icons/CheckBoxSharp';
+import CalendarIcon from '@material-ui/icons/EventSharp';
 
 const getErrorForName = (errors, name) => {
   if (!errors) {
@@ -212,7 +215,14 @@ export const Checkbox = (props) => {
   const { label, name, value, ...rest } = props;
 
   return (
-    <MaterialCheckbox checked={value} value={value} name={name} {...rest} />
+    <MaterialCheckbox
+      checked={value}
+      value={value}
+      name={name}
+      icon={<UnCheckedIcon />}
+      checkedIcon={<CheckedIcon />}
+      {...rest}
+    />
   );
 };
 
@@ -325,6 +335,9 @@ export const DatePicker = (props) => {
       onChange={onChange}
       disablePast={disablePast}
       clearable={clearable}
+      cancelLabel={t('Cancel')}
+      okLabel={t('Ok')}
+      keyboardIcon={<CalendarIcon />}
       format="DD.MM.YYYY"
       label={<span style={{ color: 'white' }}>{t(label)}</span>}
       margin="dense"

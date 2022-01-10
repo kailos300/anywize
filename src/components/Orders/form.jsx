@@ -1,22 +1,20 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import * as pick from "lodash/pick";
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
-import SaveSharpIcon from '@material-ui/icons/SaveSharp';
-import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { useHistory } from "react-router-dom";
-import clsx from "clsx";
 import { Input, InputOnlyNumbers, Autocomplete } from "../Shared/mui-formik-inputs";
 import { OrderSchema } from "constants/validation-schemas";
 import { OrderFormAllowedFields } from "constants/forms-submit-allowed-fields";
 import { PATHS } from "util/appConstants";
+import FormCancelSaveButton from 'components/Shared/FormCancelSaveButtons';
 
 const useStyles = makeStyles({
   _container: {
     backgroundColor: "#F5F5F5",
-    padding: "60px 130px",
+    padding: "90px 130px",
     minHeight: "100vh",
     "& .MuiFormLabel-root.Mui-focused": {
       color: '#6F9CEB'
@@ -24,11 +22,6 @@ const useStyles = makeStyles({
     "& .MuiInput-underline:after": {
       borderBottom: '2px solid #6F9CEB'
     }
-  },
-  _editbox: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   _heading: {
     font: "normal normal normal 28px/40px Questrial",
@@ -88,7 +81,7 @@ const OrderForm = ({
       }
     },
   });
-  const { values, handleChange, errors, handleSubmit, setFieldValue, submitCount } = formik;
+  const { values, handleChange, errors, handleSubmit, setFieldValue, submitCount, isValid, isSubmitting } = formik;
   let { handleBlur } = formik;
 
   if (!submitCount) {
@@ -96,22 +89,27 @@ const OrderForm = ({
   }
 
   const closeOrderHandler = () => {
-    // action == 'ADD' ?
     history.push(PATHS.orders.root);
-    // :
-    // history.push(PATHS.customers.detail.replace(':id', id))
   };
+
   return (
     <div className={classes._container}>
-      <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">
-          {action === "ADD" ? t("New Order") : t("Edit Order")}
-        </Typography>
-        <div>
-          <CloseSharpIcon onClick={closeOrderHandler} className={clsx(classes._icons, classes._close)} />
-          <SaveSharpIcon onClick={handleSubmit} className={clsx(classes._icons, classes._save)} />
-        </div>
-      </div>
+      <Box display="flex" mb={4}>
+        <Box flex={2}>
+          <Typography className={classes._heading} variant="h4">
+            {action === "ADD" ? t("New Order") : t("Edit Order")}
+          </Typography>
+        </Box>
+        <Box flex={2} textAlign="right" position="relative">
+          <Box position="absolute" right={0}>
+            <FormCancelSaveButton
+              disabled={!isValid || isSubmitting}
+              onCancel={closeOrderHandler}
+              onSave={handleSubmit}
+            />
+          </Box>
+        </Box>
+      </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <Autocomplete
