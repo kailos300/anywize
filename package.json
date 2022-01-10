@@ -51,6 +51,9 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9001"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "resolutions": {
     "babel-loader": "8.1.0"
   },
