@@ -8,6 +8,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ReactMapGL, { Source, Marker, Layer, NavigationControl } from 'react-map-gl';
 import MarkerIconBlue from 'assets/markers/marker-icon-blue.png';
+import MarkerIconGold from 'assets/markers/marker-icon-gold.png';
+import MarkerIconRed from 'assets/markers/marker-icon-red.png';
 import mapboxgl from 'mapbox-gl';
 import moment from 'moment';
 
@@ -29,6 +31,8 @@ export default ({ loading, route, onSubmit }) => {
     longitude: 13.391257180999904,
     zoom: 15,
   });
+  const [allLocations, setAllLocations] = useState(false);
+  const [allNavigations, setAllNavigations] = useState(false);
 
   useEffect(() => {
     if (route) {
@@ -69,6 +73,7 @@ export default ({ loading, route, onSubmit }) => {
       return selected.includes(`ROUTE_NAVIGATION_${rn.id}`);
     }).map((rn) => ({
       coordinates: rn.navigation?.routes[0].geometry.coordinates,
+      meta: rn.navigation?.meta,
       type: 'ROUTE_NAVIGATION',
     }));
 
@@ -103,6 +108,30 @@ export default ({ loading, route, onSubmit }) => {
     }
   };
 
+  const toggleAllLocations = () => {
+    const newly = selected.filter((n) => !n.startsWith('DRIVER_LOCATION'));
+
+    if (!allLocations) {
+      setSelected(newly.concat(menu.filter((rn) => rn.type === 'DRIVER_LOCATION').map((rn) => `${rn.type}_${rn.id}`)));
+    } else {
+      setSelected(newly);
+    }
+
+    setAllLocations(!allLocations);
+  };
+
+  const toggleAllNavigations = () => {
+    const newly = selected.filter((n) => !n.startsWith('ROUTE_NAVIGATION'));
+
+    if (!allNavigations) {
+      setSelected(newly.concat(menu.filter((rn) => rn.type === 'ROUTE_NAVIGATION').map((rn) => `${rn.type}_${rn.id}`)));
+    } else {
+      setSelected(newly);
+    }
+
+    setAllNavigations(!allNavigations);
+  };
+
   const layerStyle = {
     id: 'line',
     type: 'line',
@@ -117,7 +146,7 @@ export default ({ loading, route, onSubmit }) => {
   };
 
   return (
-    <Box>
+    <Box bgcolor="white" >
       <Grid container spacing={2}>
         <Grid item xs={12} sm={3} style={{ maxHeight: 'calc(100vh - 90px)', overflowY: 'scroll' }}>
           {
@@ -129,7 +158,7 @@ export default ({ loading, route, onSubmit }) => {
           }
           {
             !!route && !loading && (
-              <>
+              <Box px={2}>
                 <Typography variant="h6">Customers</Typography>
                 {
                   route.pathway.map((customer, i) => (
@@ -138,7 +167,7 @@ export default ({ loading, route, onSubmit }) => {
                     </Box>
                   ))
                 }
-              </>
+              </Box>
             )
           }
           {
@@ -147,11 +176,37 @@ export default ({ loading, route, onSubmit }) => {
                 <Typography variant="h6">
                   Driver location & navigation timeline
                 </Typography>
+                <Box my={1} p={1}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={allLocations}
+                        onChange={toggleAllLocations}
+                        name={'allLocations'}
+                        color="primary"
+                      />
+                    }
+                    label="Toggle all driver location"
+                  />
+                </Box>
+                <Box my={1} p={1}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={allNavigations}
+                        onChange={toggleAllNavigations}
+                        name={'allNavigations'}
+                        color="primary"
+                      />
+                    }
+                    label="Toggle all proposed navigations"
+                  />
+                </Box>
                 {
                   menu.map((m, i) => {
                     if (m.type === 'DRIVER_LOCATION') {
                       return (
-                        <Box key={i} my={1} boxShadow={2} p={1}>
+                        <Box key={i} my={1} boxShadow={2} p={1} style={{ color: 'white !important' }}>
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -173,13 +228,13 @@ export default ({ loading, route, onSubmit }) => {
                           {
                             m.type === 'DRIVER_LOCATION' && (
                               <>
-                                <Box display="flex">
-                                  <Box flex={1}>
+                                <Box>
+                                  <Box>
                                     <Typography variant="body2">
                                       Lat: {m.location.coordinates[1]}
                                     </Typography>
                                   </Box>
-                                  <Box flex={1}>
+                                  <Box>
                                     <Typography variant="body2">
                                       Lng: {m.location.coordinates[0]}
                                     </Typography>
@@ -209,6 +264,9 @@ export default ({ loading, route, onSubmit }) => {
                               <Box component="small" display="block">
                                 ({moment(m.created_at).format('DD-MM-YYYY HH:mm:ss')})
                               </Box>
+                              <Typography variant="body2" component="small" display="block" color="primary">
+                                Reason: {m.navigation?.meta?.reason}
+                              </Typography>
                             </>
                           )}
                         />
@@ -238,7 +296,14 @@ export default ({ loading, route, onSubmit }) => {
             {
               navigations.filter((n) => n.type === 'DRIVER_LOCATION').map((m, i) => (
                 <Marker key={i} latitude={m.latitude} longitude={m.longitude}>
-                  <div style={{ width: '10px', height: '10px', borderRadius: '20px', backgroundColor: 'red' }}></div>
+                  <img alt="icon" src={MarkerIconRed} />
+                </Marker>
+              ))
+            }
+            {
+              navigations.filter((n) => n.type === 'ROUTE_NAVIGATION' && n.meta).map((m, i) => (
+                <Marker key={i} latitude={m.meta?.fromPosition[1]} longitude={m.meta?.fromPosition[0]}>
+                  <img alt="icon" src={MarkerIconGold} />
                 </Marker>
               ))
             }

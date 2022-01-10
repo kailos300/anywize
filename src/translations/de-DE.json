@@ -128,5 +128,6 @@
   "Delivery": "Lieferung",
   "Required": "Erforderlich",
   "The routes where created successfully": "Die Routen wurden erfolgreich erstellt",
-  "Confirm": "Bestätigen"
+  "Confirm": "Bestätigen",
+  "You do not have permissions to view the selected route": "Sie haben keine Berechtigung die ausgewählte Route zu sehen."
 }
