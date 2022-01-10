@@ -133,12 +133,12 @@ const TourForm = ({ initialValues, onSubmit, action }) => {
   return (
     <div className={classes._container}>
       <Box display="flex" mb={4}>
-        <Box flex={3}>
+        <Box flex={2}>
           <Typography className={classes._heading} variant="h4">
             {action === "ADD" ? t("New Tour") : t("Edit Tour")}
           </Typography>
         </Box>
-        <Box flex={1} textAlign="right" position="relative">
+        <Box flex={2} textAlign="right" position="relative">
           <Box position="absolute" right={0}>
             <FormCancelSaveButton
               disabled={!isValid || isSubmitting}

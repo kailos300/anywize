@@ -59,6 +59,10 @@ export const getLocalization = (t) => {
     pagination: {
       labelRowsSelect: t('rows'),
       labelDisplayedRows: `{from}-{to} ${t('of')} {count}`,
+      nextTooltip: t('Next page'),
+      lastTooltip: t('Last page'),
+      previousTooltip: t('Previous page'),
+      firstTooltip: t('First page'),
     },
     toolbar: {
       nRowsSelected: `{0} ${t('row(s)')} ${t('selected')}`,

@@ -23,6 +23,7 @@ const API_URL = process.env.REACT_APP_API.replace('/api/', '');
 const useStyles = makeStyles((theme) => ({
   _container: {
     backgroundColor: '#121212',
+    paddingTop: '65px',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
   },

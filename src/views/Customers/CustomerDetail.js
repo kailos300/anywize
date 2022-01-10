@@ -130,7 +130,7 @@ const CustomerDetail = () => {
         </Typography>
         <Box className={classes._buttonbox} component="div">
           <EditIcon onClick={editCustomerHandler} className={classes._edit} />
-          <Typography variant="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
+          <Typography component="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
         </Box>
       </div>
       <Typography className={classes._infoheading} variant="h5">

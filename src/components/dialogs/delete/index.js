@@ -73,7 +73,7 @@ const withConfirm = (WrappedComponent) => (props) => {
         open={!!onConfirm}
         onClose={handleCancel}
       >
-        <DialogTitle><Typography>{t("Confirm!")}</Typography></DialogTitle>
+        <DialogTitle><Typography>{t("Confirm")}</Typography></DialogTitle>
         {description && (
           <DialogContent>
             <Typography component="p"

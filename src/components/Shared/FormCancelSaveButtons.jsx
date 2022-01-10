@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
+import SaveIcon from '@material-ui/icons/SaveSharp';
+import CloseIcon from '@material-ui/icons/CloseSharp';
 import { makeStyles } from '@material-ui/core/styles';
 
 const styles = makeStyles((theme) => ({
