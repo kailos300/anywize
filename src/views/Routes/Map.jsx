@@ -19,6 +19,7 @@ import Map from 'components/Routes/Map';
 import Stop from 'components/Routes/Stop';
 import Navbar from 'components/Navbar';
 import DarkLayout from 'components/Shared/DarkLayout';
+import { setShowMessage } from 'redux/slices/uiSlice';
 
 const API_URL = process.env.REACT_APP_API.replace('/api/', '');
 
@@ -96,7 +97,17 @@ const RoutesMap = () => {
       try {
         const full = await dispatch(getRoute(routesThatAreFavourite[i]));
 
-        initiallySelected.push(full);
+        if (full) {
+          initiallySelected.push(full);
+        } else {
+          dispatch(
+            setShowMessage({
+              description: 'You do not have permissions to view the selected route',
+              type: 'error',
+            })
+          );
+          routesThatAreFavourite = routesThatAreFavourite.filter((v) => v !== routesThatAreFavourite[i]);
+        }
       } catch (err) { }
 
       i += 1;
