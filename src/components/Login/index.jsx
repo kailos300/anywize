@@ -45,7 +45,7 @@ const LoginIndex = ({ onSubmit, error }) => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <Box height="100vh">
       <video autoPlay muted loop className={classes.video}>
         <source src={BackgroundImage} type="video/mp4" />
         Your browser does not support HTML5 video.
@@ -74,7 +74,7 @@ const LoginIndex = ({ onSubmit, error }) => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 

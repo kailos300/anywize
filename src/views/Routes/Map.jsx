@@ -17,13 +17,14 @@ import { selectUser } from 'redux/slices/userSlice';
 import MapSidebar from 'components/Routes/MapSidebar';
 import Map from 'components/Routes/Map';
 import Stop from 'components/Routes/Stop';
+import Navbar from 'components/Navbar';
+import DarkLayout from 'components/Shared/DarkLayout';
 
 const API_URL = process.env.REACT_APP_API.replace('/api/', '');
 
 const useStyles = makeStyles((theme) => ({
   _container: {
     backgroundColor: '#121212',
-    paddingTop: '65px',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1),
   },
@@ -193,45 +194,48 @@ const RoutesMap = () => {
   const closeStop = () => setSelectedStop(null);
 
   return (
-    <div className={clsx(classes._container, '')}>
-      <Grid container spacing={2}>
-        <Grid className={classes._sidebar} item xs={12} sm={3}>
-          {
-            !!selectedStop && (
-              <Stop
-                route={selectedStop.route}
-                customer={selectedStop.customer}
-                onClose={closeStop}
-              />
-            )
-          }
-          {
-            !selectedStop && (
-              <MapSidebar
-                routes={routes.filter((r) => !selected.includes(r.id))}
-                selectedRoutes={selectedRoutes}
-                selectedRoutesIds={selected}
-                onSelect={onRouteSelect}
-                onRemove={onRouteRemove}
+    <>
+      <Navbar />
+      <DarkLayout pl={2} pr={1} nopadding loading={loading}>
+        <Grid container spacing={2}>
+          <Grid className={classes._sidebar} item xs={12} sm={3}>
+            {
+              !!selectedStop && (
+                <Stop
+                  route={selectedStop.route}
+                  customer={selectedStop.customer}
+                  onClose={closeStop}
+                />
+              )
+            }
+            {
+              !selectedStop && (
+                <MapSidebar
+                  routes={routes.filter((r) => !selected.includes(r.id))}
+                  selectedRoutes={selectedRoutes}
+                  selectedRoutesIds={selected}
+                  onSelect={onRouteSelect}
+                  onRemove={onRouteRemove}
+                  highlightRoute={highlightRoute}
+                  highlightedRouteId={highlighted}
+                />
+              )
+            }
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <div>
+              <Map
+                routes={selectedRoutes}
                 highlightRoute={highlightRoute}
                 highlightedRouteId={highlighted}
+                openStop={openStop}
+                user={user}
               />
-            )
-          }
+            </div>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={9}>
-          <div>
-            <Map
-              routes={selectedRoutes}
-              highlightRoute={highlightRoute}
-              highlightedRouteId={highlighted}
-              openStop={openStop}
-              user={user}
-            />
-          </div>
-        </Grid>
-      </Grid>
-    </div>
+      </DarkLayout>
+    </>
   );
 }
 

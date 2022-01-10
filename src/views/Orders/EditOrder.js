@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-
-// Helpers
 import { PATHS } from "util/appConstants";
-
-// Actions
 import {
   selectOrder,
   selectOrderStatus,
@@ -13,10 +9,9 @@ import {
   editOrder,
 } from "redux/slices/orderSlice";
 import { getCustomers, selectCustomers } from "redux/slices/customerSlice";
-
-// Components
 import OrderForm from "components/Orders/form";
-import Loading from 'components/Shared/loading';
+import Navbar from 'components/Navbar';
+import LightLayout from 'components/Shared/LightLayout';
 
 const currentAction = "EDIT";
 
@@ -46,17 +41,18 @@ const EditOrder = () => {
     history.push(PATHS.orders.root);
   };
 
-  if (loading || !order) {
-    return <Loading />
-  }
-
   return (
-    <OrderForm
-      initialValues={order}
-      onSubmit={onSubmit}
-      action={currentAction}
-      customerList={customers}
-    />
+    <>
+      <Navbar />
+      <LightLayout loading={loading || !order}>
+        <OrderForm
+          initialValues={order}
+          onSubmit={onSubmit}
+          action={currentAction}
+          customerList={customers}
+        />
+      </LightLayout>
+    </>
   );
 };
 export default EditOrder;

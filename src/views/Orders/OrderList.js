@@ -4,23 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table';
 import { makeStyles } from '@material-ui/core/styles';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableRow from '@material-ui/core/TableRow';
+import Box from '@material-ui/core/Box';
 import clsx from 'clsx';
-
-// Helpers
 import { ORDERS_TABLE_COLUMNS } from 'constants/ui-constants';
 import { getColumns, getActions, getLocalization } from "util/table-utils";
 import { mapTableData } from 'util/helpers';
 import { PATHS } from 'util/appConstants';
-
-// Actions
 import {
   selectOrders,
   selectOrderStatus,
@@ -30,90 +22,17 @@ import {
 } from 'redux/slices/orderSlice';
 import { setShowMessage } from 'redux/slices/uiSlice';
 import { createRoute } from 'redux/slices/routeSlice';
-
-import Loading from 'components/Shared/loading';
 import withConfirm from 'components/dialogs/delete';
-
+import DarkLayout from 'components/Shared/DarkLayout';
+import Navbar from 'components/Navbar';
 import pen from '../../assets/img/pen.svg';
 
 const useStyles = makeStyles({
-  _container: {
-    backgroundColor: '#121212',
-    padding: '60px 130px',
-    minHeight: '60vh',
-    '&::-webkit-scrollbar': {
-      display: 'none'
-    },
-    '& .MuiPaper-elevation2': {
-      boxShadow: 'none',
-    },
-    '& .MuiTableCell-root:first-child': {
-      width: ' 90px !important ',
-      boxSizing: 'border-box',
-      textAlign: 'center !important'
-    },
-    '& .MuiTableCell-root:nth-last-child(2)': {
-      width: ' 35px !important',
-    },
-    '& .MuiTableCell-root:nth-last-child(3)': {
-      textAlign: 'right',
-      verticalAlign: 'bottom',
-    },
-    '& .MuiTableCell-root': {
-      border: 'none',
-      color: 'white',
-      fontSize: '12px',
-      width: 'unset !important'
-
-    },
-    // '& .MuiTableCell-root:nth-last-child(2)': {
-    //   width: 'unset !important'
-    // },
-    '& .MuiTableSortLabel-root:hover': {
-      color: '#F5F5F5',
-    },
-    '& .MuiTablePagination-root': {
-      border: 'none',
-      color: 'white',
-    },
-    '& .MuiPaper-root ': {
-      backgroundColor: '#121212',
-      color: 'white',
-    },
-    '& .MuiInput-underline:before': {
-      borderBottom: '1px solid #525252',
-    },
-    '& .MuiInput-underline:hover:before': {
-      borderBottom: '1px solid #525252',
-    },
-    '& .MuiIconButton-root': {
-      color: '#F5F5F5',
-    },
-    '& .MuiSvgIcon-root': {
-      color: '#F5F5F5',
-    },
-    '& .MuiTypography-root': {
-      color: '#F5F5F5',
-    },
-    '& .MuiTableCell-paddingNone:last-child div': {
-      marginRight: '30px'
-    },
-  },
   _1F1F1F: {
     background: '#1F1F1F',
   },
   _525252: {
     background: '#525252',
-  },
-  _textalignright: {
-    // textAlign: 'right',
-
-  },
-  _row1: {
-    width: '160px !important'
-  },
-  _row2: {
-    width: '150px !important',
   },
   _edit: {
     background: '#6F9CEB ',
@@ -122,26 +41,13 @@ const useStyles = makeStyles({
     width: '13px',
     height: '13px',
     position: 'relative',
-    top: "-7px",
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    float: 'right', marginRight: 'unset !important',
   },
   _pointer: {
     cursor: 'pointer'
   },
-  _width111: '111px',
-  _panel: {
-    "& .MuiTableCell-root:nth-child(2)": {
-      width: '160px !important'
-
-    },
-    "& .MuiTableCell-root:nth-child(3)": {
-      width: '150px !important'
-
-    },
-  }
 });
 
 const tableTitle = 'ORDERS';
@@ -280,119 +186,106 @@ const OrderList = ({ confirm }) => {
     setjsonData(newData);
   };
 
-  if (loading) {
-    return <Loading />
-  };
-
   return (
-    <div className={clsx(classes._container, 'order-table')}>
-      <MaterialTable
-        tableRef={tableRef}
-        data={mapTableData(jsonData)}
-        title={t(tableTitle)}
-        columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData), t), t)}
-        actions={actions}
-        localization={getLocalization(t)}
-        options={{
-          pageSize: 50,
-          pageSizeOptions: [50, 100],
-          detailPanelColumnAlignment: 'right',
-          paging: false,
-          actionsColumnIndex: -1,
-          search: false,
-          headerStyle: {
-            backgroundColor: '#121212',
-            color: 'white',
-            borderBottom: '1px solid #525252',
-            font: 'normal normal normal 12px/24px Roboto',
-            fontWeight: 'bold',
-          },
-          cellStyle: {
-            color: 'white',
-            border: 'none',
-            font: 'normal normal normal 12px/24px Roboto',
-          },
-          showTitle: false,
-          header: false,
-          showTextRowsSelected: false,
-          showSelectAllCheckbox: false,
-          rowStyle: rowData => {
-            if (rowData.tableData.id % 2 === 0) {
-              return { backgroundColor: ' #1F1F1F ', height: '71px' };
+    <>
+      <Navbar />
+      <DarkLayout loading={loading}>
+        <MaterialTable
+          tableRef={tableRef}
+          data={mapTableData(jsonData)}
+          title={t(tableTitle)}
+          columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData), t), t)}
+          actions={actions}
+          localization={getLocalization(t)}
+          options={{
+            pageSize: 50,
+            pageSizeOptions: [50, 100],
+            detailPanelColumnAlignment: 'right',
+            paging: false,
+            actionsColumnIndex: -1,
+            search: false,
+            headerStyle: {
+              backgroundColor: '#121212',
+              color: 'white',
+              borderBottom: '1px solid #525252',
+              font: 'normal normal normal 12px/24px Roboto',
+              fontWeight: 'bold',
+            },
+            cellStyle: {
+              color: 'white',
+              border: 'none',
+              font: 'normal normal normal 12px/24px Roboto',
+            },
+            showTitle: false,
+            header: false,
+            showTextRowsSelected: false,
+            showSelectAllCheckbox: false,
+            rowStyle: rowData => {
+              if (rowData.tableData.id % 2 === 0) {
+                return { backgroundColor: ' #1F1F1F ', height: '71px' };
+              }
+              else {
+                return { backgroundColor: '#525252', height: '71px' };
+              }
             }
-            else {
-              return { backgroundColor: '#525252', height: '71px' };
-            }
-          }
-        }}
-        detailPanel={[
-          {
-            icon: () => <ExpandMoreIcon />,
-            openIcon: () => <ExpandLessIcon />,
-            render: rowData => {
-              return (
-                <>
-                  {rowData.orders.map((order, i) =>
-                    <TableContainer className={clsx(rowData.tableData.id % 2 === 0 ? classes._1F1F1F : classes._525252, classes._panel)} key={i}>
-                      <Table>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell className={classes._textalignright}>
-                              {' '}
-                            </TableCell>
-                            <TableCell className={clsx(classes._textalignright, classes._row1)}>
-                              {order.Customer.name}
-                            </TableCell>
-                            <TableCell className={clsx(classes._textalignright, classes._row2)}>
-                              {order.number}
-                            </TableCell>
-                            <TableCell className={classes._textalignright}>
-                              {order.description}
-                            </TableCell>
-                            <TableCell className={classes._textalignright}>
-                              {/* <EditIcon onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)} /> */}
+          }}
+          detailPanel={[
+            {
+              icon: () => <ExpandMoreIcon />,
+              openIcon: () => <ExpandLessIcon />,
+              render: rowData => {
+                return (
+                  <>
+                    {rowData.orders.map((order, i) =>
+                      <Box className={clsx(rowData.tableData.id % 2 === 0 ? classes._1F1F1F : classes._525252)} key={i}>
+                        <Box display="flex" py={2}>
+                          <Box flex={2} pl={8}>
+                            {order.Customer.name}
+                          </Box>
+                          <Box flex={1}>
+                            {order.number}
+                          </Box>
+                          <Box flex={3}>
+                            {order.description}
+                          </Box>
+                          <Box flex={2} style={{ textAlign: 'right', display: 'flex', alignItems: 'center' }}>
+                            <Box flex={1} display="flex" alignItems="center">
                               <div onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)}>
                                 <img alt="icon" src={pen} style={{ height: '10px' }} />
                               </div>
-                            </TableCell>
-                            <TableCell style={{}} className={classes._textalignright}>
-                              <div style={{ textAlign: 'right', marginRight: '8px', marginTop: '-20px' }}>
-                                <input
-                                  onChange={(e) => {
-                                    e.stopPropagation();
+                            </Box>
+                            <Box flex={1} pr={1.6} textAlign="center">
+                              <input
+                                onChange={(e) => {
+                                  e.stopPropagation();
 
-                                    innerChangeHandler(order);
-                                  }}
-                                  className={'radio-checkbox'}
-                                  id={`panel${order.id}`}
-                                  type="checkbox"
-                                  name="field"
-                                  checked={!!order.checked} />
-                                <label htmlFor={`panel${order.id}`}><span><span></span></span></label>
-                              </div>
-                            </TableCell>
-                            <TableCell className={clsx(classes._textalignright, classes._width111)}>
+                                  innerChangeHandler(order);
+                                }}
+                                className={'radio-checkbox'}
+                                id={`panel${order.id}`}
+                                type="checkbox"
+                                name="field"
+                                checked={!!order.checked} />
+                              <label htmlFor={`panel${order.id}`}><span><span></span></span></label>
+
+                            </Box>
+                            <Box flex={1} display="flex" alignItems="center" justifyContent="flex-end">
                               <DeleteSharpIcon className={classes._pointer} style={{ marginRight: '20px', color: '#ADADAD' }} onClick={(e) => callbackOnDelete(e, order)} />
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </TableContainer >
-                  )
-                  }
-                </>
-
-              )
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+                    )
+                    }
+                  </>
+                )
+              }
             }
-
-          }
-        ]}
-      />
-
-    </div>
-    // </>
-  )
-}
-
+          ]}
+        />
+      </DarkLayout>
+    </>
+  );
+};
 
 export default withConfirm(OrderList);

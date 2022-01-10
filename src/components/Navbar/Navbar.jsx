@@ -18,7 +18,7 @@ import clsx from "clsx";
 import logo from "assets/img/logo.png";
 
 // constants
-import { NAVIGATION_ROUTES } from "constants/ui-constants";
+import { NAVIGATION_ROUTES, checkPaths, checkTourPaths } from "constants/ui-constants";
 import { PATHS } from "util/appConstants";
 import { logout } from 'redux/slices/userSlice';
 
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = (props) => {
+const Navbar = () => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -95,6 +95,12 @@ const Navbar = (props) => {
     handleClose();
   };
 
+  const _checkPaths = () => {
+    let id = location.pathname.split("/").pop();
+    let newPaths = checkPaths.map((path) => path.replace(":id", id));
+    return newPaths;
+  };
+
   return (
     <AppBar position="fixed" className={classes.appbar}>
       <Toolbar className={classes.toolbar}>
@@ -112,7 +118,7 @@ const Navbar = (props) => {
                 activeClassName={location.pathname.includes(item.path) ? classes._isactive : ''}
                 className={clsx(
                   classes._menuitem,
-                  ((props.checkTourPaths().includes(location.pathname) && item.name === "Tours") || (props.checkPaths().includes(location.pathname) && item.name === "Master Data"))
+                  ((checkTourPaths.includes(location.pathname) && item.name === "Tours") || (_checkPaths().includes(location.pathname) && item.name === "Master Data"))
                     ? classes._isactive
                     : ""
                 )}

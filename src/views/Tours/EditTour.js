@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-
-// Helpers
 import { PATHS } from 'util/appConstants';
-
-// Actions
 import {
   selectTour,
   selectTourStatus,
   getTour,
   editTour,
 } from 'redux/slices/tourSlice';
-
-// Components
 import TourForm from 'components/Tours/form';
-import Loading from 'components/Shared/loading';
+import Navbar from 'components/Navbar';
+import LightLayout from 'components/Shared/LightLayout';
+import CustomersNavbar from 'components/Masterbar/CustomersBar';
 
 const currentAction = 'EDIT';
 
@@ -38,16 +34,19 @@ const EditTour = () => {
     history.push(PATHS.tours.root);
   };
 
-  if (loading || !tour) {
-    return <Loading />
-  }
-
   return (
-    <TourForm
-      initialValues={tour}
-      onSubmit={onSubmit}
-      action={currentAction}
-    />
+    <>
+      <Navbar />
+      <CustomersNavbar />
+      <LightLayout doublebar loading={loading || !tour}>
+        <TourForm
+          initialValues={tour}
+          onSubmit={onSubmit}
+          action={currentAction}
+        />
+      </LightLayout>
+    </>
+
   );
 };
 
