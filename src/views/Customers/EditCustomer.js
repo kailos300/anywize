@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-// Helpers
 import { PATHS } from "util/appConstants";
-
-// Actions
 import {
   selectCustomer,
   selectCustomerStatus,
@@ -12,10 +9,10 @@ import {
   editCustomer,
 } from "redux/slices/customerSlice";
 import { getTours, selectTours } from "redux/slices/tourSlice";
-
-// Components
 import CustomerForm from "components/Customers/form";
-import Loading from 'components/Shared/loading';
+import Navbar from 'components/Navbar';
+import LightLayout from 'components/Shared/LightLayout';
+import CustomersNavbar from 'components/Masterbar/CustomersBar';
 
 const currentAction = "EDIT";
 
@@ -45,17 +42,19 @@ const EditCustomer = () => {
     history.push(PATHS.customers.detail.replace(':id', id));
   };
 
-  if (loading || !customer) {
-    return <Loading />
-  };
-
   return (
-    <CustomerForm
-      initialValues={customer}
-      onSubmit={onSubmit}
-      action={currentAction}
-      tourList={tours}
-    />
+    <>
+      <Navbar />
+      <CustomersNavbar />
+      <LightLayout doublebar loading={loading || !customer}>
+        <CustomerForm
+          initialValues={customer}
+          onSubmit={onSubmit}
+          action={currentAction}
+          tourList={tours}
+        />
+      </LightLayout>
+    </>
   );
 };
 export default EditCustomer;

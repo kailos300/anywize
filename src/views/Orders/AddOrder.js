@@ -1,19 +1,13 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-// Helpers
 import { PATHS } from "util/appConstants";
-
-// Actions
 import { getCustomers, selectCustomers } from "redux/slices/customerSlice";
 import { selectOrderStatus, addOrder } from "redux/slices/orderSlice";
 import { setShowMessage } from "redux/slices/uiSlice";
-
-// Components
 import OrderForm from "components/Orders/form";
-import Loading from 'components/Shared/loading';
-
+import LightLayout from 'components/Shared/LightLayout';
+import Navbar from 'components/Navbar';
 
 const currentAction = "ADD";
 
@@ -42,16 +36,18 @@ const AddOrder = () => {
     history.push(PATHS.orders.add);
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
-    <OrderForm
-      onSubmit={onSubmit}
-      action={currentAction}
-      customerList={customers}
-    />
+    <>
+      <Navbar />
+      <LightLayout loading={loading}>
+        <OrderForm
+          onSubmit={onSubmit}
+          action={currentAction}
+          customerList={customers}
+        />
+      </LightLayout>
+    </>
   );
 };
+
 export default AddOrder;

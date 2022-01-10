@@ -67,11 +67,9 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t) => {
     { title: 'Order id', render: rowData => <span style={{ fontSize: '15px', fontWeight: 500 }}>T{rowData.Tour.id}</span> },
     { title: 'Description', field: 'Tour.name' },
     { title: '', render: rowData => <span style={{ color: '#6F9CEB' }}> {rowData.orders.length}<span style={{ marginLeft: '15px' }}>{ } {t('New orders')}</span></span> },
-    { title: '', field: '' },
-
     {
       title: 'Id+1',
-      render: rowData => <div style={{ textAlign: 'right', marginRight: '12px', marginTop: '-20px' }}>
+      render: rowData => <div style={{ textAlign: 'right', marginRight: '20px', marginTop: '-20px' }}>
         <input onChange={(e) => checkChangeHandler(e, rowData)}
           className={'radio-checkbox'} id={rowData.id} type='checkbox' name='field' checked={rowData.mainCheck} />
         <label htmlFor={rowData.id}><span><span style={{ margin: '1px' }}></span></span></label>

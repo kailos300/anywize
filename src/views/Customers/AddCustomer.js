@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
-// Helpers
 import { PATHS } from 'util/appConstants';
-
-//Actions
 import { addCustomer } from 'redux/slices/customerSlice';
 import { getTours, selectTours, selectTourStatus } from 'redux/slices/tourSlice';
-
-//Components
 import CustomerForm from 'components/Customers/form';
+import Navbar from 'components/Navbar';
+import CustomersNavbar from 'components/Masterbar/CustomersBar';
+import LightLayout from 'components/Shared/LightLayout';
 
 const currentAction = "ADD";
 const AddCustomer = () => {
@@ -30,12 +27,19 @@ const AddCustomer = () => {
       res !== undefined ? history.push(PATHS.customers.root) : ""
     );
   };
+
   return (
-    <CustomerForm
-      action={currentAction}
-      onSubmit={onSubmit}
-      tourList={tours}
-    />
+    <>
+      <Navbar />
+      <CustomersNavbar />
+      <LightLayout doublebar>
+        <CustomerForm
+          action={currentAction}
+          onSubmit={onSubmit}
+          tourList={tours}
+        />
+      </LightLayout>
+    </>
   );
 };
 

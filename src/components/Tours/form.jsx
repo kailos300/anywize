@@ -13,17 +13,6 @@ import { PATHS } from "util/appConstants";
 import FormCancelSaveButton from 'components/Shared/FormCancelSaveButtons';
 
 const useStyles = makeStyles({
-  _container: {
-    backgroundColor: "#F5F5F5",
-    padding: "60px 130px",
-    minHeight: "100vh",
-    "& .MuiFormLabel-root.Mui-focused": {
-      color: '#6F9CEB'
-    },
-    "& .MuiInput-underline:after": {
-      borderBottom: '2px solid #6F9CEB'
-    }
-  },
   _editbox: {
     display: "flex",
     justifyContent: "space-between",
@@ -131,7 +120,7 @@ const TourForm = ({ initialValues, onSubmit, action }) => {
   };
 
   return (
-    <div className={classes._container}>
+    <Box>
       <Box display="flex" mb={4}>
         <Box flex={2}>
           <Typography className={classes._heading} variant="h4">
@@ -171,7 +160,7 @@ const TourForm = ({ initialValues, onSubmit, action }) => {
           />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 TourForm.propTypes = {

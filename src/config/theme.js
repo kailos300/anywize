@@ -5,6 +5,17 @@ const theme = createMuiTheme({
     MuiInputLabel: {
       root: {
         fontSize: '12px',
+
+        "&$focused": {
+          "color": "#6F9CEB"
+        }
+      },
+    },
+    MuiInput: {
+      underline: {
+        '&:after': {
+          borderBottom: '2px solid #6F9CEB',
+        },
       },
     },
     MuiFilledInput: {
@@ -27,6 +38,23 @@ const theme = createMuiTheme({
     MuiFormHelperText: {
       contained: {
         'margin-left': 0,
+      },
+    },
+    MuiTableRow: {
+      root: {
+        backgroundColor: '#1f1f1f',
+
+        '&:nth-of-type(odd)': {
+          backgroundColor: 'red',
+        },
+
+        '&:nth-of-type(even)': {
+          backgroundColor: '#121212',
+        },
+
+        '&:nth-of-type(1)': {
+          backgroundColor: '#121212',
+        }
       },
     },
   },

@@ -1,14 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { PATHS } from 'util/appConstants';
-
 import { selectTourStatus, addTour } from 'redux/slices/tourSlice';
 import { setShowMessage } from 'redux/slices/uiSlice';
-
 import TourForm from 'components/Tours/form';
-import Loading from 'components/Shared/loading';
+import Navbar from 'components/Navbar';
+import LightLayout from 'components/Shared/LightLayout';
+import CustomersNavbar from 'components/Masterbar/CustomersBar';
 
 const currentAction = 'ADD';
 
@@ -30,15 +29,17 @@ const AddTour = () => {
     history.push(PATHS.tours.root);
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
-    <TourForm
-      onSubmit={onSubmit}
-      action={currentAction}
-    />
+    <>
+      <Navbar />
+      <CustomersNavbar />
+      <LightLayout doublebar loading={loading}>
+        <TourForm
+          onSubmit={onSubmit}
+          action={currentAction}
+        />
+      </LightLayout>
+    </>
   );
 };
 

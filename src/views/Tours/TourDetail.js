@@ -6,26 +6,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { Typography, Box } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import clsx from "clsx";
-
 import { PATHS } from "util/appConstants";
-
-// Actions
 import { selectTour, selectTourStatus, getTour } from "redux/slices/tourSlice";
-import Loading from 'components/Shared/loading';
+import Navbar from 'components/Navbar';
+import CustomersNavbar from 'components/Masterbar/CustomersBar';
+import DarkLayout from 'components/Shared/DarkLayout';
 
 const useStyles = makeStyles({
-  _container: {
-    backgroundColor: "#121212",
-    padding: "60px 130px",
-    minHeight: "100vh",
-    "& .edittag": {
-      display: 'none',
-      position: 'absolute',
-      marginLeft: '20px',
-      transition: "all 0.3s ease-in-out",
-
-    },
-  },
   _heading: {
     color: "#F5F5F5",
     font: "normal normal normal 28px/40px Questrial",
@@ -94,7 +81,11 @@ const useStyles = makeStyles({
     height: '16px',
     color: '#6F9CEB',
     font: 'normal normal normal 14px / 20px Roboto',
-    padding: '4px 8px'
+    padding: '4px 8px',
+    display: 'none',
+    position: 'absolute',
+    marginLeft: '20px',
+    transition: "all 0.3s ease-in-out",
   }
 });
 
@@ -117,63 +108,63 @@ const TourDetail = () => {
     history.push(PATHS.tours.edit.replace(":id", id));
   };
 
-  if (loading || !tour) {
-    return <Loading />;
-  }
-
   return (
-    <div className={classes._container}>
-      <div className={classes._editbox}>
-        <Typography className={classes._heading} variant="h4">
-          {tour.name}
+    <>
+      <Navbar />
+      <CustomersNavbar />
+      <DarkLayout doublebar loading={loading || !tour}>
+        <div className={classes._editbox}>
+          <Typography className={classes._heading} variant="h4">
+            {tour?.name}
+          </Typography>
+          <Box className={classes._buttonbox} component="div">
+            <EditIcon onClick={editTourHandler} className={classes._edit} />
+            <Typography component="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
+          </Box>
+        </div>
+        <Typography className={classes._infoheading} variant="h5">
+          {t("Basic Data")}
         </Typography>
-        <Box className={classes._buttonbox} component="div">
-          <EditIcon onClick={editTourHandler} className={classes._edit} />
-          <Typography component="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
-        </Box>
-      </div>
-      <Typography className={classes._infoheading} variant="h5">
-        {t("Basic Data")}
-      </Typography>
-      <div className={classes._basicdetailhead}>
-        <div>
-          <Typography
-            className={clsx(classes._head, classes._width11)}
-            variant="h6"
-          >
-            t{"ID"}
-          </Typography>
-          <Typography
-            className={clsx(classes._detail, classes._width11)}
-            variant="h6"
-          >
-            {tour.id}
-          </Typography>
+        <div className={classes._basicdetailhead}>
+          <div>
+            <Typography
+              className={clsx(classes._head, classes._width11)}
+              variant="h6"
+            >
+              t{"ID"}
+            </Typography>
+            <Typography
+              className={clsx(classes._detail, classes._width11)}
+              variant="h6"
+            >
+              {tour?.id}
+            </Typography>
+          </div>
+          <div>
+            <Typography
+              className={clsx(classes._head, classes._name)}
+              variant="h6"
+            >
+              {t("Name")}
+            </Typography>
+            <Typography
+              className={clsx(classes._name, classes._detail)}
+              variant="h6"
+            >
+              {tour?.name}
+            </Typography>
+          </div>
+          <div>
+            <Typography className={classes._head} variant="h6">
+              {t("Description")}
+            </Typography>
+            <Typography className={classes._detail} variant="h6">
+              {tour?.description}
+            </Typography>
+          </div>
         </div>
-        <div>
-          <Typography
-            className={clsx(classes._head, classes._name)}
-            variant="h6"
-          >
-            {t("Name")}
-          </Typography>
-          <Typography
-            className={clsx(classes._name, classes._detail)}
-            variant="h6"
-          >
-            {tour.name}
-          </Typography>
-        </div>
-        <div>
-          <Typography className={classes._head} variant="h6">
-            {t("Description")}
-          </Typography>
-          <Typography className={classes._detail} variant="h6">
-            {tour.description}
-          </Typography>
-        </div>
-      </div>
-    </div>
+      </DarkLayout>
+    </>
   );
 };
 

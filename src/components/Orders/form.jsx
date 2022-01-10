@@ -12,17 +12,6 @@ import { PATHS } from "util/appConstants";
 import FormCancelSaveButton from 'components/Shared/FormCancelSaveButtons';
 
 const useStyles = makeStyles({
-  _container: {
-    backgroundColor: "#F5F5F5",
-    padding: "90px 130px",
-    minHeight: "100vh",
-    "& .MuiFormLabel-root.Mui-focused": {
-      color: '#6F9CEB'
-    },
-    "& .MuiInput-underline:after": {
-      borderBottom: '2px solid #6F9CEB'
-    }
-  },
   _heading: {
     font: "normal normal normal 28px/40px Questrial",
     color: "#121212",
@@ -93,7 +82,7 @@ const OrderForm = ({
   };
 
   return (
-    <div className={classes._container}>
+    <Box height="100%">
       <Box display="flex" mb={4}>
         <Box flex={2}>
           <Typography className={classes._heading} variant="h4">
@@ -153,7 +142,7 @@ const OrderForm = ({
           />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 export default OrderForm;
