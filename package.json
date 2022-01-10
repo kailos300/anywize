@@ -52,7 +52,7 @@
     "storybook": "start-storybook -p 9001"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "resolutions": {
     "babel-loader": "8.1.0"
