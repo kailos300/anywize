@@ -96,7 +96,7 @@ const Stopview = ({ route, customer, onClose }) => {
 					</div>
 					<div className={classes._routedetails}>
 						<PersonIcon />&nbsp;
-						<Typography>{customer.contact_salutation} {customer.contact_name} {customer.contact_surname}</Typography>
+						<Typography>{t(customer.contact_salutation)} {customer.contact_name} {customer.contact_surname}</Typography>
 					</div>
 					<div className={classes._routedetails}>
 						<EmailIcon />&nbsp;
