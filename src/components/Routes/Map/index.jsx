@@ -49,7 +49,6 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop, user }) 
         longitude = last.location.coordinates[0];
       }
 
-      setTotal(routes.length);
       setViewport({
         ...viewport,
         latitude,
@@ -57,6 +56,10 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop, user }) 
         transitionDuration: 1000,
         transitionInterpolator: new FlyToInterpolator(),
       });
+    }
+
+    if (routes.length !== total) {
+      setTotal(routes.length);
     }
   }, [routes, total]);
 

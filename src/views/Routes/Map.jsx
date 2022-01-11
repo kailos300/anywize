@@ -182,6 +182,11 @@ const RoutesMap = () => {
   const onRouteRemove = async (route) => {
     setSelected(selected.filter((id) => id !== route.id));
     setSelectedRoutes(selectedRoutes.filter((r) => r.id !== route.id));
+
+    let favourites = localStorage.getItem('current-tours-favourites');
+    favourites = favourites ? favourites.split(',') : [];
+    favourites = favourites.filter((f) => parseInt(f, 10) !== route.id);
+    localStorage.setItem('current-tours-favourites', favourites.join(','));
   };
 
   const highlightRoute = (id) => setHighlighted(id);
