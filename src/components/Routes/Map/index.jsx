@@ -118,7 +118,7 @@ export default ({ routes, highlightRoute, highlightedRouteId, openStop, user }) 
       }
 
       {
-        viewport.zoom > 14 && routes.map((route, i) => (
+        routes.map((route, i) => (
           <Markers route={route} onClick={onMarkerClick} key={i} />
         ))
       }
