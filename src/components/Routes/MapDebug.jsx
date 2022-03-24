@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Box from '@material-ui/core/Box';
 import orderBy from 'lodash/orderBy';
+import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -13,6 +14,15 @@ import MarkerIconRed from 'assets/markers/marker-icon-red.png';
 import mapboxgl from 'mapbox-gl';
 import moment from 'moment';
 
+const styles = makeStyles((theme) => ({
+  customer: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  },
+}));
+
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
@@ -21,6 +31,7 @@ const MAPBOX_MAP_STYLE = process.env.REACT_APP_MAPBOX_MAP_STYLE;
 
 export default ({ loading, route, onSubmit }) => {
   const ref = useRef(null);
+  const classes = styles();
   const [selected, setSelected] = useState([]);
   const [menu, setMenu] = useState([]);
   const [navigations, setNavigations] = useState([]);
@@ -132,6 +143,14 @@ export default ({ loading, route, onSubmit }) => {
     setAllNavigations(!allNavigations);
   };
 
+  const goToCustomer = (customer) => {
+    setViewport((v) => ({
+      ...v,
+      latitude: customer.latitude,
+      longitude: customer.longitude,
+    }));
+  };
+
   const layerStyle = {
     id: 'line',
     type: 'line',
@@ -162,8 +181,8 @@ export default ({ loading, route, onSubmit }) => {
                 <Typography variant="h6">Customers</Typography>
                 {
                   route.pathway.map((customer, i) => (
-                    <Box key={i}>
-                      <Typography>- {customer.name} - ID: {customer.id}</Typography>
+                    <Box key={i} className={classes.customer} onClick={() => goToCustomer(customer)}>
+                      <Typography><b>{i + 1})</b> {customer.name} - ID: {customer.id}</Typography>
                     </Box>
                   ))
                 }
@@ -289,6 +308,11 @@ export default ({ loading, route, onSubmit }) => {
             {
               !!route && route.pathway.map((r, i) => (
                 <Marker key={i} latitude={r.latitude} longitude={r.longitude}>
+                  <span
+                    style={{ color: 'white', position: 'absolute', top: '-18px', left: '8px', fontWeight: 'bold' }}
+                  >
+                    {i + 1}
+                  </span>
                   <img alt="icon" src={MarkerIconBlue} />
                 </Marker>
               ))
