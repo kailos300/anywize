@@ -12,6 +12,7 @@ import {
   selectRouteStatus,
   getCurrentRoutes,
   getRoute,
+  skipStop,
 } from 'redux/slices/routeSlice';
 import { selectUser } from 'redux/slices/userSlice';
 import MapSidebar from 'components/Routes/MapSidebar';
@@ -189,6 +190,17 @@ const RoutesMap = () => {
     localStorage.setItem('current-tours-favourites', favourites.join(','));
   };
 
+  const onSkipStop = async (id, customerId) => {
+    await dispatch(skipStop(id, customerId));
+
+    dispatch(
+      setShowMessage({
+        description: 'The stop has been skipped',
+        type: 'success',
+      })
+    );
+  };
+
   const highlightRoute = (id) => setHighlighted(id);
 
   const openStop = (route_id, customer_id) => {
@@ -221,6 +233,7 @@ const RoutesMap = () => {
                   route={selectedStop.route}
                   customer={selectedStop.customer}
                   onClose={closeStop}
+                  onSkipStop={onSkipStop}
                 />
               )
             }

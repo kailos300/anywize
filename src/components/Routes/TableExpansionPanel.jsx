@@ -156,7 +156,7 @@ const TableExpansionPanel = ({ rowData, scroll, redirectView, myDivToFocus }) =>
                               ? 'ball'
                               : (delivered && data.goods_back)
                                 ? 'red-ball'
-                                : 'ball-open'
+                                : (data.skipped_at ? 'ball-warning' : 'ball-open')
                             }
                           ></div>
                           <div style={{
