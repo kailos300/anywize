@@ -101,6 +101,18 @@ export const getCurrentRoutes = () => async (dispatch) => {
 	}
 };
 
+export const skipStop = (routeId, customerId) => async (dispatch) => {
+	dispatch(setRouteLoading());
+
+	try {
+		await coreApi.put(`${baseUrl}/skip-stop/${routeId}/${customerId}`, {});
+	} catch (err) {
+		console.log(err);
+	} finally {
+		dispatch(setRouteReady());
+	}
+};
+
 export const getFinisedRoutes = () => async (dispatch) => {
 	dispatch(setRouteLoading());
 	try {

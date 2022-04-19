@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -12,13 +13,15 @@ import MyLocationRoundedIcon from '@material-ui/icons/MyLocationRounded';
 import NoteAddRoundedIcon from '@material-ui/icons/NoteAddRounded';
 import CloseIcon from '@material-ui/icons/Close';
 import BackIcon from '@material-ui/icons/SettingsBackupRestore';
+import WarningIcon from '@material-ui/icons/WarningSharp';
+import Alert from '@material-ui/lab/Alert';
 import moment from 'moment';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 
 const URL = process.env.REACT_APP_API;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	_box: {
 		color: 'white',
 		display: 'flex',
@@ -67,9 +70,13 @@ const useStyles = makeStyles({
 		maxHeight: '300px',
 		cursor: 'pointer',
 	},
-});
+	_warning: {
+		color: `${theme.palette.warning.light} !important`,
+	}
+}));
 
-const Stopview = ({ route, customer, onClose }) => {
+const Stopview = ({ route, customer, onClose, onSkipStop }) => {
+	const [skipWarning, setSkipWarning] = React.useState(false);
 	const classes = useStyles();
 	const { t } = useTranslation();
 
@@ -87,6 +94,39 @@ const Stopview = ({ route, customer, onClose }) => {
 					<Typography className={classes._routename}>T{route.uuid} {route.Tour.name}</Typography>
 					<Typography className={classes._customername}>{!customer.alias ? customer.name : customer.alias} </Typography>
 				</Box>
+				{
+					!stop && !customer.Orders.some((o) => o.delivered_at) && !customer.skipped_at && (
+						<Box mb={2}>
+							{
+								!skipWarning && (
+									<Box textAlign="right">
+										<Button type="button" size="small" variant="outlined" color="primary" onClick={() => setSkipWarning(true)}>
+											{t('Skip this stop')}
+										</Button>
+									</Box>
+								)
+							}
+							{
+								skipWarning && (
+									<Box boxShadow={3} border="1px solid #656565" p={2}>
+										<Alert severity="warning" elevation={3}>
+											{t('Skipping the stop is irreversible')}
+										</Alert>
+										<Box textAlign="right">
+											<Button type="button" size="small" variant="contained" color="secondary" onClick={() => setSkipWarning(false)}>
+												{t('Go back')}
+											</Button>
+											&nbsp;
+											<Button type="button" size="small" variant="outlined" color="primary" onClick={() => onSkipStop(route.id, customer.id)}>
+												{t('Skip this stop')}
+											</Button>
+										</Box>
+									</Box>
+								)
+							}
+						</Box>
+					)
+				}
 				<Box>
 					<div className={classes._routedetails}>
 						<LocationOnIcon />&nbsp;
@@ -106,6 +146,14 @@ const Stopview = ({ route, customer, onClose }) => {
 						<CallIcon />&nbsp;
 						<Typography>{customer.phone}</Typography>
 					</div>
+					{
+						customer.skipped_at && (
+							<div className={classes._routedetails}>
+								<WarningIcon className={classes._warning} />&nbsp;
+								<Typography className={classes._warning} >{t('Skipped at')} {moment(customer.skipped_at).format('DD.MM.YYYY HH:mm')}</Typography>
+							</div>
+						)
+					}
 
 				</Box>
 				{
@@ -186,7 +234,6 @@ const Stopview = ({ route, customer, onClose }) => {
 					)
 				}
 
-
 				<Typography variant="h6" className={classes._galleryheading}>{t('Orders')}</Typography>
 
 				{
@@ -202,7 +249,7 @@ const Stopview = ({ route, customer, onClose }) => {
 					)
 				}
 			</Box>
-		</Box>
+		</Box >
 	);
 };
 
