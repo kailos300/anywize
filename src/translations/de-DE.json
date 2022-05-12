@@ -129,5 +129,9 @@
   "Required": "Erforderlich",
   "The routes where created successfully": "Die Routen wurden erfolgreich erstellt",
   "Confirm": "Bestätigen",
-  "You do not have permissions to view the selected route": "Sie haben keine Berechtigung die ausgewählte Route zu sehen."
+  "You do not have permissions to view the selected route": "Sie haben keine Berechtigung die ausgewählte Route zu sehen.",
+  "Skipping the stop is irreversible": "Überspringen des Stopps ist unwiderruflich",
+  "Go back": "Abbrechen",
+  "Skip this stop": "STOPP ÜBERSPRINGEN",
+  "Skipped at": "Übersprungen am"
 }
