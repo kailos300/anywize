@@ -28,7 +28,8 @@ export const TOUR_DATA_BAR = {
   list: [
     { name: 'Current tours', path: PATHS.tours.current },
     { name: 'Recently finished tours', path: PATHS.tours.recent },
-    { name: 'Archive tours', path: PATHS.tours.archive }
+    { name: 'Archive tours', path: PATHS.tours.archive },
+    { name: 'Export', path: PATHS.tours.export }
 
   ]
 }
@@ -189,5 +190,6 @@ export const checkPaths = [
 export const checkTourPaths = [
   PATHS.tours.current,
   PATHS.tours.recent,
-  PATHS.tours.archive
+  PATHS.tours.archive,
+  PATHS.tours.export,
 ]

@@ -170,6 +170,7 @@ export const createRoute = (payload) => async (dispatch) => {
 		dispatch(setRouteReady());
 	}
 };
+
 const routesSelector = ({ routes }) => routes.routes;
 const routeSelector = ({ routes }) => routes.route
 const currentSelector = ({ routes }) => routes.current;
