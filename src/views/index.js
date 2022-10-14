@@ -16,6 +16,7 @@ import EditOrder from './Orders/EditOrder';
 import PastDeliveries from './PastDeliveries/PastDeliveries';
 import RoutesMap from './Routes/Map';
 import RoutesMapDebug from './Routes/Map-debug';
+import TourExport from './Tours/Export';
 
 export {
   Login,
@@ -36,4 +37,5 @@ export {
   PastDeliveries,
   RoutesMap,
   RoutesMapDebug,
+  TourExport,
 };

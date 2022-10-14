@@ -10,6 +10,7 @@ export const PATHS = {
     recent: '/tours/recent',
     archive: '/tours/archive',
     map: '/map/current',
+    export: '/tours/export',
   },
   customers: {
     root: '/customers',

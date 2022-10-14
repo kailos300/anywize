@@ -2,25 +2,29 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Switch from '@material-ui/core/Switch';
-import Typography from '@material-ui/core/Typography';
-import SettingsIcon from '@material-ui/icons/Settings';
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Switch from "@material-ui/core/Switch";
+import Typography from "@material-ui/core/Typography";
+import SettingsIcon from "@material-ui/icons/Settings";
 import clsx from "clsx";
 //assets
 import logo from "assets/img/logo.png";
 
 // constants
-import { NAVIGATION_ROUTES, checkPaths, checkTourPaths } from "constants/ui-constants";
+import {
+  NAVIGATION_ROUTES,
+  checkPaths,
+  checkTourPaths,
+} from "constants/ui-constants";
 import { PATHS } from "util/appConstants";
-import { logout } from 'redux/slices/userSlice';
+import { logout } from "redux/slices/userSlice";
 
 const useStyles = makeStyles((theme) => ({
   _img: {
@@ -36,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 16px",
     "& .MuiListItemText-primary": {
       font: "normal normal normal 22px / 40px Questrial",
-    }
+    },
   },
   _nav: {
     display: "flex",
@@ -49,29 +53,29 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid #6F9CEB",
   },
   _settingicon: {
-    verticalAlign: 'middle',
-    cursor: 'pointer',
+    verticalAlign: "middle",
+    cursor: "pointer",
 
-    '&:hover': {
-      transition: 'all 0.4s ease-in-out 0s',
-      transform: 'rotate(0deg) !important',
-      color: '#6F9CEB',
+    "&:hover": {
+      transition: "all 0.4s ease-in-out 0s",
+      transform: "rotate(0deg) !important",
+      color: "#6F9CEB",
     },
   },
   appbar: {
-    backgroundColor: '#121212',
+    backgroundColor: "#121212",
   },
   toolbar: {
-    paddingLeft: '130px',
-    paddingRight: '130px',
-    boxShadow: '0px 0px 4px #ffffff52',
-    display: 'flex',
-    justifyContent: 'space-between',
+    paddingLeft: "130px",
+    paddingRight: "130px",
+    boxShadow: "0px 0px 4px #ffffff52",
+    display: "flex",
+    justifyContent: "space-between",
 
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: '20px',
-      paddingRight: '20px',
-    }
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: "20px",
+      paddingRight: "20px",
+    },
   },
 }));
 
@@ -91,7 +95,7 @@ const Navbar = () => {
   };
 
   const changeLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'de' ? 'en' : 'de');
+    i18n.changeLanguage(i18n.language === "de" ? "en" : "de");
     handleClose();
   };
 
@@ -109,20 +113,30 @@ const Navbar = () => {
         </Link>
         <List className={classes._nav} component="nav">
           {NAVIGATION_ROUTES.map((item, index) => {
-            if (item.name === 'Settings') {
+            if (item.name === "Settings") {
               return null;
             }
 
+            console.log(
+              location.pathname,
+              item,
+              checkTourPaths.includes(location.pathname),
+              item.name === "Tours"
+            );
             return (
               <ListItem
-                activeClassName={location.pathname.includes(item.path) ? classes._isactive : ''}
+                activeClassName={
+                  location.pathname.includes(item.path) ? classes._isactive : ""
+                }
                 className={clsx(
                   classes._menuitem,
-                  ((checkTourPaths.includes(location.pathname) && item.name === "Tours") || (_checkPaths().includes(location.pathname) && item.name === "Master Data"))
+                  (checkTourPaths.includes(location.pathname) &&
+                    item.name === "Tours") ||
+                    (_checkPaths().includes(location.pathname) &&
+                      item.name === "Master Data")
                     ? classes._isactive
                     : ""
                 )}
-
                 key={index}
                 component={NavLink}
                 to={item.path}
@@ -133,10 +147,7 @@ const Navbar = () => {
               </ListItem>
             );
           })}
-          <ListItem
-            className={clsx(classes._menuitem)}
-            onClick={handleClick}
-          >
+          <ListItem className={clsx(classes._menuitem)} onClick={handleClick}>
             <ListItemText className={classes._nomargin}>
               <SettingsIcon className={classes._settingicon} />
             </ListItemText>
@@ -151,20 +162,21 @@ const Navbar = () => {
             onClose={handleClose}
           >
             <MenuItem>
-              <Typography component="span">
-                EN
-              </Typography>
-              <Switch checked={i18n.language === 'de'} onChange={changeLanguage} />
-              <Typography component="span">
-                DE
-              </Typography>
+              <Typography component="span">EN</Typography>
+              <Switch
+                checked={i18n.language === "de"}
+                onChange={changeLanguage}
+              />
+              <Typography component="span">DE</Typography>
             </MenuItem>
-            <MenuItem onClick={(e) => {
-              e.preventDefault();
+            <MenuItem
+              onClick={(e) => {
+                e.preventDefault();
 
-              dispatch(logout());
-            }}>
-              {t('Logout')}
+                dispatch(logout());
+              }}
+            >
+              {t("Logout")}
             </MenuItem>
           </Menu>
         </List>
