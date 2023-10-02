@@ -131,6 +131,12 @@ table.MuiTable-root {
   line-height: 1.5em;
 }
 
+.radio-checkbox-label, .radio-checkbox-label > svg {
+  color: #6F9CEB !important;
+  cursor: pointer;
+}
+
+/*
 .radio-checkbox[type=checkbox]:not(old)+label>span {
   display: inline-block;
   width: 14px;
@@ -175,8 +181,7 @@ table.MuiTable-root {
   border: 1px solid #6F9CEB;
   margin: 1px;
   transition: 0.5s;
-
-}
+}*/
 
 .ball {
   display: block;

@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
+import EmptyCircleIcon from '@material-ui/icons/RadioButtonUnchecked';
+import FilledCircleIcon from '@material-ui/icons/RadioButtonChecked';
 import Box from '@material-ui/core/Box';
 import clsx from 'clsx';
 import { ORDERS_TABLE_COLUMNS } from 'constants/ui-constants';
@@ -100,7 +102,7 @@ const OrderList = ({ confirm }) => {
 
   const checkChangeHandler = (e, clickedRow) => {
     e.stopPropagation();
-
+    console.log('aca', clickedRow);
     const newData = tableRef.current.state.data.map((row) => {
       if (row.id !== clickedRow.id) {
         return {
@@ -266,7 +268,9 @@ const OrderList = ({ confirm }) => {
                                 type="checkbox"
                                 name="field"
                                 checked={!!order.checked} />
-                              <label htmlFor={`panel${order.id}`}><span><span></span></span></label>
+                              <label className="radio-checkbox-label" htmlFor={`panel${order.id}`}>
+                                {order.checked ? <FilledCircleIcon /> : <EmptyCircleIcon />}
+                              </label>
 
                             </Box>
                             <Box flex={1} display="flex" alignItems="center" justifyContent="flex-end">
