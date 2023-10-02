@@ -20,6 +20,7 @@ import withConfirm from 'components/dialogs/delete';
 import Navbar from 'components/Navbar';
 import CustomersNavbar from 'components/Masterbar/CustomersBar';
 import DarkLayout from 'components/Shared/DarkLayout';
+import { selectUser } from 'redux/slices/userSlice';
 
 const useStyles = makeStyles({
   _filtericon: {
@@ -38,6 +39,7 @@ const ToursList = ({ confirm }) => {
   const loading = useSelector(selectTourStatus);
   const tours = useSelector(selectTours);
   const timestamp = useSelector(selectTourTimestamp);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (!loading && !timestamp) {
@@ -55,7 +57,7 @@ const ToursList = ({ confirm }) => {
   const actions = getActions(
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
-    () => addHandler(), null, null, null, t
+    () => addHandler(), null, null, null, t, user
   );
   const addHandler = () => {
     history.push(PATHS.tours.add);

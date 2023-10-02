@@ -24,6 +24,7 @@ import {
 } from 'redux/slices/orderSlice';
 import { setShowMessage } from 'redux/slices/uiSlice';
 import { createRoute } from 'redux/slices/routeSlice';
+import { selectUser } from 'redux/slices/userSlice';
 import withConfirm from 'components/dialogs/delete';
 import DarkLayout from 'components/Shared/DarkLayout';
 import Navbar from 'components/Navbar';
@@ -63,6 +64,7 @@ const OrderList = ({ confirm }) => {
   const loading = useSelector(selectOrderStatus);
   const orders = useSelector(selectOrders);
   const timestamp = useSelector(selectOrdersTimestamp);
+  const user = useSelector(selectUser);
   const [jsonData, setjsonData] = useState(orders);
 
   const fetchOrders = async () => {
@@ -91,7 +93,8 @@ const OrderList = ({ confirm }) => {
     (e, rowData) => editHandler(rowData),
     () => startTourCheck(),
     () => startTour(),
-    t
+    t,
+    user
   );
   const addHandler = () => {
     history.push(PATHS.orders.add);
@@ -196,7 +199,7 @@ const OrderList = ({ confirm }) => {
           tableRef={tableRef}
           data={mapTableData(jsonData)}
           title={t(tableTitle)}
-          columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData), t), t)}
+          columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData), t, user), t)}
           actions={actions}
           localization={getLocalization(t)}
           options={{
@@ -256,23 +259,27 @@ const OrderList = ({ confirm }) => {
                                 <img alt="icon" src={pen} style={{ height: '10px' }} />
                               </div>
                             </Box>
-                            <Box flex={1} pr={1.6} textAlign="center">
-                              <input
-                                onChange={(e) => {
-                                  e.stopPropagation();
+                            {
+                              user?.permissions?.routesCreateForDriver && (
+                                <Box flex={1} pr={1.6} textAlign="center">
+                                  <input
+                                    onChange={(e) => {
+                                      e.stopPropagation();
 
-                                  innerChangeHandler(order);
-                                }}
-                                className={'radio-checkbox'}
-                                id={`panel${order.id}`}
-                                type="checkbox"
-                                name="field"
-                                checked={!!order.checked} />
-                              <label className="radio-checkbox-label" htmlFor={`panel${order.id}`}>
-                                {order.checked ? <FilledCircleIcon /> : <EmptyCircleIcon />}
-                              </label>
+                                      innerChangeHandler(order);
+                                    }}
+                                    className={'radio-checkbox'}
+                                    id={`panel${order.id}`}
+                                    type="checkbox"
+                                    name="field"
+                                    checked={!!order.checked} />
+                                  <label className="radio-checkbox-label" htmlFor={`panel${order.id}`}>
+                                    {order.checked ? <FilledCircleIcon /> : <EmptyCircleIcon />}
+                                  </label>
+                                </Box>
+                              )
+                            }
 
-                            </Box>
                             <Box flex={1} display="flex" alignItems="center" justifyContent="flex-end">
                               <DeleteSharpIcon className={classes._pointer} style={{ marginRight: '20px', color: '#ADADAD' }} onClick={(e) => callbackOnDelete(e, order)} />
                             </Box>

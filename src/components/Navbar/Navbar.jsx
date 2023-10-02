@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -24,7 +24,7 @@ import {
   checkTourPaths,
 } from "constants/ui-constants";
 import { PATHS } from "util/appConstants";
-import { logout } from "redux/slices/userSlice";
+import { logout, selectUser } from "redux/slices/userSlice";
 
 const useStyles = makeStyles((theme) => ({
   _img: {
@@ -85,6 +85,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const user = useSelector(selectUser);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -112,7 +113,9 @@ const Navbar = () => {
           <img className={classes._img} src={logo} alt="anywize logo" />
         </Link>
         <List className={classes._nav} component="nav">
-          {NAVIGATION_ROUTES.map((item, index) => {
+          {NAVIGATION_ROUTES.filter(
+            (item) => !item.permission || item.permission(user?.permissions)
+          ).map((item, index) => {
             if (item.name === "Settings") {
               return null;
             }

@@ -19,6 +19,7 @@ import withConfirm from "components/dialogs/delete";
 import Navbar from 'components/Navbar';
 import CustomersNavbar from 'components/Masterbar/CustomersBar';
 import DarkLayout from 'components/Shared/DarkLayout';
+import { selectUser } from "redux/slices/userSlice";
 
 const useStyles = makeStyles({
   _filtericon: {
@@ -36,6 +37,7 @@ const CustomersList = ({ confirm }) => {
 
   const loading = useSelector(selectCustomerStatus);
   const customers = useSelector(selectCustomers);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (!customers.length && !loading) {
@@ -53,7 +55,7 @@ const CustomersList = ({ confirm }) => {
   const actions = getActions(
     tableTitle,
     (e, rowData) => callbackOnDelete(e, rowData),
-    () => history.push(PATHS.customers.add), null, null, null, t
+    () => history.push(PATHS.customers.add), null, null, null, t, user
   );
 
   return (

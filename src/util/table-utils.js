@@ -14,42 +14,63 @@ export const getColumns = (columns, t) => {
 };
 
 
-export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler, startTourCheck, startTour, t) => {
+export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler, startTourCheck, startTour, t, user = {}) => {
   let actions = [];
   if (tableTitle === 'ORDERS') {
+    if (user?.permissions?.routesCreateForDriver) {
+      actions.push(
+        {
+          icon: () => { return (<><span style={{ fontSize: '16px', fontWeight: 'normal', color: startTourCheck() ? '#6F9CEB' : '#ADADAD' }}>{t('Start Tour/s')}</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: startTourCheck() ? '#6F9CEB' : '#ADADAD', height: '20px', width: '20px', marginRight: '15px' }} /></>) },
+          tooltip: 'Start Tours',
+          iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
+          isFreeAction: true,
+          onClick: startTour,
+          position: "row"
+        }
+      );
+    }
+
+    if (user?.permissions?.ordersCreate) {
+      actions.push(
+        {
+          icon: 'add',
+          tooltip: t('Add'),
+          iconProps: { style: { color: "#ADADAD", background: '#1F1F1F', marginRight: '15px' } },
+          isFreeAction: true,
+          onClick: addHandler,
+          position: "row"
+        },
+      );
+    }
+
+    return actions;
+  }
+
+  if (tableTitle === 'CUSTOMERS' && user?.permissions?.customersCreate) {
     actions.push(
-      {
-        icon: () => { return (<><span style={{ fontSize: '16px', fontWeight: 'normal', color: startTourCheck() ? '#6F9CEB' : '#ADADAD' }}>{t('Start Tour/s')}</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: startTourCheck() ? '#6F9CEB' : '#ADADAD', height: '20px', width: '20px', marginRight: '15px' }} /></>) },
-        tooltip: 'Start Tours',
-        iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
-        isFreeAction: true,
-        onClick: startTour,
-        position: "row"
-      },
       {
         icon: 'add',
         tooltip: t('Add'),
-        iconProps: { style: { color: "#ADADAD", background: '#1F1F1F', marginRight: '15px' } },
+        iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
         isFreeAction: true,
         onClick: addHandler,
         position: "row"
       },
-
     );
-    return actions;
   }
-  actions.push(
-    {
-      icon: 'add',
-      tooltip: t('Add'),
-      iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
-      isFreeAction: true,
-      onClick: addHandler,
-      position: "row"
-    },
 
-  );
-
+  if (tableTitle === 'TOURS' && user?.permissions?.toursCreate) {
+    actions.push(
+      {
+        icon: 'add',
+        tooltip: t('Add'),
+        iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
+        isFreeAction: true,
+        onClick: addHandler,
+        position: "row"
+      },
+    );
+  }
 
   return actions;
 };
