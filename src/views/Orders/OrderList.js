@@ -92,7 +92,7 @@ const OrderList = ({ confirm }) => {
     () => addHandler(),
     (e, rowData) => editHandler(rowData),
     () => startTourCheck(),
-    () => startTour(),
+    (v = null) => startTour(v),
     t,
     user
   );
@@ -132,7 +132,7 @@ const OrderList = ({ confirm }) => {
     });
   };
 
-  const startTour = async () => {
+  const startTour = async (type = null) => {
     if (!startTourCheck()) {
       return;
     }
@@ -148,6 +148,7 @@ const OrderList = ({ confirm }) => {
         await dispatch(createRoute({
           order_ids: rows[i].orders.filter((o) => o.checked).map((o) => o.id),
           tour_id: rows[i].Tour.id,
+          type,
         }));
 
         i += 1;
@@ -260,7 +261,7 @@ const OrderList = ({ confirm }) => {
                               </div>
                             </Box>
                             {
-                              user?.permissions?.routesCreateForDriver && (
+                              (user?.permissions?.routesCreateForDriver || user?.permissions?.routesCreateDeliveryOrder) && (
                                 <Box flex={1} pr={1.6} textAlign="center">
                                   <input
                                     onChange={(e) => {

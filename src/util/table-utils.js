@@ -24,7 +24,20 @@ export const getActions = (tableTitle, callbackOnDelete, addHandler, editHandler
           tooltip: 'Start Tours',
           iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
           isFreeAction: true,
-          onClick: startTour,
+          onClick: () => startTour(),
+          position: "row"
+        }
+      );
+    }
+
+    if (user?.permissions?.routesCreateDeliveryOrder) {
+      actions.push(
+        {
+          icon: () => { return (<><span style={{ fontSize: '16px', fontWeight: 'normal', color: startTourCheck() ? '#6F9CEB' : '#ADADAD' }}>{t('Approve')}</span> <PlayCircleOutlineIcon style={{ marginLeft: '10px', color: startTourCheck() ? '#6F9CEB' : '#ADADAD', height: '20px', width: '20px', marginRight: '15px' }} /></>) },
+          tooltip: 'Approve',
+          iconProps: { style: { color: "#ADADAD", background: '#1F1F1F' } },
+          isFreeAction: true,
+          onClick: () => startTour('DELIVERY'),
           position: "row"
         }
       );

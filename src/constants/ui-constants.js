@@ -6,6 +6,8 @@ import TooltipBar from "components/Tooltip";
 import Tooltip from "@material-ui/core/Tooltip";
 import EmptyCircleIcon from "@material-ui/icons/RadioButtonUnchecked";
 import FilledCircleIcon from "@material-ui/icons/RadioButtonChecked";
+import DocumentIcon from "@material-ui/icons/Description";
+import { IconButton } from "@material-ui/core";
 import moment from "moment";
 import { PATHS } from "util/appConstants";
 
@@ -105,7 +107,10 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
     },
   ];
 
-  if (user?.permissions?.routesCreateForDriver) {
+  if (
+    user?.permissions?.routesCreateForDriver ||
+    user?.permissions?.routesCreateDeliveryOrder
+  ) {
     cols.push({
       title: "Id+1",
       render: (rowData) => (
@@ -138,7 +143,8 @@ export const CURRENT_TOURS_COLUMNS = (
   tableRef,
   markFavourite,
   redirectView,
-  t
+  t,
+  getPdf
 ) => {
   return [
     {
@@ -260,35 +266,47 @@ export const CURRENT_TOURS_COLUMNS = (
     },
     {
       title: "call",
-      render: (rowData) => (
-        <>
-          {rowData.driver_name !== null ? (
-            <Tooltip
-              title={<TooltipBar name={"callicon"} rowData={rowData} />}
-              placement="top"
-              arrow
-              interactive
-            >
-              <CallSharpIcon className={"hovericon"} />
-            </Tooltip>
-          ) : (
-            <CallSharpIcon className={"disabled-btn"} disabled={true} />
-          )}
-        </>
-      ),
+      render: (rowData) => {
+        return (
+          <>
+            {rowData.driver_name !== null ? (
+              <Tooltip
+                title={<TooltipBar name={"callicon"} rowData={rowData} />}
+                placement="top"
+                arrow
+                interactive
+              >
+                <CallSharpIcon className={"hovericon"} />
+              </Tooltip>
+            ) : (
+              <CallSharpIcon className={"disabled-btn"} disabled={true} />
+            )}
+          </>
+        );
+      },
     },
     {
       title: "key",
-      render: (rowData) => (
-        <Tooltip
-          title={<TooltipBar name={"vpnicon"} rowData={rowData} />}
-          placement="top"
-          arrow
-          interactive
-        >
-          <VpnKeySharpIcon className={"hovericon"} />
-        </Tooltip>
-      ),
+      render: (rowData) => {
+        if (!rowData.code) {
+          return (
+            <IconButton color="primary" onClick={() => getPdf(rowData)} style={{ padding: 0 }}>
+              <DocumentIcon style={{ color: '#6F9CEB' }} />
+            </IconButton>
+          );
+        }
+
+        return (
+          <Tooltip
+            title={<TooltipBar name={"vpnicon"} rowData={rowData} />}
+            placement="top"
+            arrow
+            interactive
+          >
+            <VpnKeySharpIcon className={"hovericon"} />
+          </Tooltip>
+        );
+      },
     },
   ];
 };
