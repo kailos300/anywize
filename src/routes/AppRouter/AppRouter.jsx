@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@material-ui/core";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import RequireAuth from "components/hoc/require-auth";
 import {
   Login,
@@ -24,6 +24,7 @@ import {
   TourExport,
 } from "views";
 import { PATHS } from "../../util/appConstants";
+import Redirect from "./Redirect";
 
 const AppRouter = () => {
   return (
@@ -123,7 +124,7 @@ const AppRouter = () => {
             path={"/routes/map/debug/:routeId?"}
             component={RequireAuth(RoutesMapDebug)}
           />
-          <Redirect to={PATHS.tours.current} />
+          <Redirect component={RequireAuth(Redirect)} />
         </Switch>
       </Box>
     </Box>

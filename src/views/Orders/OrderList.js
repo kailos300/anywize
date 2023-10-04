@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
+import EmptyCircleIcon from '@material-ui/icons/RadioButtonUnchecked';
+import FilledCircleIcon from '@material-ui/icons/RadioButtonChecked';
 import Box from '@material-ui/core/Box';
 import clsx from 'clsx';
 import { ORDERS_TABLE_COLUMNS } from 'constants/ui-constants';
@@ -22,6 +24,7 @@ import {
 } from 'redux/slices/orderSlice';
 import { setShowMessage } from 'redux/slices/uiSlice';
 import { createRoute } from 'redux/slices/routeSlice';
+import { selectUser } from 'redux/slices/userSlice';
 import withConfirm from 'components/dialogs/delete';
 import DarkLayout from 'components/Shared/DarkLayout';
 import Navbar from 'components/Navbar';
@@ -61,6 +64,7 @@ const OrderList = ({ confirm }) => {
   const loading = useSelector(selectOrderStatus);
   const orders = useSelector(selectOrders);
   const timestamp = useSelector(selectOrdersTimestamp);
+  const user = useSelector(selectUser);
   const [jsonData, setjsonData] = useState(orders);
 
   const fetchOrders = async () => {
@@ -88,8 +92,9 @@ const OrderList = ({ confirm }) => {
     () => addHandler(),
     (e, rowData) => editHandler(rowData),
     () => startTourCheck(),
-    () => startTour(),
-    t
+    (v = null) => startTour(v),
+    t,
+    user
   );
   const addHandler = () => {
     history.push(PATHS.orders.add);
@@ -100,7 +105,7 @@ const OrderList = ({ confirm }) => {
 
   const checkChangeHandler = (e, clickedRow) => {
     e.stopPropagation();
-
+    console.log('aca', clickedRow);
     const newData = tableRef.current.state.data.map((row) => {
       if (row.id !== clickedRow.id) {
         return {
@@ -127,7 +132,7 @@ const OrderList = ({ confirm }) => {
     });
   };
 
-  const startTour = async () => {
+  const startTour = async (type = null) => {
     if (!startTourCheck()) {
       return;
     }
@@ -143,6 +148,7 @@ const OrderList = ({ confirm }) => {
         await dispatch(createRoute({
           order_ids: rows[i].orders.filter((o) => o.checked).map((o) => o.id),
           tour_id: rows[i].Tour.id,
+          type,
         }));
 
         i += 1;
@@ -194,7 +200,7 @@ const OrderList = ({ confirm }) => {
           tableRef={tableRef}
           data={mapTableData(jsonData)}
           title={t(tableTitle)}
-          columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData), t), t)}
+          columns={getColumns(ORDERS_TABLE_COLUMNS((e, rowData) => checkChangeHandler(e, rowData), t, user), t)}
           actions={actions}
           localization={getLocalization(t)}
           options={{
@@ -254,21 +260,27 @@ const OrderList = ({ confirm }) => {
                                 <img alt="icon" src={pen} style={{ height: '10px' }} />
                               </div>
                             </Box>
-                            <Box flex={1} pr={1.6} textAlign="center">
-                              <input
-                                onChange={(e) => {
-                                  e.stopPropagation();
+                            {
+                              (user?.permissions?.routesCreateForDriver || user?.permissions?.routesCreateDeliveryOrder) && (
+                                <Box flex={1} pr={1.6} textAlign="center">
+                                  <input
+                                    onChange={(e) => {
+                                      e.stopPropagation();
 
-                                  innerChangeHandler(order);
-                                }}
-                                className={'radio-checkbox'}
-                                id={`panel${order.id}`}
-                                type="checkbox"
-                                name="field"
-                                checked={!!order.checked} />
-                              <label htmlFor={`panel${order.id}`}><span><span></span></span></label>
+                                      innerChangeHandler(order);
+                                    }}
+                                    className={'radio-checkbox'}
+                                    id={`panel${order.id}`}
+                                    type="checkbox"
+                                    name="field"
+                                    checked={!!order.checked} />
+                                  <label className="radio-checkbox-label" htmlFor={`panel${order.id}`}>
+                                    {order.checked ? <FilledCircleIcon /> : <EmptyCircleIcon />}
+                                  </label>
+                                </Box>
+                              )
+                            }
 
-                            </Box>
                             <Box flex={1} display="flex" alignItems="center" justifyContent="flex-end">
                               <DeleteSharpIcon className={classes._pointer} style={{ marginRight: '20px', color: '#ADADAD' }} onClick={(e) => callbackOnDelete(e, order)} />
                             </Box>

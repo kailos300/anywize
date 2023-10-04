@@ -1,33 +1,39 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Grid, Typography, Box } from '@material-ui/core';
-import * as pick from 'lodash/pick';
-import { useDispatch } from 'react-redux';
-import { useFormik } from 'formik';
-import { makeStyles } from '@material-ui/core/styles';
-import countries from 'iso-3166-country-list';
-import { useHistory, useParams } from 'react-router-dom';
-import { Input, Select, Checkbox, Autocomplete } from 'components/Shared/mui-formik-inputs';
-import { CustomerSchema } from 'constants/validation-schemas';
-import { CustomerFormAllowedFields } from 'constants/forms-submit-allowed-fields';
-import { PATHS } from 'util/appConstants';
-import SelectGeoCoordinates from 'components/Customers/SelectGeoCoordinates';
-import { getNextPosition } from 'redux/slices/tourSlice';
-import FormCancelSaveButton from 'components/Shared/FormCancelSaveButtons';
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Grid, Typography, Box } from "@material-ui/core";
+import * as pick from "lodash/pick";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { makeStyles } from "@material-ui/core/styles";
+import countries from "iso-3166-country-list";
+import { useHistory, useParams } from "react-router-dom";
+import {
+  Input,
+  Select,
+  Checkbox,
+  Autocomplete,
+} from "components/Shared/mui-formik-inputs";
+import { CustomerSchema } from "constants/validation-schemas";
+import { CustomerFormAllowedFields } from "constants/forms-submit-allowed-fields";
+import { PATHS } from "util/appConstants";
+import SelectGeoCoordinates from "components/Customers/SelectGeoCoordinates";
+import { getNextPosition } from "redux/slices/tourSlice";
+import FormCancelSaveButton from "components/Shared/FormCancelSaveButtons";
+import { selectUser } from "redux/slices/userSlice";
 
-const unzip = require('zip-to-city');
+const unzip = require("zip-to-city");
 
 const useStyles = makeStyles({
   _heading: {
-    font: 'normal normal normal 28px/40px Questrial',
-    color: '#121212',
+    font: "normal normal normal 28px/40px Questrial",
+    color: "#121212",
   },
   _icons: {
-    color: '#ADADAD',
-    cursor: 'pointer',
+    color: "#ADADAD",
+    cursor: "pointer",
     transition: "all 0.3s ease-in-out",
-    margin: '0 16px 0 0px',
-    fontSize: '35px'
+    margin: "0 16px 0 0px",
+    fontSize: "35px",
   },
   _save: {
     "&:hover": {
@@ -35,8 +41,8 @@ const useStyles = makeStyles({
       color: "#6F9CEB",
     },
     "&:hover + span": {
-      display: 'block',
-    }
+      display: "block",
+    },
   },
   _close: {
     "&:hover": {
@@ -44,30 +50,26 @@ const useStyles = makeStyles({
       color: "#525252",
     },
     "&:hover + span": {
-      display: 'block',
-    }
+      display: "block",
+    },
   },
   _subheading: {
-    font: 'normal normal 500 22px/32px Roboto',
-    color: ' #121212',
-    marginTop: '44px',
-    marginBottom: '40px',
+    font: "normal normal 500 22px/32px Roboto",
+    color: " #121212",
+    marginTop: "44px",
+    marginBottom: "40px",
   },
   _dflex: {
     display: "flex",
     alignItems: "center",
   },
 });
-const CustomerForm = ({
-  initialValues,
-  onSubmit,
-  action,
-  tourList,
-}) => {
+const CustomerForm = ({ initialValues, onSubmit, action, tourList }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const { id } = useParams();
 
   const formik = useFormik({
@@ -76,28 +78,28 @@ const CustomerForm = ({
     validateOnBlur: true,
     validationSchema: CustomerSchema,
     initialValues: {
-      number: '',
-      contact_salutation: '',
-      contact_name: '',
-      contact_surname: '',
+      number: "",
+      contact_salutation: "",
+      contact_name: "",
+      contact_surname: "",
       email_notifications: false,
-      tour: '',
-      position: '',
-      deposit_agreement: '',
-      keybox_code: '',
-      tour_id: '', // required
-      tour_position: '', // required
-      name: '', // required
-      alias: '', // required
-      street: '', // required
-      street_number: '', // required
-      city: '', // required
-      zipcode: '', // required
-      country: '', // required
-      email: '', // required
-      phone: '', // required
-      latitude: '', // required
-      longitude: '', // required
+      tour: "",
+      position: "",
+      deposit_agreement: "",
+      keybox_code: "",
+      tour_id: "", // required
+      tour_position: "", // required
+      name: "", // required
+      alias: "", // required
+      street: "", // required
+      street_number: "", // required
+      city: "", // required
+      zipcode: "", // required
+      country: "", // required
+      email: "", // required
+      phone: "", // required
+      latitude: "", // required
+      longitude: "", // required
       ...initialValues,
     },
     onSubmit: async (values, { setSubmitting }) => {
@@ -135,8 +137,8 @@ const CustomerForm = ({
       return;
     }
     setFieldValue("zipcode", value);
-    setFieldValue("city", '');
-    setFieldValue("country", '');
+    setFieldValue("city", "");
+    setFieldValue("country", "");
   };
 
   const closeCustomerHandler = () => {
@@ -149,7 +151,7 @@ const CustomerForm = ({
     const position = await dispatch(getNextPosition(id));
 
     if (position) {
-      setFieldValue('tour_position', position);
+      setFieldValue("tour_position", position);
     }
   };
 
@@ -264,56 +266,60 @@ const CustomerForm = ({
             value={values.country}
             settings={{
               disableClearable: true,
-              valueProp: 'code',
-              labelProp: 'name',
+              valueProp: "code",
+              labelProp: "name",
             }}
             onChange={(selected) => {
-              setFieldValue('country', selected.code);
+              setFieldValue("country", selected.code);
             }}
             options={countries}
             required
           />
         </Grid>
       </Grid>
-      <Typography className={classes._subheading} variant="h5">
-        {t("Contact")}
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Select
-            label={t("Salutation")}
-            name="contact_salutation"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.contact_salutation}
-            errors={errors}
-            options={["Mr", "Ms", "Dr"].map((o) => ({
-              label: t(o),
-              value: o,
-            }))}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={2}>
-          <Input
-            label={t("First Name")}
-            name="contact_name"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.contact_name}
-            errors={errors}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Input
-            label={t("Last Name")}
-            name="contact_surname"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.contact_surname}
-            errors={errors}
-          />
-        </Grid>
-      </Grid>
+      {!user?.permissions?.customersHideLocationRelatedFields && (
+        <>
+          <Typography className={classes._subheading} variant="h5">
+            {t("Contact")}
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+              <Select
+                label={t("Salutation")}
+                name="contact_salutation"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.contact_salutation}
+                errors={errors}
+                options={["Mr", "Ms", "Dr"].map((o) => ({
+                  label: t(o),
+                  value: o,
+                }))}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={2}>
+              <Input
+                label={t("First Name")}
+                name="contact_name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.contact_name}
+                errors={errors}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+              <Input
+                label={t("Last Name")}
+                name="contact_surname"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.contact_surname}
+                errors={errors}
+              />
+            </Grid>
+          </Grid>
+        </>
+      )}
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -348,7 +354,7 @@ const CustomerForm = ({
             onChange={handleChange}
             onBlur={handleBlur}
             errors={errors}
-            style={{ color: '#6F9CEB' }}
+            style={{ color: "#6F9CEB" }}
           />
           <Typography component="span" className="font-size-12">
             {t("Notify when Tour starts")}
@@ -388,80 +394,88 @@ const CustomerForm = ({
             required
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Select
-            label={t("Deposit agreement")}
-            name="deposit_agreement"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.deposit_agreement}
-            errors={errors}
-            options={[
-              { value: "NONE", label: t("None") },
-              { value: "BRING_KEY", label: t("Bring Key") },
-              { value: "KEY_BOX", label: t("KeyBox") },
-            ].map((o) => ({ label: o.label, value: o.value }))}
-            required
-          />
-        </Grid>
-        {values.deposit_agreement === "KEY_BOX" && (
-          <Grid item xs={12} sm={6} md={4} lg={2}>
-            <Input
-              label={t("Keybox Code")}
-              name="keybox_code"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.keybox_code}
-              errors={errors}
-              required={values.deposit_agreement === 'KEY_BOX'}
-            />
+      </Grid>
+      {!user?.permissions?.customersHideLocationRelatedFields && (
+        <>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+              <Select
+                label={t("Deposit agreement")}
+                name="deposit_agreement"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.deposit_agreement}
+                errors={errors}
+                options={[
+                  { value: "NONE", label: t("None") },
+                  { value: "BRING_KEY", label: t("Bring Key") },
+                  { value: "KEY_BOX", label: t("KeyBox") },
+                ].map((o) => ({ label: o.label, value: o.value }))}
+                required
+              />
+            </Grid>
+            {values.deposit_agreement === "KEY_BOX" && (
+              <Grid item xs={12} sm={6} md={4} lg={2}>
+                <Input
+                  label={t("Keybox Code")}
+                  name="keybox_code"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.keybox_code}
+                  errors={errors}
+                  required={values.deposit_agreement === "KEY_BOX"}
+                />
+              </Grid>
+            )}
           </Grid>
-        )}
-      </Grid>
 
-      <Typography className={classes._subheading} variant="h5">
-        {t('Geolocation')}
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={3} lg={3}>
-          <Input
-            label={t("Latitude")}
-            name="latitude"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.latitude}
-            errors={errors}
-            disabled
-            required
-          />
-        </Grid>
+          <Typography className={classes._subheading} variant="h5">
+            {t("Geolocation")}
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} md={3} lg={3}>
+              <Input
+                label={t("Latitude")}
+                name="latitude"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.latitude}
+                errors={errors}
+                disabled
+                required
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={6} md={3} lg={3}>
-          <Input
-            label={t("Longitude")}
-            name="longitude"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.longitude}
-            errors={errors}
-            disabled
-            required
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <SelectGeoCoordinates
-            onChange={({ latitude, longitude }) => {
-              setFieldValue('latitude', latitude);
-              setFieldValue('longitude', longitude);
-            }}
-            latitude={values.latitude || 52.52321191756548}
-            longitude={values.longitude || 13.405897492100648}
-            initialInputValue={
-              values.id ? `${values.street} ${values.street_number}, ${values.city}, ${values.country}` : ''
-            }
-          />
-        </Grid>
-      </Grid>
+            <Grid item xs={12} sm={6} md={3} lg={3}>
+              <Input
+                label={t("Longitude")}
+                name="longitude"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.longitude}
+                errors={errors}
+                disabled
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SelectGeoCoordinates
+                onChange={({ latitude, longitude }) => {
+                  setFieldValue("latitude", latitude);
+                  setFieldValue("longitude", longitude);
+                }}
+                latitude={values.latitude || 52.52321191756548}
+                longitude={values.longitude || 13.405897492100648}
+                initialInputValue={
+                  values.id
+                    ? `${values.street} ${values.street_number}, ${values.city}, ${values.country}`
+                    : ""
+                }
+              />
+            </Grid>
+          </Grid>
+        </>
+      )}
     </Box>
   );
 };

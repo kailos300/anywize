@@ -9,6 +9,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { selectUser } from "redux/slices/userSlice";
 
 const useStyles = makeStyles((theme) => ({
   _container: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 16px",
     "& .MuiListItemText-primary": {
       font: "normal normal normal 16px/28px Questrial",
-    }
+    },
   },
   _nav: {
     display: "flex",
@@ -47,25 +49,26 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     backgroundColor: "#1F1F1F",
-    top: '64px',
+    top: "64px",
     marginBottom: theme.spacing(2),
   },
   toolbar: {
-    paddingLeft: '130px',
-    paddingRight: '130px',
-    boxShadow: '0px 0px 4px #ffffff52',
-    display: 'flex',
-    justifyContent: 'space-between',
+    paddingLeft: "130px",
+    paddingRight: "130px",
+    boxShadow: "0px 0px 4px #ffffff52",
+    display: "flex",
+    justifyContent: "space-between",
 
-    [theme.breakpoints.down('md')]: {
-      paddingLeft: '20px',
-      paddingRight: '20px',
-    }
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: "20px",
+      paddingRight: "20px",
+    },
   },
 }));
 
 const Masterbar = (props) => {
   const { t } = useTranslation();
+  const user = useSelector(selectUser);
   const classes = useStyles();
 
   return (
@@ -76,19 +79,21 @@ const Masterbar = (props) => {
             {t(props.name)}
           </Typography>
           <List className={classes._nav} component="nav">
-            {props.list.map((item, i) =>
-              <ListItem
-                activeClassName={classes._isactive}
-                className={classes._menuitem}
-                key={i}
-                component={NavLink}
-                to={item.path}
-              >
-                <ListItemText className={classes._nomargin}>
-                  {t(item.name)}
-                </ListItemText>
-              </ListItem>)
-            }
+            {props.list
+              .filter((item) => !item.permission || item.permission(user))
+              .map((item, i) => (
+                <ListItem
+                  activeClassName={classes._isactive}
+                  className={classes._menuitem}
+                  key={i}
+                  component={NavLink}
+                  to={item.path}
+                >
+                  <ListItemText className={classes._nomargin}>
+                    {t(item.name)}
+                  </ListItemText>
+                </ListItem>
+              ))}
           </List>
         </Toolbar>
       </AppBar>

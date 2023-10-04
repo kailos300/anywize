@@ -15,6 +15,7 @@ import {
 import Navbar from 'components/Navbar';
 import CustomersNavbar from 'components/Masterbar/CustomersBar';
 import DarkLayout from 'components/Shared/DarkLayout';
+import { selectUser } from "redux/slices/userSlice";
 
 const useStyles = makeStyles({
   _heading: {
@@ -95,6 +96,7 @@ const CustomerDetail = () => {
 
   const loading = useSelector(selectCustomerStatus);
   const customer = useSelector(selectCustomer);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (id) {
@@ -115,10 +117,15 @@ const CustomerDetail = () => {
           <Typography className={classes._heading} variant="h4">
             {customer?.alias || customer?.name}
           </Typography>
-          <Box className={classes._buttonbox} component="div">
-            <EditIcon onClick={editCustomerHandler} className={classes._edit} />
-            <Typography component="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
-          </Box>
+          {
+            user?.permissions?.customersCreate && (
+              <Box className={classes._buttonbox} component="div">
+                <EditIcon onClick={editCustomerHandler} className={classes._edit} />
+                <Typography component="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
+              </Box>
+            )
+          }
+
         </div>
         <Typography className={classes._infoheading} variant="h5">
           {t("Basic Data")}
@@ -215,54 +222,64 @@ const CustomerDetail = () => {
               {customer?.country}
             </Typography>
           </div>
-          <div>
-            <Typography className={classes._head} variant="h6">
-              {t("Geolocation")}
-            </Typography>
-            <Typography className={classes._detail} variant="h6">
-              {customer?.latitude}, {customer?.longitude}
-            </Typography>
-          </div>
+          {
+            !user?.permissions?.customersHideLocationRelatedFields && (
+              <div>
+                <Typography className={classes._head} variant="h6">
+                  {t("Geolocation")}
+                </Typography>
+                <Typography className={classes._detail} variant="h6">
+                  {customer?.latitude}, {customer?.longitude}
+                </Typography>
+              </div>
+            )}
         </div>
         {/** */}
-        <Typography
-          className={clsx(classes._infoheading, classes._margintop80)}
-          variant="h5"
-        >
-          {t("Contact")}
-        </Typography>
-        <div className={classes._basicdetailhead}>
-          <div>
-            <Typography className={clsx(classes._head)} variant="h6">
-              {t("Salutation")}
-            </Typography>
-            <Typography className={clsx(classes._detail)} variant="h6">
-              {t(customer?.contact_salutation)}
-            </Typography>
-          </div>
-          <div>
-            <Typography
-              className={clsx(classes._head, classes._name)}
-              variant="h6"
-            >
-              {t("First Name")}
-            </Typography>
-            <Typography
-              className={clsx(classes._name, classes._detail)}
-              variant="h6"
-            >
-              {customer?.contact_name}
-            </Typography>
-          </div>
-          <div>
-            <Typography className={classes._head} variant="h6">
-              {t("Last Name")}
-            </Typography>
-            <Typography className={classes._detail} variant="h6">
-              {customer?.contact_surname}
-            </Typography>
-          </div>
-        </div>
+        {
+          !user?.permissions?.customersHideLocationRelatedFields && (
+            <>
+              <Typography
+                className={clsx(classes._infoheading, classes._margintop80)}
+                variant="h5"
+              >
+                {t("Contact")}
+              </Typography>
+              <div className={classes._basicdetailhead}>
+                <div>
+                  <Typography className={clsx(classes._head)} variant="h6">
+                    {t("Salutation")}
+                  </Typography>
+                  <Typography className={clsx(classes._detail)} variant="h6">
+                    {t(customer?.contact_salutation)}
+                  </Typography>
+                </div>
+                <div>
+                  <Typography
+                    className={clsx(classes._head, classes._name)}
+                    variant="h6"
+                  >
+                    {t("First Name")}
+                  </Typography>
+                  <Typography
+                    className={clsx(classes._name, classes._detail)}
+                    variant="h6"
+                  >
+                    {customer?.contact_name}
+                  </Typography>
+                </div>
+                <div>
+                  <Typography className={classes._head} variant="h6">
+                    {t("Last Name")}
+                  </Typography>
+                  <Typography className={classes._detail} variant="h6">
+                    {customer?.contact_surname}
+                  </Typography>
+                </div>
+              </div>
+            </>
+          )
+        }
+
         {/*** */}
         <div className={classes._basicdetailhead}>
           <div>
@@ -336,26 +353,29 @@ const CustomerDetail = () => {
         </div>
         {/*** */}
 
-        <div className={classes._basicdetailhead}>
-          <div>
-            <Typography className={clsx(classes._head)} variant="h6">
-              {t("Deposit agreement")}
-            </Typography>
-            <Typography className={clsx(classes._detail)} variant="h6">
-              {DEPOSIT_AGREEMENTS[customer?.deposit_agreement]}
-            </Typography>
-          </div>
-          {customer?.deposit_agreement === "KEY_BOX" && (
-            <div>
-              <Typography className={clsx(classes._head)} variant="h6">
-                {t("Code")}
-              </Typography>
-              <Typography className={clsx(classes._detail)} variant="h6">
-                {customer?.keybox_code}
-              </Typography>
+        {
+          !user?.permissions?.customersHideLocationRelatedFields && (
+            <div className={classes._basicdetailhead}>
+              <div>
+                <Typography className={clsx(classes._head)} variant="h6">
+                  {t("Deposit agreement")}
+                </Typography>
+                <Typography className={clsx(classes._detail)} variant="h6">
+                  {DEPOSIT_AGREEMENTS[customer?.deposit_agreement]}
+                </Typography>
+              </div>
+              {customer?.deposit_agreement === "KEY_BOX" && (
+                <div>
+                  <Typography className={clsx(classes._head)} variant="h6">
+                    {t("Code")}
+                  </Typography>
+                  <Typography className={clsx(classes._detail)} variant="h6">
+                    {customer?.keybox_code}
+                  </Typography>
+                </div>
+              )}
             </div>
           )}
-        </div>
       </DarkLayout>
     </>
   );
