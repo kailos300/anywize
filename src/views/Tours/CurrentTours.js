@@ -72,10 +72,6 @@ const CurrentTours = () => {
 		history.push({ pathname: `${PATHS.tours.map}/${rowData.id}/${pathway.id}` });
 	};
 
-	const getPdf = (rowData) => {
-		console.log(rowData);
-	};
-
 	return (
 		<>
 			<Navbar />
@@ -85,7 +81,7 @@ const CurrentTours = () => {
 					tableRef={tableRef}
 					data={mapTableData(tabledata)}
 					localization={getLocalization(t)}
-					columns={getColumns(CURRENT_TOURS_COLUMNS(tableRef, markFavourite, redirectView, t, getPdf), t)}
+					columns={getColumns(CURRENT_TOURS_COLUMNS(tableRef, markFavourite, redirectView, t), t)}
 					options={{
 						pageSize: 50,
 						pageSizeOptions: [50, 100],

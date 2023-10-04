@@ -31,9 +31,9 @@ export const TOUR_DATA_BAR = {
   name: "Tours",
   list: [
     { name: "Current tours", path: PATHS.tours.current },
-    { name: "Recently finished tours", path: PATHS.tours.recent },
-    { name: "Archive tours", path: PATHS.tours.archive },
-    { name: "Export", path: PATHS.tours.export },
+    { name: "Recently finished tours", path: PATHS.tours.recent, permission: (user) => user?.permissions?.routesCreateForDriver },
+    { name: "Archive tours", path: PATHS.tours.archive, permission: (user) => user?.permissions?.routesCreateForDriver },
+    { name: "Export", path: PATHS.tours.export, permission: (user) => user?.permissions?.routesCreateForDriver },
   ],
 };
 export const NAVIGATION_ROUTES = [
@@ -50,7 +50,7 @@ export const NAVIGATION_ROUTES = [
   {
     name: "Past Deliveries",
     path: PATHS.pastdeliveries,
-    permission: (permissions) => permissions?.routesList,
+    permission: (permissions) => permissions?.routesList && permissions?.routesCreateForDriver,
   },
   { name: "Master Data", path: PATHS.customers.root },
   {
@@ -144,7 +144,6 @@ export const CURRENT_TOURS_COLUMNS = (
   markFavourite,
   redirectView,
   t,
-  getPdf
 ) => {
   return [
     {
@@ -160,10 +159,15 @@ export const CURRENT_TOURS_COLUMNS = (
               }}
             />
           )}
-          <MapIcon
-            onClick={() => redirectView(null, rowData)}
-            style={{ color: "#ADADAD", cursor: "pointer" }}
-          />
+          {
+            !!rowData.code && (
+              <MapIcon
+                onClick={() => redirectView(null, rowData)}
+                style={{ color: "#ADADAD", cursor: "pointer" }}
+              />
+            )
+          }
+
         </div>
       ),
       customFilterAndSearch: (v, row) => {
@@ -290,8 +294,15 @@ export const CURRENT_TOURS_COLUMNS = (
       render: (rowData) => {
         if (!rowData.code) {
           return (
-            <IconButton color="primary" onClick={() => getPdf(rowData)} style={{ padding: 0 }}>
-              <DocumentIcon style={{ color: '#6F9CEB' }} />
+            <IconButton
+              component="a"
+              href={`${process.env.REACT_APP_API}routes/document/${rowData.id
+                }?taira=${localStorage.getItem("token")}`}
+              target="_blank"
+              color="primary"
+              style={{ padding: 0 }}
+            >
+              <DocumentIcon style={{ color: "#6F9CEB" }} />
             </IconButton>
           );
         }

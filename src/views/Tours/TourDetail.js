@@ -11,6 +11,7 @@ import { selectTour, selectTourStatus, getTour } from "redux/slices/tourSlice";
 import Navbar from 'components/Navbar';
 import CustomersNavbar from 'components/Masterbar/CustomersBar';
 import DarkLayout from 'components/Shared/DarkLayout';
+import { selectUser } from "redux/slices/userSlice";
 
 const useStyles = makeStyles({
   _heading: {
@@ -97,6 +98,7 @@ const TourDetail = () => {
   const { id } = useParams();
   const loading = useSelector(selectTourStatus);
   const tour = useSelector(selectTour);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     if (id && !loading) {
@@ -117,10 +119,15 @@ const TourDetail = () => {
           <Typography className={classes._heading} variant="h4">
             {tour?.name}
           </Typography>
-          <Box className={classes._buttonbox} component="div">
-            <EditIcon onClick={editTourHandler} className={classes._edit} />
-            <Typography component="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
-          </Box>
+          {
+            user?.permissions?.toursCreate && (
+              <Box className={classes._buttonbox} component="div">
+                <EditIcon onClick={editTourHandler} className={classes._edit} />
+                <Typography component="span" className={clsx(classes._edittext, 'edittag')}>{t('Edit')}</Typography>
+              </Box>
+            )
+          }
+
         </div>
         <Typography className={classes._infoheading} variant="h5">
           {t("Basic Data")}

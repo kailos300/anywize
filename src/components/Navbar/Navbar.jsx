@@ -109,7 +109,7 @@ const Navbar = () => {
   return (
     <AppBar position="fixed" className={classes.appbar}>
       <Toolbar className={classes.toolbar}>
-        <Link to={PATHS.tours.current}>
+        <Link to="/">
           <img className={classes._img} src={logo} alt="anywize logo" />
         </Link>
         <List className={classes._nav} component="nav">
