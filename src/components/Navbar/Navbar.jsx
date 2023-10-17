@@ -120,12 +120,6 @@ const Navbar = () => {
               return null;
             }
 
-            console.log(
-              location.pathname,
-              item,
-              checkTourPaths.includes(location.pathname),
-              item.name === "Tours"
-            );
             return (
               <ListItem
                 activeClassName={

@@ -62,7 +62,7 @@
   "All tours": "Alle Touren",
   "Date": "Datum",
   "Time": "Uhrzeit",
-  "Order Number": "Auftragsnummer",
+  "Order Number": "Lieferscheinnummer",
   "Order Description": "Auftragsbeschreibung",
   "Met customer": "Kunden angetroffen",
   "Create Route(s) for the selected Orders from": "Routen für die ausgewählten Aufträge in erstellen",
@@ -133,5 +133,9 @@
   "Skipping the stop is irreversible": "Überspringen des Stopps ist unwiderruflich",
   "Go back": "Abbrechen",
   "Skip this stop": "STOPP ÜBERSPRINGEN",
-  "Skipped at": "Übersprungen am"
+  "Skipped at": "Übersprungen am",
+  "Packages": "Packstücke",
+  "MORNING": "Morgens",
+  "EVENING": "Abend",
+  "NIGHT": "Nachts"
 }

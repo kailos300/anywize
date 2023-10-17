@@ -7,6 +7,7 @@ import { PATHS } from "util/appConstants";
 
 import { selectAuthenticated } from "redux/slices/authSlice";
 import { setShowMessage } from "redux/slices/uiSlice";
+import { fetchUserInfo } from "redux/slices/userSlice";
 import LoginComponent from "components/Login";
 
 const Login = () => {
@@ -15,7 +16,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const authenticated = useSelector(selectAuthenticated);
 
-  const loginCallback = () => history.push("/");
+  const loginCallback = () => {
+    dispatch(fetchUserInfo());
+    history.push("/");
+  };
 
   useEffect(() => {
     if (localStorage.getItem("token") && authenticated) {

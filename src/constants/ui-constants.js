@@ -31,9 +31,21 @@ export const TOUR_DATA_BAR = {
   name: "Tours",
   list: [
     { name: "Current tours", path: PATHS.tours.current },
-    { name: "Recently finished tours", path: PATHS.tours.recent, permission: (user) => user?.permissions?.routesCreateForDriver },
-    { name: "Archive tours", path: PATHS.tours.archive, permission: (user) => user?.permissions?.routesCreateForDriver },
-    { name: "Export", path: PATHS.tours.export, permission: (user) => user?.permissions?.routesCreateForDriver },
+    {
+      name: "Recently finished tours",
+      path: PATHS.tours.recent,
+      permission: (user) => user?.permissions?.routesCreateForDriver,
+    },
+    {
+      name: "Archive tours",
+      path: PATHS.tours.archive,
+      permission: (user) => user?.permissions?.routesCreateForDriver,
+    },
+    {
+      name: "Export",
+      path: PATHS.tours.export,
+      permission: (user) => user?.permissions?.routesCreateForDriver,
+    },
   ],
 };
 export const NAVIGATION_ROUTES = [
@@ -50,7 +62,8 @@ export const NAVIGATION_ROUTES = [
   {
     name: "Past Deliveries",
     path: PATHS.pastdeliveries,
-    permission: (permissions) => permissions?.routesList && permissions?.routesCreateForDriver,
+    permission: (permissions) =>
+      permissions?.routesList && permissions?.routesCreateForDriver,
   },
   { name: "Master Data", path: PATHS.customers.root },
   {
@@ -92,7 +105,15 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
         </span>
       ),
     },
-    { title: "Description", field: "Tour.name" },
+    {
+      title: "Description",
+      field: "Tour.name",
+      render: (rowData) =>
+        rowData.Tour.name +
+        (rowData.orders[0].departure
+          ? ` (${t(rowData.orders[0].departure)})`
+          : ""),
+    },
     {
       title: "",
       render: (rowData) => (
@@ -143,7 +164,7 @@ export const CURRENT_TOURS_COLUMNS = (
   tableRef,
   markFavourite,
   redirectView,
-  t,
+  t
 ) => {
   return [
     {
@@ -159,15 +180,12 @@ export const CURRENT_TOURS_COLUMNS = (
               }}
             />
           )}
-          {
-            !!rowData.code && (
-              <MapIcon
-                onClick={() => redirectView(null, rowData)}
-                style={{ color: "#ADADAD", cursor: "pointer" }}
-              />
-            )
-          }
-
+          {!!rowData.code && (
+            <MapIcon
+              onClick={() => redirectView(null, rowData)}
+              style={{ color: "#ADADAD", cursor: "pointer" }}
+            />
+          )}
         </div>
       ),
       customFilterAndSearch: (v, row) => {
@@ -213,7 +231,20 @@ export const CURRENT_TOURS_COLUMNS = (
     },
     {
       title: "name",
-      render: (rowData) => rowData.Tour.name,
+      render: (rowData) => {
+        try {
+          const gdo =
+            rowData.Tour.name +
+            (rowData.pathway[0].Orders[0].departure
+              ? ` (${t(rowData.pathway[0].Orders[0].departure)})`
+              : "");
+
+          return gdo;
+        } catch (e) {
+          console.log(e)
+          return rowData.Tour.name;
+        }
+      },
     },
     {
       title: "progress",

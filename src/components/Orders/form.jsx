@@ -5,11 +5,16 @@ import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { Input, InputOnlyNumbers, Autocomplete } from "../Shared/mui-formik-inputs";
+import {
+  Input,
+  Select,
+  InputOnlyNumbers,
+  Autocomplete,
+} from "../Shared/mui-formik-inputs";
 import { OrderSchema } from "constants/validation-schemas";
 import { OrderFormAllowedFields } from "constants/forms-submit-allowed-fields";
 import { PATHS } from "util/appConstants";
-import FormCancelSaveButton from 'components/Shared/FormCancelSaveButtons';
+import FormCancelSaveButton from "components/Shared/FormCancelSaveButtons";
 
 const useStyles = makeStyles({
   _heading: {
@@ -18,10 +23,10 @@ const useStyles = makeStyles({
   },
   _icons: {
     color: "#ADADAD",
-    fontSize: '35px',
+    fontSize: "35px",
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
-    margin: '0 16px 0 0px',
+    margin: "0 16px 0 0px",
   },
   _save: {
     "&:hover": {
@@ -41,12 +46,7 @@ const useStyles = makeStyles({
     marginTop: "44px",
   },
 });
-const OrderForm = ({
-  initialValues,
-  onSubmit,
-  action,
-  customerList,
-}) => {
+const OrderForm = ({ initialValues, onSubmit, action, customerList }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
@@ -57,9 +57,11 @@ const OrderForm = ({
     validateOnBlur: true,
     validationSchema: OrderSchema,
     initialValues: {
-      customer_id: '',
-      description: '',
-      number: '',
+      customer_id: "",
+      description: "",
+      number: "",
+      packages: 0,
+      departure: null,
       ...initialValues,
     },
     onSubmit: async (values, { setSubmitting }) => {
@@ -70,7 +72,16 @@ const OrderForm = ({
       }
     },
   });
-  const { values, handleChange, errors, handleSubmit, setFieldValue, submitCount, isValid, isSubmitting } = formik;
+  const {
+    values,
+    handleChange,
+    errors,
+    handleSubmit,
+    setFieldValue,
+    submitCount,
+    isValid,
+    isSubmitting,
+  } = formik;
   let { handleBlur } = formik;
 
   if (!submitCount) {
@@ -109,11 +120,11 @@ const OrderForm = ({
             value={values.customer_id}
             settings={{
               disableClearable: true,
-              valueProp: 'id',
-              labelProp: 'alias',
+              valueProp: "id",
+              labelProp: "alias",
             }}
             onChange={(selected) => {
-              setFieldValue('customer_id', selected.id);
+              setFieldValue("customer_id", selected.id);
             }}
             options={customerList}
             required
@@ -128,17 +139,41 @@ const OrderForm = ({
             value={values.description}
             errors={errors}
             required
-
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <InputOnlyNumbers
-            label={t("Number")}
+            label={t("Order Number")}
             name="number"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.number}
             errors={errors}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={2}>
+          <Input
+            label={t("Packages")}
+            name="packages"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.packages}
+            errors={errors}
+            type="number"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={2}>
+          <Select
+            label={t("Departure")}
+            name="departure"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.departure}
+            errors={errors}
+            options={["MORNING", "EVENING", "NIGHT"].map((o) => ({
+              label: t(o),
+              value: o,
+            }))}
           />
         </Grid>
       </Grid>

@@ -66,9 +66,10 @@ export const getOrders = () => async (dispatch) => {
 
     const grouped = orders.reduce((acc, order, i) => {
       const { Tour } = order.Customer;
+      const key = `${Tour.id}-${order.departure}`;
 
-      if (!acc[Tour.id]) {
-        acc[Tour.id] = {
+      if (!acc[key]) {
+        acc[key] = {
           Tour,
           orders: [],
           id: i,
@@ -76,7 +77,7 @@ export const getOrders = () => async (dispatch) => {
         };
       }
 
-      acc[Tour.id].orders.push(order);
+      acc[key].orders.push(order);
 
       return acc;
     }, {});

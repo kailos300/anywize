@@ -28,4 +28,4 @@ export const CustomerFormAllowedFields = [
   'email_notifications',
 ];
 
-export const OrderFormAllowedFields = ['customer_id', 'description', 'number'];
+export const OrderFormAllowedFields = ['customer_id', 'description', 'number', 'departure', 'packages'];

@@ -62,7 +62,7 @@
   "All tours": "All tours",
   "Date": "Date",
   "Time": "Time",
-  "Order Number": "Order Number",
+  "Order Number": "Delivery Note Number",
   "Order Description": "Order Description",
   "Met customer": "Met Customer",
   "Create Route(s) for the selected Orders from": "Create Route(s) for the selected Orders from",
@@ -117,5 +117,9 @@
   "selected": "selected",
   "row": "row",
   "row(s)": "row(s)",
-  "rows": "rows"
+  "rows": "rows",
+  "Packages": "Packages",
+  "MORNING": "Morning",
+  "EVENING": "Evening",
+  "NIGHT": "Night"
 }
