@@ -251,9 +251,6 @@ const OrderList = ({ confirm }) => {
                           <Box flex={1}>
                             {order.number}
                           </Box>
-                          <Box flex={3}>
-                            {order.description}
-                          </Box>
                           <Box flex={2} style={{ textAlign: 'right', display: 'flex', alignItems: 'center' }}>
                             <Box flex={1} display="flex" alignItems="center">
                               <div onClick={() => editHandler(order)} className={clsx(classes._edit, classes._pointer)}>
