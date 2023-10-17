@@ -34,6 +34,6 @@ export const CustomerSchema = yup.object().shape({
 
 export const OrderSchema = yup.object().shape({
   customer_id: yup.number().required('Required'),
-  description: yup.string().required('Required'),
+  description: yup.string().nullable(),
   number: yup.string().nullable(),
 });

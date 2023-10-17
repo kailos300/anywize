@@ -138,7 +138,6 @@ const OrderForm = ({ initialValues, onSubmit, action, customerList }) => {
             onBlur={handleBlur}
             value={values.description}
             errors={errors}
-            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>

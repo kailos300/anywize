@@ -106,7 +106,7 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
       ),
     },
     {
-      title: "Description",
+      title: "Tour",
       field: "Tour.name",
       render: (rowData) =>
         rowData.Tour.name +
