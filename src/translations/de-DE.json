@@ -65,7 +65,8 @@
   "Order Number": "Lieferscheinnummer",
   "Order Description": "Auftragsbeschreibung",
   "Met customer": "Kunden angetroffen",
-  "Create Route(s) for the selected Orders from": "Routen für die ausgewählten Aufträge in erstellen",
+  "Create Route(s) for the selected Orders from": "Routen für die ausgewählten Aufträge in",
+  "Tours_create": "Touren erstellen",
   "Are you sure?": "Sind Sie sicher?",
   "Customer created successfully": "Kunde erfolgreich hinzugefügt!",
   "Can't Add! Customer": "Kann nicht hinzufügen! Kunde",
@@ -136,7 +137,9 @@
   "Skipped at": "Übersprungen am",
   "Packages": "Packstücke",
   "MORNING": "Morgens",
-  "MIDDAY": "Mittagszeit",
+  "MIDDAY": "Mittags",
   "EVENING": "Abend",
-  "NIGHT": "Nachts"
+  "NIGHT": "Nachts",
+  "Approve": "Freigeben",
+  "Departure": "Abfahrt"
 }

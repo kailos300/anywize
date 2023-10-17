@@ -161,7 +161,7 @@ const OrderList = ({ confirm }) => {
 
       fetchOrders();
     }, {
-      description: `${t('Create Route(s) for the selected Orders from')} ${rows.length} ${t('Tours')}?`
+      description: `${t('Create Route(s) for the selected Orders from')} ${rows.length} ${t('Tours_create')}?`
     });
   };
 
