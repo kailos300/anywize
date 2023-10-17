@@ -120,6 +120,7 @@
   "rows": "rows",
   "Packages": "Packages",
   "MORNING": "Morning",
+  "MIDDAY": "Midday",
   "EVENING": "Evening",
   "NIGHT": "Night"
 }

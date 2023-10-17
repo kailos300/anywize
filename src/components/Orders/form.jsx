@@ -170,7 +170,7 @@ const OrderForm = ({ initialValues, onSubmit, action, customerList }) => {
             onBlur={handleBlur}
             value={values.departure}
             errors={errors}
-            options={["MORNING", "EVENING", "NIGHT"].map((o) => ({
+            options={["MORNING", "MIDDAY", "EVENING", "NIGHT"].map((o) => ({
               label: t(o),
               value: o,
             }))}
