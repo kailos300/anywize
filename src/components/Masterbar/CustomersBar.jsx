@@ -6,9 +6,9 @@ import {selectUser} from "../../redux/slices/userSlice";
 
 export default () => {
   const user = useSelector(selectUser);
-  console.log(user)
+  // console.log(user)
   const getMasterDataBar = () => {
-    if (user && user.admin) {
+    if (user?.permissions?.showTourTab ) {
       return {...MASTER_ADMIN_DATA_BAR}
     } else {
       return {...MASTER_DATA_BAR}
