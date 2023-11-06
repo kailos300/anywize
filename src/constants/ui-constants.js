@@ -7,30 +7,39 @@ import Tooltip from "@material-ui/core/Tooltip";
 import EmptyCircleIcon from "@material-ui/icons/RadioButtonUnchecked";
 import FilledCircleIcon from "@material-ui/icons/RadioButtonChecked";
 import DocumentIcon from "@material-ui/icons/Description";
-import { IconButton } from "@material-ui/core";
+import {IconButton} from "@material-ui/core";
 import moment from "moment";
-import { PATHS } from "util/appConstants";
+import {PATHS} from "util/appConstants";
 
 export const MID_NAVIGATION_ROUTES = [
-  { name: "Customers", path: PATHS.customers.root },
-  { name: "Tours", path: PATHS.tours.root },
+  {name: "Customers", path: PATHS.customers.root},
+  {name: "Tours", path: PATHS.tours.root},
 ];
 export const TOP_NAVIGATION_ROUTES = [
-  { name: "Maps", path: "/dash" },
-  { name: "Past Deliveries", path: "/dash" },
-  { name: "New Orders", path: PATHS.orders.root },
+  {name: "Maps", path: "/dash"},
+  {name: "Past Deliveries", path: "/dash"},
+  {name: "New Orders", path: PATHS.orders.root},
 ];
+
+export const MASTER_ADMIN_DATA_BAR = {
+  name: "Master Data",
+  list: [
+    {name: "Customers", path: PATHS.customers.root},
+    {name: "Tours", path: PATHS.tours.root},
+  ],
+};
+
 export const MASTER_DATA_BAR = {
   name: "Master Data",
   list: [
-    { name: "Customers", path: PATHS.customers.root },
-    { name: "Tours", path: PATHS.tours.root },
+    {name: "Customers", path: PATHS.customers.root},
   ],
 };
+
 export const TOUR_DATA_BAR = {
   name: "Tours",
   list: [
-    { name: "Current tours", path: PATHS.tours.current },
+    {name: "Current tours", path: PATHS.tours.current},
     {
       name: "Recently finished tours",
       path: PATHS.tours.recent,
@@ -65,34 +74,43 @@ export const NAVIGATION_ROUTES = [
     permission: (permissions) =>
       permissions?.routesList && permissions?.routesCreateForDriver,
   },
-  { name: "Master Data", path: PATHS.customers.root },
+  {name: "Master Data", path: PATHS.customers.root},
   {
     name: "Map",
     path: PATHS.tours.map,
     permission: (permissions) => permissions?.routesMap,
   },
-  { name: "Settings", path: "/dash2" },
+  {name: "Settings", path: "/dash2"},
 ];
 export const TOURS_TABLE_COLUMNS = [
-  { title: "Tour name", field: "name" },
-  { title: "Tour ID", field: "id" },
+  {title: "Tour name", field: "name"},
+  {title: "Tour ID", field: "id"},
 ];
 
 export const CUSTOMERS_TABLE_COLUMNS = [
-  { title: "ID", field: "number", defaultSort: "desc", sorting: true },
-  { title: "Alias", field: "alias" },
-  { title: "Name 1", field: "name" },
-  { title: "Zipcode", field: "zipcode" },
-  { title: "City", field: "city" },
-  { title: "Tour", field: "Tour.name" },
-  { title: "Tour position", field: "tour_position" },
+  // { title: "ID", field: "number", defaultSort: "desc", sorting: true },
+  {title: "Alias", field: "alias"},
+  {title: "Name 1", field: "name"},
+  {
+    title: "Street",
+    field: "street",
+    render: (rowData) => (
+      <span style={{fontSize: "15px", fontWeight: 500}}>
+          {rowData.street} {rowData.street_number}
+      </span>
+    ),
+  },
+  {title: "Zipcode", field: "zipcode"},
+  {title: "City", field: "city"},
+  {title: "Tour", field: "Tour.name"},
+  // { title: "Tour position", field: "tour_position" },
 ];
 
 export const PAST_DELIVERIES_TABLE_COLUMNS = [
-  { title: "Customer alias", field: "alias" },
-  { title: "Customer name 1", field: "name" },
-  { title: "Tour", field: "Tour.id" },
-  { title: "Tour Name", field: "Tour.name" },
+  {title: "Customer alias", field: "alias"},
+  {title: "Customer name 1", field: "name"},
+  {title: "Tour", field: "Tour.id"},
+  {title: "Tour Name", field: "Tour.name"},
 ];
 
 export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
@@ -100,7 +118,7 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
     {
       title: "Order id",
       render: (rowData) => (
-        <span style={{ fontSize: "15px", fontWeight: 500 }}>
+        <span style={{fontSize: "15px", fontWeight: 500}}>
           T{rowData.Tour.id}
         </span>
       ),
@@ -117,11 +135,11 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
     {
       title: "",
       render: (rowData) => (
-        <span style={{ color: "#6F9CEB" }}>
+        <span style={{color: "#6F9CEB"}}>
           {" "}
           {rowData.orders.length}
-          <span style={{ marginLeft: "15px" }}>
-            { } {t("New orders")}
+          <span style={{marginLeft: "15px"}}>
+            {} {t("New orders")}
           </span>
         </span>
       ),
@@ -136,7 +154,7 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
       title: "Id+1",
       render: (rowData) => (
         <div
-          style={{ textAlign: "right", marginRight: "20px", marginTop: "6px" }}
+          style={{textAlign: "right", marginRight: "20px", marginTop: "6px"}}
         >
           <input
             onChange={(e) => checkChangeHandler(e, rowData)}
@@ -150,7 +168,7 @@ export const ORDERS_TABLE_COLUMNS = (checkChangeHandler, t, user) => {
             className="radio-checkbox-label"
             htmlFor={`panel${rowData.id}`}
           >
-            {rowData.mainCheck ? <FilledCircleIcon /> : <EmptyCircleIcon />}
+            {rowData.mainCheck ? <FilledCircleIcon/> : <EmptyCircleIcon/>}
           </label>
         </div>
       ),
@@ -170,7 +188,7 @@ export const CURRENT_TOURS_COLUMNS = (
     {
       title: "icon",
       render: (rowData) => (
-        <div style={{ display: "flex" }}>
+        <div style={{display: "flex"}}>
           {!!markFavourite && (
             <StarRateIcon
               onClick={(e) => markFavourite(e, rowData)}
@@ -183,7 +201,7 @@ export const CURRENT_TOURS_COLUMNS = (
           {!!rowData.code && (
             <MapIcon
               onClick={() => redirectView(null, rowData)}
-              style={{ color: "#ADADAD", cursor: "pointer" }}
+              style={{color: "#ADADAD", cursor: "pointer"}}
             />
           )}
         </div>
@@ -258,7 +276,7 @@ export const CURRENT_TOURS_COLUMNS = (
               }}
             >
               {t(rowData.progress)}
-              <small style={{ display: "block" }}>
+              <small style={{display: "block"}}>
                 {moment(rowData.end_date).format("DD.MM.YYYY")}{" "}
                 {moment(rowData.end_date).format("HH:mm")}
               </small>
@@ -306,15 +324,15 @@ export const CURRENT_TOURS_COLUMNS = (
           <>
             {rowData.driver_name !== null ? (
               <Tooltip
-                title={<TooltipBar name={"callicon"} rowData={rowData} />}
+                title={<TooltipBar name={"callicon"} rowData={rowData}/>}
                 placement="top"
                 arrow
                 interactive
               >
-                <CallSharpIcon className={"hovericon"} />
+                <CallSharpIcon className={"hovericon"}/>
               </Tooltip>
             ) : (
-              <CallSharpIcon className={"disabled-btn"} disabled={true} />
+              <CallSharpIcon className={"disabled-btn"} disabled={true}/>
             )}
           </>
         );
@@ -328,24 +346,24 @@ export const CURRENT_TOURS_COLUMNS = (
             <IconButton
               component="a"
               href={`${process.env.REACT_APP_API}routes/document/${rowData.id
-                }?taira=${localStorage.getItem("token")}`}
+              }?taira=${localStorage.getItem("token")}`}
               target="_blank"
               color="primary"
-              style={{ padding: 0 }}
+              style={{padding: 0}}
             >
-              <DocumentIcon style={{ color: "#6F9CEB" }} />
+              <DocumentIcon style={{color: "#6F9CEB"}}/>
             </IconButton>
           );
         }
 
         return (
           <Tooltip
-            title={<TooltipBar name={"vpnicon"} rowData={rowData} />}
+            title={<TooltipBar name={"vpnicon"} rowData={rowData}/>}
             placement="top"
             arrow
             interactive
           >
-            <VpnKeySharpIcon className={"hovericon"} />
+            <VpnKeySharpIcon className={"hovericon"}/>
           </Tooltip>
         );
       },

@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import React, {useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {useHistory} from "react-router-dom";
 import MaterialTable from "material-table";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
-import { CUSTOMERS_TABLE_COLUMNS } from "constants/ui-constants";
-import { getColumns, getActions, getLocalization } from "util/table-utils";
-import { mapTableData } from "util/helpers";
-import { PATHS } from "util/appConstants";
+import {CUSTOMERS_TABLE_COLUMNS} from "constants/ui-constants";
+import {getColumns, getActions, getLocalization} from "util/table-utils";
+import {mapTableData} from "util/helpers";
+import {PATHS} from "util/appConstants";
 import {
   selectCustomers,
   selectCustomerStatus,
@@ -19,7 +19,7 @@ import withConfirm from "components/dialogs/delete";
 import Navbar from 'components/Navbar';
 import CustomersNavbar from 'components/Masterbar/CustomersBar';
 import DarkLayout from 'components/Shared/DarkLayout';
-import { selectUser } from "redux/slices/userSlice";
+import {selectUser} from "redux/slices/userSlice";
 
 const useStyles = makeStyles({
   _filtericon: {
@@ -29,8 +29,8 @@ const useStyles = makeStyles({
 });
 const tableTitle = "CUSTOMERS";
 
-const CustomersList = ({ confirm }) => {
-  const { t } = useTranslation();
+const CustomersList = ({confirm}) => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -60,8 +60,8 @@ const CustomersList = ({ confirm }) => {
 
   return (
     <>
-      <Navbar />
-      <CustomersNavbar />
+      <Navbar/>
+      <CustomersNavbar/>
       <DarkLayout doublebar loading={loading}>
         <div className="custom-table-styles">
           <MaterialTable
@@ -70,7 +70,7 @@ const CustomersList = ({ confirm }) => {
                 <i className={clsx(classes._filtericon, "fas fa-filter")}></i>
               ),
             }}
-            style={{ display: "flex", flexDirection: "column" }}
+            style={{display: "flex", flexDirection: "column"}}
             data={mapTableData(customers)}
             title={t(tableTitle)}
             columns={getColumns(CUSTOMERS_TABLE_COLUMNS, t)}
@@ -106,8 +106,7 @@ const CustomersList = ({ confirm }) => {
               filterCellStyle: {
                 color: "#F5F5F5",
               },
-              rowStyle: { height: "38px" },
-
+              rowStyle: {height: "38px"},
             }}
           />
         </div>
