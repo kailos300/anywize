@@ -7,13 +7,12 @@ import { PATHS } from "../../util/appConstants";
 
 export default () => {
   const user = useSelector(selectUser);
-  // console.log('redirect user: ', user)
 
   if (user?.permissions?.routesList) {
     return <Redirect to={PATHS.tours.current} />;
   } else if (user?.permissions?.ordersList) {
     return <Redirect to={PATHS.orders.root} />;
-  } else if (user?.permissions?.showMasterData === false) {
+  } else if (!user?.permissions?.showMasterData) {
     return <Redirect to={PATHS.tours.map} />;
   }
 

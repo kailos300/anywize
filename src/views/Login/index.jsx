@@ -16,8 +16,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const authenticated = useSelector(selectAuthenticated);
 
-  const loginCallback = () => {
-    dispatch(fetchUserInfo());
+  const loginCallback = async () => {
+    await dispatch(fetchUserInfo());
     history.push("/");
   };
 
