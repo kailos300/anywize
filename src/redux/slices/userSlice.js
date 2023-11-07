@@ -40,9 +40,6 @@ export default userSlice.reducer;
 export const fetchUserInfo = () => async (dispatch) => {
   try {
     const user = await coreApi.fetch('/users/me');
-    if (typeof user.permissions === 'string') {
-      user.permissions = JSON.parse(user.permissions)
-    }
     dispatch(setUser(user));
   } catch (err) {
   }
