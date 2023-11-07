@@ -1,8 +1,8 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import {makeStyles} from "@material-ui/core/styles";
+import {Link, NavLink, useLocation} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {useDispatch, useSelector} from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -23,8 +23,8 @@ import {
   checkPaths,
   checkTourPaths,
 } from "constants/ui-constants";
-import { PATHS } from "util/appConstants";
-import { logout, selectUser } from "redux/slices/userSlice";
+import {PATHS} from "util/appConstants";
+import {logout, selectUser} from "redux/slices/userSlice";
 
 const useStyles = makeStyles((theme) => ({
   _img: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
-  const { t, i18n } = useTranslation();
+  const {t, i18n} = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -110,7 +110,7 @@ const Navbar = () => {
     <AppBar position="fixed" className={classes.appbar}>
       <Toolbar className={classes.toolbar}>
         <Link to="/">
-          <img className={classes._img} src={logo} alt="anywize logo" />
+          <img className={classes._img} src={logo} alt="anywize logo"/>
         </Link>
         <List className={classes._nav} component="nav">
           {NAVIGATION_ROUTES.filter(
@@ -118,6 +118,10 @@ const Navbar = () => {
           ).map((item, index) => {
             if (item.name === "Settings") {
               return null;
+            }
+            if (item.name === "Master Data") {
+              // if (!user?.permissions?.showMasterData) return null
+              if (user?.permissions?.showMasterData === false) return null
             }
 
             return (
@@ -129,8 +133,8 @@ const Navbar = () => {
                   classes._menuitem,
                   (checkTourPaths.includes(location.pathname) &&
                     item.name === "Tours") ||
-                    (_checkPaths().includes(location.pathname) &&
-                      item.name === "Master Data")
+                  (_checkPaths().includes(location.pathname) &&
+                    item.name === "Master Data")
                     ? classes._isactive
                     : ""
                 )}
@@ -146,13 +150,13 @@ const Navbar = () => {
           })}
           <ListItem className={clsx(classes._menuitem)} onClick={handleClick}>
             <ListItemText className={classes._nomargin}>
-              <SettingsIcon className={classes._settingicon} />
+              <SettingsIcon className={classes._settingicon}/>
             </ListItemText>
           </ListItem>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            anchorOrigin={{vertical: "bottom", horizontal: "left"}}
             getContentAnchorEl={null}
             keepMounted
             open={Boolean(anchorEl)}

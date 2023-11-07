@@ -12,6 +12,8 @@ export default () => {
     return <Redirect to={PATHS.tours.current} />;
   } else if (user?.permissions?.ordersList) {
     return <Redirect to={PATHS.orders.root} />;
+  } else if (!user?.permissions?.showMasterData) {
+    return <Redirect to={PATHS.tours.map} />;
   }
 
   return <Redirect to={PATHS.customers.root} />;

@@ -330,7 +330,6 @@ const CustomerForm = ({ initialValues, onSubmit, action, tourList }) => {
             onBlur={handleBlur}
             value={values.phone}
             errors={errors}
-            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -342,7 +341,6 @@ const CustomerForm = ({ initialValues, onSubmit, action, tourList }) => {
             onBlur={handleBlur}
             value={values.email}
             errors={errors}
-            required
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>

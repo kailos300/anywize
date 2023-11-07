@@ -1,5 +1,5 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
-import { coreApi } from 'api/core';
+import {createSlice, createSelector} from '@reduxjs/toolkit';
+import {coreApi} from 'api/core';
 
 export const APP_NAMESPACE = 'mkrn-starter';
 const userPrefix = `${APP_NAMESPACE}/user`;
@@ -34,7 +34,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setUserSettings } = userSlice.actions;
+export const {setUser, setUserSettings} = userSlice.actions;
 export default userSlice.reducer;
 
 export const fetchUserInfo = () => async (dispatch) => {
